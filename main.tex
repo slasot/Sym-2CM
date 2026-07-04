@@ -251,17 +251,28 @@ $c_j^{n_j}$.
 We thus get the claim with $D_\sigma = (m_1+m_2)(m_2-m_1)$.
 
 \para{Case 3: All sum-increasing cycles have $(+,0)$ or $(+,+)$ effect}
-There must be some sum-increasing cycle with $(+,+)$.
-Let $c_j$ be the 'steepest' such cycle, namely the one maximising the ratio
-$(m_2/m_1)$ where $(m_1, m_2)$ is its effect.
-It must be followed by 
-some $c_i$, for $i>j$ with negative horizontal effect
-$(-,+)$, $(-,0)$ or $(-,-)$, that is iterated sufficiently many times,
-namely $\ell \cdot \norm \V \cdot n_i\geq n_j$ times.
-It must be also the case that some such $c_i$ is 'less steep' than $c_j$,
-namely 
-for some numbers $I, J$, the sum of effects of
-$c_j^J$ and $c_i^I$ is vertical $(0,+)$.
+Restrict our attention to those cycle $c_j$ of effect $(m_1,m_2)$ with $m_1\neq 0$.
+Depending on whther $m_1>0$ or $m_1<0$, we call such cycles 
+horizontally positive, or horizontally negstive.  
+By the above assumption, evey sum-increasing cycle is horizontall positive.
+We define "steepness" of $c_j$ as $m_2/m_1$.
+
+\begin{claim} \label{claim:steep}
+There are some $i<j$ such that $c_i$ is sum-increasing, $c_j$ is 
+horizontally negative, and $c_i$ is steeper than $c_j$.
+\end{claim}
+%
+\begin{proof}
+Supposing there is no such $i<j$, we have that whenver $c_i$ is sum-increasing,
+every horizontally-negative cycle $c_j$, with $j>i$, is at least as steep as $c_i$.
+This contradicts $a'-a>C$.
+\sla{check and fill details}
+\end{proof}
+
+By \Cref{claim:steep}, for some positive integers $I, J$, the sum of effects of
+$c_i^I$ and $c_j^J$ is vertical $(0,+)$.
+Exgtending $c_i^{n_i}$ with $c_i^I$ and $c_j^{n_j}$ with $c_j^J$ yields
+a run ending in $q'(0,a'+D_\sigma)$, where $D_\sigma = ,,,$.
 \sla{complete}
 
 \medskip
