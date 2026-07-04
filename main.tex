@@ -193,16 +193,18 @@ As there are at only $\ell$ cycles $c_1, \ldots, c_\ell$, iteration of some of t
 say $c_j$, necessarily increases the sum of counters by a sufficiently large value.
 This means that $c_j$ itself increases the sum of counters, and that the number $n_j$ of
 iterations of the cycle $c_j$ is sufficiently large.
-Call every cycle $c_j$ satisfying the two avove conditions \emph{sum-increasing}.
+Call every cycle $c_j$ satisfying the two above conditions \emph{sum-increasing}.
+The effect of every sum-increasing cycle is either $(-,+)$, or 
+vertical $(0,+)$, or $(+,+)$, or horizontal $(+,0)$, or $(+,-)$.
 
-As $a'-a$ is sufficiently large, on of the sum-increasing cycles must have an
-effect which is either vertical $(0,+)$, or $(-,+)$, or $(+,+)$.
-
-\para{Case 1: Some sum-increasing cycle has vertical effect}
+\para{Case 1: Some sum-increasing cycle $c_j$ has $(0,+)$ effect}
 One extra iteration of this cycle yields the claim with $D_\sigma$ equal to its
 vertical effect.
 
-\para{Case 2: Some sum-increasing cycle $c_j$ has $(-,+)$ effect}
+\para{Case 2: Some sum-increasing cycle $c_j$ has $(-,+)$ or $(+,-)$ effect}
+Assume $(-,+)$ effect, the other case is similar.
+\sla{check}
+
 For our argument it is enough if the $n_j$ is large enough to guarantee that 
 in the middle
 of $c_j^{n_j}$, namely after the half of $n_j$ of iterations of $c_j$, the 
@@ -248,7 +250,7 @@ is $(0, (m_1+m_2)(m_2-m_1))$, and this cycle is still fireable in the middle of
 $c_j^{n_j}$.
 We thus get the claim with $D_\sigma = (m_1+m_2)(m_2-m_1)$.
 
-\para{Case 3: No sum-increasing cycle with $(0,+)$ or $(+,+)$ effect}
+\para{Case 3: All sum-increasing cycles have $(+,0)$ or $(+,+)$ effect}
 There must be some sum-increasing cycle with $(+,+)$.
 Let $c_j$ be the 'steepest' such cycle, namely the one maximising the ratio
 $(m_2/m_1)$ where $(m_1, m_2)$ is its effect.
