@@ -1,0 +1,106 @@
+% !TEX root = ../main.tex
+
+
+\newcommand{\wrt}{w.r.t.\xspace}
+\newcommand{\pn}{\text{\sc pn}\xspace}
+\newcommand{\vas}{\text{\sc vas}\xspace}
+\newcommand{\vass}{\text{\sc vass}\xspace}
+
+\newcommand{\dvass}{data \text{\sc vass}\xspace}
+\newcommand{\onevas}{1-\text{\sc vas}\xspace}
+\newcommand{\onevass}{1-\text{\sc vass}\xspace}
+\newcommand{\donevas}{1-\text{\sc dvas}\xspace}
+\newcommand{\donevass}{1-\text{\sc dvass}\xspace}
+\newcommand{\donevasr}{1-\text{\sc dvasr}\xspace}
+\newcommand{\donepn}{1-\text{\sc dpn}\xspace}
+
+\newcommand{\dtwovas}{2-\text{\sc dvas}\xspace}
+\newcommand{\dtwovass}{2-\text{\sc dvass}\xspace}
+\newcommand{\dtwopn}{2-\text{\sc dpn}\xspace}
+
+
+\newcommand{\vr}[1]{\mathbf{#1}}%{\vect{#1}}
+\newcommand{\setof}[2]{\{\,#1 \ \mid \ #2\,\}}
+\newcommand{\aut}[1]{\textsc{Perm}(#1)}
+\newcommand{\step}{\longrightarrow}
+\newcommand{\Mywlog}{W.l.o.g.\xspace}
+\newcommand{\mywlog}{w.l.o.g.\xspace}
+\newcommand{\norm}[1]%{\textsc{norm}(#1)}
+{\lVert#1\rVert}
+\newcommand{\width}[1]{\textsc{width}(#1)}
+\newcommand{\height}[1]{\textsc{height}(#1)}%{\lVert#1\rVert}
+\newcommand{\findim}[2]{{#1}_{#2}}
+\newcommand{\decomp}{decomposable\xspace}
+\newcommand{\indecomp}{indecomposable\xspace}
+\newcommand{\Decomp}{Decomposable\xspace}
+\newcommand{\Indecomp}{Indecomposable\xspace}
+\newcommand{\trace}{trace\xspace}
+\newcommand{\prefsum}[2]{#1[#2]}
+\newcommand{\reachprob}[1]{#1 \textsc{reachability}\xspace}
+
+
+\newcommand{\np}{{\sc NP}\xspace}
+\newcommand{\pspace}{{\sc PSpace}\xspace}
+\newcommand{\expspace}{{\sc ExpSpace}\xspace}
+\newcommand{\Ackermann}{{{\sc Ackermann}}\xspace}
+\newcommand{\para}[1]{\vspace{-2mm}\subparagraph*{#1.}}
+\newcommand{\tuple}[1]{\ensuremath{\langle #1 \rangle}\xspace}
+
+%%% Todo notes
+\newcommand{\sltodo}{\textcolor{blue}{TODO}}
+\newcommand{\sla}[1]{\textcolor{blue}{SL: #1}}
+\newcommand{\ml}[1]{\todo[color=cyan]{ML: {#1}}}
+\newcommand{\rp}[1]{\todo[color=green]{RP: {#1}}}
+\newcommand{\mlinline}[1]{\todo[color=cyan,inline]{ML: {#1}}}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+
+%%% Sets
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Npos}{\mathbb{N}_{>0}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Time}{\mathbb{T}}
+\newcommand{\Qpos}{\Q_{\geq 0}}
+\newcommand{\Rpos}{\R_{\geq 0}}
+\newcommand{\atoms}{\mathbb{A}}
+
+\newcommand{\finto}{\to_{\text{fin}}}
+\newcommand{\finsubseteq}{\subseteq_{\text{fin}}}
+\newcommand{\V}{\mathcal{V}}
+
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\mysize}[1]{|#1|}
+
+%%% TIKZ
+\usetikzlibrary{automata,positioning,shadows}
+\usetikzlibrary{calc, shapes, backgrounds,arrows}
+\usetikzlibrary{chains, decorations.pathmorphing}
+\usetikzlibrary{positioning,decorations.pathreplacing, automata}
+\usetikzlibrary{shapes.misc}
+
+\tikzset{every loop/.style={looseness=7}, >=latex}
+\tikzset{every picture/.style={>=latex}}
+\tikzstyle{PlayerMin}=[draw,circle,minimum size=4mm,inner sep=1.5pt]
+\tikzstyle{PlayerMax}=[draw,rectangle,minimum size=7mm,inner sep=1.5pt]
+\tikzstyle{Player}=[draw,diamond,minimum size=7mm,inner sep=1.5pt]
+\tikzstyle{target}=[circle, minimum size=1mm,inner sep=-2pt]
+\tikzstyle{PlayerMinmin}=[draw,circle, minimum size=1.5mm,inner sep=0pt]
+\tikzstyle{PlayerMaxmin}=[draw,rectangle,minimum size=1.5mm,inner sep=0pt]
+\tikzstyle{PlayerMinsmall}=[draw,circle, minimum size=3mm,inner sep=0pt]
+\tikzstyle{PlayerMaxsmall}=[draw,rectangle,minimum size=3mm,inner sep=0pt]
+\tikzstyle{leaf}=[draw,diamond,minimum size=7mm,inner sep=1.5pt]
+
+\tikzstyle{strat} =[minimum width=0.1cm,line width=0.01mm,draw=none]
+\tikzstyle{vecArrow} = [decoration={markings,mark=at position
+1 with {\arrow[scale=.5,>=latex]{>}}}%,postaction={decorate}
+]
+
+
+
+\theoremstyle{definition}
+\newtheorem{fact}{Fact}
+\newtheorem{question}{Question}
+

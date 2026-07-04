@@ -1,0 +1,297 @@
+\documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate,dvipsnames]{lipics-v2021}
+%\documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate,dvipsnames,anonymous]{lipics-v2021}
+
+
+\usepackage{todonotes}
+\usepackage{xspace}
+\usepackage{mathtools}
+\usepackage{multicol}
+\usepackage{stmaryrd}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{nicefrac}
+\usepackage{xparse}
+\usepackage{array}
+\usepackage{makecell}
+
+%\usepackage[appendix=append]{apxproof} % move to appendix
+%\usepackage[appendix=inline]{apxproof} % leave in place
+\usepackage[appendix=strip]{apxproof} % remove proofs
+%\newtheoremrep{lemma}[theorem]{Lemma}
+\newtheoremrep{apxtheorem}[theorem]{Theorem}
+\newtheoremrep{apxlemma}[theorem]{Lemma}
+
+\nolinenumbers
+
+\bibliographystyle{plainurl}% the mandatory bibstyle
+
+\title{Symmetric two-counter machines\footnote{{Partially supported by the NCN grant 2024/55/B/ST6/01674.}
+}} %TODO Please add
+
+%\titlerunning{Dummy short title} %TODO optional, please use if title is longer than one line
+
+\author{Krzysztof Jaros}{University of Warsaw}{}
+{}
+{}
+% \author{Roland~Guttenberg}{University of Warsaw}{}
+% {}
+\author{{\L}ukasz~Kami{\'n}ski}{University of Warsaw}{}
+{https://orcid.org/0009-0004-1641-9049}
+{}
+\author{Maja Kądziołka}{University of Warsaw}{}
+{}
+{}
+\author{S{\l}awomir Lasota}{University of Warsaw}{}
+{https://orcid.org/0000-0001-8674-4470}
+{}
+% {Partially supported by ERC grant INFSYS, agreement no. 950398 and 
+% by the NCN grant 2024/55/B/ST6/01674.}
+\author{Vaios~Michalakis}{University of Warsaw}{}
+{}
+{}
+
+
+\authorrunning{K.~Jaros, 
+%R.~Guttenberg, 
+{\L}.~Kami{\'n}ski, M.~Kądziołka, S.~Lasota, V.~Michalakis} 
+%TODO mandatory. First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et al.'
+
+\Copyright{Clotilde~Biziere, Wojciech~Czerwi{\'n}ski, Roland~Guttenberg, {\L}ukasz~Kami{\'n}ski, S{\l}awomir~Lasota, {\L}ukasz~Orlikowski, Vaios~Michalakis} %TODO mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
+
+%\ccsdesc[100]{\textcolor{red}{Replace ccsdesc macro with valid one}} %TODO mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10003752.10003766.10003770</concept_id>
+<concept_desc>Theory of computation~Automata over infinite objects</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10003752.10003766.10003773.10003775</concept_id>
+<concept_desc>Theory of computation~Quantitative automata</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10003752.10003790.10002990</concept_id>
+<concept_desc>Theory of computation~Logic and verification</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Theory of computation~Automata over infinite objects}
+\ccsdesc[500]{Theory of computation~Quantitative automata}
+\ccsdesc[500]{Theory of computation~Logic and verification}
+
+\keywords{Counter machines, vector addition systems, halting problem, reachability problem} %TODO mandatory; please add comma-separated list of keywords
+
+\category{} %optional, e.g. invited paper
+
+%\relatedversion{} %optional, e.g. full version hosted on arXiv, HAL, or other respository/website
+%\relatedversiondetails[linktext={opt. text shown instead of the URL}, cite=DBLP:books/mk/GrayR93]{Classification (e.g. Full Version, Extended Version, Previous Version}{URL to related version} %linktext and cite are optional
+\relatedversion{}
+\relatedversiondetails{Extended Version}{}
+
+%\supplement{}%optional, e.g. related research data, source code, ... hosted on a repository like zenodo, figshare, GitHub, ...
+%\supplementdetails[linktext={opt. text shown instead of the URL}, cite=DBLP:books/mk/GrayR93, subcategory={Description, Subcategory}, swhid={Software Heritage Identifier}]{General Classification (e.g. Software, Dataset, Model, ...)}{URL to related version} %linktext, cite, and subcategory are optional
+
+%\funding{(Optional) general funding statement \dots}%optional, to capture a funding statement, which applies to all authors. Please enter author specific funding statements as fifth argument of the \author macro.
+
+%\acknowledgements{I want to thank \dots}%optional
+
+%\nolinenumbers %uncomment to disable line numbering
+
+
+\input{macros}
+
+
+\begin{document}
+
+\maketitle
+
+%TODO mandatory: add short abstract of the document
+\begin{abstract}
+We study the expressive power of symmetric two-counter machines, namely
+two-counter machines whose transitions
+are unvarinat under swapping of counters.
+\end{abstract}
+
+
+\newpage
+
+\section{The model}
+
+A 2-\vass $\V$ is \emph{symmetric} if whenever it has a transition
+$q \stackrel{(x_1,x_2)}{\step} q'$
+then it also has a the transposed transition 
+$q \stackrel{(x_2,x_1)}{\step} q'$.
+We consider \emph{paths}, which are sequences of transitions where target state 
+of every transition
+matches the source targe state of the next one.
+%
+A \emph{run} is a path plus a source configuration whose
+state matches with the first transition, such that
+all transitions are fireable.
+A \emph{cycle} is a path where the source state of the 
+first matches the target state of the last one.
+By $c; c'$ we denote the concatenation of paths $c, c'$, and  
+by $c^k$ we denote the $k$-fold concatenation of a cycle $c$.
+Firing of a single transition we call a \emph{step} and
+write $q(n_1, n_2) \step q'(n_1+x_1, n_2+x_2)$.
+
+\medskip
+
+We denote by $\mysize \V$ the size of $\V$, in unary representation,
+and by $\norm \V$ the max-norm of $\V$, namely the maximal absolute value of
+all numbers appearing in transitions.
+Clearly, $\mysize \V \geq \norm \V$.
+
+\section{Target pummping}
+
+\begin{lemma} [Target pumping]
+Given a symmetric 2-\vass $\V$ one can compute numbers $C, D \in \N$ 
+such that for every control states $q, q'$ of $\V$ and  
+$a, a'\in\N$ such that $a, a'-a > C$, 
+\[
+q(a,0)\step^* q'(0,a') \quad \implies  \quad  
+q(a,0) \step^* q'(0, a'+D).
+\]
+Moreover, $C$ is polynomial in $\mysize \V$ and $D$ is exponential in $\mysize \V$.
+\end{lemma}
+%
+\begin{proof}
+Consider a run $\sigma : q(a,0)\step^* q'(0,a')$ for some $a, a'\in \N$.
+We modify the run to lift the target configuration to $q'(0,a'+D_\sigma)$ for some 
+$D_\sigma$ depending both on $\V$ and on $\sigma$, assuming
+that both $a$ and the difference $a'-a$ are sufficiently large (namely larger
+than some $C$, depending now only on $\V$).
+As there will be only finitely many different numbers $D_\sigma$,
+we argue then that taking the least common multiplicity of all $D_\sigma$ yields a
+number $D$ satisfying the claim of the lemma.
+
+By the SLP decomposition \cite{Blondin15}, we may assume \mywlog that 
+$\sigma$ consists of a polynomial number of transitions $t_0, \ldots, t_\ell$
+and cycles $c_1, \ldots, c_\ell$, each cycle of
+polynomial length  (with respect to the size $\mysize \V$ of
+unary representation of $\V$):
+\[
+\sigma \ \in \ s_0 \ c_1^* \ s_1 \ c_2^* \ \ldots \ c_\ell^* \ s_\ell,
+\]
+where the legth of each cycle $c_i$ is at most $e$,
+and both $\ell$ and $e$ are bounded by a polynomial of $\mysize \V$.
+Let $C_0$ the the minimal value such that every cycle of length at most $e$ 
+is enabled
+at $(C_0, C_0)$.
+Assume that $a$ and $a'-a$ are both sufficiently large 
+(that means larger tha $C$, to be defined later).
+Thus the sum of counters increases by sufficiently large value 
+(larger than $C$) along $\sigma$.
+
+The total effect of transitions $t_0, \ldots, t_\ell$ is negligible as they
+may increase the sum of counters by at most $(\ell+1)\norm \V$.
+As there are at only $\ell$ cycles $c_1, \ldots, c_\ell$, iteration of some of them,
+say $c_j$, necessarily increases the sum of counters by a sufficiently large value.
+This means that $c_j$ itself increases the sum of counters, and that the number $n_j$ of
+iterations of the cycle $c_j$ is sufficiently large.
+Call every cycle $c_j$ satisfying the two avove conditions \emph{sum-increasing}.
+
+As $a'-a$ is sufficiently large, on of the sum-increasing cycles must have an
+effect which is either vertical $(0,+)$, or $(-,+)$, or $(+,+)$.
+
+\para{Case 1: Some sum-increasing cycle has vertical effect}
+One extra iteration of this cycle yields the claim with $D_\sigma$ equal to its
+vertical effect.
+
+\para{Case 2: Some sum-increasing cycle $c_j$ has $(-,+)$ effect}
+For our argument it is enough if the $n_j$ is large enough to guarantee that 
+in the middle
+of $c_j^{n_j}$, namely after the half of $n_j$ of iterations of $c_j$, the 
+transposed cycle $\overline{c_j}$ is also enabled.
+(the transposed cycle $\overline{c_j}$ is obtained by transposing all transitions 
+along $c_j$).
+We observe the key claim, relying on the fact that  
+the effect of $c_j$ nonzero on both coordinates 
+(it seems that the fact is quite general and 
+does not need the assumption that $c_j$ increases 
+the sum of counters):
+%
+\begin{claim}  \label{claim:fireable}
+If $n_j > 2C_0$, in the middle of $c_j^{n_j}$ the transposed 
+cycle $\overline{c_j}$ is fireable
+(irrspectively of the source configuration). 
+\end{claim}
+%
+\begin{proof}
+The $n_j+1$ source-target condfigurations along the run $c_j^{n_j}$
+form a linear progression.
+As the effect of $c_j$ is nonzero on both coordinates,
+the middle source-target point is above $(C_0, C_0)$.
+\end{proof}
+%
+
+In consequence of \Cref{claim:fireable} the cycle $\overline{c_j}$ is fireable
+in the middle of $c_j^{n_j}$, 
+and hence the composition $\overline{c_j}; c_j$ is fireable too.
+Let $(-m_1, m_2)$ denote the effect of $c_j$. 
+Thus $m_2 > m_1$, and
+the effect of $\overline{c_j}; c_j$ is $(m_2-m_1,m_2-m_1)$.
+% Let $k$ be the least common multiplicity of $m_2 - m_1$ and $m_1$.  
+Let $k:=m_1(m_2-m_1)$.
+Thus iterating $m_1$ times the cycle $\overline{c_j}; c_j$
+we get a cycle with effect $(k,k)$, and then iterating
+$m_2-m_1$ times the cycle $\overline {c_j}$ we get the vertical effect.
+Indeed, the effect of
+\[
+\big(\overline{c_j}; c_j\big)^{m_1}; c_j^{m_2-m_1}
+\]
+is $(0, (m_1+m_2)(m_2-m_1))$, and this cycle is still fireable in the middle of
+$c_j^{n_j}$.
+We thus get the claim with $D_\sigma = (m_1+m_2)(m_2-m_1)$.
+
+\para{Case 3: No sum-increasing cycle with $(0,+)$ or $(+,+)$ effect}
+There must be some sum-increasing cycle with $(+,+)$.
+Let $c_j$ be the 'steepest' such cycle, namely the one maximising the ratio
+$(m_2/m_1)$ where $(m_1, m_2)$ is its effect.
+It must be followed by 
+some $c_i$, for $i>j$ with negative horizontal effect
+$(-,+)$, $(-,0)$ or $(-,-)$, that is iterated sufficiently many times,
+namely $\ell \cdot \norm \V \cdot n_i\geq n_j$ times.
+It must be also the case that some such $c_i$ is 'less steep' than $c_j$,
+namely 
+for some numbers $I, J$, the sum of effects of
+$c_j^J$ and $c_i^I$ is vertical $(0,+)$.
+\sla{complete}
+
+\medskip
+
+The norm of the effect of every cycle of length at most $e$ is bounded
+by $e\cdot\norm{\V}$, and hence
+All values $D_\sigma$ are bounded by $2\cdot e^2\cdot \norm{\V}^2$, and hence
+polynomially in $\mysize \V$.
+Taking as $D$ the least common multiplicity of all $D_\sigma$ is enough for the
+claim of the lemmma.
+
+The constant $C$ must be large enough so that, even after forgetting of
+the total effects of all transitions $t_0, \ldots, t_\ell$, the iterations of
+cycles $c_1, \ldots, c_\ell$ increase the sum by the amount large enough so that
+one of sum-incrasing cycles is iterated at least $2 C_0$ times (are reqiured
+by \Cref{claim:fireable}).
+As $C_0$ is at most $e\cdot \norm \V$ and $\ell$ is polynomial in $\mysize \V$,
+a polynomial value of $C$, \wrt $\mysize \V$, 
+is sufficient to satisfy the above requirement.
+\sla{complete the calculations}
+\end{proof}
+
+
+\newpage
+
+
+%%
+%% Bibliography
+%%
+
+%% Please use bibtex,
+\bibliography{bib.bib}
+
+
+\end{document}
