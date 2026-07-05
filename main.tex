@@ -184,27 +184,38 @@ is fireable
 at $(C_0, C_0)$.
 Assume that $a$ and $a'-a$ are both sufficiently large 
 (i.e. larger than $C$, to be defined later).
-Thus the sum of counters increases by sufficiently large value 
-(larger than $C$) along $\sigma$.
+Thus the sum of counters increases by more than $C$ along $\sigma$.
+
+We now classify the cycles as follows: call a cycle $c_j$ \emph{major}
+if its number of iterations $n_j$ is larger than $2 C_0$, and \emph{minor} otherwise.
+Moreover, call a cycle
+$c_j$ \emph{sum-increasing} if its effect $(m_1, m_2)$ satisfies $m_1 + m_2 > 0$.
 
 The total effect of transitions $t_0, \ldots, t_\ell$ is negligible as they
-may increase the sum of counters by at most $(\ell+1)\norm \V$.
-As there are at only $\ell$ cycles $c_1, \ldots, c_\ell$, iteration of some of them,
-say $c_j$, necessarily increases the sum of counters by a sufficiently large value.
-    \mei{We could use some more precision in describing how the increase of the counter sum
-    gets distributed across the cycles, and how the respective uses of ``\emph{sufficiently
-    large}'' relate to each other.}
-This means that $c_j$ itself increases the sum of counters, and that the number $n_j$ of
-iterations of the cycle $c_j$ is sufficiently large.
-Call every cycle $c_j$ satisfying the two above conditions \emph{sum-increasing}.
-The effect of every sum-increasing cycle can be:
-vertical $(0,+)$, horizontal $(+,0)$, or one of $(+,-)$, $(+,+)$, or $(-,+)$.
+may increase the sum of the counters by at most $(\ell+1)\norm \V$.
+Likewise, each minor cycle may only increase the sum of the counters by at most
+$2 C_0 e \norm \V$. Thus, if $a' - a > (2 C_0 e \ell + \ell + 1)\norm \V$,
+a major sum-increasing cycle must exist.
+%As there are at only $\ell$ cycles $c_1, \ldots, c_\ell$, iteration of some of them,
+%say $c_j$, necessarily increases the sum of counters by a sufficiently large value.
+%    \mei{We could use some more precision in describing how the increase of the counter sum
+%    gets distributed across the cycles, and how the respective uses of ``\emph{sufficiently
+%    large}'' relate to each other.}
+%This means that $c_j$ itself increases the sum of counters, and that the number $n_j$ of
+%iterations of the cycle $c_j$ is sufficiently large.
+%Call every cycle $c_j$ satisfying the two above conditions \emph{sum-increasing}.
 
-\para{Case 1: Some sum-increasing cycle $c_j$ has vertical $(0,+)$ effect}
+We now perform case analysis based on each of the major sum increasing-cycles'
+sign of the effect on each counter.
+The effect of a sum-increasing cycle can be:
+vertical $(0,+)$, horizontal $(+,0)$, or one of $(+,-)$, $(+,+)$, or $(-,+)$.
+We classify these into three cases.
+
+\para{Case 1: Some major sum-increasing cycle $c_j$ has vertical $(0,+)$ effect}
 One extra iteration of this cycle yields the claim with $D_\sigma$ equal to its
 vertical effect.
 
-\para{Case 2: Some sum-increasing cycle $c_j$ has $(-,+)$ or $(+,-)$ effect}
+\para{Case 2: Some major sum-increasing cycle $c_j$ has effect $(-,+)$ or $(+,-)$}
 Assume $(-,+)$ effect, the other case is similar.
 \sla{check}
 
@@ -215,7 +226,7 @@ transposed cycle $\overline{c_j}$ is also enabled.
 (the transposed cycle $\overline{c_j}$ is obtained by transposing all transitions 
 along $c_j$).
 We observe the key claim, relying on the fact that  
-the effect of $c_j$ nonzero on both coordinates 
+the effect of $c_j$ is nonzero on both coordinates
 (it seems that the fact is quite general and 
 does not need the assumption that $c_j$ increases 
 the sum of counters):
@@ -263,7 +274,7 @@ is $(0, (m_1+m_2)(m_2-m_1))$, and this cycle is still fireable in the middle of
 $c_j^{n_j}$.
 We thus get the claim with $D_\sigma = (m_1+m_2)(m_2-m_1)$.
 
-\para{Case 3: All sum-increasing cycles have $(+,0)$ or $(+,+)$ effect}
+\para{Case 3: All major sum-increasing cycles have $(+,0)$ or $(+,+)$ effect}
 Let us restrict our attention to those cycles $c_j$, whose effect $(m_1,m_2)$ satisfies $m_1\neq 0$.
 \mei{Do we also want $m_2 > 0$?}
 Depending on whether $m_1>0$ or $m_1<0$, we call such cycles 
@@ -306,7 +317,7 @@ claim of the lemmma.
 The constant $C$ must be large enough so that, even after forgetting of
 the total effects of all transitions $t_0, \ldots, t_\ell$, the iterations of
 cycles $c_1, \ldots, c_\ell$ increase the sum by the amount large enough so that
-one of sum-incrasing cycles is iterated at least $2 C_0$ times (are reqiured
+one of sum-incrasing cycles is iterated at least $2 C_0$ times (are required
 by \Cref{claim:fireable}).
 As $C_0$ is at most $e\cdot \norm \V$ and $\ell$ is polynomial in $\mysize \V$,
 a polynomial value of $C$, \wrt $\mysize \V$, 
