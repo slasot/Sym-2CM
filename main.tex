@@ -39,7 +39,7 @@
 {https://orcid.org/0009-0004-1641-9049}
 {}
 \author{Maja Kądziołka}{University of Warsaw}{}
-{}
+{https://orcid.org/0009-0001-1308-9492}
 {}
 \author{S{\l}awomir Lasota}{University of Warsaw}{}
 {https://orcid.org/0000-0001-8674-4470}
@@ -113,7 +113,7 @@
 \begin{abstract}
 We study the expressive power of symmetric two-counter machines, namely
 two-counter machines whose transitions
-are unvarinat under swapping of counters.
+are invariant under swapping of counters.
 \end{abstract}
 
 
@@ -122,9 +122,9 @@ are unvarinat under swapping of counters.
 \section{The model}
 
 A 2-\vass $\V$ is \emph{symmetric} if whenever it has a transition
-$q \stackrel{(x_1,x_2)}{\step} q'$
+$q \xstep{(x_1,x_2)} q'$
 then it also has a the transposed transition 
-$q \stackrel{(x_2,x_1)}{\step} q'$.
+$q \xstep{(x_2,x_1)} q'$.
 We consider \emph{paths}, which are sequences of transitions where target state 
 of every transition
 matches the source targe state of the next one.
@@ -150,7 +150,7 @@ Clearly, $\mysize \V \geq \norm \V$.
 
 \begin{lemma} [Target pumping]
 Given a symmetric 2-\vass $\V$ one can compute numbers $C, D \in \N$ 
-such that for every control states $q, q'$ of $\V$ and  
+such that for every pair of control states $q, q'$ of $\V$ and  
 $a, a'\in\N$ such that $a, a'-a > C$, 
 \[
 q(a,0)\step^* q'(0,a') \quad \implies  \quad  
@@ -166,10 +166,10 @@ $D_\sigma$ depending both on $\V$ and on $\sigma$, assuming
 that both $a$ and the difference $a'-a$ are sufficiently large (namely larger
 than some $C$, depending now only on $\V$).
 As there will be only finitely many different numbers $D_\sigma$,
-we argue then that taking the least common multiplicity of all $D_\sigma$ yields a
+we argue then that taking the least common multiple of all $D_\sigma$ yields a
 number $D$ satisfying the claim of the lemma.
 
-By the SLP decomposition \cite{Blondin15}, we may assume \mywlog that 
+By the LPS decomposition \cite{Blondin15}, we may assume \mywlog that 
 $\sigma$ consists of a polynomial number of transitions $t_0, \ldots, t_\ell$
 and cycles $c_1, \ldots, c_\ell$, each cycle of
 polynomial length  (with respect to the size $\mysize \V$ of
@@ -177,13 +177,13 @@ unary representation of $\V$):
 \[
 \sigma \ \in \ s_0 \ c_1^* \ s_1 \ c_2^* \ \ldots \ c_\ell^* \ s_\ell,
 \]
-where the legth of each cycle $c_i$ is at most $e$,
+where the length of each cycle $c_i$ is at most $e$,
 and both $\ell$ and $e$ are bounded by a polynomial of $\mysize \V$.
-Let $C_0$ the the minimal value such that every cycle of length at most $e$ 
-is enabled
+Let $C_0$ be the minimal value such that every cycle of length at most $e$ 
+is fireable
 at $(C_0, C_0)$.
 Assume that $a$ and $a'-a$ are both sufficiently large 
-(that means larger tha $C$, to be defined later).
+(i.e. larger than $C$, to be defined later).
 Thus the sum of counters increases by sufficiently large value 
 (larger than $C$) along $\sigma$.
 
@@ -191,13 +191,16 @@ The total effect of transitions $t_0, \ldots, t_\ell$ is negligible as they
 may increase the sum of counters by at most $(\ell+1)\norm \V$.
 As there are at only $\ell$ cycles $c_1, \ldots, c_\ell$, iteration of some of them,
 say $c_j$, necessarily increases the sum of counters by a sufficiently large value.
+    \mei{We could use some more precision in describing how the increase of the counter sum
+    gets distributed across the cycles, and how the respective uses of ``\emph{sufficiently
+    large}'' relate to each other.}
 This means that $c_j$ itself increases the sum of counters, and that the number $n_j$ of
 iterations of the cycle $c_j$ is sufficiently large.
 Call every cycle $c_j$ satisfying the two above conditions \emph{sum-increasing}.
-The effect of every sum-increasing cycle is either $(-,+)$, or 
-vertical $(0,+)$, or $(+,+)$, or horizontal $(+,0)$, or $(+,-)$.
+The effect of every sum-increasing cycle can be:
+vertical $(0,+)$, horizontal $(+,0)$, or one of $(+,-)$, $(+,+)$, or $(-,+)$.
 
-\para{Case 1: Some sum-increasing cycle $c_j$ has $(0,+)$ effect}
+\para{Case 1: Some sum-increasing cycle $c_j$ has vertical $(0,+)$ effect}
 One extra iteration of this cycle yields the claim with $D_\sigma$ equal to its
 vertical effect.
 
