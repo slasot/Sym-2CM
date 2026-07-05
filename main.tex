@@ -235,17 +235,26 @@ the middle source-target point is above $(C_0, C_0)$.
 %
 
 In consequence of \Cref{claim:fireable} the cycle $\overline{c_j}$ is fireable
-in the middle of $c_j^{n_j}$, 
-and hence the composition $\overline{c_j}; c_j$ is fireable too.
-\mei{How do we obtain that the composition is fireable? Do we need to raise $C_0$ for this?}
+in the middle of $c_j^{n_j}$.
+%Moreover, we obtain that
+%the composition $\overline{c_j}; c_j$ is fireable as well:
+%\mei{How do we obtain that the composition is fireable? Do we need to raise $C_0$ for this?}
 Let $(-m_1, m_2)$ denote the effect of $c_j$. 
 Thus $m_2 > m_1$, and
 the effect of $\overline{c_j}; c_j$ is $(m_2-m_1,m_2-m_1)$.
+Likewise, the effect of $c_j; \overline{c_j}$ is $(m_2-m_1,m_2-m_1)$ as well.
+
+Since $\overline{c_j}$ is fireable after $c_j^{n_j/2}$, we get that
+$c_j; \overline{c_j}$ is fireable after $c_j^{n_j/2 - 1}$. However, as the
+effect of $c_j; \overline{c_j}$ is $(+, +)$, we obtain that $c_j$ remains fireable
+after $c_j^{n_j/2}; \overline{c_j}$. Thus, $\overline{c_j}; c_j$ is fireable
+arbitrarily many times at the midpoint of $c_j^{n_j}$.
+
 % Let $k$ be the least common multiplicity of $m_2 - m_1$ and $m_1$.  
 Let $k:=m_1(m_2-m_1)$.
-Thus iterating $m_1$ times the cycle $\overline{c_j}; c_j$
+By iterating $m_1$ times the cycle $\overline{c_j}; c_j$,
 we get a cycle with effect $(k,k)$, and then iterating
-$m_2-m_1$ times the cycle $\overline {c_j}$ we get the vertical effect.
+$m_2-m_1$ times the cycle $c_j$ we get the vertical effect.
 Indeed, the effect of
 \[
 \big(\overline{c_j}; c_j\big)^{m_1}; c_j^{m_2-m_1}
@@ -287,7 +296,7 @@ The norm of the effect of every cycle of length at most $e$ is bounded
 by $e\cdot\norm{\V}$, and hence
 All values $D_\sigma$ are bounded by $2\cdot e^2\cdot \norm{\V}^2$, and hence
 polynomially in $\mysize \V$.
-Taking as $D$ the least common multiplicity of all $D_\sigma$ is enough for the
+Taking as $D$ the least common multiple of all $D_\sigma$ is enough for the
 claim of the lemmma.
 
 The constant $C$ must be large enough so that, even after forgetting of
