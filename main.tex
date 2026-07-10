@@ -161,8 +161,8 @@ Moreover, $C$ is polynomial in $\mysize \V$ and $D$ is exponential in $\mysize \
 %
 \begin{proof}
 Consider a run $\sigma : q(a,0)\step^* q'(0,a')$ for some $a, a'\in \N$.
-We modify the run to lift the target configuration to $q'(0,a'+D_\sigma)$ for some 
-$D_\sigma$ depending both on $\V$ and on $\sigma$, assuming
+We modify the run to lift the target configuration to $q'(0,a'+\gamma D_\sigma)$ for any
+$\gamma > 0$, for some particular $D_\sigma$ depending both on $\V$ and on $\sigma$, assuming
 that both $a$ and the difference $a'-a$ are sufficiently large (namely larger
 than some $C$, depending now only on $\V$).
 As there will be only finitely many different numbers $D_\sigma$,
@@ -180,34 +180,30 @@ unary representation of $\V$):
 where the length of each cycle $c_i$ is at most $e$,
 and both $\ell$ and $e$ are bounded by a polynomial of $\mysize \V$.
 Let $C_0$ be the minimal value such that every cycle of length at most $e$ 
-is fireable
-at $(C_0, C_0)$.
-Assume that $a$ and $a'-a$ are both sufficiently large 
-(i.e. larger than $C$, to be defined later).
-Thus the sum of counters increases by more than $C$ along $\sigma$.
+is fireable at $(C_0, C_0)$.
 
 We now classify the cycles as follows: call a cycle $c_j$ \emph{major}
 if its number of iterations $n_j$ is larger than $2 C_0$, and \emph{minor} otherwise.
 Moreover, call a cycle
-$c_j$ \emph{sum-increasing} if its effect $(m_1, m_2)$ satisfies $m_1 + m_2 > 0$.
+$c_j$ \emph{sum-increasing} if its effect $(x_j, y_j)$ satisfies $x_j + y_j > 0$.
 
-The total effect of transitions $t_0, \ldots, t_\ell$ is negligible as they
-may increase the sum of the counters by at most $(\ell+1)\norm \V$.
+As we're assuming that $a' - a > C$, note that the sum of counters
+must increase by more by more than $C$ along $\sigma$. Thus, by setting an appropriately
+large $C$, we can ensure that at least one \emph{major sum-increasing cycle}
+will be present in the decomposition of $\sigma$.
+
+In particular, the total effect of the one-off transitions $s_0, \ldots, s_\ell$ is bounded,
+as each of them may increase the sum of the counters by at most $\norm \V$.
 Likewise, each minor cycle may only increase the sum of the counters by at most
-$2 C_0 e \norm \V$. Thus, if $a' - a > (2 C_0 e \ell + \ell + 1)\norm \V$,
-a major sum-increasing cycle must exist.
-%As there are at only $\ell$ cycles $c_1, \ldots, c_\ell$, iteration of some of them,
-%say $c_j$, necessarily increases the sum of counters by a sufficiently large value.
-%    \mei{We could use some more precision in describing how the increase of the counter sum
-%    gets distributed across the cycles, and how the respective uses of ``\emph{sufficiently
-%    large}'' relate to each other.}
-%This means that $c_j$ itself increases the sum of counters, and that the number $n_j$ of
-%iterations of the cycle $c_j$ is sufficiently large.
-%Call every cycle $c_j$ satisfying the two above conditions \emph{sum-increasing}.
+$2 C_0 e \norm \V$. Thus, it suffices to set
+\[
+    C = (2 C_0 e_\mathrm{max} + 1)(\ell_\mathrm{max} + 1)\norm\V,
+\]
+where $e_\mathrm{max}$ and $\ell_\mathrm{max}$ are the (polynomial in $\mysize\V$) bounds
+on $e$ and $\ell$ respectively.
 
-We now perform case analysis based on each of the major sum increasing-cycles'
-sign of the effect on each counter.
-The effect of a sum-increasing cycle can be:
+We now perform case analysis in terms of the sign of the effect of each major
+sum increasing-cycle. \mei{Clunky, reword.} Specifically, the effect of a sum-increasing cycle can be:
 vertical $(0,+)$, horizontal $(+,0)$, or one of $(+,-)$, $(+,+)$, or $(-,+)$.
 We classify these into three cases.
 
@@ -217,7 +213,7 @@ vertical effect.
 
 \para{Case 2: Some major sum-increasing cycle $c_j$ has effect $(-,+)$ or $(+,-)$}
 Assume $(-,+)$ effect, the other case is similar.
-\sla{check}
+\sla{check} \mei{I have checked}
 
 For our argument it is enough if the $n_j$ is large enough to guarantee that 
 in the middle
@@ -227,76 +223,118 @@ transposed cycle $\overline{c_j}$ is also enabled.
 along $c_j$).
 We observe the key claim, relying on the fact that  
 the effect of $c_j$ is nonzero on both coordinates
-(it seems that the fact is quite general and 
-does not need the assumption that $c_j$ increases 
-the sum of counters):
+(in particular note that we don't use the sum-increasing
+assumption for this claim):
 %
 \begin{claim}  \label{claim:fireable}
-If $n_j > 2C_0$, in the middle of $c_j^{n_j}$ the transposed 
-cycle $\overline{c_j}$ is fireable
-(irrspectively of the source configuration). 
+If a cycle $c_j$ is repeated $n_j > 2C_0$ times, and $C_0 \leq i \leq n_j - C_0$,
+the transposed cycle $\overline{c_j}$ is fireable after $c_j^i$
+(regardless of the source configuration).
 \end{claim}
 %
 \begin{proof}
 The $n_j+1$ source-target configurations along the run $c_j^{n_j}$
-form a linear progression.
-As the effect of $c_j$ is nonzero on both coordinates,
-the middle source-target point is above $(C_0, C_0)$.
+form an arithmetic progression defined by
+$(x_i, y_i) = (x_0 + ix, y_0 + iy)$.
+%For a coordinate at which the
+%effect of the cycle is positive, say $x > 0$, we obtain $x_i \geq C_0$
+%for $i \geq C_0$. On the other hand, for a coordinate with a negative effect,
+%say $y < 0$, we have $y_i = y_{n_j} - (n_j - i)y$, with $y_{n_j} \geq 0$, and
+%thus $y_i \geq n_j - i$. Hence for $i \leq n_j - C_0$ we have $y_i \geq C_0$.
+%As such, for $C_0 \leq i \leq n_j - C_0$, both coordinates are above $(C_0, C_0)$,
+%which suffices to obtain that $\overline{c_j}$ is fireable.
+It suffices to show that for appropriate $i$ we have $x_i, y_i \geq C_0$.
+For coordinates at which the effect is positive, say $x > 0$,
+we need $C_0 \leq i$; conversely for coordinates with negative effect, say $y < 0$,
+we need $i \leq n_j - C_0$. Note that for $n_j > 2C_0$, we can satisfy both
+inequalities.
 \end{proof}
 %
 
-In consequence of \Cref{claim:fireable} the cycle $\overline{c_j}$ is fireable
-in the middle of $c_j^{n_j}$.
-%Moreover, we obtain that
-%the composition $\overline{c_j}; c_j$ is fireable as well:
-%\mei{How do we obtain that the composition is fireable? Do we need to raise $C_0$ for this?}
-Let $(-m_1, m_2)$ denote the effect of $c_j$. 
-Thus $m_2 > m_1$, and
-the effect of $\overline{c_j}; c_j$ is $(m_2-m_1,m_2-m_1)$.
-Likewise, the effect of $c_j; \overline{c_j}$ is $(m_2-m_1,m_2-m_1)$ as well.
-
-Since $\overline{c_j}$ is fireable after $c_j^{n_j/2}$, we get that
-$c_j; \overline{c_j}$ is fireable after $c_j^{n_j/2 - 1}$. However, as the
-effect of $c_j; \overline{c_j}$ is $(+, +)$, we obtain that $c_j$ remains fireable
-after $c_j^{n_j/2}; \overline{c_j}$. Thus, $\overline{c_j}; c_j$ is fireable
-arbitrarily many times at the midpoint of $c_j^{n_j}$.
+In consequence of \Cref{claim:fireable}, the cycle $\overline{c_j}$ is fireable
+after $c_j^{C_0+1}$. Equivalently, $c_j; \overline{c_j}$ is fireable after $c_j^{C_0}$.
+Denoting by $(-x, y)$ the effect of $c_j$, we have that $y > x$, as the cycle is
+sum-increasing. Thus, the effect of $c_j; \overline{c_j}$, being $(y-x, y-x)$,
+is positive on both coordinates, and $c_j; \overline{c_j}$ may be fired arbitrarily
+many times at the midpoint of $c_j^{n_j}$, without interference with the remainder of the path.
 
 % Let $k$ be the least common multiplicity of $m_2 - m_1$ and $m_1$.  
-Let $k:=m_1(m_2-m_1)$.
-By iterating $m_1$ times the cycle $\overline{c_j}; c_j$,
-we get a cycle with effect $(k,k)$, and then iterating
-$m_2-m_1$ times the cycle $c_j$ we get the vertical effect.
+Now set $k:=x(y-x)$.
+By iterating $x$ times the cycle $c_j; \overline{c_j}$,
+we get a cycle with effect $(k,k)$, and then appending
+$c_j^{y-x}$ we get the vertical effect.
 Indeed, the effect of
 \[
-\big(\overline{c_j}; c_j\big)^{m_1}; c_j^{m_2-m_1}
+\big(c_j; \overline{c_j}\big)^{x}; c_j^{y-x}
 \]
-is $(0, (m_1+m_2)(m_2-m_1))$, and this cycle is still fireable in the middle of
+is $(0, (x+y)(y-x))$, and this cycle is still fireable in the middle of
 $c_j^{n_j}$.
-We thus get the claim with $D_\sigma = (m_1+m_2)(m_2-m_1)$.
+We thus get the claim with $D_\sigma = (x+y)(y-x)$.
 
 \para{Case 3: All major sum-increasing cycles have $(+,0)$ or $(+,+)$ effect}
-Let us restrict our attention to those cycles $c_j$, whose effect $(m_1,m_2)$ satisfies $m_1\neq 0$.
-\mei{Do we also want $m_2 > 0$?}
-Depending on whether $m_1>0$ or $m_1<0$, we call such cycles 
-horizontally positive, or horizontally negative.  
-By the above assumption, every sum-increasing cycle is horizontally positive;
-note however that horizontally negative cycles that aren't sum-increasing can
-still be present.
-We define \emph{steepness} of a cycle $c_j$ as $m_2/m_1$.
-\mei{Perhaps $m_2/|m_1|$, or something along these lines?
-Otherwise every horizontally positive is trivially steeper than
-any horizontally negative cycle.}
+We will aim to increase the repetition count of one of the major sum-increasing
+cycles, together with one other cycle occurring later in the run.
+Let us restrict our attention to those cycles $c_j$, whose effect $(x_j,y_j)$ satisfies $x_j\neq 0$.
+Depending on whether $x_j>0$ or $x_j<0$, we call such cycles 
+\emph{horizontally positive}, or \emph{horizontally negative} respectively.
+We define \emph{steepness} of a cycle $c_j$ as $y_j/x_j$ and denote it by $\varphi_j$.
+\mei{TODO: Figure: demonstrate some non-trivial steepness comparisons; illustrate a run that
+doesn't satisfy the claim below to show what we want to rule out.}
 
 \begin{claim} \label{claim:steep}
-There are some $i<j$ such that $c_i$ is sum-increasing, $c_j$ is 
-horizontally negative, and $c_i$ is steeper than $c_j$.
+There are some $i<j$ such that $c_i$ is a major sum-increasing cycle, $c_j$ is major and
+horizontally negative, and $c_i$ is steeper than $c_j$ (i.e. $\varphi_i > \varphi_j$).
+    \mei{heads up: current proof doesn't show the $i<j$ part}
 \end{claim}
 %
 \begin{proof}
-Supposing there is no such $i<j$, we have that whenever $c_i$ is sum-increasing,
-every horizontally-negative cycle $c_j$, with $j>i$, is at least as steep as $c_i$.
-This contradicts $a'-a>C$.
-\sla{check and fill details}
+Analyzing the effect of all the cycles on the first coordinate, we have
+\[
+    \sum_{c_i \text{ major}} x_i n_i =
+    \sum_{\substack{c_i \text{ major} \\ x_i > 0}} |x_i| n_i
+    - \sum_{\substack{c_j \text{ major} \\ x_j < 0}} |x_j| n_j = -a - \varepsilon_1 \leq C - a < 0
+\]
+where $|\varepsilon_1| \leq (\ell + 1) \norm \V \leq C$ accounts for the effect of
+the minor cycles and the one-off transitions $s_0, \ldots, s_\ell$. Thus,
+\[
+    \sum_{\substack{c_i \text{ major} \\ x_i > 0}} |x_i| n_i < \sum_{\substack{c_j \text{ major} \\ x_j < 0}} |x_j| n_j.
+\]
+Similarly, analyzing the effect of the cycles on the second coordinate, we get
+\[
+    \sum_{c_i \text{ major}} y_i n_i = \sum_{\substack{c_i \text{ major} \\ x_i \neq 0}} \varphi_i x_i n_i
+    + \sum_{\substack{c_i \text{ major} \\ x_i = 0}} y_i n_i
+    = a' - \varepsilon_2 \geq a' - C > 0.
+\]
+Note here that for major cycles $c_i$ for which $x_i = 0$, we must have $y_i \leq 0$, as the current case
+doesn't admit vertical sum-increasing cycles. Thus, we obtain
+\[
+    \sum_{\substack{c_i \text{ major} \\ x_i > 0}} \varphi_i |x_i| n_i > \sum_{\substack{c_j \text{ major} \\ x_j < 0}} \varphi_j |x_j| n_j.
+\]
+
+This is enough to obtain a major horizontally negative cycle $c_j$ that is less steep than some
+major sum-increasing cycle $c_i$. Indeed, supposing that such a $c_j$ doesn't exist, we have some
+$\beta$ such that $\varphi_i \leq \beta \leq \varphi_j$ for any major sum-increasing $c_i$
+and major horizontally negative $c_j$. Moreover note that we can strengthen this for $c_i$
+major and horizontally positive, as a horizontally positive cycle that isn't sum-increasing
+has $\varphi_i < 0$. Thus we observe
+\[
+    \sum_{\substack{c_i \text{ major} \\ x_i > 0}} \varphi_i |x_i| n_i \leq
+    \beta \sum_{\substack{c_i \text{ major} \\ x_i > 0}} |x_i| n_i <
+    \beta \sum_{\substack{c_j \text{ major} \\ x_j < 0}} |x_j| n_j \leq
+    \sum_{\substack{c_j \text{ major} \\ x_j < 0}} \varphi_j |x_j| n_j,
+\]
+a contradiction. \mei{I was hoping to now conclude that actually $i < j$ must hold,
+because I thought the first major cycle must be sum-increasing, but that was just me
+conflating $C$ and $C_0$, not to mention some trouble with mixed up quantifiers.
+Suffice to say, it turns out that this part of my argument turns out to be hopelessly flawed.
+I think we need some tighter analysis. The $\Delta x < 0$ can be generalized to something like $\Delta x \leq C$
+for any suffix of the run; similarly $\Delta y > 0$ should generalize to something like
+$\Delta y \geq -C$ for any prefix. I didn't sleep well enough to work out how to actually
+make it work, though.}
+%Supposing there is no such $i<j$, we have that whenever $c_i$ is sum-increasing,
+%every horizontally-negative cycle $c_j$, with $j>i$, is at least as steep as $c_i$.
+%This contradicts $a'-a>C$.
+%\sla{check and fill details}
 \end{proof}
 
 By \Cref{claim:steep}, for some positive integers $I, J$, the sum of effects of
