@@ -371,6 +371,11 @@ is sufficient to satisfy the above requirement.
 \sla{This is just a sketch of the proof structure, to be completed, debugged, etc}
 As above, we use $\step$ to denote step relation of a 2-\vass, namely without zero tests.
 
+For convenience we assume that instead of zero testing transitions which change state
+when a given counter is 0, we have "zero-testing states" which can be visited only
+if a given counter is 0. Transformation to this form is easy: replace every
+zero testing transition by two, with intermediate zero-testing state.
+
 \para{1-dimensional notation}
 Likewise, we prove the three remaining variants of \Cref{lem:targetpump}:
 for every pair of control states $q, q'$ of $\V$ and  
@@ -380,12 +385,13 @@ q(0,a)\step^* q'(0,a') \quad \implies  \quad  q(0,a) \step^* q'(0, a'+D)\\
 q(0,a)\step^* q'(a',0) \quad \implies  \quad  q(0,a) \step^* q'(a'+D, 0)\\
 q(a,0)\step^* q'(a',0) \quad \implies  \quad  q(a,0) \step^* q'(a'+D,0)
 \end{align*}
-In order to merge the four cases into one, assume \mywlog that control state determines which
-counter can be zero tested. %, and that a run zero tests every counter whenever it has value 0. 
-To this aim double the control states, that is replace every $q\in Q$
-by $q_1, q_2$, each of them involved into the same increment transitions as $q$, but $q_1$ only 
-capable to do those zero-testing transitions $q$ that test counter 1, and likewiese $q_2$ only 
-capable to do those zero-testing transitions $q$ that test counter 2.
+By the above introduced "zero-testing states" we can
+merge the four cases into one, knowing that  control state determines which
+counter is actually zero tested. %, and that a run zero tests every counter whenever it has value 0. 
+% To this aim double the control states, that is replace every $q\in Q$
+% by $q_1, q_2$, each of them involved into the same increment transitions as $q$, but $q_1$ only 
+% capable to do those zero-testing transitions $q$ that test counter 1, and likewiese $q_2$ only 
+% capable to do those zero-testing transitions $q$ that test counter 2.
 So prepared, we can simply write
 \begin{align} \label{eq:basictran}
 q(a) \step^* q'(a')
