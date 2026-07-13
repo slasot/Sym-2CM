@@ -193,19 +193,20 @@ large $C$, we can ensure that at least one \emph{major sum-increasing cycle}
 will be present in the decomposition of $\sigma$.
 
 In particular, the total effect of the one-off transitions $s_0, \ldots, s_\ell$ is bounded,
-as each of them may increase the sum of the counters by at most $\norm \V$.
+as each of them may increase the sum of the counters by at most $2 \norm \V$.
 Likewise, each minor cycle may only increase the sum of the counters by at most
-$2 C_0 e \norm \V$. Thus, it suffices to set
+$4 C_0 e \norm \V$. Thus, it suffices to set
 \[
-    C = (2 C_0 e_\mathrm{max} + 1)(\ell_\mathrm{max} + 1)\norm\V,
+    C = (2 C_0 e_\mathrm{max} + 1)(\ell_\mathrm{max} + 1) 2\norm\V,
 \]
 where $e_\mathrm{max}$ and $\ell_\mathrm{max}$ are the (polynomial in $\mysize\V$) bounds
 on $e$ and $\ell$ respectively.
 
-We now perform case analysis in terms of the sign of the effect of each major
-sum increasing-cycle. \mei{Clunky, reword.} Specifically, the effect of a sum-increasing cycle can be:
+We now focus our attention on the major sum-increasing cycles, and perform
+case analysis in terms of the sign of each coordinate of their effect.
+Specifically, the effect of a sum-increasing cycle can be:
 vertical $(0,+)$, horizontal $(+,0)$, or one of $(+,-)$, $(+,+)$, or $(-,+)$.
-We classify these into three cases.
+We classify these into three cases.\mei{Could use a figure here as well.}
 
 \para{Case 1: Some major sum-increasing cycle $c_j$ has vertical $(0,+)$ effect}
 One extra iteration of this cycle yields the claim with $D_\sigma$ equal to its
@@ -273,21 +274,60 @@ We thus get the claim with $D_\sigma = (x+y)(y-x)$.
 
 \para{Case 3: All major sum-increasing cycles have $(+,0)$ or $(+,+)$ effect}
 We will aim to increase the repetition count of one of the major sum-increasing
-cycles, together with one other cycle occurring later in the run.
-Let us restrict our attention to those cycles $c_j$, whose effect $(x_j,y_j)$ satisfies $x_j\neq 0$.
+cycles, together with one other cycle occurring later in the run, in order to obtain
+the vertical effect.
+Let us restrict our attention to those major cycles $c_j$, whose effect $(x_j,y_j)$ satisfies $x_j\neq 0$.
 Depending on whether $x_j>0$ or $x_j<0$, we call such cycles 
 \emph{horizontally positive}, or \emph{horizontally negative} respectively.
-We define \emph{steepness} of a cycle $c_j$ as $y_j/x_j$ and denote it by $\varphi_j$.
+We define \emph{steepness} of such a cycle $c_j$ as $y_j/x_j$ and denote it by $\varphi_j$.
+Note that, while in general the steepness may be negative, by assumption it will never be negative
+for a major sum-increasing cycle.
 \mei{TODO: Figure: demonstrate some non-trivial steepness comparisons; illustrate a run that
 doesn't satisfy the claim below to show what we want to rule out.}
+
 
 \begin{claim} \label{claim:steep}
 There are some $i<j$ such that $c_i$ is a major sum-increasing cycle, $c_j$ is major and
 horizontally negative, and $c_i$ is steeper than $c_j$ (i.e. $\varphi_i > \varphi_j$).
-    \mei{heads up: current proof doesn't show the $i<j$ part}
 \end{claim}
 %
 \begin{proof}
+%Define a \emph{segment} of a run as a sequence of consecutive major cycles that begins
+%with a sum-increasing cycle that is the steepest among the sum-increasing major cycles
+%that are part of the segment. We do not consider the minor cycles, nor the one-off
+%transitions, that occur between the major cycles of a segment, to be part of said segment,
+%and define the \emph{effect} of a segment to be the sum of the effects of only its major
+%cycles.
+%
+%Thus, we split the run, and its total effect, into (a) the one-off transitions and minor cycles,
+%(b) the major cycles that occur before the first sum-increasing major cycle, and
+%(c) a number of segments, each starting with a steeper sum-increasing cycle than the last.
+Suppose the claim doesn't hold. Let $c_{k_1}, \ldots c_{k_s}$ be the sequence
+of major sum-increasing cycles of increasing steepness, i.e. let $c_{k_1}$
+be the first major sum-increasing cycle of the run, and define
+$c_{k_{i+1}}$ to be the first major sum-increasing cycle steeper than
+$c_{k_i}$. Moreover, let $S_i \leq C$ be the total norm of all the one-off
+transitions and minor cycles which occurred up to $c_i$ (including $c_i$
+itself if it happens to be minor), and let $(X_i, Y_i)$ be the
+counter values after $c_i$. Finally, denote by $\beta_i$ the steepness of
+the most recent cycle among the $k_j$, i.e. $\beta_i = \varphi_i$ if
+$i \in \{k_1, \ldots, k_s\}$, and $\beta_i = \beta_{i-1}$ otherwise. At the
+boundary, set $\beta_0 = S_0 = 0$, and $(X_0, Y_0) = (a, 0)$.
+
+Note that, if \Cref{claim:steep} indeed doesn't hold, we have $\beta_j \leq \varphi_j$ for any
+horizontally negative major cycle $c_j$, with the possible exception of cycles $j < k_1$.
+Indeed, otherwise we have $\varphi_i = \beta_j > \varphi_j$ as required.
+
+By induction on $i$, we will now prove that the configuration
+will always satisfy $Y_i \leq S_i + \beta_i X_i$. At $i = 0$, equality trivially holds.
+Suppose then that the inequality holds at a specific $i$. Denoting by $(x, y)$ the counter
+values just before $c_{i+1}$, we have $y - Y_i \leq S_{i+1} - S_i$, and if $c_{i+1}$ is
+a minor cycle, $Y_{i+1} - Y_i \leq S_{i+1} - S_i$. This is enough to conclude the inductive
+step for minor cycles.\mei{no it isn't, this is wrong because a transition of a particular norm
+may need to push the line upwards by an amount that depends on $\beta_i$. We need to rename
+the current $C$ to $C_1$ and define a better $C$, probably in terms of $C_1$}
+
+\mei{Previous attempt at proof follows.}
 Analyzing the effect of all the cycles on the first coordinate, we have
 \[
     \sum_{c_i \text{ major}} x_i n_i =
