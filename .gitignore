@@ -1,0 +1,10 @@
+*.aux
+*.axp
+*.bbl
+*.blg
+*.dvi
+*.fls
+*.log
+*.out
+*.pdf
+*.vtc
