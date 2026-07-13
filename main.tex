@@ -148,7 +148,7 @@ Clearly, $\mysize \V \geq \norm \V$.
 
 \section{Target pummping}
 
-\begin{lemma} [Target pumping]
+\begin{lemma} [Target pumping] \label{lem:targetpump}
 Given a symmetric 2-\vass $\V$ one can compute numbers $C, D \in \N$ 
 such that for every pair of control states $q, q'$ of $\V$ and  
 $a, a'\in\N$ such that $a, a'-a > C$, 
@@ -364,6 +364,166 @@ a polynomial value of $C$, \wrt $\mysize \V$,
 is sufficient to satisfy the above requirement.
 \sla{complete the calculations}
 \end{proof}
+
+
+\section{Proof strategy}
+
+\sla{This is just a sketch of the proof structure, to be completed, debugged, etc}
+As above, we use $\step$ to denote step relation of a 2-\vass, namely without zero tests.
+
+\para{1-dimensional notation}
+Likewise, we prove the three remaining variants of \Cref{lem:targetpump}:
+for every pair of control states $q, q'$ of $\V$ and  
+$a, a'\in\N$ such that $a, a'-a > C$, 
+\begin{align*}
+q(0,a)\step^* q'(0,a') \quad \implies  \quad  q(0,a) \step^* q'(0, a'+D)\\
+q(0,a)\step^* q'(a',0) \quad \implies  \quad  q(0,a) \step^* q'(a'+D, 0)\\
+q(a,0)\step^* q'(a',0) \quad \implies  \quad  q(a,0) \step^* q'(a'+D,0)
+\end{align*}
+In order to merge the four cases into one, assume \mywlog that control state determines which
+counter can be zero tested. %, and that a run zero tests every counter whenever it has value 0. 
+To this aim double the control states, that is replace every $q\in Q$
+by $q_1, q_2$, each of them involved into the same increment transitions as $q$, but $q_1$ only 
+capable to do those zero-testing transitions $q$ that test counter 1, and likewiese $q_2$ only 
+capable to do those zero-testing transitions $q$ that test counter 2.
+So prepared, we can simply write
+\begin{align} \label{eq:basictran}
+q(a) \step^* q'(a')
+\end{align}
+without specifying which of the four cases is happening
+\begin{align*}
+q(a,0)\step^* q'(0,a')\\
+q(0,a)\step^* q'(0,a')\\
+q(0,a)\step^* q'(a',0)\\
+q(a,0)\step^* q'(a',0)
+\end{align*}
+since the control states $q,q'$ uniquely determine these two bits of information.
+Note that the newly introduced zero tests are not symmetric, but we do not assume that. 
+
+\Mywlog we assume that both the source and target vector have at least one 0.
+
+\para{Run structure}
+
+We split the relation \eqref{eq:basictran} into 3 disjoint subrelations, depending on the value of
+$a, a'$ and $a'-a$. We write
+\begin{align} \label{eq:tran0-+}
+\begin{aligned}
+& q(a) \step_0 q'(a') && \text{ if } a\leq C \vee a'\leq C \vee |a'-a|\leq C \\
+& q(a) \step_- q'(a') && \text{ if none of above holds but } a > a'+C \\
+& q(a) \step_+ q'(a') && \text{ if none of above holds but } a' > a+C
+\end{aligned}
+\end{align}
+
+Each of the three relations \eqref{eq:tran0-+} is included in $(Q\times\N)^2$.
+In particular, the four variants of \Cref{lem:targetpump} jointly imply that 
+$\step_+$ is \emph{target-pumpable}, that is for every pair of control states $q, q'$ of $\V$, 
+% and  $a, a'\in\N$ such that $a, a'-a > C$, 
+\begin{align} \label{eq:tpump}
+q(a)\step_+ q'(a') \quad \implies  \quad  q(a) \step_+ q'(a'+D).
+\end{align}
+The reverse version of the four variants, where we swap source and target and reverse all transitions, 
+implies that $\step_-$ is \emph{source-pumpable}, that is 
+\begin{align} \label{eq:spump}
+q(a)\step_- q'(a') \quad \implies  \quad  q(a+D) \step_- q'(a').
+\end{align}
+
+The idea is to split every run into segments, at positions where some of counters is zero tested.
+The segment between two such consecutive positions is described by one of the three relations
+$\step_0$, $\step_-$ and $\step_+$.
+Now the rechability relation is $\big(\step_0 \ \cup \ \step_- \ \cup \ \step_+ \big)^*$, an arbitrary composition
+of all the three relations arbitrarily many times, where $R^*$ stands for composing the relation $R$
+arbitrarily
+many times.
+Note that the composition assures that control states match.
+We prefer to see the reachability relation as described by the expression
+\begin{align} \label{eq:3phases}
+\big(\step_{0}^* \ \circ \ E \ \circ \ \step_+)^* \ \circ \ \step_0^* \ \circ \ E
+\end{align}
+where 
+\[
+ E  \ = \ \big(\step_- \ \circ \ \step_0^*\big)^*.
+\]
+Thus we split every run into three phases: the first one ends with the last appearance of $\step_+$,
+the middle one consisting just of $\step_0^*$, and the last one starting with $\step_-$ and
+iterating arbitratily many times $\step_-$ and $\step_0$.
+Each of the phases may be empty.
+
+
+\para{Computing pumpable sets}
+
+In the sequel we compute sets of configurations $X\subseteq Q\times\N$ which are \emph{pumpable},
+namely $q(a)\in X \implies q(a+D)\in X$. We represent these sets in vector form as functions
+$X:Q\to \powset{\N}$, where $X(q)$ is pumpable for every $q\in Q$, namely $a\in X(q)\implies a+D\in X(q)$.
+Termination of computation will be guaranteed since the chains of such sets $X$ will be increasing, and
+
+\begin{lemma} \label{lem:stab}
+    Every increasing chain of pumpable subset of $\N$ stabilizes.
+\end{lemma}
+
+The two basic building blocks:
+
+\begin{lemma} \label{lem:0-+}
+The relations $\step_0, \ \step_-, \ \step_+$ are effectively semi-linear (and thus computable).
+\end{lemma}
+\begin{proof}
+    They are sections of the reachability relation of a 2-\vass which is effectively semi-linear \cite{Blondin15}.
+\end{proof}
+
+\begin{lemma} \label{lem:0star}
+The relation $\step_0^*$ is effectively semi-linear (and thus computable).
+\end{lemma}
+\begin{proof}
+    Computable by a 1-counter automaton, a special case of a pushdown automaton.
+\end{proof}
+
+Notationally, we allows ourselves to compose a relation $R\subseteq (Q\times\N)^2$ 
+with a set $X\subseteq Q\times\N$ to denote the set inverse image $R\circ X\subseteq Q\times\N$, 
+or the image $X\circ R \subseteq Q\times\N$.
+% Let $I_s = \{(s,s)\}$ be the relation containg exactly one pair, where $s$ is the source configuration.
+% Likewise, let $I_t = \{(t,t)\}$.
+We will be able to decide if $s\step^* t$, given source and target configurations $s,t\in Q\times\N$,
+as long as we prove the two following fact: one can (backward) compute the inverse image
+$E\circ \{t\}$, and (forward) compute the image 
+$\{s\} \circ \big(\step_{0}^* \ \circ \ E \ \circ \ \step_+)^*$,
+according to the partition into phases \eqref{eq:3phases}.
+
+\begin{lemma} \label{lem:compback}
+One can compute 
+the (source-pumpable) set $\big(\step_- \ \circ \ \step_0^*\big)^* \ \circ \ \{t\}$.
+\end{lemma}
+\begin{proof}
+The set $\big(\step_- \ \circ \ \step_0^*\big) \ \circ \ S$ is source-pumpable due to \eqref{eq:spump},
+irrespectively of $S$, and computable due to \Cref{lem:0-+,lem:0star}, as long $S$ is semi-linear.
+The claim follows by iterating the computation of the transformation
+\[
+S \quad \mapsto \quad \big(\step_- \ \circ \ \step_0^*\big) \ \circ \ S,
+\]
+relying on \Cref{lem:stab}.
+\end{proof}
+
+\begin{lemma} \label{lem:compfor}
+One can compute 
+the (target-pumpable) set 
+$\{s\} \circ \big(\step_{0}^* \ \circ \ E \ \circ \ \step_+)^*$.
+\end{lemma}
+\begin{proof}
+Again, The set $S \circ \step_{0}^* \ \circ \ E \ \circ \ \step_+$ is
+target-pumpable due to \eqref{eq:tpump},
+irrespectively of $S$.
+Computability is more involved, but relates again on iteration of the transformation
+\[
+S \quad \mapsto \quad f(S) \ = \ S \ \circ \ \step_{0}^* \ \circ \ E \ \circ \ \step_+,
+\]
+relying on \Cref{lem:stab}.
+To compute $f(S)$, one first establishes which remainders modulo $D$ appear in this set,
+by applyting the transformation of \Cref{lem:compback} to the set $\step_+ \ \circ \ M_k$,
+where $M_k$ contains all numbers equal to $k$ modulo $D$, and checking intersection with 
+$S\ \circ \ \step_0$. 
+Then, by exhaustive search one finds the smallest number in $f(S)$, 
+for each remainder modulo $D$ separately.
+\end{proof}
+
+
 
 
 \newpage
