@@ -197,7 +197,7 @@ as each of them may increase the sum of the counters by at most $2 \norm \V$.
 Likewise, each minor cycle may only increase the sum of the counters by at most
 $4 C_0 e \norm \V$. Thus, it suffices to set
 \[
-    C = (2 C_0 e_\mathrm{max} + 1)(\ell_\mathrm{max} + 1) 2\norm\V,
+    C \geq C_1 = (2 C_0 e_\mathrm{max} + 1)(\ell_\mathrm{max} + 1) 2\norm\V,
 \]
 where $e_\mathrm{max}$ and $\ell_\mathrm{max}$ are the (polynomial in $\mysize\V$) bounds
 on $e$ and $\ell$ respectively.
@@ -306,7 +306,7 @@ Suppose the claim doesn't hold. Let $c_{k_1}, \ldots c_{k_s}$ be the sequence
 of major sum-increasing cycles of increasing steepness, i.e. let $c_{k_1}$
 be the first major sum-increasing cycle of the run, and define
 $c_{k_{i+1}}$ to be the first major sum-increasing cycle steeper than
-$c_{k_i}$. Moreover, let $S_i \leq C$ be the total norm of all the one-off
+$c_{k_i}$. Moreover, let $S_i \leq C_1$ be the total norm of all the one-off
 transitions and minor cycles which occurred up to $c_i$ (including $c_i$
 itself if it happens to be minor), and let $(X_i, Y_i)$ be the
 counter values after $c_i$. Finally, denote by $\beta_i$ the steepness of
@@ -317,66 +317,51 @@ boundary, set $\beta_0 = S_0 = 0$, and $(X_0, Y_0) = (a, 0)$.
 Note that, if \Cref{claim:steep} indeed doesn't hold, we have $\beta_j \leq \varphi_j$ for any
 horizontally negative major cycle $c_j$, with the possible exception of cycles $j < k_1$.
 Indeed, otherwise we have $\varphi_i = \beta_j > \varphi_j$ as required.
+Note also that for horizontally positive major cycles $c_i$, we have $\varphi_i \leq \beta_i$,
+either by definition, for sum-increasing cycles, or trivially, for $\varphi_i \leq 0 \leq \beta_i$.
 
 By induction on $i$, we will now prove that the configuration
-will always satisfy $Y_i \leq S_i + \beta_i X_i$. At $i = 0$, equality trivially holds.
+will always satisfy
+\begin{equation} \label{eq:steep-ind}
+    Y_i \leq S_i (1 + \beta_i) + \beta_i X_i.
+\end{equation}
+\mei{Illustrate.}
+At $i = 0$, equality trivially holds.
 Suppose then that the inequality holds at a specific $i$. Denoting by $(x, y)$ the counter
-values just before $c_{i+1}$, we have $y - Y_i \leq S_{i+1} - S_i$, and if $c_{i+1}$ is
-a minor cycle, $Y_{i+1} - Y_i \leq S_{i+1} - S_i$. This is enough to conclude the inductive
-step for minor cycles.\mei{no it isn't, this is wrong because a transition of a particular norm
-may need to push the line upwards by an amount that depends on $\beta_i$. We need to rename
-the current $C$ to $C_1$ and define a better $C$, probably in terms of $C_1$}
+values just before $c_{i+1}$, we have $y - Y_i \leq S_{i+1} - S_i$, and $X_i - x \leq S_{i+1} - S_i$.
+Multiplying the latter by $\beta_i$ and rearranging, we obtain
+\[
+    y - Y_i \leq (S_{i+1} - S_i)(1 + \beta_i) + \beta_i (x - X_i),
+\]
+and thus
+\[
+    y \leq S_{i+1} (1 + \beta_i) + \beta_i x \leq S_{i+1} (1 + \beta_{i+1}) + \beta_{i+1} x,
+\]
+where the latter inequality follows because $\beta$ is non-decreasing.
 
-\mei{Previous attempt at proof follows.}
-Analyzing the effect of all the cycles on the first coordinate, we have
+If $c_{i+1}$ is a minor cycle, we can replace $(x, y)$ in the above reasoning by $(X_{i+1}, Y_{i+1})$,
+obtaining the inductive hypothesis. Let us thus
+focus on the case when $c_{i+1}$ is a major cycle, denoting by $(x_{i+1}, y_{i+1})$ the effect
+of one of the $n_{i+1}$ iterations of the cycle.
+
+If $x_{i+1} = 0$, we must have $y_{i+1} < 0$, as we handle vertical sum-increasing cycles in Case 1.
+A $(0, -)$ cycle will however trivially preserve the desired inequality. It remains to consider
+major cycles that are either horizontally positive, or horizonally negative. In both cases we have
+$y_{i+1} = \varphi_{i+1} x_{i+1}$ and will endeavour to prove $\varphi_{i+1} x_{i+1} \leq \beta_{i+1} x_{i+1}$.
+But as we've noted before, we have $\varphi_{i+1} \leq \beta_{i+1}$ whenever $x_{i+1} > 0$, and the
+opposite inequality when $x_{i+1} < 0$, exactly as required to obtain $y_{i+1} \leq \beta_{i+1} x_{i+1}$.
+Thus,
 \[
-    \sum_{c_i \text{ major}} x_i n_i =
-    \sum_{\substack{c_i \text{ major} \\ x_i > 0}} |x_i| n_i
-    - \sum_{\substack{c_j \text{ major} \\ x_j < 0}} |x_j| n_j = -a - \varepsilon_1 \leq C - a < 0
-\]
-where $|\varepsilon_1| \leq (\ell + 1) \norm \V \leq C$ accounts for the effect of
-the minor cycles and the one-off transitions $s_0, \ldots, s_\ell$. Thus,
-\[
-    \sum_{\substack{c_i \text{ major} \\ x_i > 0}} |x_i| n_i < \sum_{\substack{c_j \text{ major} \\ x_j < 0}} |x_j| n_j.
-\]
-Similarly, analyzing the effect of the cycles on the second coordinate, we get
-\[
-    \sum_{c_i \text{ major}} y_i n_i = \sum_{\substack{c_i \text{ major} \\ x_i \neq 0}} \varphi_i x_i n_i
-    + \sum_{\substack{c_i \text{ major} \\ x_i = 0}} y_i n_i
-    = a' - \varepsilon_2 \geq a' - C > 0.
-\]
-Note here that for major cycles $c_i$ for which $x_i = 0$, we must have $y_i \leq 0$, 
-\sla{Wlog we may assume that there is no major $(0,-)$ cycles, I guess}
-as the current case
-doesn't admit vertical sum-increasing cycles. Thus, we obtain
-\[
-    \sum_{\substack{c_i \text{ major} \\ x_i > 0}} \varphi_i |x_i| n_i > \sum_{\substack{c_j \text{ major} \\ x_j < 0}} \varphi_j |x_j| n_j.
+    Y_{i+1} = y + n_{i+1} y_{i+1} \leq S_{i+1} (1 + \beta_{i+1}) + \beta_{i+1} (x + n_{i+1} x_{i+1})
+    = S_{i+1} (1 + \beta_{i+1}) + \beta_{i+1} X_{i+1}.
 \]
 
-This is enough to obtain a major horizontally negative cycle $c_j$ that is less steep than some
-major sum-increasing cycle $c_i$. Indeed, supposing that such a $c_j$ doesn't exist, we have some
-$\beta$ such that $\varphi_i \leq \beta \leq \varphi_j$ for any major sum-increasing $c_i$
-and major horizontally negative $c_j$. Moreover note that we can strengthen this for $c_i$
-major and horizontally positive, as a horizontally positive cycle that isn't sum-increasing
-has $\varphi_i < 0$. Thus we observe
+Hence we finish the induction and obtain \eqref{eq:steep-ind}, in particular for
+the final configuration $(0, a')$:
 \[
-    \sum_{\substack{c_i \text{ major} \\ x_i > 0}} \varphi_i |x_i| n_i \leq
-    \beta \sum_{\substack{c_i \text{ major} \\ x_i > 0}} |x_i| n_i <
-    \beta \sum_{\substack{c_j \text{ major} \\ x_j < 0}} |x_j| n_j \leq
-    \sum_{\substack{c_j \text{ major} \\ x_j < 0}} \varphi_j |x_j| n_j,
+    a' \leq C_1 (1 + \varphi_\mathrm{max}) \leq C_1 (1 + \norm\V)
 \]
-a contradiction. \mei{I was hoping to now conclude that actually $i < j$ must hold,
-because I thought the first major cycle must be sum-increasing, but that was just me
-conflating $C$ and $C_0$, not to mention some trouble with mixed up quantifiers.
-Suffice to say, it turns out that this part of my argument turns out to be hopelessly flawed.
-I think we need some tighter analysis. The $\Delta x < 0$ can be generalized to something like $\Delta x \leq C$
-for any suffix of the run; similarly $\Delta y > 0$ should generalize to something like
-$\Delta y \geq -C$ for any prefix. I didn't sleep well enough to work out how to actually
-make it work, though.}
-%Supposing there is no such $i<j$, we have that whenever $c_i$ is sum-increasing,
-%every horizontally-negative cycle $c_j$, with $j>i$, is at least as steep as $c_i$.
-%This contradicts $a'-a>C$.
-%\sla{check and fill details}
+By setting $C = C_1 (1 + \norm\V)$, we obtain a contradiction.
 \end{proof}
 
 By \Cref{claim:steep}, for some positive integers $I, J$, the sum of effects of
