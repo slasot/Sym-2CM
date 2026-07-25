@@ -202,6 +202,7 @@ $4 C_0 e \norm \V$. Thus, it suffices to set
 where $e_\mathrm{max}$ and $\ell_\mathrm{max}$ are the (polynomial in $\mysize\V$) bounds
 on $e$ and $\ell$ respectively.
 
+
 We now focus our attention on the major sum-increasing cycles, and perform
 case analysis in terms of the sign of each coordinate of their effect.
 Specifically, the effect of a sum-increasing cycle can be:
@@ -527,7 +528,8 @@ The set $\big(\step_- \ \circ \ \step_0^*\big) \ \circ \ S$ is source-pumpable d
 irrespectively of $S$, and computable due to \Cref{lem:0-+,lem:0star}, as long $S$ is semi-linear.
 The claim follows by iterating the computation of the transformation
 \[
-S \quad \mapsto \quad \big(\step_- \ \circ \ \step_0^*\big) \ \circ \ S,
+S \quad \mapsto \quad \big(\step_- \ \circ \ \step_0^*\big) \ \circ \ S
+\quad \cup \quad S,
 \]
 relying on \Cref{lem:stab}.
 \end{proof}
@@ -538,18 +540,19 @@ the (target-pumpable) set
 $\{s\} \circ \big(\step_{0}^* \ \circ \ E \ \circ \ \step_+)^*$.
 \end{lemma}
 \begin{proof}
-Again, The set $S \circ \step_{0}^* \ \circ \ E \ \circ \ \step_+$ is
+Again, The set $f(S) = S \ \circ \ \step_{0}^* \ \circ \ E \ \circ \ \step_+$ is
 target-pumpable due to \eqref{eq:tpump},
 irrespectively of $S$.
 Computability is more involved, but relates again on iteration of the transformation
 \[
-S \quad \mapsto \quad f(S) \ = \ S \ \circ \ \step_{0}^* \ \circ \ E \ \circ \ \step_+,
+S \quad \mapsto \quad f(S) \quad \cup \quad S,
 \]
 relying on \Cref{lem:stab}.
 To compute $f(S)$, one first establishes which remainders modulo $D$ appear in this set,
-by applyting the transformation of \Cref{lem:compback} to the set $\step_+ \ \circ \ M_k$,
+by applyting the transformation of \Cref{lem:compback} to the set 
+$(\step_+ \ \circ \ M_k)$,
 where $M_k$ contains all numbers equal to $k$ modulo $D$, and checking intersection with 
-$S\ \circ \ \step_0$. 
+the set $(S\ \circ \ \step_0)$. 
 Then, by exhaustive search one finds the smallest number in $f(S)$, 
 for each remainder modulo $D$ separately.
 \end{proof}
