@@ -431,13 +431,16 @@ so we can keep the knowledge of which counter is zero.
 
 
 The strategy of the proof is as follows:
-a run $\rho : s \step^\ast t$ in the \sym2-\cm  
+a run $\rho$ from $s$ to $t$ in the \sym2-\cm  ($s,t \in Q\times\N$)
 can be decomposed at the zero-testing states
 into segments which are \vass runs;
 write
-\[ \rho=\rho_0 z_1 \rho_1 z_2 \dots \rho_{n-1}z_n\rho_n,\]
-where the $z_i$ are all transitions of $\rho$ which are zero tests,
-and the $\rho_i$ do not contain any zero tests.
+%\[ \rho=\rho_0 z_1 \rho_1 z_2 \dots \rho_{n-1}z_n\rho_n,\]
+\[ \rho=\rho_0 \rho_1 \dots \rho_n,\]
+where 
+%the $z_i$ are the zero-testing states of $\rho$, and
+each $\rho_i$ starts and ends at consecutive zero-testing states---%
+we shall call them the \vass segments of $\rho$.
 %
 Every $\rho_i$ is of one of the following forms:
 \begin{align*}
@@ -454,34 +457,47 @@ q(a) \step^* q'(a')
 without specifying which of the four cases is happening,
 since the control states $q,q'$ uniquely determine that.
 
-Next, we split the relation $\step^\ast$ into three subrelations,
-which represent different kinds of runs in $(Q\times\N)^2$:
-call them the positive relation $\step_+$, 
+Every \vass segment $\rho_i$ falls into one of three categories
+%split the relation $\step^\ast$ into three subrelations,
+which represent different kinds of \vass runs in $(Q\times\N^2)$,
+depending on the relation between the initial and final values $a$ and $a'$:
+we call them the positive relation $\step_+$, 
 the negative relation $\step_-$, 
 and the neutral relation $\step_0$;
 the precise definitions will be given in \Cref{sec:proof}.
 
-Now the rechability relation is $\big(\step_0 \ \cup \ \step_- \ \cup \ \step_+ \big)^*$,
-an arbitrary composition
-of all three relations arbitrarily many times, 
-where $R^*$ stands for composing the relation $R$
-arbitrarily many times---%
-note that the composition assures that control states match.
+%Now the rechability relation is $\big(\step_0 \ \cup \ \step_- \ \cup \ \step_+ \big)^*$,
+%an arbitrary composition
+%of all three relations arbitrarily many times, 
+%where $R^*$ stands for composing the relation $R$
+%arbitrarily many times---%
+%note that the composition assures that control states match.
 
-We then split every run into three phases: 
-the first one ($\Phi_1$) ends with the \emph{last} appearance of $\step_+$,
-the middle one ($\Phi_2$) consisting just of $\step_0^*$, 
-and the last one ($\Phi_3$) starting with a $\step_-$ and
-iterating arbitratily many times $\step_-$ and $\step_0$.
+We then split the run $\rho$ into three phases: 
+\begin{itemize}
+\item the first one ($\Phi_1$) is a \emph{prefix} of $\rho$ and ends with the \emph{last} $\rho_i$ of the form $\step_+$,
+\item the middle one ($\Phi_2$) is an \emph{infix} of $\rho$ and consists only of $\rho_i$'s of the form $\step_0^*$, and
+\item the last one ($\Phi_3$) is a \emph{suffix} of $\rho$ and starts with a $\rho_i$ of the form $\step_-$ 
+(followed by other \vass segments of the forms $\step_-$ and $\step_0$).
+\end{itemize}
 Each of the phases may be empty.
 Thus the forms of the three phases are the following:
 \begin{align*}
-\Phi_1 :\quad &(\step_0 \ \cup \ \step_- \ \cup \ \step_+)^\ast\\
-\Phi_2 :\quad &(\step_0)^\ast\\
-\Phi_3 :\quad &(\step_0 \ \cup \ \step_-)^\ast\\
+\Phi_1 :\quad &(\step_0 \ \cup \ \step_- \ \cup \ \step_+)^\ast,\\
+\Phi_2 :\quad &(\step_0)^\ast,\\
+\Phi_3 :\quad &(\step_0 \ \cup \ \step_-)^\ast.
 \end{align*}
-Finally, we prove that each of $\step_+$, $\step_-$, $\step_0$ is effectively semilinear,
-and then prove that the phases are also semilinear.
+
+We prove that $\Phi_0 \subseteq (Q \times \N)^2$ is an \emph{effectively semilinear} relation,
+and that for the given source $s$ and target $t$, the sets
+\begin{align*}
+\Phi_3 \circ \{t\} &\coloneq \{x \mid (x,t) \in \Phi_3 \} \subseteq Q \times \N, \\
+\{s\} \circ \Phi_1 &\coloneq \{y \mid (s,y) \in \Phi_1 \} \subseteq Q \times \N
+\end{align*}
+are also \emph{effectively semilinear}.
+Thus the reachability questions, 
+which is equivalent to whether $(s,t) \in \Phi_1\circ\Phi_2\circ\Phi_3$, 
+is decidable.
 
 \section{Proof of Decidability}\label{sec:proof}
 \para{1-dimensional notation}
@@ -528,12 +544,13 @@ $a$, $a'$, and $a'-a$. We write
 & q(a) \step_+ q'(a') && \text{if $a\phantom{'} > C$ and $a' > a+C${};}
 \end{aligned}
 \end{align}
-see \Cref{fig:areas}.
+see \Cref{fig:areas} for a graphical illustration.
 
 \begin{figure}
 \centering
-\includegraphics{figures-1.eps}
-\caption{The three relations $\step_+$, $\step_-$, and $\step_0$.}
+\includegraphics{figures.1.eps}
+\caption{The three relations $\step_+$, $\step_-$, and $\step_0$.
+The axes do \emph{not} correspond to the counters, but rather the initial and final values of the \vass run.}
 \label{fig:areas}
 \end{figure}
 

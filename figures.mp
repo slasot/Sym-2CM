@@ -37,6 +37,9 @@ beginfig(1);
   label(btex $\bm-$ etex, 1/3((2C,C)+(u,C)+(u,u-C)) );
   label(btex $\bm0$ etex, (C,C));
 
+  label.rt(btex $a$ etex, (u+5bp,0));
+  label.lft(btex $a'$ etex, (0,u));
+
 endfig;
 
 end.
