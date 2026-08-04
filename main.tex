@@ -1,3 +1,6 @@
+\newif\ifuselm
+%\uselmfalse
+\uselmtrue
 \documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate,dvipsnames]{lipics-v2021}
 %\documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate,dvipsnames,anonymous]{lipics-v2021}
 
@@ -13,6 +16,9 @@
 \usepackage{xparse}
 \usepackage{array}
 \usepackage{makecell}
+\usepackage{graphicx}
+
+\usepackage[bb=boondox,bfbb]{mathalpha}
 
 %\usepackage[appendix=append]{apxproof} % move to appendix
 %\usepackage[appendix=inline]{apxproof} % leave in place
@@ -123,7 +129,7 @@ are invariant under swapping of counters.
 
 A 2-\vass $\V$ is \emph{symmetric} if whenever it has a transition
 $q \xstep{(x_1,x_2)} q'$
-then it also has a the transposed transition 
+then it also has the transposed transition 
 $q \xstep{(x_2,x_1)} q'$.
 We consider \emph{paths}, which are sequences of transitions where target state 
 of every transition
@@ -136,8 +142,17 @@ A \emph{cycle} is a path where the source state of the
 first matches the target state of the last one.
 By $c; c'$ we denote the concatenation of paths $c, c'$, and  
 by $c^k$ we denote the $k$-fold concatenation of a cycle $c$.
-Firing of a single transition we call a \emph{step} and
-write $q(n_1, n_2) \step q'(n_1+x_1, n_2+x_2)$.
+Firing of a single transition $q \xstep{(x_1,x_2)} q'$
+we call a \emph{step} and
+write $q(n_1, n_2) \step q'(n_1+x_1, n_2+x_2)$;
+and $\step^\ast$ is the transitive closure of $\step$.
+
+\medskip
+
+A \emph{symmetric} counter machine with two counters (\sym 2-\cm) is a 
+counter machine whose \vass component (\ie, the \vass obtained by removing zero tests) is a symmetric \vass.
+Thus, transitions are symmetric,
+but zero tests need not be, and can distinguish the two counters.
 
 \medskip
 
@@ -395,13 +410,80 @@ is sufficient to satisfy the above requirement.
 \section{Proof strategy}
 
 \sla{This is just a sketch of the proof structure, to be completed, debugged, etc}
+
 As above, we use $\step$ to denote step relation of a 2-\vass, namely without zero tests.
 
-For convenience we assume that instead of zero testing transitions which change state
-when a given counter is 0, we have "zero-testing states" which can be visited only
-if a given counter is 0. Transformation to this form is easy: replace every
-zero testing transition by two, with intermediate zero-testing state.
+First, replace zero-testing transitions 
+with zero-testing states:
+replace every zero testing transition 
+\(t : q \xstep{\textsf{c}_i=0?} q'\)
+by the longer two-step sequence
+\[q \xstep{\textsf{c}_i=0?} S_i^t \xstep{(0,0)} q'',\]
+where $S_i^t$ is a new state, unique to the transition $t$.
+Notice that the new \sym2-\cm thus obtained 
+is equivalent to the original one, 
+and that it has special states $S_i^t$
+which can be entered only if counter $i$ is zero;
+thus we have zero-testing states.
+The zero-testing states can be partitioned 
+into those corresponding to the first and to the second counter,
+so we can keep the knowledge of which counter is zero.
 
+
+The strategy of the proof is as follows:
+a run $\rho : s \step^\ast t$ in the \sym2-\cm  
+can be decomposed at the zero-testing states
+into segments which are \vass runs;
+write
+\[ \rho=\rho_0 z_1 \rho_1 z_2 \dots \rho_{n-1}z_n\rho_n,\]
+where the $z_i$ are all transitions of $\rho$ which are zero tests,
+and the $\rho_i$ do not contain any zero tests.
+%
+Every $\rho_i$ is of one of the following forms:
+\begin{align*}
+q(a,0)&\step^* q'(0,a')\\
+q(0,a)&\step^* q'(0,a')\\
+q(0,a)&\step^* q'(a',0)\\
+q(a,0)&\step^* q'(a',0),
+\end{align*}
+where $q$ and $q'$ are zero-testing states;
+notice that we may write just
+\begin{equation} \label{eq:basictran}
+q(a) \step^* q'(a')
+\end{equation}
+without specifying which of the four cases is happening,
+since the control states $q,q'$ uniquely determine that.
+
+Next, we split the relation $\step^\ast$ into three subrelations,
+which represent different kinds of runs in $(Q\times\N)^2$:
+call them the positive relation $\step_+$, 
+the negative relation $\step_-$, 
+and the neutral relation $\step_0$;
+the precise definitions will be given in \Cref{sec:proof}.
+
+Now the rechability relation is $\big(\step_0 \ \cup \ \step_- \ \cup \ \step_+ \big)^*$,
+an arbitrary composition
+of all three relations arbitrarily many times, 
+where $R^*$ stands for composing the relation $R$
+arbitrarily many times---%
+note that the composition assures that control states match.
+
+We then split every run into three phases: 
+the first one ($\Phi_1$) ends with the \emph{last} appearance of $\step_+$,
+the middle one ($\Phi_2$) consisting just of $\step_0^*$, 
+and the last one ($\Phi_3$) starting with a $\step_-$ and
+iterating arbitratily many times $\step_-$ and $\step_0$.
+Each of the phases may be empty.
+Thus the forms of the three phases are the following:
+\begin{align*}
+\Phi_1 :\quad &(\step_0 \ \cup \ \step_- \ \cup \ \step_+)^\ast\\
+\Phi_2 :\quad &(\step_0)^\ast\\
+\Phi_3 :\quad &(\step_0 \ \cup \ \step_-)^\ast\\
+\end{align*}
+Finally, we prove that each of $\step_+$, $\step_-$, $\step_0$ is effectively semilinear,
+and then prove that the phases are also semilinear.
+
+\section{Proof of Decidability}\label{sec:proof}
 \para{1-dimensional notation}
 Likewise, we prove the three remaining variants of \Cref{lem:targetpump}:
 for every pair of control states $q, q'$ of $\V$ and  
@@ -411,40 +493,49 @@ q(0,a)\step^* q'(0,a') \quad \implies  \quad  q(0,a) \step^* q'(0, a'+D)\\
 q(0,a)\step^* q'(a',0) \quad \implies  \quad  q(0,a) \step^* q'(a'+D, 0)\\
 q(a,0)\step^* q'(a',0) \quad \implies  \quad  q(a,0) \step^* q'(a'+D,0)
 \end{align*}
-By the above introduced "zero-testing states" we can
+By the above introduced ``zero-testing states'' we can
 merge the four cases into one, knowing that  control state determines which
 counter is actually zero tested. %, and that a run zero tests every counter whenever it has value 0. 
 % To this aim double the control states, that is replace every $q\in Q$
 % by $q_1, q_2$, each of them involved into the same increment transitions as $q$, but $q_1$ only 
 % capable to do those zero-testing transitions $q$ that test counter 1, and likewiese $q_2$ only 
 % capable to do those zero-testing transitions $q$ that test counter 2.
-So prepared, we can simply write
-\begin{align} \label{eq:basictran}
-q(a) \step^* q'(a')
-\end{align}
-without specifying which of the four cases is happening
-\begin{align*}
-q(a,0)\step^* q'(0,a')\\
-q(0,a)\step^* q'(0,a')\\
-q(0,a)\step^* q'(a',0)\\
-q(a,0)\step^* q'(a',0)
-\end{align*}
-since the control states $q,q'$ uniquely determine these two bits of information.
-Note that the newly introduced zero tests are not symmetric, but we do not assume that. 
+
+%So prepared, we can simply write
+%\begin{align} \label{eq:basictran}
+%q(a) \step^* q'(a')
+%\end{align}
+%without specifying which of the four cases is happening
+%\begin{align*}
+%q(a,0)\step^* q'(0,a')\\
+%q(0,a)\step^* q'(0,a')\\
+%q(0,a)\step^* q'(a',0)\\
+%q(a,0)\step^* q'(a',0)
+%\end{align*}
+%since the control states $q,q'$ uniquely determine these two bits of information.
+%Note that the newly introduced zero tests are not symmetric, but we do not assume that. 
 
 \Mywlog we assume that both the source and target vector have at least one 0.
 
 \para{Run structure}
 
 We split the relation \eqref{eq:basictran} into 3 disjoint subrelations, depending on the value of
-$a, a'$ and $a'-a$. We write
+$a$, $a'$, and $a'-a$. We write
 \begin{align} \label{eq:tran0-+}
 \begin{aligned}
-& q(a) \step_0 q'(a') && \text{ if } a\leq C \vee a'\leq C \vee |a'-a|\leq C \\
-& q(a) \step_- q'(a') && \text{ if none of above holds but } a > a'+C \\
-& q(a) \step_+ q'(a') && \text{ if none of above holds but } a' > a+C
+& q(a) \step_0 q'(a') && \text{if $a\leq C$ or $a'\leq C$ or $|a'-a|\leq C $;}\\
+& q(a) \step_- q'(a') && \text{if $a' > C$ and $a > a'+C${};}\\
+& q(a) \step_+ q'(a') && \text{if $a\phantom{'} > C$ and $a' > a+C${};}
 \end{aligned}
 \end{align}
+see \Cref{fig:areas}.
+
+\begin{figure}
+\centering
+\includegraphics{figures-1.eps}
+\caption{The three relations $\step_+$, $\step_-$, and $\step_0$.}
+\label{fig:areas}
+\end{figure}
 
 Each of the three relations \eqref{eq:tran0-+} is included in $(Q\times\N)^2$.
 In particular, the four variants of \Cref{lem:targetpump} jointly imply that 

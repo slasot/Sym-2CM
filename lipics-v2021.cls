@@ -517,7 +517,9 @@
 		\pdfgentounicode=1
 	}{}%
 \fi 
-\IfFileExists{lmodern.sty}{\RequirePackage{lmodern}}{}
+\ifuselm
+  \IfFileExists{lmodern.sty}{\RequirePackage{lmodern}}{}
+\fi
 \IfFileExists{fontawesome5.sty}{%
 \RequirePackage{fontawesome5}%
 \IfFileExists{orcid.pdf}{%
