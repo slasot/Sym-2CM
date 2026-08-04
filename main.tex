@@ -427,11 +427,11 @@ which can be entered only if counter $i$ is zero;
 thus we have zero-testing states.
 The zero-testing states can be partitioned 
 into those corresponding to the first and to the second counter,
-so we can keep the knowledge of which counter is zero.
+so we tell which counter is zero by looking at the state.
 
 
 The strategy of the proof is as follows:
-a run $\rho$ from $s$ to $t$ in the \sym2-\cm  ($s,t \in Q\times\N$)
+a run $\rho$ from $s$ to $t$ in the \sym2-\cm  ($s,t \in Q\times\N^2$)
 can be decomposed at the zero-testing states
 into segments which are \vass runs;
 write
@@ -439,8 +439,8 @@ write
 \[ \rho=\rho_0 \rho_1 \dots \rho_n,\]
 where 
 %the $z_i$ are the zero-testing states of $\rho$, and
-each $\rho_i$ starts and ends at consecutive zero-testing states---%
-we shall call them the \vass segments of $\rho$.
+each $\rho_i$ starts and ends at consecutive zero-testing states of $\rho$---%
+we shall call them the \emph{\vass segments} of $\rho$.
 %
 Every $\rho_i$ is of one of the following forms:
 \begin{align*}
@@ -454,16 +454,15 @@ notice that we may write just
 \begin{equation} \label{eq:basictran}
 q(a) \step^* q'(a')
 \end{equation}
-without specifying which of the four cases is happening,
-since the control states $q,q'$ uniquely determine that.
+without specifying which of the four cases occurs,
+since the control states $q$, $q'$ uniquely determine that.
 
-Every \vass segment $\rho_i$ falls into one of three categories
+Every \vass segment $\rho_i$, 
+depending on the values $a$ and $a'$,
+falls into one of three categories,
 %split the relation $\step^\ast$ into three subrelations,
-which represent different kinds of \vass runs in $(Q\times\N^2)$,
-depending on the relation between the initial and final values $a$ and $a'$:
-we call them the positive relation $\step_+$, 
-the negative relation $\step_-$, 
-and the neutral relation $\step_0$;
+%which represent different kinds of \vass runs in $(Q\times\N^2)$:
+denoted by $\step_+$, $\step_-$, and $\step_0$;
 the precise definitions will be given in \Cref{sec:proof}.
 
 %Now the rechability relation is $\big(\step_0 \ \cup \ \step_- \ \cup \ \step_+ \big)^*$,
@@ -473,14 +472,13 @@ the precise definitions will be given in \Cref{sec:proof}.
 %arbitrarily many times---%
 %note that the composition assures that control states match.
 
-We then split the run $\rho$ into three phases: 
+We will split the run $\rho$ into three phases (possibly empty): 
 \begin{itemize}
-\item the first one ($\Phi_1$) is a \emph{prefix} of $\rho$ and ends with the \emph{last} $\rho_i$ of the form $\step_+$,
-\item the middle one ($\Phi_2$) is an \emph{infix} of $\rho$ and consists only of $\rho_i$'s of the form $\step_0^*$, and
-\item the last one ($\Phi_3$) is a \emph{suffix} of $\rho$ and starts with a $\rho_i$ of the form $\step_-$ 
+\item $\Phi_1$, which is a \emph{prefix} of $\rho$ and ends with the \emph{last} $\rho_i$ of the form $\step_+$,
+\item $\Phi_2$, which is an \emph{infix} of $\rho$ and consists only of $\rho_i$'s of the form $\step_0^*$, and
+\item $\Phi_3$, which is a \emph{suffix} of $\rho$ and starts with a $\rho_i$ of the form $\step_-$ 
 (followed by other \vass segments of the forms $\step_-$ and $\step_0$).
 \end{itemize}
-Each of the phases may be empty.
 Thus the forms of the three phases are the following:
 \begin{align*}
 \Phi_1 :\quad &(\step_0 \ \cup \ \step_- \ \cup \ \step_+)^\ast,\\
@@ -495,8 +493,9 @@ and that for the given source $s$ and target $t$, the sets
 \{s\} \circ \Phi_1 &\coloneq \{y \mid (s,y) \in \Phi_1 \} \subseteq Q \times \N
 \end{align*}
 are also \emph{effectively semilinear}.
-Thus the reachability questions, 
-which is equivalent to whether $(s,t) \in \Phi_1\circ\Phi_2\circ\Phi_3$, 
+Thus the reachability question, 
+which is equivalent to whether $(s,t) \in \Phi_1\circ\Phi_2\circ\Phi_3$ 
+(\ie $\exists x,y : (s,x) \in \Phi_1 \wedge (x,y) \in \Phi_2 \wedge (y,t) \in \Phi_3$),
 is decidable.
 
 \section{Proof of Decidability}\label{sec:proof}
@@ -550,7 +549,8 @@ see \Cref{fig:areas} for a graphical illustration.
 \centering
 \includegraphics{figures.1.eps}
 \caption{The three relations $\step_+$, $\step_-$, and $\step_0$.
-The axes do \emph{not} correspond to the counters, but rather the initial and final values of the \vass run.}
+The axes do \emph{not} correspond to the counters, 
+but rather the initial and final values $a$ and $a'$ of the \vass segment.}
 \label{fig:areas}
 \end{figure}
 
