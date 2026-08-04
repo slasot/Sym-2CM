@@ -494,9 +494,11 @@ and that for the given source $s$ and target $t$, the sets
 \end{align*}
 are also \emph{effectively semilinear}.
 Thus the reachability question, 
-which is equivalent to whether $(s,t) \in \Phi_1\circ\Phi_2\circ\Phi_3$ 
-(\ie $\exists x,y : (s,x) \in \Phi_1 \wedge (x,y) \in \Phi_2 \wedge (y,t) \in \Phi_3$),
-is decidable.
+which is equivalent to whether 
+\( (s,t) \in \Phi_1\circ\Phi_2\circ\Phi_3,\)
+or equivalently \[\exists x,y : (s,x) \in \Phi_1 \wedge (x,y) \in \Phi_2 \wedge (y,t) \in \Phi_3,\]
+is decidable
+(by semilinearity, the last formulation is equivalent to an ILP).
 
 \section{Proof of Decidability}\label{sec:proof}
 \para{1-dimensional notation}
