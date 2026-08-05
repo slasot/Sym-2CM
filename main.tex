@@ -127,6 +127,39 @@ are invariant under swapping of counters.
 \newpage
 
 \section{The model}
+A \emph{symmetric} counter machine with two counters (\sym 2-\cm) is a 
+counter machine whose \vass component (\ie, the \vass obtained by removing zero tests) is a symmetric \vass.
+Thus, transitions are symmetric,
+but zero tests need not be, and can distinguish the two counters.
+\medskip
+
+%\noindent A \emph{Counter Machine with $n$-counters} (or $n$-\cm for short) 
+%is a quadruple
+%\[
+%\mathcal{M} = (Q, q_0, q_h, \Delta)
+%\]
+%where:
+%\begin{itemize}
+%    \item $Q$ is a finite set of \emph{control states},
+%    \item $q_0 \in Q$  and $q_h \in Q$ are the \emph{initial} and the \emph{halting} state respectively,
+%    \item $\Delta \subseteq (Q - \{q_h\}) \times \text{Instr}_n \times Q$ is the 
+%    \emph{transition relation}, where $\text{Instr}_n$ is a finite subset of 
+%    $\Z^n \cup \{ \text{\lq\lq$\textsf{c}_i=0$?\rq\rq} \mid 1 \leq i \leq n\}$.
+%\end{itemize}
+%
+%A configuration of $\mathcal{M}$ is a pair $(q,x)$ where $q \in Q$ and $x \in \N^n$.
+%A run of $\mathcal{M}$ is a sequence $\rho=c_0, c_1, \dots, c_\ell$ of configurations,
+%where $c_0=(q_0, (0,0))$,
+%and if $c_i = (q_i,x_i)$, then $c_{i+1}=(q_{i+1},x_{i+1})$
+%for some transition $(q_i, A,q_{i+1}) \in \Delta$,
+%where:
+%\begin{itemize}
+%\item $x_{i+1} = x_i + A$, if $A \in \Z^n$,
+%\item $x_{i+1}= x_i$ and $x_i(j)=0$ if $A = \text{``$\textsf{c}_j=0?$\rq\rq}$.
+%\end{itemize}
+%We say $\rho$ is an accepting run if $q_\ell = q_h$.
+%
+%An $n$-\vass is an $n$-\cm with $\Delta \subseteq Q \times \Z^n \times Q$.
 
 A 2-\vass $\V$ is \emph{symmetric} if whenever it has a transition
 $q \xstep{(x_1,x_2)} q'$
@@ -147,13 +180,6 @@ Firing of a single transition $q \xstep{(x_1,x_2)} q'$
 we call a \emph{step} and
 write $q(n_1, n_2) \step q'(n_1+x_1, n_2+x_2)$;
 and $\step^\ast$ is the transitive closure of $\step$.
-
-\medskip
-
-A \emph{symmetric} counter machine with two counters (\sym 2-\cm) is a 
-counter machine whose \vass component (\ie, the \vass obtained by removing zero tests) is a symmetric \vass.
-Thus, transitions are symmetric,
-but zero tests need not be, and can distinguish the two counters.
 
 \medskip
 
@@ -473,6 +499,7 @@ the precise definitions will be given in \Cref{sec:proof}.
 %arbitrarily many times---%
 %note that the composition assures that control states match.
 
+\bigskip
 We will split the run $\rho$ into three phases (possibly empty): 
 \begin{itemize}
 \item $\Phi_1$, which is a \emph{prefix} of $\rho$ and ends with the \emph{last} $\rho_i$ of the form $\step_+$,
@@ -482,16 +509,17 @@ We will split the run $\rho$ into three phases (possibly empty):
 \end{itemize}
 Thus the three phases are of the following form:
 \begin{align*}
-\Phi_1 :\quad &(\step_0 \ \cup \ \step_- \ \cup \ \step_+)^\ast,\\
-\Phi_2 :\quad &(\step_0)^\ast,\\
-\Phi_3 :\quad &(\step_0 \ \cup \ \step_-)^\ast.
+\Phi_1 :\ &(\step_0 \ \cup \ \step_- \ \cup \ \step_+)^\ast,\\
+\Phi_2 :\ &(\step_0)^\ast,\\
+\Phi_3 :\ &(\step_0 \ \cup \ \step_-)^\ast.
 \end{align*}
 
-We prove that $\Phi_0 \subseteq (Q \times \N)^2$ is an \emph{effectively semilinear} relation,
+\vrm{What is a semilinear subset of $Q \times \N$?}
+We prove that $\Phi_2 \subseteq (Q \times \N)^2$ is an \emph{effectively semilinear} relation,
 and that for the given source $s$ and target $t$, the sets
 \begin{align*}
-\Phi_3 \circ \{t\} &\coloneq \{x \mid (x,t) \in \Phi_3 \} \subseteq Q \times \N, \\
-\{s\} \circ \Phi_1 &\coloneq \{y \mid (s,y) \in \Phi_1 \} \subseteq Q \times \N
+\Phi_3 \circ \{t\} &\coloneq \{x \mid (x,t) \in \Phi_3 \} \subseteq Q \times \N^2, \\
+\{s\} \circ \Phi_1 &\coloneq \{y \mid (s,y) \in \Phi_1 \} \subseteq Q \times \N^2
 \end{align*}
 are also \emph{effectively semilinear}.
 Thus the reachability question, 
