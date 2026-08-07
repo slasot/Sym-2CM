@@ -481,7 +481,8 @@ is sufficient to satisfy the above requirement.
 \end{proof}
 
 
-\section{Proof strategy}\label{sec:strategy}
+\section{Proof of Decidability}
+\subsection{Strategy of proof}\label{sec:strategy}
 As above, we use $\step$ to denote step relation of a 2-\vass, namely without zero tests.
 First some notational preprocessing.
 Replace every zero-testing transition 
@@ -527,6 +528,9 @@ q(a) \step^* q'(a')
 \end{equation}
 without specifying which of the four cases occurs,
 since the (zero-testing) control states $q$, $q'$ uniquely determine that.
+We follow the notational shorthand (\ref{eq:basictran}) throughout. 
+Without loss of generality, we also assume 
+that both the source and target vector have at least one 0.
 
 Every \vass segment $\rho_i \colon q(a) \step^\ast q'(a')$, 
 depending on the values $a$ and $a'$,
@@ -569,7 +573,7 @@ which is equivalent to%
 is decidable
 (by semilinearity, the last formulation is expressible in Pressburger Arithmetic).
 
-\section{Proof of Decidability}\label{sec:proof}
+\subsection{Proof Details}\label{sec:proof}
 %\para{1-dimensional notation}
 %By symmetry, \Cref{lem:targetpump} holds more generally:
 %for every pair of control states $q$, $q'$ of $\V$ and  
@@ -601,10 +605,6 @@ is decidable
 %\end{align*}
 %since the control states $q,q'$ uniquely determine these two bits of information.
 %Note that the newly introduced zero tests are not symmetric, but we do not assume that. 
-
-We follow the notational shorthand (\ref{eq:basictran}). 
-Without loss of generality,
-we assume that both the source and target vector have at least one 0.
 
 \para{Run structure}
 
@@ -644,7 +644,8 @@ implies that $\step_-$ is \emph{source-pumpable}, that is
 q(a)\step_- q'(a') \quad \implies  \quad  q(a+D) \step_- q'(a').
 \end{align}
 \vrm{Why do the $\step_+$ and $\step_-$ have the same $C,D$? 
-Is $D$ the same in a \vass and its reverse?}
+Is $D$ the same in a \vass and its reverse?
+Basically, what is the $D$?}
 
 The idea is to split every run into segments, at positions where some of counters is zero tested.
 The segment between two such consecutive positions is described by one of the three relations
