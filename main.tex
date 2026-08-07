@@ -127,11 +127,24 @@ are invariant under swapping of counters.
 \newpage
 
 \section{The model}
-A \emph{symmetric} counter machine with two counters (\sym 2-\cm) is a 
+
+A 2-\vass $\V$ is symmetric if whenever it has a transition
+$q \xstep{(x_1,x_2)} q'$
+then it also has the transposed transition 
+$q \xstep{(x_2,x_1)} q'$.
+
+%
+A \emph{symmetric counter machine} with two counters (\sym 2-\cm) is a 
 counter machine whose \vass component (\ie, the \vass obtained by removing zero tests) is a symmetric \vass.
 Thus, transitions are symmetric,
 but zero tests need not be, and can distinguish the two counters.
-\medskip
+
+We prove that reachability in \sym 2-\cm is decidable.
+The proof consists of two independent sections:
+\cref{sec:targetpump}, which proves a general lemma about \sym 2-\cm{s},
+and \cref{sec:strategy,sec:proof}, which use that lemma (as a black-box)
+to prove the decidability result.
+
 
 %\noindent A \emph{Counter Machine with $n$-counters} (or $n$-\cm for short) 
 %is a quadruple
@@ -160,15 +173,13 @@ but zero tests need not be, and can distinguish the two counters.
 %We say $\rho$ is an accepting run if $q_\ell = q_h$.
 %
 %An $n$-\vass is an $n$-\cm with $\Delta \subseteq Q \times \Z^n \times Q$.
-
-A 2-\vass $\V$ is \emph{symmetric} if whenever it has a transition
-$q \xstep{(x_1,x_2)} q'$
-then it also has the transposed transition 
-$q \xstep{(x_2,x_1)} q'$.
-We consider \emph{paths}, which are sequences of transitions where target state 
-of every transition
-matches the source targe state of the next one.
 %
+
+\section{Terminology \& Notation}
+\para{VASS}
+In a \vass $\V$, \emph{path} is a sequence of transitions 
+where the target state of every transition
+matches the source targe state of the next one.
 A \emph{run} is a path plus a source configuration whose
 state matches with the first transition, such that
 all transitions are fireable.
@@ -188,16 +199,52 @@ and by $\norm \V$ the max-norm of $\V$, namely the maximal absolute value of
 all numbers appearing in transitions.
 Clearly, $\mysize \V \geq \norm \V$.
 
-\section{Target pummping}
+\para{Relations}
+If $R\subseteq X \times Y$, $R' \subseteq Y \times Z$ and $A \subseteq X$, $B \subseteq Y$,
+we define the following compositions:
+\begin{alignat*}{3}
+& R \circ R' &&= \{(x,z) \mid \exists y : (x,y) \in R \wedge (y,z) \in R'\},\\
+& R \circ B  &&= \{x \in A \mid \exists y \in B : (x,y)\in R\},\\
+& A \circ R  &&= \{y \in B \mid \exists x \in A : (x,y)\in R \}.
+\end{alignat*}
 
-\begin{lemma} [Target pumping] \label{lem:targetpump}
-Given a symmetric 2-\vass $\V$ one can compute numbers $C, D \in \N$ 
-such that for every pair of control states $q, q'$ of $\V$ and  
-$a, a'\in\N$ such that $a, a'-a > C$, 
+\para{Semilinear Sets}
+If $b, p_1, \dots, p_n \in \N^d$,
+we define 
 \[
-q(a,0)\step^* q'(0,a') \quad \implies  \quad  
-q(a,0) \step^* q'(0, a'+D).
+\lin b {\{p_1,\dots,p_n\}} = 
+\left\{ b + k_1 p_1 + \cdots + k_n p_n 
+\mid k_1, \dots, k_n \in \N \right\},
 \]
+the linear set with base $b$ and periods $p_1, \dots, p_n$.
+A semilinear set is a finite union of linear sets.
+We say $X \subseteq Q \times \N^d$ is semilinear 
+if for every $q \in Q$, 
+the set 
+\(\{n\in \N \mid (q,n)\in X\} \subseteq \N^d\)
+is semilinear.
+Similarly, $R \subseteq (Q\times \N^d)^2$ is semilinear if for every $q,q' \in Q$,
+the set
+\( \{(n,n') \mid ((q,n),(q',n')) \in R \} \subseteq \N^{2d}\)
+is semilinear.
+
+
+
+
+\section{Target pummping}\label{sec:targetpump}
+\begin{lemma} [Target pumping] \label{lem:targetpump}
+\vrm{I put everything in the same lemma to emphasize that all versions share the same $C,D$.}\par
+Let $\V$ be a symmetric $2$-$\vass$.
+One can compute numbers $C, D \in \N$ 
+such that for every pair of control states $q, q'$ of $\V$ and  
+$a, a'\in\N$ such that $a > C$ and $a' > a + C$,%
+\[\text{if} \quad q(a,0)\step^* q'(0,a') \quad \text{then} \quad q(a,0) \step^* q'(0, a'+D),\]
+and similarly for the other three symmetric cases:
+\begin{alignat*}{3}
+&\text{if} \quad q(0,a)\step^* q'(0,a') \quad &&\text{then}  \quad  q(0,a) \step^* q'(0, a'+D),\\
+&\text{if} \quad q(0,a)\step^* q'(a',0) \quad &&\text{then}  \quad  q(0,a) \step^* q'(a'+D, 0),\\
+&\text{if} \quad q(a,0)\step^* q'(a',0) \quad &&\text{then}  \quad  q(a,0) \step^* q'(a'+D,0).
+\end{alignat*}
 Moreover, $C$ is polynomial in $\mysize \V$ and $D$ is exponential in $\mysize \V$.
 \end{lemma}
 %
@@ -434,27 +481,24 @@ is sufficient to satisfy the above requirement.
 \end{proof}
 
 
-\section{Proof strategy}
-
-\sla{This is just a sketch of the proof structure, to be completed, debugged, etc}
-
+\section{Proof strategy}\label{sec:strategy}
 As above, we use $\step$ to denote step relation of a 2-\vass, namely without zero tests.
-
-First, replace zero-testing transitions 
-with zero-testing states:
-replace every zero testing transition 
+First some notational preprocessing.
+Replace every zero-testing transition 
 \(t : q \xstep{\textsf{c}_i=0?} q'\)
 by the longer two-step sequence
-\[q \xstep{\textsf{c}_i=0?} S_i^t \xstep{(0,0)} q'',\]
+\[q \xstep{\textsf{c}_i=0?} S_i^t \xstep{(0,0)} q',\]
 where $S_i^t$ is a new state, unique to the transition $t$.
 Notice that the new \sym2-\cm thus obtained 
 is equivalent to the original one, 
 and that it has special states $S_i^t$
 which can be entered only if counter $i$ is zero;
-thus we have zero-testing states.
-The zero-testing states can be partitioned 
-into those corresponding to the first and to the second counter,
-so we tell which counter is zero by looking at the state.
+we call them zero-testing states.
+The zero-testing states have the property
+that they ``remember'' which counter is zero 
+when the control of the machine is at them.
+%into those corresponding to counter $\textsf{c}_1$ and to counter $\textsf{c}_2$,
+%so we tell which counter is zero by looking at the state.
 
 
 The strategy of the proof is as follows:
@@ -467,40 +511,33 @@ write
 where 
 %the $z_i$ are the zero-testing states of $\rho$, and
 each $\rho_i$ starts and ends at consecutive zero-testing states of $\rho$---%
-we shall call them the \emph{\vass segments} of $\rho$.
+we shall call the $\rho_i$ the \emph{\vass segments} of $\rho$.
 %
 Every $\rho_i$ is of one of the following forms:
-\begin{align*}
-q(a,0)&\step^* q'(0,a')\\
-q(0,a)&\step^* q'(0,a')\\
-q(0,a)&\step^* q'(a',0)\\
-q(a,0)&\step^* q'(a',0),
-\end{align*}
+\begin{alignat*}{2}
+q(a,0) &\step^\ast q'(0,a')\\
+q(0,a) &\step^\ast q'(0,a')\\
+q(0,a) &\step^\ast q'(a',0)\\
+q(a,0) &\step^\ast q'(a',0),
+\end{alignat*}
 where $q$ and $q'$ are zero-testing states;
 notice that we may write just
 \begin{equation} \label{eq:basictran}
 q(a) \step^* q'(a')
 \end{equation}
 without specifying which of the four cases occurs,
-since the control states $q$, $q'$ uniquely determine that.
+since the (zero-testing) control states $q$, $q'$ uniquely determine that.
 
-Every \vass segment $\rho_i$, 
+Every \vass segment $\rho_i \colon q(a) \step^\ast q'(a')$, 
 depending on the values $a$ and $a'$,
 falls into one of three categories,
 %split the relation $\step^\ast$ into three subrelations,
 %which represent different kinds of \vass runs in $(Q\times\N^2)$:
 denoted by $\step_+$, $\step_-$, and $\step_0$;
 the precise definitions will be given in \Cref{sec:proof}.
-
-%Now the rechability relation is $\big(\step_0 \ \cup \ \step_- \ \cup \ \step_+ \big)^*$,
-%an arbitrary composition
-%of all three relations arbitrarily many times, 
-%where $R^*$ stands for composing the relation $R$
-%arbitrarily many times---%
-%note that the composition assures that control states match.
-
-\bigskip
-We will split the run $\rho$ into three phases (possibly empty): 
+%\bigskip\noindent
+Using this categorization 
+we split the run $\rho$ into three phases (possibly empty): 
 \begin{itemize}
 \item $\Phi_1$, which is a \emph{prefix} of $\rho$ and ends with the \emph{last} $\rho_i$ of the form $\step_+$,
 \item $\Phi_2$, which is an \emph{infix} of $\rho$ and consists only of $\rho_i$'s of the form $\step_0^*$, and
@@ -509,39 +546,43 @@ We will split the run $\rho$ into three phases (possibly empty):
 \end{itemize}
 Thus the three phases are of the following form:
 \begin{align*}
-\Phi_1 :\ &(\step_0 \ \cup \ \step_- \ \cup \ \step_+)^\ast,\\
+\Phi_1 :\ &((\step_0 \ \cup \ \step_-)^\ast \circ \step_+)^\ast,\\
 \Phi_2 :\ &(\step_0)^\ast,\\
-\Phi_3 :\ &(\step_0 \ \cup \ \step_-)^\ast.
+\Phi_3 :\ &(\step_- \circ \step_0^\ast)^\ast.
 \end{align*}
 
-\vrm{What is a semilinear subset of $Q \times \N$?}
-We prove that $\Phi_2 \subseteq (Q \times \N)^2$ is an \emph{effectively semilinear} relation,
-and that for the given source $s$ and target $t$, the sets
+We will prove that $\Phi_2 \subseteq (Q \times \N)^2$ is an \emph{effectively semilinear} relation%
+%\footnote{This means $\{n \in \N \colon (q,n) \in \Phi_3 \}$ is effectively semilinear, for every $q\in Q$.}%
+,
+and that for given source $s$ and target $t$, the sets
 \begin{align*}
-\Phi_3 \circ \{t\} &\coloneq \{x \mid (x,t) \in \Phi_3 \} \subseteq Q \times \N^2, \\
-\{s\} \circ \Phi_1 &\coloneq \{y \mid (s,y) \in \Phi_1 \} \subseteq Q \times \N^2
+\Phi_3 \circ \{t\} &\coloneq \{x \mid (x,t) \in \Phi_3 \} \subseteq Q \times \N, \\
+\{s\} \circ \Phi_1 &\coloneq \{y \mid (s,y) \in \Phi_1 \} \subseteq Q \times \N
 \end{align*}
 are also \emph{effectively semilinear}.
 Thus the reachability question, 
-which is equivalent to whether 
-\( (s,t) \in \Phi_1\circ\Phi_2\circ\Phi_3,\)
-\ie \[\exists x,y : (s,x) \in \Phi_1 \wedge (x,y) \in \Phi_2 \wedge (y,t) \in \Phi_3,\]
+which is equivalent to%
+%\( (s,t) \in \Phi_1\circ\Phi_2\circ\Phi_3,\) \ie 
+\begin{equation}
+\exists\, x,y : (s,x) \in \Phi_1 \wedge (x,y) \in \Phi_2 \wedge (y,t) \in \Phi_3,
+\end{equation}
 is decidable
-(by semilinearity, the last formulation is equivalent to an ILP).
+(by semilinearity, the last formulation is expressible in Pressburger Arithmetic).
 
 \section{Proof of Decidability}\label{sec:proof}
-\para{1-dimensional notation}
-Likewise, we prove the three remaining variants of \Cref{lem:targetpump}:
-for every pair of control states $q, q'$ of $\V$ and  
-$a, a'\in\N$ such that $a, a'-a > C$, 
-\begin{align*}
-q(0,a)\step^* q'(0,a') \quad \implies  \quad  q(0,a) \step^* q'(0, a'+D)\\
-q(0,a)\step^* q'(a',0) \quad \implies  \quad  q(0,a) \step^* q'(a'+D, 0)\\
-q(a,0)\step^* q'(a',0) \quad \implies  \quad  q(a,0) \step^* q'(a'+D,0)
-\end{align*}
-By the above introduced ``zero-testing states'' we can
-merge the four cases into one, knowing that  control state determines which
-counter is actually zero tested. %, and that a run zero tests every counter whenever it has value 0. 
+%\para{1-dimensional notation}
+%By symmetry, \Cref{lem:targetpump} holds more generally:
+%for every pair of control states $q$, $q'$ of $\V$ and  
+%$a, a'\in\N$ such that $a$, $a'-a>C$, 
+%\begin{align*}
+%q(0,a)\step^* q'(0,a') \quad \implies  \quad  q(0,a) \step^* q'(0, a'+D)\\
+%q(0,a)\step^* q'(a',0) \quad \implies  \quad  q(0,a) \step^* q'(a'+D, 0)\\
+%q(a,0)\step^* q'(a',0) \quad \implies  \quad  q(a,0) \step^* q'(a'+D,0).
+%\end{align*}
+%As discussed before, the ``zero-testing states'' indicate which counter is zero, 
+%so we can merge the four cases into one notation, 
+%adopting the shorthand (\ref{eq:basictran}).
+%and that a run zero tests every counter whenever it has value 0. 
 % To this aim double the control states, that is replace every $q\in Q$
 % by $q_1, q_2$, each of them involved into the same increment transitions as $q$, but $q_1$ only 
 % capable to do those zero-testing transitions $q$ that test counter 1, and likewiese $q_2$ only 
@@ -561,19 +602,24 @@ counter is actually zero tested. %, and that a run zero tests every counter when
 %since the control states $q,q'$ uniquely determine these two bits of information.
 %Note that the newly introduced zero tests are not symmetric, but we do not assume that. 
 
-\Mywlog we assume that both the source and target vector have at least one 0.
+We follow the notational shorthand (\ref{eq:basictran}). 
+Without loss of generality,
+we assume that both the source and target vector have at least one 0.
 
 \para{Run structure}
 
-We split the relation \eqref{eq:basictran} into 3 disjoint subrelations, depending on the value of
-$a$, $a'$, and $a'-a$. We write
-\begin{align} \label{eq:tran0-+}
-\begin{aligned}
-& q(a) \step_0 q'(a') && \text{if $a\leq C$ or $a'\leq C$ or $|a'-a|\leq C $;}\\
-& q(a) \step_- q'(a') && \text{if $a' > C$ and $a > a'+C${};}\\
-& q(a) \step_+ q'(a') && \text{if $a\phantom{'} > C$ and $a' > a+C${};}
-\end{aligned}
-\end{align}
+We split the relation \eqref{eq:basictran} into three disjoint subrelations, 
+depending on the value of
+$a$, $a'$, and $a'-a$. 
+If $q(a) \step q'(a')$, write:
+\begin{equation}
+\left.
+\begin{aligned}\label{eq:tran0-+}
+& q(a) \step_0\, q'(a'),\quad && \text{if\ \ $a\leq C$ or $a'\leq C$ or $|a'-a|\leq C $}\\
+& q(a) \step_- q'(a'),\quad && \text{if\ \ $a' > C$\ \ and\ \ $a > a'+C${}}\\
+& q(a) \step_+ q'(a'),\quad && \text{if\ \ $a\phantom{'} > C$\ \ and\ \ $a' > a+C${}}
+\end{aligned}\right\};
+\end{equation}
 see \Cref{fig:areas} for a graphical illustration.
 
 \begin{figure}
@@ -585,7 +631,7 @@ but rather the initial and final values $a$ and $a'$ of the \vass segment.}
 \label{fig:areas}
 \end{figure}
 
-Each of the three relations \eqref{eq:tran0-+} is included in $(Q\times\N)^2$.
+%Each of the three relations \eqref{eq:tran0-+} is included in $(Q\times\N)^2$.
 In particular, the four variants of \Cref{lem:targetpump} jointly imply that 
 $\step_+$ is \emph{target-pumpable}, that is for every pair of control states $q, q'$ of $\V$, 
 % and  $a, a'\in\N$ such that $a, a'-a > C$, 
@@ -597,6 +643,8 @@ implies that $\step_-$ is \emph{source-pumpable}, that is
 \begin{align} \label{eq:spump}
 q(a)\step_- q'(a') \quad \implies  \quad  q(a+D) \step_- q'(a').
 \end{align}
+\vrm{Why do the $\step_+$ and $\step_-$ have the same $C,D$? 
+Is $D$ the same in a \vass and its reverse?}
 
 The idea is to split every run into segments, at positions where some of counters is zero tested.
 The segment between two such consecutive positions is described by one of the three relations
