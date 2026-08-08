@@ -646,6 +646,9 @@ q(a)\step_- q'(a') \quad \implies  \quad  q(a+D) \step_- q'(a').
 \vrm{Why do the $\step_+$ and $\step_-$ have the same $C,D$? 
 Is $D$ the same in a \vass and its reverse?
 Basically, what is the $D$?}
+\sla{$D$ is the lcm of a set of numbers, see the ending of the proof of pumping lemma. We can
+take the same $D$ easily, namely by multiplying the forward $D$ by the backward one. 
+Any multiplicity of $D$ is good enough for the pumping lemma to hold.}
 
 The idea is to split every run into segments, at positions where some of counters is zero tested.
 The segment between two such consecutive positions is described by one of the three relations
