@@ -1,0 +1,182 @@
+
+%\begin{abstract}
+Counter machines are a particularly simple, Turing-complete
+model of computation.
+We study the expressive power of nondeterministic
+counter machines which are symmetric, namely their
+transitions are invariant under swapping of counters.
+As the main result we demonstrate that symmetric 2-counter machines
+are not Turing-complete, by proving decidability of their 
+reachability problem.
+%Our approach builds on specific properties of 2-counter
+%machines, and does not extend to 3 or more counters.
+We conjecture the decidability 
+for nondeterministic machines with arbitrarily many counters,
+as long as (their transitions) are invariant under all permutations
+of counters. 
+We leave the status for symmetric 3-counter machines open, but
+identify a bound on the impact of symmetry by proving
+undecidabilty for 3-counter machines invariant under the
+cyclic permutation group.
+%\end{abstract}
+
+\bigskip
+
+\para{Introduction}
+
+Counter machines are a particularly simple
+model of computation \cite{Minsky67}.
+A counter machine has a number of registers where it
+stores its data, each register storing a natural number.
+While the particular instruction sets may vary, 
+common machine instructions are: counter increment, 
+counter decrement, and counter zero-test. 
+Many variants of the model have been introduced and studied,
+and both deterministic and nondetermistic 
+machines are widely studied in the literature 
+(often under different names, for instance 
+\emph{counter automata}).
+Numerous syntactic restrictions of the model are also widely
+studied since,
+as shown already by Minsky in the early 1960s \cite{Minsky61},
+in its full generality the model is Turing-complete:
+deterministic 2-counter machines have undecidable halting problem. 
+
+The purpose of this paper is to initiate study of impact of
+\emph{symmetry} on the expressive power of counter machines.
+We investigate the \emph{nondeterministic} model, where
+a machine may choose between different istructions executable
+in the same state.
+
+As the starting point, we specifically choose the set of 
+machine instructions:
+counter \emph{updates} that simultaneously modify all counters  
+by given numbers, and counter \emph{zero-tests} that are 
+executable only if a given counter has value zero.
+Every \emph{transition} $(q,i,q')$ of a machine changes its state
+from $q$ to $q'$,
+and executes an attached instruction $i$,
+and executing a transition in a given configuration constitutes a 
+\emph{step} of a machine.
+The model we investigate is thus essentially \vass
+(vector addition systems with states) \cite{}
+extended with zero tests, and
+is clearly equivalent to standard counter machines.
+In this paper we mostly focus on counter machines that are 
+\emph{symmetric}, by which we mean that the set of transitions
+is invariant under all permutations $\sigma$ of counters:
+for every transition $(q,i,q')$, the machine has also a transition
+$(q,\sigma(i), q')$, where $\sigma(i)$ is the result of 
+applying $\sigma$ to the counters in the instruction $i$.
+We choose to impose the invariance only on update transitions
+(when $i$ is a counter update), but
+not on zero-test transitions, since the latter does not seems
+necessary for our proofs to work.
+\sla{here we need a small example}
+
+The initial motivation of this study is the immense impact of symmetry
+on complexity of the \vass reachability problem:
+while the problem is {\sc Ackermann}-complete in general,
+the complexity drops to
+only \pspace-complete for symmetric \vass \cite{KL25}.
+As our main result, we confirm the immense drop in case of 
+2-counter machines
+(in this case, symmetricity amounts to invariance under all swaps of 
+counters).
+We prove decidability of the configuration-to-configuration reachability
+problem, when one aks if a given machine has a sequence of steps
+starting in a given source configuration and ending in
+a given target one:
+
+\begin{theorem} \label{thm:main}
+The reachability problem  is decidable for symmetric 2-counter machines.
+\end{theorem}
+
+Symmetric two-counter machines are thus not Turing-complete,
+which we consider to be quite surprising.
+
+\begin{remark}
+In the proof we do not need symmetry of zero-test transitions,
+only symmetry of updating transitions.
+Interestingly, the converse restriction, namely imposing symmetry on
+zero-test transitions but not on update transitions immediately 
+leads to undecidability.
+\end{remark}
+
+A natural question is whther \Cref{thm:main} extends to larger numbers of
+counters. 
+In particular, is the reachability problem is still decidable
+for symmetric 3-counter machines, whose update transitions are invariant
+under all (6) permutations of the 3 counters?
+Our apprach does not extend to the 3-counter setting, as our argument
+relies on a
+number of low-dimensional properties of reachable sets and reachability
+relations.
+We thus leave this intriguing question for further research, conjecturing
+decidability for any numner of counters:
+
+\begin{conjecture}
+The reachability problem  is decidable for symmetric counter machines.
+\end{conjecture}
+
+Another question we leave open is the exact compplexity of the problem.
+\sla{expand}
+
+It is natural to consider invariance under certain subgroups
+of permutations: for every subgroup $G\leq \symg d$
+one can consider the class of \emph{$G$-counter machines}, namely 
+$d$-counter machines invariant under all permutations from $G$.
+Symmetric $d$-counter machines are thus the same as 
+$\symg d$-counter machines.
+For instance, every $\symg 3$-counter machine is automatically
+a $\cycg 3$-counter machine, for the cyclic 
+permutation group $\cycg 3 \leq \symg 3$.
+As an additional result, we identify a bound on the impact of symmetry,
+already for 3-counter machines, namely we prove undecidability 
+for $\cycg 3$-counter machines:
+
+\begin{theorem} \label{thm:undecid}
+The reachability problem  is undecidable for $\cycg 3$-counter machines.
+\end{theorem}
+
+
+\para{Related research}
+
+Identifying decidable restrictions of counter machines
+is a very active line of research since 1960s.
+A prominent example is counter machines without zero-tests, that is
+vector addition systems with states
+(\vass), shown to have decidable reachability in early 1980s
+\cite{Mayr81,Kosaraju82}.
+Surprisingly, 
+imposing symmetry makes \vass reachability as cheap as
+\pspace-complete \cite{KL24}.
+Even more powerful but still decidable is the model of \vass 
+with only one zero-tested counter \cite{},
+or with with nested zero-tests \cite{}.
+On the other hand, most natural restrictions of the counter model
+preserves Turing-completeness.
+For instance, considering deterministic counter machines, 
+the reachability problem is still undecidable
+in the subclass of \emph{reversible} counter machines,
+where the step relation is reverse deterministic, and hence every step
+may be uniquely undone \cite{Morita96}.
+
+A couple of interesting decidability and compleexity results 
+have neen obtained in the special case of 2 counters.
+For instance, the above mentioned undecidability in reversible counter
+machines seems to be very fragile with respect
+to the choice of instruction set of a counter machine.
+As shown in \cite[Thm.~21]{Dudenhefner},
+for certain 
+choice of instruction set, the Turing-complete model of 2-counter machines 
+becomes decidable under reversibility restriction.
+% 
+(Symmetric) 2-counter machines are an extesion of (symmetric) 2-\vass by zero-tests.
+The reachability problem for 2-\vass and for symmetric 2-\vass is \pspace-complete
+\cite{,KL24}.
+The same is the complexity of the problem in case of 
+2-\vass with one zero-tested counter \cite{}.
+In all the three cases the reachability relation is semilinear
+\cite{}, which 
+fails when the number of counters is at least 3.
