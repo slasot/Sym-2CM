@@ -207,6 +207,7 @@ we define the following compositions:
 & R \circ B  &&= \{x \in A \mid \exists y \in B : (x,y)\in R\},\\
 & A \circ R  &&= \{y \in B \mid \exists x \in A : (x,y)\in R \}.
 \end{alignat*}
+If $X=Y$, then $R^\ast$ is $\bigcup_{n=0}^\infty \underset{\text{$n$ times}}{\underbrace{R \circ \cdots \circ R}}$.
 
 \para{Semilinear Sets}
 If $b, p_1, \dots, p_n \in \N^d$,
@@ -528,7 +529,7 @@ q(a) \step^* q'(a')
 \end{equation}
 without specifying which of the four cases occurs,
 since the (zero-testing) control states $q$, $q'$ uniquely determine that.
-We follow the notational shorthand (\ref{eq:basictran}) throughout. 
+We follow the notational shorthand \eqref{eq:basictran} throughout. 
 Without loss of generality, we also assume 
 that both the source and target vector have at least one 0.
 
@@ -539,7 +540,13 @@ falls into one of three categories,
 %which represent different kinds of \vass runs in $(Q\times\N^2)$:
 denoted by $\step_+$, $\step_-$, and $\step_0$;
 the precise definitions will be given in \Cref{sec:proof}.
-%\bigskip\noindent
+Thus the rechability relation is 
+$\big(\step_0 \ \cup \ \step_- \ \cup \ \step_+ \big)^*$, 
+an arbitrary composition
+of the three relations arbitrarily many times.
+Note that the composition assures that \emph{control states match}!
+
+\bigskip\noindent
 Using this categorization 
 we split the run $\rho$ into three phases (possibly empty): 
 \begin{itemize}
@@ -548,21 +555,23 @@ we split the run $\rho$ into three phases (possibly empty):
 \item $\Phi_3$, which is a \emph{suffix} of $\rho$ and starts with a $\rho_i$ of the form $\step_-$ 
 (followed by other \vass segments of the forms $\step_-$ and $\step_0$).
 \end{itemize}
-Thus the three phases are of the following form:
+It is obvious to deduce that the three phases are of the following form:
 \begin{align*}
 \Phi_1 :\ &((\step_0 \ \cup \ \step_-)^\ast \circ \step_+)^\ast,\\
 \Phi_2 :\ &(\step_0)^\ast,\\
 \Phi_3 :\ &(\step_- \circ \step_0^\ast)^\ast.
 \end{align*}
 
-We will prove that $\Phi_2 \subseteq (Q \times \N)^2$ is an \emph{effectively semilinear} relation%
+To conclude, 
+we will prove that $\Phi_2 \subseteq (Q \times \N)^2$ 
+is an \emph{effectively semilinear} relation%
 %\footnote{This means $\{n \in \N \colon (q,n) \in \Phi_3 \}$ is effectively semilinear, for every $q\in Q$.}%
 ,
 and that for given source $s$ and target $t$, the sets
-\begin{align*}
-\Phi_3 \circ \{t\} &\coloneq \{x \mid (x,t) \in \Phi_3 \} \subseteq Q \times \N, \\
-\{s\} \circ \Phi_1 &\coloneq \{y \mid (s,y) \in \Phi_1 \} \subseteq Q \times \N
-\end{align*}
+\begin{alignat*}{6}
+\Phi_3 \circ \{t\} &\coloneq \{x &&\mid (x,t) \in \Phi_3 \hskip 0.5pt\} &&\subseteq Q \times \N, \\
+\{s\} \circ \Phi_1 &\coloneq \{y &&\mid (s,y) \in \Phi_1 \} &&\subseteq Q \times \N
+\end{alignat*}
 are also \emph{effectively semilinear}.
 Thus the reachability question, 
 which is equivalent to%
@@ -585,7 +594,7 @@ is decidable
 %\end{align*}
 %As discussed before, the ``zero-testing states'' indicate which counter is zero, 
 %so we can merge the four cases into one notation, 
-%adopting the shorthand (\ref{eq:basictran}).
+%adopting the shorthand \eqref{eq:basictran}.
 %and that a run zero tests every counter whenever it has value 0. 
 % To this aim double the control states, that is replace every $q\in Q$
 % by $q_1, q_2$, each of them involved into the same increment transitions as $q$, but $q_1$ only 
@@ -606,7 +615,7 @@ is decidable
 %since the control states $q,q'$ uniquely determine these two bits of information.
 %Note that the newly introduced zero tests are not symmetric, but we do not assume that. 
 
-\para{Run structure}
+\para{VASS segment types}
 
 We split the relation \eqref{eq:basictran} into three disjoint subrelations, 
 depending on the value of
@@ -650,79 +659,91 @@ Basically, what is the $D$?}
 take the same $D$ easily, namely by multiplying the forward $D$ by the backward one. 
 Any multiplicity of $D$ is good enough for the pumping lemma to hold.}
 
-The idea is to split every run into segments, at positions where some of counters is zero tested.
-The segment between two such consecutive positions is described by one of the three relations
-$\step_0$, $\step_-$ and $\step_+$.
-Now the rechability relation is $\big(\step_0 \ \cup \ \step_- \ \cup \ \step_+ \big)^*$, an arbitrary composition
-of all the three relations arbitrarily many times, where $R^*$ stands for composing the relation $R$
-arbitrarily
-many times.
-Note that the composition assures that control states match.
-We prefer to see the reachability relation as described by the expression
-\begin{align} \label{eq:3phases}
-\big(\step_{0}^* \ \circ \ E \ \circ \ \step_+)^* \ \circ \ \step_0^* \ \circ \ E
-\end{align}
-where 
-\[
- E  \ = \ \big(\step_- \ \circ \ \step_0^*\big)^*.
-\]
-Thus we split every run into three phases: the first one ends with the last appearance of $\step_+$,
-the middle one consisting just of $\step_0^*$, and the last one starting with $\step_-$ and
-iterating arbitratily many times $\step_-$ and $\step_0$.
-Each of the phases may be empty.
+%Now define the three phases $\Phi_1, \Phi_2, \Phi_3$ as stated above.
+%
+%\begin{align} \label{eq:3phases}
+%\big(\step_{0}^* \ \circ \ E \ \circ \ \step_+)^* \ \circ \ \step_0^* \ \circ \ E
+%\end{align}
+%where 
+%\[
+% E  \ = \ \big(\step_- \ \circ \ \step_0^*\big)^*.
+%\]
+%Thus we split every run into three phases: the first one ends with the last appearance of $\step_+$,
+%the middle one consisting just of $\step_0^*$, and the last one starting with $\step_-$ and
+%iterating arbitratily many times $\step_-$ and $\step_0$.
+%Each of the phases may be empty.
 
 
 \para{Computing pumpable sets}
+In the sequel, fix $D$ from \cref{lem:targetpump}. 
+A set $X \subseteq Q \times \N$ is \emph{pumpable} 
+if it is $D$-periodic:
+for all $(q,a) \in X$, also $(q,a+D) \in X$.
 
-In the sequel we compute sets of configurations $X\subseteq Q\times\N$ which are \emph{pumpable},
-namely $q(a)\in X \implies q(a+D)\in X$. We represent these sets in vector form as functions
-$X:Q\to \powset{\N}$, where $X(q)$ is pumpable for every $q\in Q$, namely $a\in X(q)\implies a+D\in X(q)$.
-Termination of computation will be guaranteed since the chains of such sets $X$ will be increasing, and
-
+We will compute an increasing chain 
+of sets of configurations $X\subseteq Q\times\N$ which are pumpable.
+%We represent these sets in vector form as functions
+%$X:Q\to \powset{\N}$, where $X(q)$ is pumpable for every $q\in Q$, namely $a\in X(q)\implies a+D\in X(q)$.
+The termination of computation is guaranteed by the following lemma:
 \begin{lemma} \label{lem:stab}
-    Every increasing chain of pumpable subset of $\N$ stabilizes.
+    Every increasing chain of $X_1 \subseteq X_2 \subseteq \cdots$ of $D$-periodic sets of $\N$ stabilizes.
 \end{lemma}
 
 The two basic building blocks:
 
 \begin{lemma} \label{lem:0-+}
-The relations $\step_0, \ \step_-, \ \step_+$ are effectively semi-linear (and thus computable).
+The relations $\step_0, \ \step_-, \ \step_+$ are effectively semilinear (and thus computable).
 \end{lemma}
 \begin{proof}
-    They are sections of the reachability relation of a 2-\vass which is effectively semi-linear \cite{Blondin15}.
+    They are sections of the reachability relation of a 2-\vass 
+    which is effectively semi-linear \cite{Blondin15}.
 \end{proof}
 
 \begin{lemma} \label{lem:0star}
-The relation $\step_0^*$ is effectively semi-linear (and thus computable).
+The relation $\step_0^*$ is effectively semilinear (and thus computable).
 \end{lemma}
 \begin{proof}
+    \vrm{Hard; to write down later.}\par
     Computable by a 1-counter automaton, a special case of a pushdown automaton.
 \end{proof}
 
-Notationally, we allows ourselves to compose a relation $R\subseteq (Q\times\N)^2$ 
-with a set $X\subseteq Q\times\N$ to denote the set inverse image $R\circ X\subseteq Q\times\N$, 
-or the image $X\circ R \subseteq Q\times\N$.
-% Let $I_s = \{(s,s)\}$ be the relation containg exactly one pair, where $s$ is the source configuration.
-% Likewise, let $I_t = \{(t,t)\}$.
-We will be able to decide if $s\step^* t$, given source and target configurations $s,t\in Q\times\N$,
-as long as we prove the two following fact: one can (backward) compute the inverse image
-$E\circ \{t\}$, and (forward) compute the image 
-$\{s\} \circ \big(\step_{0}^* \ \circ \ E \ \circ \ \step_+)^*$,
-according to the partition into phases \eqref{eq:3phases}.
+
+%Notationally, we allows ourselves to compose a relation $R\subseteq (Q\times\N)^2$ 
+%with a set $X\subseteq Q\times\N$ to denote the set inverse image $R\circ X\subseteq Q\times\N$, 
+%or the image $X\circ R \subseteq Q\times\N$.
+%% Let $I_s = \{(s,s)\}$ be the relation containg exactly one pair, where $s$ is the source configuration.
+%% Likewise, let $I_t = \{(t,t)\}$.
+%We will be able to decide if $s\step^* t$, given source and target configurations $s,t\in Q\times\N$,
+%as long as we prove the two following fact: one can (backward) compute the inverse image
+%$E\circ \{t\}$, and (forward) compute the image 
+%$\{s\} \circ \big(\step_{0}^* \ \circ \ E \ \circ \ \step_+)^*$,
+%according to the partition into phases.
 
 \begin{lemma} \label{lem:compback}
 One can compute 
-the (source-pumpable) set $\big(\step_- \ \circ \ \step_0^*\big)^* \ \circ \ \{t\}$.
+the set 
+$\big(\step_- \ \circ \ \step_0^*\big)^* \ \circ \ \{t\}$.
 \end{lemma}
 \begin{proof}
-The set $\big(\step_- \ \circ \ \step_0^*\big) \ \circ \ S$ is source-pumpable due to \eqref{eq:spump},
-irrespectively of $S$, and computable due to \Cref{lem:0-+,lem:0star}, as long $S$ is semi-linear.
-The claim follows by iterating the computation of the transformation
+Recall that $\big(\step_- \ \circ \ \step_0^*\big) \ \circ \ S$
+is the set of all 
+\((q,a) \in Q \times \N\) such that $q(a)$ leads to some $x \in S$ via a run of form $(\step_-\step_0^\ast)^\ast$.
+Thus, $\big(\step_- \ \circ \ \step_0^*\big) \ \circ \ S$ is source-pumpable 
+due to \eqref{eq:spump},
+irrespectively of $S$.
+
+It is also computable due to \Cref{lem:0-+,lem:0star}, 
+as long $S$ is semilinear.
+This is seen by iterating the computation of the transformation
 \[
 S \quad \mapsto \quad \big(\step_- \ \circ \ \step_0^*\big) \ \circ \ S
 \quad \cup \quad S,
 \]
-relying on \Cref{lem:stab}.
+which stabilises, by \Cref{lem:stab}.
+\vrm{how many details to write here?}
+Furthermore, by the effective representation of $\step_0^\ast$ and $\step_{-}$ as semilinear relations,
+each step of the process above is effectively representable,
+and thus so is the fixed point.
 \end{proof}
 
 \begin{lemma} \label{lem:compfor}
@@ -739,6 +760,9 @@ Computability is more involved, but relates again on iteration of the transforma
 S \quad \mapsto \quad f(S) \quad \cup \quad S,
 \]
 relying on \Cref{lem:stab}.
+
+\vrm{To write that $f(S)$ consists of arithmetic progressions of period $D$,
+and that we choose the minimal element of every arithmetic progression.}
 To compute $f(S)$, one first establishes which remainders modulo $D$ appear in this set,
 by applyting the transformation of \Cref{lem:compback} to the set 
 $(\step_+ \ \circ \ M_k)$,
