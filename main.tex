@@ -1,8 +1,8 @@
 \newif\ifuselm
 %\uselmfalse
 \uselmtrue
-\documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate,dvipsnames]{lipics-v2021}
-%\documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate,dvipsnames,anonymous]{lipics-v2021}
+%\documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate,dvipsnames]{lipics-v2021}
+\documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate,dvipsnames,anonymous]{lipics-v2021}
 
 
 \usepackage{todonotes}
@@ -32,8 +32,9 @@
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 
-\title{Symmetric two-counter machines\footnote{{Partially supported by the NCN grant 2024/55/B/ST6/01674.}
-}} %TODO Please add
+\title{Symmetric two-counter machines%
+% \footnote{{Partially supported by the NCN grant 2024/55/B/ST6/01674.}}
+} 
 
 %\titlerunning{Dummy short title} %TODO optional, please use if title is longer than one line
 
@@ -125,6 +126,8 @@ are invariant under swapping of counters.
 
 
 \newpage
+
+    \input{abstract.tex}
 
 \section{The model}
 
@@ -748,7 +751,7 @@ and thus so is the fixed point.
 
 \begin{lemma} \label{lem:compfor}
 One can compute 
-the (target-pumpable) set 
+the set 
 $\{s\} \circ \big(\step_{0}^* \ \circ \ E \ \circ \ \step_+)^*$.
 \end{lemma}
 \begin{proof}
