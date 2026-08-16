@@ -1,0 +1,502 @@
+
+% %\begin{abstract}
+% Counter machines are a particularly simple, Turing-complete
+% model of computation.
+% We study the expressive power of nondeterministic
+% counter machines which are symmetric, namely their
+% transitions are invariant under swapping of counters.
+% As the main result we demonstrate that symmetric 2-counter machines
+% are not Turing-complete, by proving decidability of their 
+% reachability problem.
+% %Our approach builds on specific properties of 2-counter
+% %machines, and does not extend to 3 or more counters.
+% We conjecture the decidability 
+% for nondeterministic machines with arbitrarily many counters,
+% as long as (their transitions) are invariant under all permutations
+% of counters. 
+% We leave the status for symmetric 3-counter machines open, but
+% identify a bound on the impact of symmetry by proving
+% undecidabilty for 3-counter machines invariant under the
+% cyclic permutation group.
+% %\end{abstract}
+
+\bigskip
+
+\section{Introduction}
+
+Counter machines (\cm{s}) are a particularly simple
+model of computation \cite{Minsky67}.
+A counter machine has a number of registers where it
+stores its data, each register storing a natural number.
+While the particular instruction sets may vary, 
+common machine instructions are: counter increment, 
+counter decrement, and counter zero-test. 
+Many variants of the model have been introduced and studied,
+and both deterministic and nondetermistic 
+machines are widely studied in the literature 
+(often under different names, for instance 
+\emph{counter automata}).
+Numerous syntactic restrictions of the model are also widely
+studied \cite{HKOW09,Ibarra78,HopcroftPansiot,FS00}
+since,
+as shown already by Minsky in the early 1960s \cite{Minsky61},
+in its full generality the model is Turing-complete:
+deterministic 2-counter machines can faithfully simulate Tuting machines
+and have undecidable halting problem. 
+
+The purpose of this paper is to understand the impact of
+\emph{symmetry} on the expressive power of \cm{s}. %counter machines.
+We investigate the \emph{nondeterministic} model, where
+a machine may choose between different istructions executable
+in the same state.
+
+\para{Symmetric counter machines}
+As the starting point, we specifically choose the set of 
+machine instructions:
+counter \emph{updates} that simultaneously modify all counters  
+by given numbers, and counter \emph{zero-tests} that are 
+executable only if a given counter has value zero.
+Every \emph{transition} $(q,i,q')$ of a machine changes its state
+from $q$ to $q'$,
+and executes an attached instruction $i$.
+Executing a transition in a given configuration constitutes a 
+\emph{step} of a machine.
+The model we investigate is thus essentially \vass
+(vector addition systems with states) \cite{HopcroftPansiot}
+extended with zero-tests, and
+is clearly equivalent to standard \cm{s}. %counter machines.
+In this paper we mostly focus on \cm{s} %counter machines 
+that are 
+\emph{symmetric}, by which we mean that the set of transitions
+is invariant under all permutations $\sigma$ of counters:
+for every transition $(q,i,q')$, the machine has also a transition
+$(q,\sigma(i), q')$, where $\sigma(i)$ is the result of 
+applying $\sigma$ to the counters in the instruction $i$.
+Specifically, we choose to impose the invariance only on update transitions
+(when $i$ is a counter update), but
+not on zero-test transitions, since the latter does not seems
+necessary for our proofs to work.
+Here is an illustrative example of a 2-\cm (a \cm having two counters)
+with
+two control states and
+six transitions, including five symmetric update transitions
+and one zero-test transition:
+\sla{the example to be improved}
+% \begin{figure}
+\begin{center}
+\scalebox{0.7}
+{\begin{tikzpicture} [draw=black!70,
+  fill=blue!20, node distance = 4cm, on grid, auto,
+  every initial by arrow/.style = {thin}]
+% State q0 
+\node (q0) [state, scale=1.4, fill=blue!20, initial text = {}] {$p$};
+% State q1  
+\node (q1) [state, scale=1.4, fill=blue!20, right = of q0] {$q$};
+% Arrows
+\path [-stealth, thick]
+   (q0) edge[bend left] node[scale=1.5] {\tiny{$\textbf{zero-test}_1$}}  (q1)
+   (q1) edge[bend left] node[scale=1.1] {$(-1,-1)$}  (q0)
+   (q0) edge [loop above] node[scale=1.5] {$\substack{(-1, 3) \\ (3, -1)}$}()
+   (q1) edge [loop above] node[scale=1.5] {$\substack{(1, -1) \\ (-1, 1)}$}();
+\end{tikzpicture}}
+\end{center}
+% \caption{A symmetric 2-counter machine.}
+\label{fig:example}
+% \end{figure}
+
+
+\para{Contribution}
+The initial motivation of this study is the immense impact of symmetry
+on complexity of the \vass reachability problem:
+while the problem is {\sc Ackermann}-complete in general \cite{LS19,CO21,L21},
+the complexity drops to
+only \pspace-complete for symmetric \vass \cite{KL25}.
+As our main result, we confirm the immense drop in case of 
+2-\cm{s}
+(in this case, symmetricity amounts to invariance under all swaps of 
+counters).
+We prove decidability of the configuration-to-configuration reachability
+problem, when one aks if a given machine has a sequence of steps
+starting in a given source configuration and ending in
+a given target one:
+
+\begin{theorem} \label{thm:main}
+The reachability problem  is decidable for symmetric 2-counter machines.
+\end{theorem}
+
+Symmetric two-counter machines are thus not Turing-complete.
+We find this result quite surprising, as it applies to a model
+with unrestricted zero-test instructions.
+
+\begin{remark}
+In the proof we do not need symmetry of zero-test transitions,
+only symmetry of updating transitions.
+Interestingly, the converse restriction, namely imposing symmetry on
+zero-test transitions but not on update transitions immediately 
+leads to undecidability.
+\end{remark}
+
+A natural question is whether \Cref{thm:main} extends to larger numbers of
+counters. 
+In particular, is the reachability problem still decidable
+for symmetric 3-counter machines, whose update transitions are invariant
+under all 6 permutations of the 3 counters?
+Our decidability argument does not extend to the 3-counter setting, 
+as the argument relies on a
+number of low-dimensional properties of reachable sets and reachability
+relations.
+We thus leave this intriguing question for further research, conjecturing
+decidability for any numner of counters:
+
+\begin{conjecture}
+The reachability problem  is decidable for symmetric counter machines.
+\end{conjecture}
+
+Another question we leave open is the exact complexity of the problem.
+As the lower bound, we known nothing more than 
+\pspace-hardness inherited from symmetric 2-\vass \cite{KL24}.
+It is possible that the reachability problem is \pspace-complete
+in symmetric $d$-\cm{s} for every $d\leq 2$.
+\sla{expand}
+
+\medskip
+
+It is natural to consider invariance under certain subgroups
+of permutations: for every subgroup $G\leq \symg d$
+one can consider the class of \emph{$G$-counter machines}
+($G$-\cm{s}), namely 
+$d$-counter machines invariant under all permutations from $G$.
+On one end, 
+when $G=\symg d$, the general definition instantiates to 
+symmetric $d$-\cm{s}.
+On the opposite end, when $G$ is the trivial group one gets classical counter
+machines.
+Between the two extremities there is a landscape of models, 
+whose expressive power is related according to the permutation subgroup relation:
+whenever $G\leq H$, every $H$-\cm is automatically a
+$G$-\cm.
+For instance, every $\symg 3$-\cm is automatically
+a $\cycg 3$-\cm, for the cyclic 
+permutation group $\cycg 3 \leq \symg 3$.
+As an additional result, we identify a bound on the impact of symmetry,
+already for 3-counter machines, namely we prove undecidability 
+for $\cycg 3$-counter machines:
+
+\begin{theorem} \label{thm:undecid}
+The reachability problem  is undecidable for $\cycg 3$-counter machines.
+\end{theorem}
+
+
+\para{Related research}
+
+Identifying decidable restrictions of counter machines
+is a very active line of research since 1960s, for instance 
+1-counter, reversal-bounded, or restricted 2-counter machines 
+\cite{HKOW09,Ibarra78,FS00}.
+A prominent example is counter machines without zero-tests, that is
+vector addition systems with states
+(\vass), shown to have decidable reachability in early 1980s
+\cite{Mayr81,Kosaraju82,Lambert92}.
+The decidability extends to 
+\cm{s}
+with only one zero-tested counter \cite{Bonnet11},
+or with with nested zero-tests \cite{Reinhardt08,GCL25}.
+On the other hand, most of natural restrictions of the counter model
+preserves Turing-completeness, as long as no constraint is imposed
+on zero-tests.
+For instance, considering deterministic \cm{s}, 
+the reachability problem is still undecidable
+in the subclass of \emph{reversible} \cm{s},
+where the step relation is reverse deterministic, and hence every step
+may be uniquely undone \cite{Morita96}.
+
+In the special case of 1 counter, symmetric 1-\cm{s} coincide with 
+general 1-\cm{s}.
+Their reachability problem is \np-complete 
+if transition updates are encoded in binary, and \nl-complete 
+in unary encoding \cite{HKOW09}.
+
+% (Symmetric) 2-counter machines are an extesion of (symmetric) 2-\vass by 
+% zero-tests.
+Restricting the use of zero-tests in 2-counter machines often
+leads not only to decidability, but even 
+to \pspace-completenss of the reachability problem.
+Assuming binary encoding,
+the \pspace-completeness has been obtained for 2-\vass 
+\cite{Blondin15,BEFGHLMT21}
+(assuming unary encoding, we have \nl-completeness \cite{ELT16}),
+but also for the further restriction to symmetric 2-\vass \cite{KL24},
+and for a relaxation of 2-\vass to 
+2-counter machines with just one zero-tested counter \cite{FLS18}.
+In all the three cases the reachability relation is effectively semilinear, which
+is a key for obtaining the \pspace upper complexity bound, and which 
+fails when the number of counters is at least 3 (even for 3-\vass) 
+\cite{HopcroftPansiot}.
+We do not know the exact complexity of symmetric 2-counter machines,
+but it is possible that the complexity remains \pspace.
+Furthermore, we do not know if the reachability relation of a
+symmetric 2-counter machine is semilinear, but we believe it is so.
+
+Contrarily to the avove-mentioned restrictions of zero-tests, 
+our model leaves the zero-tests unrestricted, which makes
+\Cref{thm:main} particularly interesting.
+We conclude by recalling another recently obtained decidability result that
+also does not assume any explicit restriction of zero-tests \cite{Dudenhefner22}.
+% , and hence seems as surprising as our \Cref{thm:main}.
+It amounts to observing that
+the above-mentioned Turing-completeness of 
+reversible counter machines seems to be very fragile with respect
+to the choice of instruction set of a \cm.
+As shown in \cite{Dudenhefner22},
+for certain 
+choice of instruction set, the Turing-complete model of 2-\cm{s}
+becomes decidable under the reversibility restriction.
+% 
+
+\para{Outline} \sla{todo}
+
+\section{Symmetric counter machines}
+
+Let $d$ be a positive integer.
+A \emph{$d$-counter machine} ($d$-\cm in short) 
+$\mach$
+is a finite-state automaton whose transitions
+may perform two kinds of instructions,
+namely update and zero-test \emph{instructions},
+on $d$ \emph{counters}, namely nonnegative integer values
+stored by $\mach$.
+Formally, we define such a machine as 
+$\mach = (Q,T)$, where $Q$ is a finite set of control states,
+$T\subseteqfin Q\times\Instr\times Q$ is a finite set of 
+\emph{transiitons} of $\mach$,
+and the set $\Instr$ of \emph{istructions} is the union of
+update instructions and zero-testing instructions:
+\[
+\Instr \ = \ \setof{\updinstr{w}}{w\in\Z^d} \ \cup \ 
+\setof{\ztinstr{i}}{i\in d}.
+\]
+Execution of $\updinstr{w}$ amounts to adding
+the vector
+$w$ to the counters, and execution of 
+$\ztinstr{i}$ amounts to checking if counter $i$
+has value 0.
+Formally, we define the semantics of $\mach$ by considering
+its \emph{configurations} $c=(q,v) \in Q\times \N^d$ and
+the step relation between configurations determined by 
+transitions of $\mach$:
+$(q,v) \step (q',v')$ if 
+
+\begin{itemize}
+\item 
+$v' = v + w$,  for some  $(q,\updinstr{w},q')\in T$, or
+\item  
+$v' = v$ and $v(i)=0$, for some 
+$(q,\ztinstr i, q')\in T$.
+\end{itemize}
+
+\noindent
+We use the term $d$-\vass (vector addition system with states)
+for a $d$-\cm without zero-test instructions.
+
+The symmetric group $\symg d$ acts naturally on vectors in $\Z^d$
+and hence also on update transitions:
+for $\sigma\in \symg d$ and $t=(q,w,q')\in T$, we define
+$\sigma(t)=(q,\sigma(w),q')$, where $\sigma(w)(\sigma(i))=w(i)$
+for every $i\in\setto d$.
+A $d$-\cm $\mach$ is \emph{symmetric} if its update transitions
+are invariant under the natural action: for every $\sigma\in \symg d$ 
+and $t\in T$, we have $\sigma(t)\in T$.
+Importantly, 
+we note that no restriction is imposed on zero-test transitons of $\mach$.
+Therefore we assume, \mywlog, 
+that every zero-test applies to a single counter.
+
+In the sequel
+we mostly focus on symmetric 2-\cm{s},
+which are 2-\cm{s} whose set of transitions is invariant under the
+swap of counters.
+
+The reflexive-transitive closure $\step^*$ of $\step$ we call
+the \emph{reachability relation} (between configurations).
+The \emph{reachability problem} asks, given a \cm $\mach$ and two
+its configurations, source $c$ and target $c'$, whether $c \step^* c'$
+(in which case we say that $c'$ is \emph{reachable} from $c$).
+A reachability certificate, namely any sequence $\rho$ of configurations
+\[
+c \ = \ c_0 \step c_1 \step \ldots \step c_n \ = \ c'
+\]
+related by the step relation,
+we call a \emph{run} from configuration $c$ to $c'$.
+
+% A 2-\vass $\V$ is symmetric if whenever it has a transition
+% $q \xstep{(x_1,x_2)} q'$
+% then it also has the transposed transition 
+% $q \xstep{(x_2,x_1)} q'$.
+
+% %
+% A \emph{symmetric counter machine} with two counters (\sym 2-\cm) is a 
+% counter machine whose \vass component (\ie, the \vass obtained by removing zero tests) is a symmetric \vass.
+% Thus, transitions are symmetric,
+% but zero tests need not be, and can distinguish the two counters.
+
+% We prove that reachability in \sym 2-\cm is decidable.
+% The proof consists of two independent sections:
+% \cref{sec:targetpump}, which proves a general lemma about \sym 2-\cm{s},
+% and \cref{sec:strategy,sec:proof}, which use that lemma (as a black-box)
+% to prove the decidability result.
+
+
+\section{Strategy of decidability proof}\label{sec:strategy}
+
+% % As above, we use $\step$ to denote step relation of a 2-\vass, namely without zero tests.
+% First some notational preprocessing.
+
+Consider a symmetric 2-\cm $\mach = (Q,T)$ and 
+two configurations, source $s$ and target $t$  ($s,t \in Q\times\N^2$).
+For convenience, we perform on $\mach$ the following notational
+preprocessing:
+we replace every zero-test transition
+$t=(q,\ztinstr i, q')\in T$ by a sequence of two transitions,
+\[
+(q, \ztinstr i, q^t) \qquad
+(q^t, \updinstr {0,0}, q'),
+\]
+% q \xstep{\textsf{c}_i=0?} S_i^t \xstep{(0,0)} q',\]
+where $q^t$ is a new state, unique to the transition $t$.
+Notice that reachability in the new symmetric 2-\cm thus obtained 
+is equivalent to the original one, 
+and that it has special states $q^t$
+which can only be entered if the counter zero-tested by 
+transition $t$ is zero;
+we call them \emph{zero-testing states}.
+The zero-testing states have the property
+that they ``remember'' which counter is zero 
+when the control of the machine is at them,
+and that zero-test transitions are exactly those entering
+a zero-testing state.
+A fragment (infix) of a run between two consecutive zero-testing
+states consists of only update transitions, except for the very last
+transition which is a zero-test.
+Such a fragment, called \emph{segment} in the sequel,
+may be considered as a 2-\vass run
+that ends with one counter 0, and which counter is 0 is determined
+by the ending zero-testing state.
+
+Furthermore, \mywlog we may assume that one counter is 0
+in both source and target configurations.
+For instance, if the source vector is $v=(v_1,v_2)$ with $0<v_1\leq v_2$,
+we replace it by $(0,v_2-v_1)$ and add one extra transition
+with update $(v_1,v_1)$.
+
+%into those corresponding to counter $\textsf{c}_1$ and to counter $\textsf{c}_2$,
+%so we tell which counter is zero by looking at the state.
+
+
+% The strategy of the proof is to 
+In the decidability proof we exploit the unique
+decompostion of a run $\rho$ from source $s$ to
+target $t$ 
+into segments:
+%\[ \rho=\rho_0 z_1 \rho_1 z_2 \dots \rho_{n-1}z_n\rho_n,\]
+\[ \rho=\rho_0 \rho_1 \dots \rho_n,\]
+where 
+each $\rho_i$ starts and ends at consecutive zero-testing states of 
+$\rho$.
+% ---%
+% we shall call the $\rho_i$ the \emph{\vass segments} of $\rho$.
+%
+Every $\rho_i$ is thus
+of one of the following forms:
+\begin{alignat*}{2}
+q(a,0) &\step^\ast q'(0,a')\\
+q(0,a) &\step^\ast q'(0,a')\\
+q(0,a) &\step^\ast q'(a',0)\\
+q(a,0) &\step^\ast q'(a',0),
+\end{alignat*}
+where $q$ and $q'$ are zero-testing states;
+notice that we may write just
+\begin{equation} \label{eq:basictran}
+q(a) \step^* q'(a')
+\end{equation}
+without specifying which of the four cases occurs,
+since the (zero-testing) states $q$, $q'$ uniquely determine that.
+We thus may consider $\step^*$ as the relation on $Q\times\N$,
+\[
+\step^* \ \subseteq \ (Q\times\N)^2,
+\]
+instead of $\step^* \ \subseteq \ (Q\times\N^2)^2$.
+We follow the notational shorthand \eqref{eq:basictran} throughout. 
+% Without loss of generality, we also assume 
+% that both the source and target vector have at least one 0.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.8]{figures-1.eps}
+\caption{The three relations $\step_+$, $\step_-$, and $\step_0$.
+The axes do \emph{not} correspond to the counters, 
+but rather the initial and final values $a$ and $a'$ of a segment.}
+\label{fig:areas}
+\end{figure}
+
+Every segment $\rho_i \colon q(a) \step^\ast q'(a')$, 
+depending on the values $a$ and $a'$,
+falls into one of three categories,
+%split the relation $\step^\ast$ into three subrelations,
+%which represent different kinds of \vass runs in $(Q\times\N^2)$:
+denoted by $\step_+$, $\step_-$, and $\step_0$;
+see \Cref{fig:areas} for a graphical illustration.
+% 
+The precise definitions will be given in \Cref{sec:proof}.
+Thus the rechability relation is 
+\[
+\big(\step_0 \ \cup \ \step_- \ \cup \ \step_+ \big)^*,
+\] 
+an arbitrary composition
+of the three relations arbitrarily many times.
+Note that the composition assures that \emph{control states match}.
+% 
+% \bigskip\noindent
+Using this categorization 
+we split the run $\rho$ into three \emph{phases} (possibly empty): 
+
+\begin{itemize}
+\item $\Phi_1$, which is the \emph{prefix} of $\rho$ and ends with the \emph{last} $\rho_i$ of the form $\step_+$,
+\item $\Phi_2$, which is an \emph{infix} of $\rho$ and consists only of $\rho_i$'s of the form $\step_0^*$, 
+\item $\Phi_3$, which is the remaining \emph{suffix} of $\rho$ starting 
+with a $\rho_i$ of the form $\step_-$.
+% (followed by other \vass segments of the forms $\step_-$ and $\step_0$).
+\end{itemize}
+
+\noindent
+Clarly, the composition of the three phases yields
+the reachability relation, that is
+\begin{align} \label{eq:reachrel}
+\step^* \ = \ \Phi_1 \circ \Phi_2 \circ \Phi_3
+\end{align}
+for  the three relations defined as follows:
+\begin{align*}
+&\Phi_1 \ = \ ((\step_0 \ \cup \ \step_-)^\ast \circ \step_+)^\ast,\\
+&\Phi_2 \ = \ (\step_0)^\ast,\\
+&\Phi_3 \ = \ (\step_- \circ \step_0^\ast)^\ast,
+\end{align*}
+
+To conclude, \Cref{thm:main} is proved by
+showing that $\Phi_2 \subseteq (Q \times \N)^2$ 
+is an \emph{effectively semilinear} relation%
+%\footnote{This means $\{n \in \N \colon (q,n) \in \Phi_3 \}$ is effectively semilinear, for every $q\in Q$.}%
+,
+and that for given source $s$ and target $t$, the sets
+\begin{alignat*}{6}
+&\Phi_3 \circ \{t\} \ := \  \{y &&\mid (y,t) \in \Phi_3 \hskip 0.5pt\}  \ \subseteq \ Q \times \N, \\
+&\{s\} \circ \Phi_1 \ := \  \{x &&\mid (s,x) \in \Phi_1 \} \ \subseteq \ Q \times \N
+\end{alignat*}
+are also \emph{effectively semilinear}.
+Thus the reachability question
+which, according to \eqref{eq:reachrel}, is equivalent to%
+%\( (s,t) \in \Phi_1\circ\Phi_2\circ\Phi_3,\) \ie 
+\begin{equation}
+\exists\, x,y \in Q\times\N \ : \  x \in \{s\} \circ \Phi_1 \ \wedge \ (x,y) \in \Phi_2 
+\ \wedge \ y\in \Phi_3 \circ \{t\},
+\end{equation}
+is decidable
+(by semilinearity, the last formulation is expressible in Pressburger Arithmetic).

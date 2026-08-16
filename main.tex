@@ -119,34 +119,31 @@
 
 %TODO mandatory: add short abstract of the document
 \begin{abstract}
-We study the expressive power of symmetric two-counter machines, namely
-two-counter machines whose transitions
-are invariant under swapping of counters.
+Counter machines are a particularly simple, Turing-complete
+model of computation.
+We study the expressive power of nondeterministic
+counter machines which are symmetric, that is their
+transitions are invariant under swapping of counters.
+As the main result we demonstrate that symmetric 2-counter machines
+are not Turing-complete, by proving decidability of their 
+reachability problem.
+%Our approach builds on specific properties of 2-counter
+%machines, and does not extend to 3 or more counters.
+We conjecture that the decidability extends to 
+machines with 3 or more counters that are symmetric, 
+namely their transitions are
+invariant under all permutations of counters. 
+We leave this problem open,
+even for 3 counters,
+but identify a bound on the impact of symmetry by proving
+undecidabilty for 3-counter machines invariant under the
+cyclic permutation group.
 \end{abstract}
 
 
 \newpage
 
-    \input{abstract.tex}
-
-\section{The model}
-
-A 2-\vass $\V$ is symmetric if whenever it has a transition
-$q \xstep{(x_1,x_2)} q'$
-then it also has the transposed transition 
-$q \xstep{(x_2,x_1)} q'$.
-
-%
-A \emph{symmetric counter machine} with two counters (\sym 2-\cm) is a 
-counter machine whose \vass component (\ie, the \vass obtained by removing zero tests) is a symmetric \vass.
-Thus, transitions are symmetric,
-but zero tests need not be, and can distinguish the two counters.
-
-We prove that reachability in \sym 2-\cm is decidable.
-The proof consists of two independent sections:
-\cref{sec:targetpump}, which proves a general lemma about \sym 2-\cm{s},
-and \cref{sec:strategy,sec:proof}, which use that lemma (as a black-box)
-to prove the decidability result.
+    \input{prefix.tex}
 
 
 %\noindent A \emph{Counter Machine with $n$-counters} (or $n$-\cm for short) 
@@ -179,38 +176,38 @@ to prove the decidability result.
 %
 
 \section{Terminology \& Notation}
-\para{VASS}
-In a \vass $\V$, \emph{path} is a sequence of transitions 
-where the target state of every transition
-matches the source targe state of the next one.
-A \emph{run} is a path plus a source configuration whose
-state matches with the first transition, such that
-all transitions are fireable.
-A \emph{cycle} is a path where the source state of the 
-first matches the target state of the last one.
-By $c; c'$ we denote the concatenation of paths $c, c'$, and  
-by $c^k$ we denote the $k$-fold concatenation of a cycle $c$.
-Firing of a single transition $q \xstep{(x_1,x_2)} q'$
-we call a \emph{step} and
-write $q(n_1, n_2) \step q'(n_1+x_1, n_2+x_2)$;
-and $\step^\ast$ is the transitive closure of $\step$.
+% \para{VASS}
+% In a \vass $\V$, \emph{path} is a sequence of transitions 
+% where the target state of every transition
+% matches the source targe state of the next one.
+% A \emph{run} is a path plus a source configuration whose
+% state matches with the first transition, such that
+% all transitions are fireable.
+% A \emph{cycle} is a path where the source state of the 
+% first matches the target state of the last one.
+% By $c; c'$ we denote the concatenation of paths $c, c'$, and  
+% by $c^k$ we denote the $k$-fold concatenation of a cycle $c$.
+% Firing of a single transition $q \xstep{(x_1,x_2)} q'$
+% we call a \emph{step} and
+% write $q(n_1, n_2) \step q'(n_1+x_1, n_2+x_2)$;
+% and $\step^\ast$ is the transitive closure of $\step$.
 
-\medskip
+% \medskip
 
 We denote by $\mysize \V$ the size of $\V$, in unary representation,
 and by $\norm \V$ the max-norm of $\V$, namely the maximal absolute value of
 all numbers appearing in transitions.
 Clearly, $\mysize \V \geq \norm \V$.
 
-\para{Relations}
-If $R\subseteq X \times Y$, $R' \subseteq Y \times Z$ and $A \subseteq X$, $B \subseteq Y$,
-we define the following compositions:
-\begin{alignat*}{3}
-& R \circ R' &&= \{(x,z) \mid \exists y : (x,y) \in R \wedge (y,z) \in R'\},\\
-& R \circ B  &&= \{x \in A \mid \exists y \in B : (x,y)\in R\},\\
-& A \circ R  &&= \{y \in B \mid \exists x \in A : (x,y)\in R \}.
-\end{alignat*}
-If $X=Y$, then $R^\ast$ is $\bigcup_{n=0}^\infty \underset{\text{$n$ times}}{\underbrace{R \circ \cdots \circ R}}$.
+% \para{Relations}
+% If $R\subseteq X \times Y$, $R' \subseteq Y \times Z$ and $A \subseteq X$, $B \subseteq Y$,
+% we define the following compositions:
+% \begin{alignat*}{3}
+% & R \circ R' &&= \{(x,z) \mid \exists y : (x,y) \in R \wedge (y,z) \in R'\},\\
+% & R \circ B  &&= \{x \in A \mid \exists y \in B : (x,y)\in R\},\\
+% & A \circ R  &&= \{y \in B \mid \exists x \in A : (x,y)\in R \}.
+% \end{alignat*}
+% If $X=Y$, then $R^\ast$ is $\bigcup_{n=0}^\infty \underset{\text{$n$ times}}{\underbrace{R \circ \cdots \circ R}}$.
 
 \para{Semilinear Sets}
 If $b, p_1, \dots, p_n \in \N^d$,
@@ -486,104 +483,6 @@ is sufficient to satisfy the above requirement.
 
 
 \section{Proof of Decidability}
-\subsection{Strategy of proof}\label{sec:strategy}
-As above, we use $\step$ to denote step relation of a 2-\vass, namely without zero tests.
-First some notational preprocessing.
-Replace every zero-testing transition 
-\(t : q \xstep{\textsf{c}_i=0?} q'\)
-by the longer two-step sequence
-\[q \xstep{\textsf{c}_i=0?} S_i^t \xstep{(0,0)} q',\]
-where $S_i^t$ is a new state, unique to the transition $t$.
-Notice that the new \sym2-\cm thus obtained 
-is equivalent to the original one, 
-and that it has special states $S_i^t$
-which can be entered only if counter $i$ is zero;
-we call them zero-testing states.
-The zero-testing states have the property
-that they ``remember'' which counter is zero 
-when the control of the machine is at them.
-%into those corresponding to counter $\textsf{c}_1$ and to counter $\textsf{c}_2$,
-%so we tell which counter is zero by looking at the state.
-
-
-The strategy of the proof is as follows:
-a run $\rho$ from $s$ to $t$ in the \sym2-\cm  ($s,t \in Q\times\N^2$)
-can be decomposed at the zero-testing states
-into segments which are \vass runs;
-write
-%\[ \rho=\rho_0 z_1 \rho_1 z_2 \dots \rho_{n-1}z_n\rho_n,\]
-\[ \rho=\rho_0 \rho_1 \dots \rho_n,\]
-where 
-%the $z_i$ are the zero-testing states of $\rho$, and
-each $\rho_i$ starts and ends at consecutive zero-testing states of $\rho$---%
-we shall call the $\rho_i$ the \emph{\vass segments} of $\rho$.
-%
-Every $\rho_i$ is of one of the following forms:
-\begin{alignat*}{2}
-q(a,0) &\step^\ast q'(0,a')\\
-q(0,a) &\step^\ast q'(0,a')\\
-q(0,a) &\step^\ast q'(a',0)\\
-q(a,0) &\step^\ast q'(a',0),
-\end{alignat*}
-where $q$ and $q'$ are zero-testing states;
-notice that we may write just
-\begin{equation} \label{eq:basictran}
-q(a) \step^* q'(a')
-\end{equation}
-without specifying which of the four cases occurs,
-since the (zero-testing) control states $q$, $q'$ uniquely determine that.
-We follow the notational shorthand \eqref{eq:basictran} throughout. 
-Without loss of generality, we also assume 
-that both the source and target vector have at least one 0.
-
-Every \vass segment $\rho_i \colon q(a) \step^\ast q'(a')$, 
-depending on the values $a$ and $a'$,
-falls into one of three categories,
-%split the relation $\step^\ast$ into three subrelations,
-%which represent different kinds of \vass runs in $(Q\times\N^2)$:
-denoted by $\step_+$, $\step_-$, and $\step_0$;
-the precise definitions will be given in \Cref{sec:proof}.
-Thus the rechability relation is 
-$\big(\step_0 \ \cup \ \step_- \ \cup \ \step_+ \big)^*$, 
-an arbitrary composition
-of the three relations arbitrarily many times.
-Note that the composition assures that \emph{control states match}!
-
-\bigskip\noindent
-Using this categorization 
-we split the run $\rho$ into three phases (possibly empty): 
-\begin{itemize}
-\item $\Phi_1$, which is a \emph{prefix} of $\rho$ and ends with the \emph{last} $\rho_i$ of the form $\step_+$,
-\item $\Phi_2$, which is an \emph{infix} of $\rho$ and consists only of $\rho_i$'s of the form $\step_0^*$, and
-\item $\Phi_3$, which is a \emph{suffix} of $\rho$ and starts with a $\rho_i$ of the form $\step_-$ 
-(followed by other \vass segments of the forms $\step_-$ and $\step_0$).
-\end{itemize}
-It is obvious to deduce that the three phases are of the following form:
-\begin{align*}
-\Phi_1 :\ &((\step_0 \ \cup \ \step_-)^\ast \circ \step_+)^\ast,\\
-\Phi_2 :\ &(\step_0)^\ast,\\
-\Phi_3 :\ &(\step_- \circ \step_0^\ast)^\ast.
-\end{align*}
-
-To conclude, 
-we will prove that $\Phi_2 \subseteq (Q \times \N)^2$ 
-is an \emph{effectively semilinear} relation%
-%\footnote{This means $\{n \in \N \colon (q,n) \in \Phi_3 \}$ is effectively semilinear, for every $q\in Q$.}%
-,
-and that for given source $s$ and target $t$, the sets
-\begin{alignat*}{6}
-\Phi_3 \circ \{t\} &\coloneq \{x &&\mid (x,t) \in \Phi_3 \hskip 0.5pt\} &&\subseteq Q \times \N, \\
-\{s\} \circ \Phi_1 &\coloneq \{y &&\mid (s,y) \in \Phi_1 \} &&\subseteq Q \times \N
-\end{alignat*}
-are also \emph{effectively semilinear}.
-Thus the reachability question, 
-which is equivalent to%
-%\( (s,t) \in \Phi_1\circ\Phi_2\circ\Phi_3,\) \ie 
-\begin{equation}
-\exists\, x,y : (s,x) \in \Phi_1 \wedge (x,y) \in \Phi_2 \wedge (y,t) \in \Phi_3,
-\end{equation}
-is decidable
-(by semilinearity, the last formulation is expressible in Pressburger Arithmetic).
 
 \subsection{Proof Details}\label{sec:proof}
 %\para{1-dimensional notation}
@@ -620,7 +519,7 @@ is decidable
 
 \para{VASS segment types}
 
-We split the relation \eqref{eq:basictran} into three disjoint subrelations, 
+We split the relation $\step^*$ \eqref{eq:basictran} into three disjoint subrelations, 
 depending on the value of
 $a$, $a'$, and $a'-a$. 
 If $q(a) \step q'(a')$, write:
@@ -634,14 +533,14 @@ If $q(a) \step q'(a')$, write:
 \end{equation}
 see \Cref{fig:areas} for a graphical illustration.
 
-\begin{figure}
-\centering
-\includegraphics{figures-1.eps}
-\caption{The three relations $\step_+$, $\step_-$, and $\step_0$.
-The axes do \emph{not} correspond to the counters, 
-but rather the initial and final values $a$ and $a'$ of the \vass segment.}
-\label{fig:areas}
-\end{figure}
+% \begin{figure}
+% \centering
+% \includegraphics{figures-1.eps}
+% \caption{The three relations $\step_+$, $\step_-$, and $\step_0$.
+% The axes do \emph{not} correspond to the counters, 
+% but rather the initial and final values $a$ and $a'$ of the \vass segment.}
+% \label{fig:areas}
+% \end{figure}
 
 %Each of the three relations \eqref{eq:tran0-+} is included in $(Q\times\N)^2$.
 In particular, the four variants of \Cref{lem:targetpump} jointly imply that 
