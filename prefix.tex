@@ -73,15 +73,16 @@ for every transition $(q,i,q')$, the machine has also a transition
 $(q,\sigma(i), q')$, where $\sigma(i)$ is the result of 
 applying $\sigma$ to the counters in the instruction $i$.
 Specifically, we choose to impose the invariance only on update transitions
-(when $i$ is a counter update), but
-not on zero-test transitions, since the latter does not seems
+(when the instruction $i$ is a counter update), but
+not on zero-test transitions, as the latter restriction is not 
 necessary for our proofs to work.
 Here is an illustrative example of a 2-\cm (a \cm having two counters)
 with
 two control states and
 six transitions, including five symmetric update transitions
-and one zero-test transition:
+(invariant under the swap of counters) and one zero-test transition:
 \sla{the example to be improved}
+
 % \begin{figure}
 \begin{center}
 \scalebox{0.7}
@@ -94,14 +95,14 @@ and one zero-test transition:
 \node (q1) [state, scale=1.4, fill=blue!20, right = of q0] {$q$};
 % Arrows
 \path [-stealth, thick]
-   (q0) edge[bend left] node[scale=1.5] {\tiny{$\textbf{zero-test}_1$}}  (q1)
-   (q1) edge[bend left] node[scale=1.1] {$(-1,-1)$}  (q0)
-   (q0) edge [loop above] node[scale=1.5] {$\substack{(-1, 3) \\ (3, -1)}$}()
-   (q1) edge [loop above] node[scale=1.5] {$\substack{(1, -1) \\ (-1, 1)}$}();
+   (q0) edge[bend left] node[scale=1.5] {\tiny{$\ztinstr 1$}}  (q1)
+   (q1) edge[bend left] node[scale=1.5] {\tiny$\updinstr{-1,-1}$}  (q0)
+   (q0) edge [loop above] node[scale=1.5] {\tiny$\substack{\updinstr{-1, 3} \\ \updinstr{3, -1}}$}()
+   (q1) edge [loop above] node[scale=1.5] {\tiny$\substack{\updinstr{1, -1} \\ \updinstr{-1, 1}}$}();
 \end{tikzpicture}}
 \end{center}
 % \caption{A symmetric 2-counter machine.}
-\label{fig:example}
+% \label{fig:example}
 % \end{figure}
 
 
@@ -261,11 +262,11 @@ We proceed in a top-down manner, by consecutive reductions to more and
 more basic properties. 
 In \Cref{sec:outline} we provide the proof of \Cref{thm:main},
 buidling on effective
-semilinearity of reachability sets and relations in the underlying
-symmetric 2-\vass.
+semilinearity of certain reachability sets and relations in a
+symmetric 2-\cm.
 Then in \Cref{sec:sl} we prove the effective semilinearity,
 building on the central property of target (resp.~source) pumping
-of symmetric 2-\vass, that is finally shown in \Cref{sec:targetpump}.
+in symmetric 2-\vass, that is subsequently shown in \Cref{sec:targetpump}.
 Finally, \Cref{sec:undecid} contains the proof of \Cref{thm:undecid}.
 
 
@@ -529,15 +530,17 @@ the reachability relation, that is
 \reachrel^* \ = \ \Phi_1 \circ \Phi_2 \circ \Phi_3,
 \end{align}
 for  the three relations defined by the following rational expressions:
-\begin{align*}
+\begin{align}
+  \begin{aligned} \label{eq:regexp}
 &\Phi_1 \ = \ ((\stepp 0 \ \cup \ \stepp -)^\ast \circ \stepp +)^\ast,\\
 &\Phi_2 \ = \ (\stepp 0)^\ast,\\
 &\Phi_3 \ = \ (\stepp - \circ \stepp {0}^\ast)^\ast.
-\end{align*}
+  \end{aligned}
+\end{align}
 
 \para{Outline of decidability proof}
 
-The proof uses semilinear sets.
+The proof uses \emph{semilinear sets}.
 Any subset of $\N^d$ of the form
 \[
 % \lin b {\{p_1,\dots,p_n\}} = 
@@ -545,7 +548,7 @@ Any subset of $\N^d$ of the form
 \mid k_1, \dots, k_n \in \N \right\},
 \]
 for $b, p_1, \dots, p_n \in \N^d$,
-we call a
+is called a
 \emph{linear} set with base $b$ and periods $p_1, \dots, p_n$.
 A \emph{semilinear} set is a finite union of linear sets in the same
 dimension $d$.
@@ -572,8 +575,9 @@ in dimension $d=1$.
 
 
 \begin{lemma} \label{lem:0star}
+Given a symmetric 2-\cm $\mach$, the relation
 $\Phi_2 \subseteq (Q \times \N)^2$ 
-is an \emph{effectively semilinear} relation.
+is effectively semilinear.
 % The relation $\stepp {0}^*$ is effectively semilinear.
 \end{lemma}
 
@@ -585,12 +589,12 @@ is an \emph{effectively semilinear} relation.
 % \end{lemma}
 
 \begin{lemma} \label{lem:compbackfor}
-Given source $s$ and target $t$, the sets
+Given a symmetric 2-\cm $\mach$ and source $s$ and target $t$, the sets
 \begin{alignat*}{6}
 &\Phi_3 \circ \{t\} \ := \  \{y &&\mid (y,t) \in \Phi_3 \hskip 0.5pt\}  \ \subseteq \ Q \times \N, \\
 &\{s\} \circ \Phi_1 \ := \  \{x &&\mid (s,x) \in \Phi_1 \} \ \subseteq \ Q \times \N
 \end{alignat*}
-are \emph{effectively semilinear}.
+are effectively semilinear.
 % One can compute 
 % the set 
 % $\{s\} \circ \big(\stepp {0}^* \ \circ \ E \ \circ \ \stepp +)^*$.
@@ -606,6 +610,12 @@ are \emph{effectively semilinear}.
 % &\{s\} \circ \Phi_1 \ := \  \{x &&\mid (s,x) \in \Phi_1 \} \ \subseteq \ Q \times \N
 % \end{alignat*}
 % are also \emph{effectively semilinear}.
+
+\begin{remark}
+The proof of \Cref{lem:0star} does not use symmetry of a 2-\cm
+and the lemma holds for \emph{all} 2-\cm{s}, as opposed to
+the proof of \Cref{lem:compbackfor} that crucially uses the symmetry assumption.
+\end{remark}
 
 Relying on effective 
 semilinearity given in \Cref{lem:0star,lem:compbackfor},
@@ -640,10 +650,10 @@ It thus remains to demonstrate the two key lemmas.
 
 \section{Effective semilinearity} \label{sec:sl}
 
-We denote by $\mysize \V$ the size of $\V$, in unary representation,
-and by $\norm \V$ the max-norm of $\V$, namely the maximal absolute value of
-all numbers appearing in transitions.
-Clearly, $\mysize \V \geq \norm \V$.
+For complexity considerations,
+we denote by $\mysize \mach$ the size of unary representation of $\mach$,
+and by $\norm \mach$ the max-norm of $\mach$, namely the maximal absolute value of all numbers appearing in update transitions.
+% Clearly, $\mysize \mach \geq \norm \mach$.
 
 We start with a basic observation concerning the building blocks
 of sets of our interest:
@@ -652,9 +662,12 @@ of sets of our interest:
 The relations $\stepp 0, \ \stepp -, \ \stepp +$ are effectively semilinear.
 \end{lemma}
 \begin{proof}
-The relation $\reachrel$ is the reachability relation of a 2-\vass
-$\V$, which is effectively semi-linear \cite{Blondin15}.
-Each of the sub-relations $\stepp 0, \ \stepp -, \ \stepp +$ is a Presburger-definable subset of $\reachrel$,
+The reachability relation $R$ of the underlying 2-\vass $\V$
+is effectively semi-linear \cite{Blondin15}.
+The relation $\reachrel$ is a restriction (section) of $R$ by imposing
+a counter to be 0 in the beginning and in the end, and therefore
+$\reachrel$ is effectively semilinear too.
+Finally, each of the sub-relations $\stepp 0, \ \stepp -, \ \stepp +$ is a Presburger-definable subset of $\reachrel$,
 and hence effectively semilinear as well.
 \end{proof}
 
@@ -689,6 +702,17 @@ and similarly for the other three symmetric cases:
 Moreover, $C$ is polynomial in $\mysize \V$ and $D$ is exponential in $\mysize \V$.
 \end{lemma}
 
+\begin{remark}
+It is worth noting that the proof of \Cref{lem:targetpump},
+to be given in \Cref{sec:targetpump}, is that part of
+our development that unavoidably relies on symmetry.
+\Cref{lem:targetpump} fails for non-symmetric 2-\vass,
+for instance point $\punkt 1 2$ fails 
+for a 2-\vass with one state and one transition $(q,(-1,2),q)$.
+\Cref{lem:targetpump} is a cornerstone of the proof
+of \Cref{lem:compbackfor}.
+\end{remark}
+
 In the sequel we fix the underlying symmetric 2-\vass $\V$ of
 a symmetric 2-\cm.
 The four claims of \Cref{lem:targetpump} jointly imply that 
@@ -713,15 +737,24 @@ $D$ from \eqref{eq:tpump} and \eqref{eq:spump}.
 
 \para{Periodic sets}
 
-A set $X \subseteq Q \times \N$ is $N$-periodic if
+A set $X \subseteq Q \times \N$ is \emph{ultimately $N$-periodic}
+(\emph{$N$-periodic} in short) if
 for all $(q,a) \in X$, also $(q,a+N) \in X$.
-It is a folklore that semilinear sets $X\subseteq Q\times\N$
-are $N$-periodic for some period $N$. 
+It is a folklore that every semilinear set $X\subseteq Q\times\N$
+is $N$-periodic for some period $N$. 
+An $N$-periodic set $X$ is representable by a function 
+$\minf X : Q\times \setfromto 0 {N-1} \to \N \cup \{\infty\}$ 
+that maps a state $q\in Q$ and $r<N$ to the least number $n$ 
+whose reminder modulo $N$ equals $r$, and such that $(q,n)\in X$ 
+(and to $\infty$ if there is no such number):
+\[
+\minf X (q,r) \ = \ \min\{n : (q,n) \in X, \ \ n \equiv r\!\!\mod N\}.
+\]
 In the sequel it will be crucial that all semilinear sets we maintain
 are $D$-periodic with the same period $D$.
 % 
 For instance, in consequence of \eqref{eq:tpump} and \eqref{eq:spump}, 
-the image $S\circ \stepp +$ as well as the pre-image
+the image $S\circ \stepp +$ as well as the inverse image
 $\stepp - \circ S$ is always $D$-periodic, irrespectively of
 $S\subseteq Q\times\N$.
 % 
@@ -740,15 +773,7 @@ $S\subseteq Q\times\N$.
 %Each of the phases may be empty.
 % 
 
-A $D$-periodic set $X$ is representable by a function 
-$\minf X : Q\times \setfromto 0 {D-1} \to \N \cup \{\infty\}$ 
-that maps a state $q\in Q$ and $r<D$ to the least number $n$ 
-whose reminder modulo $D$ equals $r$, and such that $(q,n)\in X$ 
-(and to $\infty$ if there is no such number):
-\[
-\minf X (q,r) \ = \ \min\{n : (q,n) \in X, \ \ n \equiv r\!\!\mod D\}.
-\]
-In the proofs of \Cref{lem:0star,lem:compbackfor}
+In the proof of \Cref{lem:compbackfor}
 we compute increasing (actually, non-decreasing) chains 
 of $D$-periodic sets of configurations $X\subseteq Q\times\N$.
 %We represent these sets in vector form as functions
@@ -756,7 +781,8 @@ of $D$-periodic sets of configurations $X\subseteq Q\times\N$.
 Termination of computation is guaranteed by:
 %  the following lemma:
 \begin{lemma} \label{lem:stab}
-    Every non-decreasing chain of $X_1 \subseteq X_2 \subseteq \cdots$ of $D$-periodic sets of $\N$ stabilizes.
+    For every $D\in\N$, 
+    every non-decreasing chain of $X_1 \subseteq X_2 \subseteq \cdots$ of $D$-periodic subsets of $Q\times\N$ stabilizes.
 \end{lemma}
 % 
 \begin{proof}
@@ -769,51 +795,272 @@ of the function space $Q\times \setfromto 0 {D-1} \to \N \cup \{\infty\}$.
 
 
 \begin{proof}[Proof of \Cref{lem:0star}]
-    \vrm{Hard; to write down later.}\par
-    Computable by a 1-counter automaton, a special case of a pushdown automaton.
-\end{proof}
+    In outline,
+    we prove that $\Phi_2 = (\stepp 0)^*$ is essentially the reachability
+    relation of an effectively constructible 1-\cm, and apply
+    Parikh's theorem.
+
+    \medskip
+
+    We start by constructing a 1-\cm for the non-iterated  
+    relation $\stepp 0$; namely, 
+    for a fixed pair $q,q'\in Q$ of zero-testing control states, 
+    we define a
+    1-\cm $\mach_{q,q'}$ with control states $Q'$ and a surjective
+    forgetful function $q\mapsto \overline q :Q'\to Q$ such that, for every $n,n'\in\N$, we have
+    \begin{align} \label{eq:mach}
+    % \setof{(n,n')}
+    {\overline q(n) \stepp 0 \overline {q}'(n')} \text{ in } \mach \ \iff \ 
+    % \setof{(n,n')}
+    {q(n)\step^* q'(n') \text{ in } \mach_{q,q'}}.
+    \end{align}
+    The 1-\cm $\mach'$ is the union of finitely many simpler 1-\cm{s} 
+    $\mach^c_{q,q'}$ where,
+    according to the definition of $\stepp 0$, each of them assumes either
+
+    \begin{enumerate}
+    \item
+    initial counter value $n=c$, where $c\leq C$, or 
+    \item 
+    final counter value $n'=c$, where $c\leq C$, or 
+    \item 
+    the different of initial and final counter values $n-n'=c$, where $-C\leq c\leq C$.
+    \end{enumerate}
+
+    \noindent
+    We define $\mach^c_{q,q'}$ separately in each case.
+
+    \para{Case 1: $n=c$}
+
+    The 1-\cm $\mach^c_{q,q'}$ starts by checking if $n=c$, which is done
+    by subtracting $c$ from the counter and then zero-testing.
+    % , and then adding $c$.
+    Then $\mach^c_{q,q'}$ computes on its counter a nondeterministically chosen 
+    number from the effectively semilinear (and hence ultimately
+    $N$-periodic for some computable $N$)
+    set
+    \[
+    \setof{n'}{q(c)\stepp 0 q'(n')},
+    \]
+    and goes to state $q'$.
+
+    \para{Case 2: $n'=c$}
+
+    Similarly to the previous case, using the fact that
+    1-\cm{s} are closed under reverse.
+
+    \para{Case 3: $n' = n-c$}
+
+    The 1-\cm $\mach^c_{q,q'}$ proceeds by first checking whether the
+    initial value of its counter belongs to
+    \[
+     X_c \ = \ \setof{n}{q(n)\stepp 0 q'(n-c)},
+    \]
+    and then by subtracting $c$ from the counter,
+    and goind to state $q'$.
+    Knowing that $X_c$ is effectively semilinear,
+    and hence ultimately $N_c$-periodic for some computable $N_c$,
+    we design the 1-\cm $\mach^c_{q,q'}$ to store, in its control state,
+    the reminder of current counter value modulo $N_c$. 
+    Then checking membership in $X_c$ amounts to an inequality test
+    if the initial counter value
+    is at least $m=\minf {X_c}(q,r)$, where $r$ is the reminder of 
+    the initial counter value modulo $N_c$.
+    The inequality test is doable by subtracting $m$, and then adding
+    $m$ back to the counter.
+    Clearly, if $\minf{X_c}(q,r)=\infty$, the 1-\cm stops without reaching
+    $q'$.
+
+    \medskip
+
+    We end by noting that for different values of $c$ between $-C$ and $C$,
+    Case 3 may require the 1-\cm
+    $\mach^c_{q,q'}$ to store in control states the reminders
+    of current counter value modulo different numbers $N_c$.
+    We unify all the 1-\cm{s} $\mach^c_{q,q'}$ by storing in the control
+    state the reminder modulo the least common multiplicity of all
+    $N_c$.
+    The forgetful function $q\mapsto \overline q$ simply forgets about the
+    reminider.
+    We have thus completed the effective construction of 1-\cm{s}
+    $\mach_{q,q'}$ satisfying the condition \eqref{eq:mach},
+    as the union of finitely many 1-\cm{s} $\mach^c_{q,q'}$.
+
+    \medskip
+
+    Finally,
+    we define $\mach'$ as the union of all the 1-\cm{s} $\mach_{q,q'}$.
+    By the very construction, the reachability relation of the 
+    1-\cm $\mach'$ is essentially $\Phi_2 = (\stepp 0)^*$, namely:
+    \[
+        {\overline q(n) \ (\stepp 0)^* \ \overline q'(n')} \text{ in } \mach \ \iff \ 
+    {q(n)\step^* q'(n') \text{ in } \mach'}.
+    \]
+
+    Now, the lemma follows by Parikh's Theorem \cite{}, 
+    since 1-\cm{s} are a special case of pushdown automata.
+    Fix a pair $q,q'\in Q'$ of states where the stored reminder is 0.
+    In order to apply Parikh's Theorem, take all the transitions of 
+    $\mach'$ as unlabelled (labelled with $\varepsilon$), 
+    add a state $p$ with
+    an $a$-labelled self-loop transition that  adds 
+    $1$ to the counter, 
+    and another state $p'$ with a $b$-labelled self-loop transition that subtracts 1 from the counter, and 0-update transitions from
+    $p$ to $q$, and from $q'$ to $p'$. 
+    The language $L_{p,p'}$ of so obtained labelled 1-\cm
+    with initial configuration $p(0)$ and final configuration $p'(0)$,
+    corresponds to the reachability relation of $\mach'$ from $q$
+    to $q'$, namely $a^n b^{n'}\in L_{p,p'}$ if and only if
+    $q(n) \step^* q'(n')$ in $\mach'$.
+    As Parikh image of every $L_{p,p'}$ is effectively semilinear due to 
+    Parikh's Theorem, the lemma follows.
+% 
+    % Since $\stepp 0$ is effectively semilinear, due to \Cref{lem:0-+},
+    % its section $\setof{(n,n')}{q(n)\stepp 0 q'(n'), \ n=}$
+    % as then $\mach'$ is obtained as the union of all $\mach'_{q,q'}$.
+    % We split $\Phi_2$ into finitely many state projections $\Phi^{q,q'}_2$,
+    % where for a pair of states $q,q'\in Q$ we define
+    % \[
+    % \Phi^{q.q'}_2 \ := \ \setof{(n,n')}{(q(n),q'(n'))\in \Phi_2} 
+    % \]
+    % It is enough to prove that for every pair of states $q,q'\in Q$,
+    % the relation
+    % \[
+    % \Phi_2 \ = \ \setof{(q(n),q'(n'))}{q(n)\step^* q'(n') \text{ in } \mach'}.
+    % \]
+    \end{proof}
+
 
 \begin{proof}[Proof of \Cref{lem:compbackfor}]
-Recall that $\big(\stepp - \ \circ \ \stepp {0}^*\big) \ \circ \ S$
-is the set of all 
-\((q,a) \in Q \times \N\) such that $q(a)$ leads to some $x \in S$ via a run of form $(\stepp -\stepp {0}^\ast)^\ast$.
-Thus, $\big(\stepp - \ \circ \ \stepp {0}^*\big) \ \circ \ S$ is source-pumpable 
-due to \eqref{eq:spump},
-irrespectively of $S$.
+Recall that $\Phi_3 \ = \ (\stepp - \circ \stepp {0}^\ast)^\ast$.
+By \Cref{lem:0-+,lem:0star}, both the relations $\stepp -$ and
+$(\stepp 0)^*$ are effectively semilinear.
+Using the effective equivalence of semilinear sets and Presburger Aritmetic,
+the composed relation 
+$\stepp - \circ \stepp {0}^\ast$ is also effectively semilinear,
+as well as 
+$(\stepp - \circ \stepp {0}^\ast) \circ S$ for every given 
+semilinear set $S$.
+Furthermore, as $\stepp -$ is source pumpable \eqref{eq:spump},
+and therefore the composed relation $\stepp - \circ \stepp {0}^\ast$
+is so as well, the set
+$(\stepp - \circ \stepp {0}^\ast) \circ S$ is forcedly $D$-periodic.
 
-It is also computable due to \Cref{lem:0-+,lem:0star}, 
-as long $S$ is semilinear.
-This is seen by iterating the computation of the transformation
+In order to  argue that the set $\Phi_3 \circ \{t\}$
+is effectively semilinear, 
+we use the above observations to deduce that the initial set
 \[
-S \quad \mapsto \quad \big(\stepp - \ \circ \ \stepp {0}^*\big) \ \circ \ S
-\quad \cup \quad S,
+X_0 \ := \ (\stepp - \circ \stepp {0}^\ast) \circ \{t\}
 \]
-which stabilises, by \Cref{lem:stab}.
-\vrm{how many details to write here? $\stepp {0}^\ast$ has a representation as a semilinear set;
-to explain why every intermediate step in fixed point computation also has an efficient representation,
-and give it.}
-Furthermore, by the effective representation of $\stepp {0}^\ast$ and $\stepp {-}$ as semilinear relations,
-each step of the process above is effectively representable,
-and thus so is the fixed point.
-\end{proof}
-
-\begin{proof}[Proof of \Cref{lem:compbackfor}]
-Again, The set $f(S) = S \ \circ \ \stepp {0}^* \ \circ \ E \ \circ \ \stepp +$ is
-target-pumpable due to \eqref{eq:tpump},
-irrespectively of $S$.
-Computability is more involved, but relates again on iteration of the transformation
+is effectively semilinear and $D$-periodic, as well as every next iterate
 \[
-S \quad \mapsto \quad f(S) \quad \cup \quad S,
+X_{i+1} \ := \ X_{i} \ \cup \ (\stepp - \circ \stepp {0}^\ast) \circ X_{i},
 \]
-relying on \Cref{lem:stab}.
+for $0 = 1, 2, \ldots$. The seqeuence $X_0, X_1, \ldots$ is a 
+non-decreasing
+chain of $D$-periodic sets and hence stabilises, by \Cref{lem:stab}, namely
+\[
+X_j \ = \ X_{j+1} \ = \ X_{j+2} \ = \ \ldots
+\] 
+for some $i$. 
+Since both the iteration
+$X_i \mapsto X_{i+1}$ and the equality test $X_i = X_{i+1}$ are effective,
+the set 
+\[
+\Phi_3\circ \{t\} \ = \ \{t\} \ \cup \ \bigcup_{i\in\N} X_i \ = \ 
+\{t\} \ \cup \ X_j
+\]
+is effectively semilinear (and $D$-periodic), as required.
+We conclude the first part by 
+noting that the proof is not specific to the starting set $\{t\}$
+and shows that $\Phi_3 \circ S$ is effectively 
+semilinear given any semilinear $S\subseteq Q\times\N$,
+which will be useful in the second part.
 
-\vrm{To write that $f(S)$ consists of arithmetic progressions of period $D$,
-and that we choose the minimal element of every arithmetic progression.}
-To compute $f(S)$, one first establishes which remainders modulo $D$ appear in this set,
-by applyting the transformation of \Cref{lem:compback} to the set 
-$(\stepp + \ \circ \ M_k)$,
-where $M_k$ contains all numbers equal to $k$ modulo $D$, and checking intersection with 
-the set $(S\ \circ \ \stepp 0)$. 
-Then, by exhaustive search one finds the smallest number in $f(S)$, 
-for each remainder modulo $D$ separately.
+\medskip
+
+Now we proceed to arguing that
+the set $\{s\} \circ \Phi_1$ is effectively semilinear.
+To this aim we prefer to use another rational expression defining 
+$\Phi_1$, where $\Phi_3$ appears as a subexpression:
+\[
+\Phi_1 \ = \ ((\stepp 0)^* \ \circ \ \Phi_3 \ \circ \ \stepp +)^\ast;
+\qquad\qquad\qquad
+\text{recalling } \Phi_3 \ = \ (\stepp - \circ \stepp {0}^\ast)^\ast;
+\]
+indeed, as in \eqref{eq:regexp} in \Cref{sec:outline}, the inner subexpression $(\stepp 0)^*  \circ  \Phi_3  \circ  \stepp +$ 
+describes an arbitrary
+composition of segments of type $\stepp 0$ and $\stepp -$ that ends 
+with one segment of type $\stepp +$.
+
+The structure of the proof is similar to the previous part, namely
+we proceed by iterating the relation defined by the inner subexpression, 
+that is we consider the initial set
+\[
+X_0 \ := \ \{t\} \ \circ \ \bigl((\stepp 0)^* \ \circ \ \Phi_3 \ \circ \ \stepp +\bigr)
+\]
+and the consecutive iterates
+\[
+X_{i+1} \ := \ X_i \ \ \cup \ \ 
+X_i \  \circ \  \bigl((\stepp 0)^* \ \circ \ \Phi_3 \ \circ \ \stepp +\bigr).
+\]
+Similarly as before, knowing that $\stepp +$ is target pumpable, we know
+that all $X_i$ are $D$-periodic sets, and therefore the sequence 
+$X_0, X_1, \ldots$ stabilises, and hence
+\[
+\{s\} \circ  \Phi_1 \ = \ 
+ \{s\} \ \cup \  X_j
+\]
+for some $j$, simiarly as before.
+The only missing ingredient is computability of the iteration
+$X_i \mapsto X_{i+1}$.
+However, in order to apply the previously shown computablility of 
+the function
+\begin{align} \label{eq:back}
+S \ \mapsto \ \Phi_3 \ \circ \ S
+\end{align}
+which proceeds 'backward', for computability
+of the function
+\[
+S \ \mapsto \ f(S) \ := \ S \ 
+\circ \ \bigl((\stepp 0)^* \ \circ \ \Phi_3 \ \circ \ \stepp +\bigr)
+\]
+which proceeds 'forward', we need a trick.
+Note that the relation 
+$(\stepp 0)^* \ \circ \ \Phi_3 \ \circ \ \stepp +$ is always
+target-pumpable since $\stepp +$ is so \eqref{eq:tpump},
+and hence $f(S)$ is always $D$-periodic
+irrespectively of $S$.
+To compute $f(S)$, one first establishes, for every state $q\in Q$, 
+which remainders $r$ modulo $D$ appear in this set,
+by applying the transformation \eqref{eq:back} to the set
+\begin{align} \label{eq:set1}
+\stepp + \circ \ X_{q,r}
+,
+\end{align} 
+% where $M_r = r + D\cdot\N$ contains all numbers congruent to $r$ modulo $D$, 
+where $X_{qr} = \setof{q(n)}{n\equiv r \!\!\mod D}$,
+and checking nomemptiness of intersection with 
+the set 
+\begin{align} \label{eq:set2}
+S\ \circ \ (\stepp 0)^*.
+\end{align} 
+Both the sets \eqref{eq:set1}, \eqref{eq:set2} 
+are effectively semilinear due to 
+\Cref{lem:0-+,lem:0star}, and hence the set
+$\Phi_3 \ \circ \ \stepp + \circ \ X_{q,r}$,
+and its intersection with \eqref{eq:set2}, are
+computable.
+Then one finds the representation
+$\minf{f(S)}$ of $f(S)$ by performing,
+for every positively verified state-reminder pair $(p,r)$,
+an exhaustive search, along the same lines as above:
+for consecutive $k=0, 1, \ldots$, 
+apply the transformation \eqref{eq:back} to the set
+\[
+\stepp + \circ \ \{q(r+k\cdot D)\}
+\]
+and ckeck nonemptiness of intersection with the set \eqref{eq:set2}.
+This concludes the proof of effective semilinearity and $D$-periodicity
+of $f(S)$, and thus also the second part.
 \end{proof}
