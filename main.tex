@@ -175,7 +175,51 @@ cyclic permutation group.
 %An $n$-\vass is an $n$-\cm with $\Delta \subseteq Q \times \Z^n \times Q$.
 %
 
-\section{Terminology \& Notation}
+
+
+%\para{1-dimensional notation}
+%By symmetry, \Cref{lem:targetpump} holds more generally:
+%for every pair of control states $q$, $q'$ of $\V$ and  
+%$a, a'\in\N$ such that $a$, $a'-a>C$, 
+%\begin{align*}
+%q(0,a)\step^* q'(0,a') \quad \implies  \quad  q(0,a) \step^* q'(0, a'+D)\\
+%q(0,a)\step^* q'(a',0) \quad \implies  \quad  q(0,a) \step^* q'(a'+D, 0)\\
+%q(a,0)\step^* q'(a',0) \quad \implies  \quad  q(a,0) \step^* q'(a'+D,0).
+%\end{align*}
+%As discussed before, the ``zero-testing states'' indicate which counter is zero, 
+%so we can merge the four cases into one notation, 
+%adopting the shorthand \eqref{eq:basictran}.
+%and that a run zero tests every counter whenever it has value 0. 
+% To this aim double the control states, that is replace every $q\in Q$
+% by $q_1, q_2$, each of them involved into the same increment transitions as $q$, but $q_1$ only 
+% capable to do those zero-testing transitions $q$ that test counter 1, and likewiese $q_2$ only 
+% capable to do those zero-testing transitions $q$ that test counter 2.
+
+%So prepared, we can simply write
+%\begin{align} \label{eq:basictran}
+%q(a) \step^* q'(a')
+%\end{align}
+%without specifying which of the four cases is happening
+%\begin{align*}
+%q(a,0)\step^* q'(0,a')\\
+%q(0,a)\step^* q'(0,a')\\
+%q(0,a)\step^* q'(a',0)\\
+%q(a,0)\step^* q'(a',0)
+%\end{align*}
+%since the control states $q,q'$ uniquely determine these two bits of information.
+%Note that the newly introduced zero tests are not symmetric, but we do not assume that. 
+
+% \begin{figure}
+% \centering
+% \includegraphics{figures-1.eps}
+% \caption{The three relations $\stepp +$, $\stepp -$, and $\stepp 0$.
+% The axes do \emph{not} correspond to the counters, 
+% but rather the initial and final values $a$ and $a'$ of the \vass segment.}
+% \label{fig:areas}
+% \end{figure}
+
+%Each of the three relations \eqref{eq:tran0-+} is included in $(Q\times\N)^2$.
+
 % \para{VASS}
 % In a \vass $\V$, \emph{path} is a sequence of transitions 
 % where the target state of every transition
@@ -194,10 +238,6 @@ cyclic permutation group.
 
 % \medskip
 
-We denote by $\mysize \V$ the size of $\V$, in unary representation,
-and by $\norm \V$ the max-norm of $\V$, namely the maximal absolute value of
-all numbers appearing in transitions.
-Clearly, $\mysize \V \geq \norm \V$.
 
 % \para{Relations}
 % If $R\subseteq X \times Y$, $R' \subseteq Y \times Z$ and $A \subseteq X$, $B \subseteq Y$,
@@ -209,47 +249,13 @@ Clearly, $\mysize \V \geq \norm \V$.
 % \end{alignat*}
 % If $X=Y$, then $R^\ast$ is $\bigcup_{n=0}^\infty \underset{\text{$n$ times}}{\underbrace{R \circ \cdots \circ R}}$.
 
-\para{Semilinear Sets}
-If $b, p_1, \dots, p_n \in \N^d$,
-we define 
-\[
-\lin b {\{p_1,\dots,p_n\}} = 
-\left\{ b + k_1 p_1 + \cdots + k_n p_n 
-\mid k_1, \dots, k_n \in \N \right\},
-\]
-the linear set with base $b$ and periods $p_1, \dots, p_n$.
-A semilinear set is a finite union of linear sets.
-We say $X \subseteq Q \times \N^d$ is semilinear 
-if for every $q \in Q$, 
-the set 
-\(\{n\in \N \mid (q,n)\in X\} \subseteq \N^d\)
-is semilinear.
-Similarly, $R \subseteq (Q\times \N^d)^2$ is semilinear if for every $q,q' \in Q$,
-the set
-\( \{(n,n') \mid ((q,n),(q',n')) \in R \} \subseteq \N^{2d}\)
-is semilinear.
 
 
 
 
 \section{Target pummping}\label{sec:targetpump}
-\begin{lemma} [Target pumping] \label{lem:targetpump}
-\vrm{I put everything in the same lemma to emphasize that all versions share the same $C,D$.}\par
-Let $\V$ be a symmetric $2$-$\vass$.
-One can compute numbers $C, D \in \N$ 
-such that for every pair of control states $q, q'$ of $\V$ and  
-$a, a'\in\N$ such that $a > C$ and $a' > a + C$,%
-\[\text{if} \quad q(a,0)\step^* q'(0,a') \quad \text{then} \quad q(a,0) \step^* q'(0, a'+D),\]
-and similarly for the other three symmetric cases:
-\begin{alignat*}{3}
-&\text{if} \quad q(0,a)\step^* q'(0,a') \quad &&\text{then}  \quad  q(0,a) \step^* q'(0, a'+D),\\
-&\text{if} \quad q(0,a)\step^* q'(a',0) \quad &&\text{then}  \quad  q(0,a) \step^* q'(a'+D, 0),\\
-&\text{if} \quad q(a,0)\step^* q'(a',0) \quad &&\text{then}  \quad  q(a,0) \step^* q'(a'+D,0).
-\end{alignat*}
-Moreover, $C$ is polynomial in $\mysize \V$ and $D$ is exponential in $\mysize \V$.
-\end{lemma}
 %
-\begin{proof}
+\begin{proof}[Proof of \Cref{lem:targetpump}]
 Consider a run $\sigma : q(a,0)\step^* q'(0,a')$ for some $a, a'\in \N$.
 We modify the run to lift the target configuration to $q'(0,a'+\gamma D_\sigma)$ for any
 $\gamma > 0$, for some particular $D_\sigma$ depending both on $\V$ and on $\sigma$, assuming
@@ -482,203 +488,10 @@ is sufficient to satisfy the above requirement.
 \end{proof}
 
 
-\section{Proof of Decidability}
+\section{Undecidability proof} \label{sec:undecid}
 
-\subsection{Proof Details}\label{sec:proof}
-%\para{1-dimensional notation}
-%By symmetry, \Cref{lem:targetpump} holds more generally:
-%for every pair of control states $q$, $q'$ of $\V$ and  
-%$a, a'\in\N$ such that $a$, $a'-a>C$, 
-%\begin{align*}
-%q(0,a)\step^* q'(0,a') \quad \implies  \quad  q(0,a) \step^* q'(0, a'+D)\\
-%q(0,a)\step^* q'(a',0) \quad \implies  \quad  q(0,a) \step^* q'(a'+D, 0)\\
-%q(a,0)\step^* q'(a',0) \quad \implies  \quad  q(a,0) \step^* q'(a'+D,0).
-%\end{align*}
-%As discussed before, the ``zero-testing states'' indicate which counter is zero, 
-%so we can merge the four cases into one notation, 
-%adopting the shorthand \eqref{eq:basictran}.
-%and that a run zero tests every counter whenever it has value 0. 
-% To this aim double the control states, that is replace every $q\in Q$
-% by $q_1, q_2$, each of them involved into the same increment transitions as $q$, but $q_1$ only 
-% capable to do those zero-testing transitions $q$ that test counter 1, and likewiese $q_2$ only 
-% capable to do those zero-testing transitions $q$ that test counter 2.
-
-%So prepared, we can simply write
-%\begin{align} \label{eq:basictran}
-%q(a) \step^* q'(a')
-%\end{align}
-%without specifying which of the four cases is happening
-%\begin{align*}
-%q(a,0)\step^* q'(0,a')\\
-%q(0,a)\step^* q'(0,a')\\
-%q(0,a)\step^* q'(a',0)\\
-%q(a,0)\step^* q'(a',0)
-%\end{align*}
-%since the control states $q,q'$ uniquely determine these two bits of information.
-%Note that the newly introduced zero tests are not symmetric, but we do not assume that. 
-
-\para{VASS segment types}
-
-We split the relation $\step^*$ \eqref{eq:basictran} into three disjoint subrelations, 
-depending on the value of
-$a$, $a'$, and $a'-a$. 
-If $q(a) \step q'(a')$, write:
-\begin{equation}
-\left.
-\begin{aligned}\label{eq:tran0-+}
-& q(a) \step_0\, q'(a'),\quad && \text{if\ \ $a\leq C$ or $a'\leq C$ or $|a'-a|\leq C $}\\
-& q(a) \step_- q'(a'),\quad && \text{if\ \ $a' > C$\ \ and\ \ $a > a'+C${}}\\
-& q(a) \step_+ q'(a'),\quad && \text{if\ \ $a\phantom{'} > C$\ \ and\ \ $a' > a+C${}}
-\end{aligned}\right\};
-\end{equation}
-see \Cref{fig:areas} for a graphical illustration.
-
-% \begin{figure}
-% \centering
-% \includegraphics{figures-1.eps}
-% \caption{The three relations $\step_+$, $\step_-$, and $\step_0$.
-% The axes do \emph{not} correspond to the counters, 
-% but rather the initial and final values $a$ and $a'$ of the \vass segment.}
-% \label{fig:areas}
-% \end{figure}
-
-%Each of the three relations \eqref{eq:tran0-+} is included in $(Q\times\N)^2$.
-In particular, the four variants of \Cref{lem:targetpump} jointly imply that 
-$\step_+$ is \emph{target-pumpable}, that is for every pair of control states $q, q'$ of $\V$, 
-% and  $a, a'\in\N$ such that $a, a'-a > C$, 
-\begin{align} \label{eq:tpump}
-q(a)\step_+ q'(a') \quad \implies  \quad  q(a) \step_+ q'(a'+D).
-\end{align}
-The reverse version of the four variants, where we swap source and target and reverse all transitions, 
-implies that $\step_-$ is \emph{source-pumpable}, that is 
-\begin{align} \label{eq:spump}
-q(a)\step_- q'(a') \quad \implies  \quad  q(a+D) \step_- q'(a').
-\end{align}
-\vrm{Why do the $\step_+$ and $\step_-$ have the same $C,D$? 
-Is $D$ the same in a \vass and its reverse?
-Basically, what is the $D$?}
-\sla{$D$ is the lcm of a set of numbers, see the ending of the proof of pumping lemma. We can
-take the same $D$ easily, namely by multiplying the forward $D$ by the backward one. 
-Any multiplicity of $D$ is good enough for the pumping lemma to hold.}
-
-%Now define the three phases $\Phi_1, \Phi_2, \Phi_3$ as stated above.
-%
-%\begin{align} \label{eq:3phases}
-%\big(\step_{0}^* \ \circ \ E \ \circ \ \step_+)^* \ \circ \ \step_0^* \ \circ \ E
-%\end{align}
-%where 
-%\[
-% E  \ = \ \big(\step_- \ \circ \ \step_0^*\big)^*.
-%\]
-%Thus we split every run into three phases: the first one ends with the last appearance of $\step_+$,
-%the middle one consisting just of $\step_0^*$, and the last one starting with $\step_-$ and
-%iterating arbitratily many times $\step_-$ and $\step_0$.
-%Each of the phases may be empty.
-
-
-\para{Computing pumpable sets}
-In the sequel, fix $D$ from \cref{lem:targetpump}. 
-A set $X \subseteq Q \times \N$ is \emph{pumpable} 
-if it is $D$-periodic:
-for all $(q,a) \in X$, also $(q,a+D) \in X$.
-
-We will compute an increasing chain 
-of sets of configurations $X\subseteq Q\times\N$ which are pumpable.
-%We represent these sets in vector form as functions
-%$X:Q\to \powset{\N}$, where $X(q)$ is pumpable for every $q\in Q$, namely $a\in X(q)\implies a+D\in X(q)$.
-The termination of computation is guaranteed by the following lemma:
-\begin{lemma} \label{lem:stab}
-    Every increasing chain of $X_1 \subseteq X_2 \subseteq \cdots$ of $D$-periodic sets of $\N$ stabilizes.
-\end{lemma}
-
-The two basic building blocks:
-
-\begin{lemma} \label{lem:0-+}
-The relations $\step_0, \ \step_-, \ \step_+$ are effectively semilinear (and thus computable).
-\end{lemma}
-\begin{proof}
-    They are sections of the reachability relation of a 2-\vass 
-    which is effectively semi-linear \cite{Blondin15}.
-\end{proof}
-
-\begin{lemma} \label{lem:0star}
-The relation $\step_0^*$ is effectively semilinear (and thus computable).
-\end{lemma}
-\begin{proof}
-    \vrm{Hard; to write down later.}\par
-    Computable by a 1-counter automaton, a special case of a pushdown automaton.
-\end{proof}
-
-
-%Notationally, we allows ourselves to compose a relation $R\subseteq (Q\times\N)^2$ 
-%with a set $X\subseteq Q\times\N$ to denote the set inverse image $R\circ X\subseteq Q\times\N$, 
-%or the image $X\circ R \subseteq Q\times\N$.
-%% Let $I_s = \{(s,s)\}$ be the relation containg exactly one pair, where $s$ is the source configuration.
-%% Likewise, let $I_t = \{(t,t)\}$.
-%We will be able to decide if $s\step^* t$, given source and target configurations $s,t\in Q\times\N$,
-%as long as we prove the two following fact: one can (backward) compute the inverse image
-%$E\circ \{t\}$, and (forward) compute the image 
-%$\{s\} \circ \big(\step_{0}^* \ \circ \ E \ \circ \ \step_+)^*$,
-%according to the partition into phases.
-
-\vrm{\bf I am still unsure what would be the best way to write the proofs of these lemmas.}
-
-\begin{lemma} \label{lem:compback}
-One can compute 
-the set 
-$\big(\step_- \ \circ \ \step_0^*\big)^* \ \circ \ \{t\}$.
-\end{lemma}
-\begin{proof}
-Recall that $\big(\step_- \ \circ \ \step_0^*\big) \ \circ \ S$
-is the set of all 
-\((q,a) \in Q \times \N\) such that $q(a)$ leads to some $x \in S$ via a run of form $(\step_-\step_0^\ast)^\ast$.
-Thus, $\big(\step_- \ \circ \ \step_0^*\big) \ \circ \ S$ is source-pumpable 
-due to \eqref{eq:spump},
-irrespectively of $S$.
-
-It is also computable due to \Cref{lem:0-+,lem:0star}, 
-as long $S$ is semilinear.
-This is seen by iterating the computation of the transformation
-\[
-S \quad \mapsto \quad \big(\step_- \ \circ \ \step_0^*\big) \ \circ \ S
-\quad \cup \quad S,
-\]
-which stabilises, by \Cref{lem:stab}.
-\vrm{how many details to write here? $\step_0^\ast$ has a representation as a semilinear set;
-to explain why every intermediate step in fixed point computation also has an efficient representation,
-and give it.}
-Furthermore, by the effective representation of $\step_0^\ast$ and $\step_{-}$ as semilinear relations,
-each step of the process above is effectively representable,
-and thus so is the fixed point.
-\end{proof}
-
-\begin{lemma} \label{lem:compfor}
-One can compute 
-the set 
-$\{s\} \circ \big(\step_{0}^* \ \circ \ E \ \circ \ \step_+)^*$.
-\end{lemma}
-\begin{proof}
-Again, The set $f(S) = S \ \circ \ \step_{0}^* \ \circ \ E \ \circ \ \step_+$ is
-target-pumpable due to \eqref{eq:tpump},
-irrespectively of $S$.
-Computability is more involved, but relates again on iteration of the transformation
-\[
-S \quad \mapsto \quad f(S) \quad \cup \quad S,
-\]
-relying on \Cref{lem:stab}.
-
-\vrm{To write that $f(S)$ consists of arithmetic progressions of period $D$,
-and that we choose the minimal element of every arithmetic progression.}
-To compute $f(S)$, one first establishes which remainders modulo $D$ appear in this set,
-by applyting the transformation of \Cref{lem:compback} to the set 
-$(\step_+ \ \circ \ M_k)$,
-where $M_k$ contains all numbers equal to $k$ modulo $D$, and checking intersection with 
-the set $(S\ \circ \ \step_0)$. 
-Then, by exhaustive search one finds the smallest number in $f(S)$, 
-for each remainder modulo $D$ separately.
-\end{proof}
-
-
+In this section we prove \Cref{thm:undecid}.
+\sla{TODO}
 
 
 \newpage

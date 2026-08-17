@@ -253,9 +253,23 @@ choice of instruction set, the Turing-complete model of 2-\cm{s}
 becomes decidable under the reversibility restriction.
 % 
 
-\para{Outline} \sla{todo}
+\para{Outline} 
+Afer we define the model in \Cref{sec:model}, the subsequent
+\Cref{sec:outline,sec:sl,sec:targetpump} are devoted to the proof of
+\Cref{thm:main}.
+We proceed in a top-down manner, by consecutive reductions to more and
+more basic properties. 
+In \Cref{sec:outline} we provide the proof of \Cref{thm:main},
+buidling on effective
+semilinearity of reachability sets and relations in the underlying
+symmetric 2-\vass.
+Then in \Cref{sec:sl} we prove the effective semilinearity,
+building on the central property of target (resp.~source) pumping
+of symmetric 2-\vass, that is finally shown in \Cref{sec:targetpump}.
+Finally, \Cref{sec:undecid} contains the proof of \Cref{thm:undecid}.
 
-\section{Symmetric counter machines}
+
+\section{Symmetric counter machines} \label{sec:model}
 
 Let $d$ be a positive integer.
 A \emph{$d$-counter machine} ($d$-\cm in short) 
@@ -346,13 +360,15 @@ we call a \emph{run} from configuration $c$ to $c'$.
 % to prove the decidability result.
 
 
-\section{Strategy of decidability proof}\label{sec:strategy}
+\section{Outline of decidability proof}\label{sec:outline}
 
 % % As above, we use $\step$ to denote step relation of a 2-\vass, namely without zero tests.
 % First some notational preprocessing.
 
 Consider a symmetric 2-\cm $\mach = (Q,T)$ and 
 two configurations, source $s$ and target $t$  ($s,t \in Q\times\N^2$).
+
+\para{Decomposition of run into segments}
 For convenience, we perform on $\mach$ the following notational
 preprocessing:
 we replace every zero-test transition
@@ -379,14 +395,23 @@ states consists of only update transitions, except for the very last
 transition which is a zero-test.
 Such a fragment, called \emph{segment} in the sequel,
 may be considered as a 2-\vass run
-that ends with one counter 0, and which counter is 0 is determined
-by the ending zero-testing state.
+that ends with one counter 0, and which counter is 0 is
+determined by the ending, zero-testing state.
+Fornally, we will concider a segment as a run in the
+\emph{unbderlying} symmetric 2-\vass $\V$
+obtained by replacing every zero-test transition 
+$(q, \ztinstr i, q^t)$ by
+the corresponding $(0,0)$ update one
+$(q, \updinstr{0,0}, q^t)$.
 
+\begin{remark} \label{rem:wlog}
 Furthermore, \mywlog we may assume that one counter is 0
 in both source and target configurations.
 For instance, if the source vector is $v=(v_1,v_2)$ with $0<v_1\leq v_2$,
 we replace it by $(0,v_2-v_1)$ and add one extra transition
 with update $(v_1,v_1)$.
+We thus assume that the source and target states are zero-testing.
+\end{remark}
 
 %into those corresponding to counter $\textsf{c}_1$ and to counter $\textsf{c}_2$,
 %so we tell which counter is zero by looking at the state.
@@ -406,53 +431,83 @@ $\rho$.
 % we shall call the $\rho_i$ the \emph{\vass segments} of $\rho$.
 %
 Every $\rho_i$ is thus
+a run in the underlying 2-\vass $\V$
 of one of the following forms:
-\begin{alignat*}{2}
+\begin{alignat}{2} 
+  \begin{aligned} \label{eq:4cases}
 q(a,0) &\step^\ast q'(0,a')\\
 q(0,a) &\step^\ast q'(0,a')\\
 q(0,a) &\step^\ast q'(a',0)\\
 q(a,0) &\step^\ast q'(a',0),
-\end{alignat*}
-where $q$ and $q'$ are zero-testing states;
-notice that we may write just
-\begin{equation} \label{eq:basictran}
-q(a) \step^* q'(a')
-\end{equation}
+  \end{aligned}
+\end{alignat}
+where the initial and final states $q$ and $q'$ are zero-testing states, and no zero-testing
+state is visited in between.
+Notice that we may write just
+% \begin{equation*} %\label{eq:basictran}
+$q(a) \step^* q'(a')$
+% \end{equation*}
 without specifying which of the four cases occurs,
 since the (zero-testing) states $q$, $q'$ uniquely determine that.
-We thus may consider $\step^*$ as the relation on $Q\times\N$,
+We follow the notational shorthand %\eqref{eq:basictran} 
+throughout and, instead of 
+$\step^*$ which is a binary relation on $Q\times\N^2$,
+%  \  \subseteq  (Q\times\N^2)^2$
+we prefer to use 
+a binary relation on $Q\times\N$, 
 \[
-\step^* \ \subseteq \ (Q\times\N)^2,
+\reachrel \ \ \subseteq \ (Q\times\N)^2,
 \]
-instead of $\step^* \ \subseteq \ (Q\times\N^2)^2$.
-We follow the notational shorthand \eqref{eq:basictran} throughout. 
+defined as expected: $q(a)\reachrel q'(a')$ if and only if 
+any of the four cases of \eqref{eq:4cases} holds, namely
+the underlying 2-\vass $\V$ has a corresponding run that does not
+visit zero-testing states except for the initial and final ones.
 % Without loss of generality, we also assume 
 % that both the source and target vector have at least one 0.
+Relying on Remark \ref{rem:wlog}, our taks is to decide if 
+$s\reachrel^* t$
+for $s,t\in Q\times\N$,
+that is if the pair $(s,t)$ belongs to the reflexive-transitive
+closure of $\reachrel$.
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.8]{figures-1.eps}
-\caption{The three relations $\step_+$, $\step_-$, and $\step_0$.
+\caption{The three relations $\stepp +$, $\stepp -$, and $\stepp 0$.
 The axes do \emph{not} correspond to the counters, 
 but rather the initial and final values $a$ and $a'$ of a segment.}
 \label{fig:areas}
 \end{figure}
 
-Every segment $\rho_i \colon q(a) \step^\ast q'(a')$, 
-depending on the values $a$ and $a'$,
+
+\para{Three types of segments}
+Every segment $\rho_i \colon q(a) \reachrel q'(a')$, 
+depending on the values of $a$, $a'$ and $a-a'$,
 falls into one of three categories,
 %split the relation $\step^\ast$ into three subrelations,
 %which represent different kinds of \vass runs in $(Q\times\N^2)$:
-denoted by $\step_+$, $\step_-$, and $\step_0$;
-see \Cref{fig:areas} for a graphical illustration.
+denoted by $\stepp +$, $\stepp -$, and $\stepp 0$.
+% We split the relation $\reachrel$ into three disjoint subrelations; 
+% depending on the value of $a$, $a'$, and $a'-a$. 
+If $q(a) \reachrel q'(a')$, we write:
+\begin{equation}
+\left.
+\begin{aligned}\label{eq:tran0-+}
+& q(a) \stepp 0\, q'(a'),\quad && \text{if\ \ $a\leq C$ or $a'\leq C$ or $|a'-a|\leq C $}\\
+& q(a) \stepp - q'(a'),\quad && \text{if\ \ $a' > C$\ \ and\ \ $a > a'+C${}}\\
+& q(a) \stepp + q'(a'),\quad && \text{if\ \ $a\phantom{'} > C$\ \ and\ \ $a' > a+C${}}
+\end{aligned}\right\}
+\end{equation}
+See \Cref{fig:areas} for a graphical illustration.
 % 
-The precise definitions will be given in \Cref{sec:proof}.
+The precise definition of constant $C$ will be given in \Cref{sec:targetpump}.
 Thus the rechability relation is 
 \[
-\big(\step_0 \ \cup \ \step_- \ \cup \ \step_+ \big)^*,
+\reachrel^* \ = \ 
+\big(\stepp 0 \ \cup \ \stepp - \ \cup \ \stepp + \big)^*,
 \] 
 an arbitrary composition
-of the three relations arbitrarily many times.
+of the three sub-relations arbitrarily many times.
 Note that the composition assures that \emph{control states match}.
 % 
 % \bigskip\noindent
@@ -460,43 +515,305 @@ Using this categorization
 we split the run $\rho$ into three \emph{phases} (possibly empty): 
 
 \begin{itemize}
-\item $\Phi_1$, which is the \emph{prefix} of $\rho$ and ends with the \emph{last} $\rho_i$ of the form $\step_+$,
-\item $\Phi_2$, which is an \emph{infix} of $\rho$ and consists only of $\rho_i$'s of the form $\step_0^*$, 
+\item $\Phi_1$, which is the \emph{prefix} of $\rho$ and ends with the \emph{last} $\rho_i$ of the form $\stepp +$,
+\item $\Phi_2$, which is an \emph{infix} of $\rho$ and consists only of $\rho_i$'s of the form $\stepp {0}^*$, 
 \item $\Phi_3$, which is the remaining \emph{suffix} of $\rho$ starting 
-with a $\rho_i$ of the form $\step_-$.
-% (followed by other \vass segments of the forms $\step_-$ and $\step_0$).
+with \emph{the first} $\rho_i$ of the form $\stepp -$.
+% (followed by other \vass segments of the forms $\stepp -$ and $\stepp 0$).
 \end{itemize}
 
 \noindent
 Clarly, the composition of the three phases yields
 the reachability relation, that is
 \begin{align} \label{eq:reachrel}
-\step^* \ = \ \Phi_1 \circ \Phi_2 \circ \Phi_3
+\reachrel^* \ = \ \Phi_1 \circ \Phi_2 \circ \Phi_3,
 \end{align}
-for  the three relations defined as follows:
+for  the three relations defined by the following rational expressions:
 \begin{align*}
-&\Phi_1 \ = \ ((\step_0 \ \cup \ \step_-)^\ast \circ \step_+)^\ast,\\
-&\Phi_2 \ = \ (\step_0)^\ast,\\
-&\Phi_3 \ = \ (\step_- \circ \step_0^\ast)^\ast,
+&\Phi_1 \ = \ ((\stepp 0 \ \cup \ \stepp -)^\ast \circ \stepp +)^\ast,\\
+&\Phi_2 \ = \ (\stepp 0)^\ast,\\
+&\Phi_3 \ = \ (\stepp - \circ \stepp {0}^\ast)^\ast.
 \end{align*}
 
-To conclude, \Cref{thm:main} is proved by
-showing that $\Phi_2 \subseteq (Q \times \N)^2$ 
-is an \emph{effectively semilinear} relation%
-%\footnote{This means $\{n \in \N \colon (q,n) \in \Phi_3 \}$ is effectively semilinear, for every $q\in Q$.}%
-,
-and that for given source $s$ and target $t$, the sets
+\para{Outline of decidability proof}
+
+The proof uses semilinear sets.
+Any subset of $\N^d$ of the form
+\[
+% \lin b {\{p_1,\dots,p_n\}} = 
+\left\{ b + k_1 p_1 + \cdots + k_n p_n 
+\mid k_1, \dots, k_n \in \N \right\},
+\]
+for $b, p_1, \dots, p_n \in \N^d$,
+we call a
+\emph{linear} set with base $b$ and periods $p_1, \dots, p_n$.
+A \emph{semilinear} set is a finite union of linear sets in the same
+dimension $d$.
+We say $X \subseteq Q \times \N^d$ is semilinear 
+if for every $q \in Q$, 
+the set 
+\(\{n \mid (q,n)\in X\} \subseteq \N^d\)
+is semilinear.
+Similarly, 
+$R \subseteq (Q\times \N^d)^2$ is semilinear if for every $q,q' \in Q$,
+the set
+\( \{(n,n') \mid ((q,n),(q',n')) \in R \} \subseteq \N^{2d}\)
+is semilinear.
+
+\Cref{thm:main} is proved by showing that the relation $\Phi_2$, 
+as well as
+the image of relation $\Phi_1$ and pre-image of $\Phi_3$, are
+\emph{effectively semilinear}, which means that they are 
+semilinear sets and their descriptions are computable
+given the underlying 2-\vass $\V$ and source and target
+$s, t\in Q\times\N$.
+Importantly, we only need to consider semilinar sets and relations
+in dimension $d=1$.
+
+
+\begin{lemma} \label{lem:0star}
+$\Phi_2 \subseteq (Q \times \N)^2$ 
+is an \emph{effectively semilinear} relation.
+% The relation $\stepp {0}^*$ is effectively semilinear.
+\end{lemma}
+
+
+% \begin{lemma} \label{lem:compbackfor}
+% One can compute 
+% the set 
+% $\big(\stepp - \ \circ \ \stepp {0}^*\big)^* \ \circ \ \{t\}$.
+% \end{lemma}
+
+\begin{lemma} \label{lem:compbackfor}
+Given source $s$ and target $t$, the sets
 \begin{alignat*}{6}
 &\Phi_3 \circ \{t\} \ := \  \{y &&\mid (y,t) \in \Phi_3 \hskip 0.5pt\}  \ \subseteq \ Q \times \N, \\
 &\{s\} \circ \Phi_1 \ := \  \{x &&\mid (s,x) \in \Phi_1 \} \ \subseteq \ Q \times \N
 \end{alignat*}
-are also \emph{effectively semilinear}.
-Thus the reachability question
+are \emph{effectively semilinear}.
+% One can compute 
+% the set 
+% $\{s\} \circ \big(\stepp {0}^* \ \circ \ E \ \circ \ \stepp +)^*$.
+\end{lemma}
+
+%  $\Phi_2 \subseteq (Q \times \N)^2$ 
+% is an \emph{effectively semilinear} relation
+% %\footnote{This means $\{n \in \N \colon (q,n) \in \Phi_3 \}$ is effectively semilinear, for every $q\in Q$.}%
+% % 
+% and that for given source $s$ and target $t$, the sets
+% \begin{alignat*}{6}
+% &\Phi_3 \circ \{t\} \ := \  \{y &&\mid (y,t) \in \Phi_3 \hskip 0.5pt\}  \ \subseteq \ Q \times \N, \\
+% &\{s\} \circ \Phi_1 \ := \  \{x &&\mid (s,x) \in \Phi_1 \} \ \subseteq \ Q \times \N
+% \end{alignat*}
+% are also \emph{effectively semilinear}.
+
+Relying on effective 
+semilinearity given in \Cref{lem:0star,lem:compbackfor},
+and on the effective equivalence of semilinear sets and Presburger 
+Arithmetic \cite{},
+the proof of \Cref{thm:main} is immediate:
+the reachability question $s\reachrel^* t$
 which, according to \eqref{eq:reachrel}, is equivalent to%
 %\( (s,t) \in \Phi_1\circ\Phi_2\circ\Phi_3,\) \ie 
 \begin{equation}
 \exists\, x,y \in Q\times\N \ : \  x \in \{s\} \circ \Phi_1 \ \wedge \ (x,y) \in \Phi_2 
 \ \wedge \ y\in \Phi_3 \circ \{t\},
 \end{equation}
-is decidable
-(by semilinearity, the last formulation is expressible in Pressburger Arithmetic).
+is effectively 
+expressible in Presburger Arithmetic, and hence decidable \cite{}.
+It thus remains to demonstrate the two key lemmas.
+
+
+%Notationally, we allows ourselves to compose a relation $R\subseteq (Q\times\N)^2$ 
+%with a set $X\subseteq Q\times\N$ to denote the set inverse image $R\circ X\subseteq Q\times\N$, 
+%or the image $X\circ R \subseteq Q\times\N$.
+%% Let $I_s = \{(s,s)\}$ be the relation containg exactly one pair, where $s$ is the source configuration.
+%% Likewise, let $I_t = \{(t,t)\}$.
+%We will be able to decide if $s\step^* t$, given source and target configurations $s,t\in Q\times\N$,
+%as long as we prove the two following fact: one can (backward) compute the inverse image
+%$E\circ \{t\}$, and (forward) compute the image 
+%$\{s\} \circ \big(\stepp {0}^* \ \circ \ E \ \circ \ \stepp +)^*$,
+%according to the partition into phases.
+
+
+
+
+\section{Effective semilinearity} \label{sec:sl}
+
+We denote by $\mysize \V$ the size of $\V$, in unary representation,
+and by $\norm \V$ the max-norm of $\V$, namely the maximal absolute value of
+all numbers appearing in transitions.
+Clearly, $\mysize \V \geq \norm \V$.
+
+We start with a basic observation concerning the building blocks
+of sets of our interest:
+
+\begin{lemma} \label{lem:0-+}
+The relations $\stepp 0, \ \stepp -, \ \stepp +$ are effectively semilinear.
+\end{lemma}
+\begin{proof}
+The relation $\reachrel$ is the reachability relation of a 2-\vass
+$\V$, which is effectively semi-linear \cite{Blondin15}.
+Each of the sub-relations $\stepp 0, \ \stepp -, \ \stepp +$ is a Presburger-definable subset of $\reachrel$,
+and hence effectively semilinear as well.
+\end{proof}
+
+
+\para{Target and source pumping}
+
+
+The \emph{target pumping} 
+property of segments of the form $\stepp +$, is 
+a central technical tool in the proofs of
+\Cref{lem:0star,lem:compbackfor}:
+
+\newcommand{\punkt}[2]{({#1}{\rightarrow}{#2})}
+\begin{lemma} [Target pumping] \label{lem:targetpump}
+Given a symmetric 2-\vass $\V$,
+one can compute numbers $C, D \in \N$ 
+such that for every pair of control states $q, q'$ of $\V$ and  
+$a, a'\in\N$ such that $a > C$ and $a' > a + C$,%
+\[
+\punkt 1 2 \qquad
+\text{if} \quad q(a,0)\step^* q'(0,a') \quad \text{then} \quad q(a,0) \step^* q'(0, a'+D),
+\]
+and similarly for the other three symmetric cases:
+\begin{alignat*}{3}
+&\punkt 2 2 \qquad
+\text{if} \quad q(0,a)\step^* q'(0,a') \quad &&\text{then}  \quad  q(0,a) \step^* q'(0, a'+D),\\
+&\punkt 2 1 \qquad
+\text{if} \quad q(0,a)\step^* q'(a',0) \quad &&\text{then}  \quad  q(0,a) \step^* q'(a'+D, 0),\\
+&\punkt 1 1 \qquad
+\text{if} \quad q(a,0)\step^* q'(a',0) \quad &&\text{then}  \quad  q(a,0) \step^* q'(a'+D,0).
+\end{alignat*}
+Moreover, $C$ is polynomial in $\mysize \V$ and $D$ is exponential in $\mysize \V$.
+\end{lemma}
+
+In the sequel we fix the underlying symmetric 2-\vass $\V$ of
+a symmetric 2-\cm.
+The four claims of \Cref{lem:targetpump} jointly imply that 
+$\stepp +$ is \emph{target-pumpable} in $\V$, 
+that is for every pair of control states $q, q'$ of $\V$, 
+% and  $a, a'\in\N$ such that $a, a'-a > C$, 
+\begin{align} \label{eq:tpump}
+q(a)\stepp + q'(a') \quad \implies  \quad  q(a) \stepp + q'(a'+D).
+\end{align}
+The reverse version of the four claims, where we swap source and target and reverse all transitions
+(the reverse of $(q,w,q')$ is $(q',-w,q)$, as expected), 
+implies that $\stepp -$ is \emph{source-pumpable}, that is 
+\begin{align} \label{eq:spump}
+q(a)\stepp - q'(a') \quad \implies  \quad  q(a+D) \stepp - q'(a').
+\end{align}
+Note that we can assume the same $D$ in \eqref{eq:tpump} and 
+\eqref{eq:spump}, by taking the least common multiplicity of the
+two constants given by the two applications of \Cref{lem:targetpump}.
+In the sequel, fix the constant 
+$D$ from \eqref{eq:tpump} and \eqref{eq:spump}.
+
+
+\para{Periodic sets}
+
+A set $X \subseteq Q \times \N$ is $N$-periodic if
+for all $(q,a) \in X$, also $(q,a+N) \in X$.
+It is a folklore that semilinear sets $X\subseteq Q\times\N$
+are $N$-periodic for some period $N$. 
+In the sequel it will be crucial that all semilinear sets we maintain
+are $D$-periodic with the same period $D$.
+% 
+For instance, in consequence of \eqref{eq:tpump} and \eqref{eq:spump}, 
+the image $S\circ \stepp +$ as well as the pre-image
+$\stepp - \circ S$ is always $D$-periodic, irrespectively of
+$S\subseteq Q\times\N$.
+% 
+%Now define the three phases $\Phi_1, \Phi_2, \Phi_3$ as stated above.
+%
+%\begin{align} \label{eq:3phases}
+%\big(\stepp {0}^* \ \circ \ E \ \circ \ \stepp +)^* \ \circ \ \stepp {0}^* \ \circ \ E
+%\end{align}
+%where 
+%\[
+% E  \ = \ \big(\stepp - \ \circ \ \stepp {0}^*\big)^*.
+%\]
+%Thus we split every run into three phases: the first one ends with the last appearance of $\stepp +$,
+%the middle one consisting just of $\stepp {0}^*$, and the last one starting with $\stepp -$ and
+%iterating arbitratily many times $\stepp -$ and $\stepp 0$.
+%Each of the phases may be empty.
+% 
+
+A $D$-periodic set $X$ is representable by a function 
+$\minf X : Q\times \setfromto 0 {D-1} \to \N \cup \{\infty\}$ 
+that maps a state $q\in Q$ and $r<D$ to the least number $n$ 
+whose reminder modulo $D$ equals $r$, and such that $(q,n)\in X$ 
+(and to $\infty$ if there is no such number):
+\[
+\minf X (q,r) \ = \ \min\{n : (q,n) \in X, \ \ n \equiv r\!\!\mod D\}.
+\]
+In the proofs of \Cref{lem:0star,lem:compbackfor}
+we compute increasing (actually, non-decreasing) chains 
+of $D$-periodic sets of configurations $X\subseteq Q\times\N$.
+%We represent these sets in vector form as functions
+%$X:Q\to \powset{\N}$, where $X(q)$ is pumpable for every $q\in Q$, namely $a\in X(q)\implies a+D\in X(q)$.
+Termination of computation is guaranteed by:
+%  the following lemma:
+\begin{lemma} \label{lem:stab}
+    Every non-decreasing chain of $X_1 \subseteq X_2 \subseteq \cdots$ of $D$-periodic sets of $\N$ stabilizes.
+\end{lemma}
+% 
+\begin{proof}
+The sequence $\minf {X_1}, \minf{X_2}, \ldots$ is a non-increasing
+chain of functions, ordered pointwise 
+(assuming $n<\infty$ for $n\in\N$), 
+and hence necessarily stabilises due to well-foundedness
+of the function space $Q\times \setfromto 0 {D-1} \to \N \cup \{\infty\}$.
+\end{proof}
+
+
+\begin{proof}[Proof of \Cref{lem:0star}]
+    \vrm{Hard; to write down later.}\par
+    Computable by a 1-counter automaton, a special case of a pushdown automaton.
+\end{proof}
+
+\begin{proof}[Proof of \Cref{lem:compbackfor}]
+Recall that $\big(\stepp - \ \circ \ \stepp {0}^*\big) \ \circ \ S$
+is the set of all 
+\((q,a) \in Q \times \N\) such that $q(a)$ leads to some $x \in S$ via a run of form $(\stepp -\stepp {0}^\ast)^\ast$.
+Thus, $\big(\stepp - \ \circ \ \stepp {0}^*\big) \ \circ \ S$ is source-pumpable 
+due to \eqref{eq:spump},
+irrespectively of $S$.
+
+It is also computable due to \Cref{lem:0-+,lem:0star}, 
+as long $S$ is semilinear.
+This is seen by iterating the computation of the transformation
+\[
+S \quad \mapsto \quad \big(\stepp - \ \circ \ \stepp {0}^*\big) \ \circ \ S
+\quad \cup \quad S,
+\]
+which stabilises, by \Cref{lem:stab}.
+\vrm{how many details to write here? $\stepp {0}^\ast$ has a representation as a semilinear set;
+to explain why every intermediate step in fixed point computation also has an efficient representation,
+and give it.}
+Furthermore, by the effective representation of $\stepp {0}^\ast$ and $\stepp {-}$ as semilinear relations,
+each step of the process above is effectively representable,
+and thus so is the fixed point.
+\end{proof}
+
+\begin{proof}[Proof of \Cref{lem:compbackfor}]
+Again, The set $f(S) = S \ \circ \ \stepp {0}^* \ \circ \ E \ \circ \ \stepp +$ is
+target-pumpable due to \eqref{eq:tpump},
+irrespectively of $S$.
+Computability is more involved, but relates again on iteration of the transformation
+\[
+S \quad \mapsto \quad f(S) \quad \cup \quad S,
+\]
+relying on \Cref{lem:stab}.
+
+\vrm{To write that $f(S)$ consists of arithmetic progressions of period $D$,
+and that we choose the minimal element of every arithmetic progression.}
+To compute $f(S)$, one first establishes which remainders modulo $D$ appear in this set,
+by applyting the transformation of \Cref{lem:compback} to the set 
+$(\stepp + \ \circ \ M_k)$,
+where $M_k$ contains all numbers equal to $k$ modulo $D$, and checking intersection with 
+the set $(S\ \circ \ \stepp 0)$. 
+Then, by exhaustive search one finds the smallest number in $f(S)$, 
+for each remainder modulo $D$ separately.
+\end{proof}
