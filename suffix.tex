@@ -1,0 +1,479 @@
+    
+%\noindent A \emph{Counter Machine with $n$-counters} (or $n$-\cm for short) 
+%is a quadruple
+%\[
+%\mathcal{M} = (Q, q_0, q_h, \Delta)
+%\]
+%where:
+%\begin{itemize}
+%    \item $Q$ is a finite set of \emph{control states},
+%    \item $q_0 \in Q$  and $q_h \in Q$ are the \emph{initial} and the \emph{halting} state respectively,
+%    \item $\Delta \subseteq (Q - \{q_h\}) \times \text{Instr}_n \times Q$ is the 
+%    \emph{transition relation}, where $\text{Instr}_n$ is a finite subset of 
+%    $\Z^n \cup \{ \text{\lq\lq$\textsf{c}_i=0$?\rq\rq} \mid 1 \leq i \leq n\}$.
+%\end{itemize}
+%
+%A configuration of $\mathcal{M}$ is a pair $(q,x)$ where $q \in Q$ and $x \in \N^n$.
+%A run of $\mathcal{M}$ is a sequence $\rho=c_0, c_1, \dots, c_\ell$ of configurations,
+%where $c_0=(q_0, (0,0))$,
+%and if $c_i = (q_i,x_i)$, then $c_{i+1}=(q_{i+1},x_{i+1})$
+%for some transition $(q_i, A,q_{i+1}) \in \Delta$,
+%where:
+%\begin{itemize}
+%\item $x_{i+1} = x_i + A$, if $A \in \Z^n$,
+%\item $x_{i+1}= x_i$ and $x_i(j)=0$ if $A = \text{``$\textsf{c}_j=0?$\rq\rq}$.
+%\end{itemize}
+%We say $\rho$ is an accepting run if $q_\ell = q_h$.
+%
+%An $n$-\vass is an $n$-\cm with $\Delta \subseteq Q \times \Z^n \times Q$.
+%
+
+
+
+%\para{1-dimensional notation}
+%By symmetry, \Cref{lem:targetpump} holds more generally:
+%for every pair of control states $q$, $q'$ of $\V$ and  
+%$a, a'\in\N$ such that $a$, $a'-a>C$, 
+%\begin{align*}
+%q(0,a)\step^* q'(0,a') \quad \implies  \quad  q(0,a) \step^* q'(0, a'+D)\\
+%q(0,a)\step^* q'(a',0) \quad \implies  \quad  q(0,a) \step^* q'(a'+D, 0)\\
+%q(a,0)\step^* q'(a',0) \quad \implies  \quad  q(a,0) \step^* q'(a'+D,0).
+%\end{align*}
+%As discussed before, the ``zero-testing states'' indicate which counter is zero, 
+%so we can merge the four cases into one notation, 
+%adopting the shorthand \eqref{eq:basictran}.
+%and that a run zero tests every counter whenever it has value 0. 
+% To this aim double the control states, that is replace every $q\in Q$
+% by $q_1, q_2$, each of them involved into the same increment transitions as $q$, but $q_1$ only 
+% capable to do those zero-testing transitions $q$ that test counter 1, and likewiese $q_2$ only 
+% capable to do those zero-testing transitions $q$ that test counter 2.
+
+%So prepared, we can simply write
+%\begin{align} \label{eq:basictran}
+%q(a) \step^* q'(a')
+%\end{align}
+%without specifying which of the four cases is happening
+%\begin{align*}
+%q(a,0)\step^* q'(0,a')\\
+%q(0,a)\step^* q'(0,a')\\
+%q(0,a)\step^* q'(a',0)\\
+%q(a,0)\step^* q'(a',0)
+%\end{align*}
+%since the control states $q,q'$ uniquely determine these two bits of information.
+%Note that the newly introduced zero tests are not symmetric, but we do not assume that. 
+
+% \begin{figure}
+% \centering
+% \includegraphics{figures-1.eps}
+% \caption{The three relations $\stepp +$, $\stepp -$, and $\stepp 0$.
+% The axes do \emph{not} correspond to the counters, 
+% but rather the initial and final values $a$ and $a'$ of the \vass segment.}
+% \label{fig:areas}
+% \end{figure}
+
+%Each of the three relations \eqref{eq:tran0-+} is included in $(Q\times\N)^2$.
+
+% \para{VASS}
+% In a \vass $\V$, \emph{path} is a sequence of transitions 
+% where the target state of every transition
+% matches the source targe state of the next one.
+% A \emph{run} is a path plus a source configuration whose
+% state matches with the first transition, such that
+% all transitions are fireable.
+% A \emph{cycle} is a path where the source state of the 
+% first matches the target state of the last one.
+% By $c; c'$ we denote the concatenation of paths $c, c'$, and  
+% by $c^k$ we denote the $k$-fold concatenation of a cycle $c$.
+% Firing of a single transition $q \xstep{(x_1,x_2)} q'$
+% we call a \emph{step} and
+% write $q(n_1, n_2) \step q'(n_1+x_1, n_2+x_2)$;
+% and $\step^\ast$ is the transitive closure of $\step$.
+
+% \medskip
+
+
+% \para{Relations}
+% If $R\subseteq X \times Y$, $R' \subseteq Y \times Z$ and $A \subseteq X$, $B \subseteq Y$,
+% we define the following compositions:
+% \begin{alignat*}{3}
+% & R \circ R' &&= \{(x,z) \mid \exists y : (x,y) \in R \wedge (y,z) \in R'\},\\
+% & R \circ B  &&= \{x \in A \mid \exists y \in B : (x,y)\in R\},\\
+% & A \circ R  &&= \{y \in B \mid \exists x \in A : (x,y)\in R \}.
+% \end{alignat*}
+% If $X=Y$, then $R^\ast$ is $\bigcup_{n=0}^\infty \underset{\text{$n$ times}}{\underbrace{R \circ \cdots \circ R}}$.
+
+
+
+
+
+\section{Target pumping}\label{sec:targetpump}
+%
+
+\sla{\bf this section is technically the hardest, especially 
+\Cref{claim:steep};
+Krzysiek, can you verify all the details?
+}
+
+\sla{\bf a couple of figures is needed; Vaios, can you produce them?}
+
+We now prove \Cref{lem:targetpump}.
+We focus on proving point $\punkt 1 2$, noticing however that
+literally the same argument 
+\sla{am I right?}
+works for point $\punkt 2 2$.
+The other two points, namely $\punkt 2 1$ and $\punkt 1 1$
+follow immediately, by swapping the coordinates.
+
+\begin{proof}[Proof of \Cref{lem:targetpump}$\punkt 1 2$]
+Consider a fixed 2-\vass $\V = (Q,T)$ and
+run $\sigma : q(a,0)\step^* q'(0,a')$ for some $a, a'\in \N$.
+We modify the run to lift the target configuration to $q'(0,a'+\gamma D_\sigma)$ for any
+$\gamma > 0$, for some particular $D_\sigma$ depending both on $\V$ and on $\sigma$, assuming
+that both $a$ and the difference $a'-a$ are sufficiently large (namely larger
+than some $C$, depending only on $\V$).
+As there will be only finitely many different numbers $D_\sigma$,
+we argue then that taking the least common multiple of all $D_\sigma$ yields a
+number $D$ satisfying the claim of the lemma.
+
+Given $t=(q,\updinstr{w},q')\in T$, 
+we call states $q, q'$ the \emph{source} and
+\emph{target} state of $t$, respectively,
+and the vector $w$ we call the \emph{effect} of $t$.
+% 
+Denote by $\widetilde \sigma$ the sequence of transitions fired along
+$\sigma$.
+Clearly, $\widetilde \sigma$ is a \emph{path}, i.e., the target state
+of every transition in $\sigma$ matches the source state of the next one.
+According to the linear-path-scheme (LPS) decomposition of 
+\cite[Thm.~1]{Blondin15}, 
+we may assume \mywlog that 
+$\widetilde\sigma$ is build of transitions 
+$t_0, \ldots, t_\ell$ and cycles $c_1, \ldots, c_\ell$:
+\[
+\widetilde\sigma \ \in \ t_0 \ c_1^* \ t_1 \ c_2^* \ \ldots \ c_\ell^* \ t_\ell,
+\]
+where the length of each cycle $c_i$ is at most $e$,
+and both $\ell$ and $e$ are bounded by a polynomial of $\mysize \V$,
+the size of unary representation of $\V$.
+Here by a \emph{cycle} we mean a path where source state of the first
+transition maches the target state of the last one.
+Note the we do not claim any bound the number $n_j$ of iterations of every 
+cycle $c_i$ in $\widetilde\sigma$.
+Let $C_0$ be the minimal value such that every cycle of $\V$
+of length at most $e$ is fireable at $(C_0, C_0)$.
+
+We now classify the cycles as follows: call a cycle $c_j$ \emph{major}
+if its number of iterations $n_j$ is larger than $2 C_0$, and \emph{minor} otherwise.
+Moreover, call a cycle
+$c_j$ \emph{sum-increasing} if its effect $(x_j, y_j)$,
+defined as the sum of effects of its transitions, 
+satisfies $x_j + y_j > 0$.
+
+As we are assuming that $a' - a > C$, note that the sum of counters
+must increase by more than $C$ along $\sigma$. Thus, by setting an appropriately
+large $C$, we can ensure that at least one \emph{major sum-increasing cycle}
+will be present in the decomposition of $\sigma$.
+
+In particular, the total effect of the one-off transitions 
+$t_0, \ldots, t_\ell$ is bounded,
+as each of them may increase the sum of the counters by at most $2 \norm \V$.
+Likewise, each minor cycle may only increase the sum of the counters by at most
+$4 C_0 e \norm \V$. Thus, it suffices to set
+\[
+    C \ \geq \ C_1 \ = \ 
+    (2 C_0 e_\mathrm{max} + 1)(\ell_\mathrm{max} + 1) 2\norm\V,
+\]
+where $e_\mathrm{max}$ and $\ell_\mathrm{max}$ are the (polynomial in $\mysize\V$) bounds
+on $e$ and $\ell$, respectively.
+
+
+We now focus our attention on the major sum-increasing cycles, and perform
+case analysis in terms of the sign of each coordinate of their effect.
+Specifically, the effect of a sum-increasing cycle can be:
+vertical $(0,+)$, horizontal $(+,0)$, or one of $(+,-)$, $(+,+)$, or $(-,+)$.
+We classify these into three cases.
+\sla{TODO a figure}
+
+\para{Case 1: Some major sum-increasing cycle $c_j$ has vertical $(0,+)$ effect}
+One extra iteration of this cycle yields the claim with $D_\sigma$ equal to its
+vertical effect.
+
+\para{Case 2: Some major sum-increasing cycle $c_j$ has effect $(-,+)$ or $(+,-)$}
+Assume $(-,+)$ effect, the other case is similar.
+% 
+For our argument it is enough if the $n_j$ is large enough to guarantee that 
+in the middle
+of $c_j^{n_j}$, namely after the half of $n_j$ of iterations of $c_j$, the 
+transposed cycle $\overline{c_j}$
+(existing due to the assumed symmetry of $\V$) is also enabled.
+(The transposed cycle $\overline{c_j}$ is obtained by transposing all transitions 
+along $c_j$.)
+We observe the key claim, relying on the fact that  
+the effect of $c_j$ is nonzero on both coordinates
+(in particular note that we don't use the sum-increasing
+assumption for this claim):
+%
+\begin{claim}  \label{claim:fireable}
+If a cycle $c_j$ is repeated $n_j > 2C_0$ times, and $C_0 \leq i \leq n_j - C_0$,
+the transposed cycle $\overline{c_j}$ is fireable after $c_j^i$
+(regardless of the source configuration).
+\end{claim}
+%
+\begin{proof}
+Denoting the effect of $c_j$ by $(x,y)$,
+the $n_j+1$ source-target configurations along the run $c_j^{n_j}$
+form an arithmetic progression defined by
+$(x_i, y_i) = (x_0 + ix, y_0 + iy)$.
+%For a coordinate at which the
+%effect of the cycle is positive, say $x > 0$, we obtain $x_i \geq C_0$
+%for $i \geq C_0$. On the other hand, for a coordinate with a negative effect,
+%say $y < 0$, we have $y_i = y_{n_j} - (n_j - i)y$, with $y_{n_j} \geq 0$, and
+%thus $y_i \geq n_j - i$. Hence for $i \leq n_j - C_0$ we have $y_i \geq C_0$.
+%As such, for $C_0 \leq i \leq n_j - C_0$, both coordinates are above $(C_0, C_0)$,
+%which suffices to obtain that $\overline{c_j}$ is fireable.
+It suffices to show that for appropriate $i$ we have $x_i, y_i \geq C_0$.
+For coordinates at which the effect is positive, say $x > 0$,
+we need $C_0 \leq i$; conversely for coordinates with negative effect, say $y < 0$,
+we need $i \leq n_j - C_0$. Note that for $n_j > 2C_0$, we can satisfy both
+inequalities.
+\end{proof}
+%
+
+In consequence of \Cref{claim:fireable}, the cycle $\overline{c_j}$ is fireable
+after $c_j^{C_0+1}$. Equivalently, $c_j; \overline{c_j}$ is fireable after $c_j^{C_0}$.
+Denoting by $(-x, y)$ the effect of $c_j$, we have that $y > x$, as the cycle is
+sum-increasing. Thus, the effect of $c_j; \overline{c_j}$, being $(y-x, y-x)$,
+is positive on both coordinates, and $c_j; \overline{c_j}$ may be fired arbitrarily
+many times at the midpoint of $c_j^{n_j}$, without interference with the remainder of the path.
+
+% Let $k$ be the least common multiplicity of $m_2 - m_1$ and $m_1$.  
+Now set $k:=x(y-x)$.
+By iterating $x$ times the cycle $c_j; \overline{c_j}$,
+we get a cycle with effect $(k,k)$, and then appending
+$c_j^{y-x}$ we get the vertical effect.
+Indeed, the effect of
+\[
+\big(c_j; \overline{c_j}\big)^{x}; c_j^{y-x}
+\]
+is $(0, (x+y)(y-x))$, and this cycle is still fireable in the middle of
+$c_j^{n_j}$.
+We thus get the claim with $D_\sigma = (x+y)(y-x)$.
+
+\para{Case 3: All major sum-increasing cycles have $(+,0)$ or $(+,+)$ effect}
+We will aim at increasing 
+the repetition count of one of the major sum-increasing
+cycles, together with one other cycle occurring later in the run, 
+in order to obtain
+a vertical effect.
+Let us restrict our attention to those major cycles $c_j$, whose effect 
+$(x_j,y_j)$ satisfies $x_j\neq 0$.
+Depending on whether $x_j>0$ or $x_j<0$, we call such cycles 
+\emph{horizontally positive}, or \emph{horizontally negative} respectively.
+We define \emph{steepness} of such a cycle $c_j$ as $y_j/x_j$ and denote it by $\varphi_j$.
+Note that, while in general the steepness may be negative, by assumption it will never be negative
+for a major sum-increasing cycle.
+\mei{TODO: Figure: demonstrate some non-trivial steepness comparisons; illustrate a run that
+doesn't satisfy the claim below to show what we want to rule out.}
+
+
+\sla{\bf I had a couple of doubts/qustions in the proof of the claim below; 
+Maja: can you addres them?}
+
+\begin{claim} \label{claim:steep}
+There are some $i<j$ such that $c_i$ is a major sum-increasing cycle, $c_j$ is major and
+horizontally negative, and $c_i$ is steeper than $c_j$ (i.e. $\varphi_i > \varphi_j$).
+\end{claim}
+%
+\begin{proof}
+%Define a \emph{segment} of a run as a sequence of consecutive major cycles that begins
+%with a sum-increasing cycle that is the steepest among the sum-increasing major cycles
+%that are part of the segment. We do not consider the minor cycles, nor the one-off
+%transitions, that occur between the major cycles of a segment, to be part of said segment,
+%and define the \emph{effect} of a segment to be the sum of the effects of only its major
+%cycles.
+%
+%Thus, we split the run, and its total effect, into (a) the one-off transitions and minor cycles,
+%(b) the major cycles that occur before the first sum-increasing major cycle, and
+%(c) a number of segments, each starting with a steeper sum-increasing cycle than the last.
+Suppose the claim doesn't hold. Let $c_{k_1}, \ldots c_{k_s}$ be the sequence
+of major sum-increasing cycles of increasing steepness, i.e. let $c_{k_1}$
+be the first major sum-increasing cycle of the run, and define
+$k_{i+1}>k_i$ so that
+$c_{k_{i+1}}$ is the first major sum-increasing cycle steeper than
+$c_{k_i}$. Moreover, let $S_i \leq C_1$ be the total norm 
+\sla{what is 'total norm'? Is it "sum of norms of all the 
+one-off andf minor cycles' transitions"?}
+of all the one-off
+transitions and minor cycles which occurred up to $c_i$ (including $c_i$
+itself if it happens to be minor), and let $(X_i, Y_i)$ be the
+counter values after $c_i^{n_i}$. 
+Finally, denote by $\beta_i$ the steepness of
+the most recent cycle among $c_{k_1}, \ldots c_{k_s}$, 
+i.e. $\beta_i = \varphi_i$ if
+$i \in \{k_1, \ldots, k_s\}$, and $\beta_i = \beta_{i-1}$ otherwise. At the
+boundary, set $\beta_0 = S_0 = 0$, and $(X_0, Y_0) = (a, 0)$.
+
+Note that, if \Cref{claim:steep} indeed doesn't hold, we have $\beta_j \leq \varphi_j$ for any
+horizontally negative major cycle $c_j$, with the possible exception of cycles $j < k_1$.
+Indeed, otherwise we have $\varphi_i = \beta_j > \varphi_j$ as required.
+Note also that for horizontally positive major cycles $c_i$, we have $\varphi_i \leq \beta_i$,
+either by definition, for sum-increasing cycles, or trivially, as 
+$\varphi_i \leq 0 \leq \beta_i$ for 
+horizontally positive cycles $c_i$ that are not sum-increasing.
+
+By induction on $i$, we will now prove that the pair $(X_i,Y_i)$ of
+counter values %configuration
+will always satisfy
+\begin{equation} \label{eq:steep-ind}
+    Y_i \ \leq \ S_i (1 + \beta_i) \ + \ \beta_i X_i.
+\end{equation}
+\mei{TODO Figure.}
+At $i = 0$, equality trivially holds.
+Suppose then that the inequality holds at a specific $i$. Denoting by $(x, y)$ the counter
+values just before $c_{i+1}$, we have $y - Y_i \leq S_{i+1} - S_i$, and $X_i - x \leq S_{i+1} - S_i$.
+Multiplying the latter by $\beta_i$ and rearranging, we obtain
+\[
+    y - Y_i \ \leq \ (S_{i+1} - S_i)(1 + \beta_i) \ + \ \beta_i (x - X_i),
+\]
+and thus moving $Y_i$ to the right-hand side and using the inequality
+\eqref{eq:steep-ind} we get
+\[
+    y \ \leq \ S_{i+1} (1 + \beta_i)  \ + \ \beta_i x
+    \  \leq \ S_{i+1} (1 + \beta_{i+1}) \ + \ \beta_{i+1} x,
+\]
+where the latter inequality follows because $\beta$ is non-decreasing.
+
+If $c_{i+1}$ is a minor 
+\sla{isn't the induction over major cycles $c_i$ only?}
+cycle, we can replace $(x, y)$ in the above reasoning by $(X_{i+1}, Y_{i+1})$,
+obtaining the inductive hypothesis. 
+Let us thus
+focus on the case when $c_{i+1}$ is a major cycle, denoting by 
+$(x_{i+1}, y_{i+1})$ the effect of $c_{i+1}$.
+% of one of the $n_{i+1}$ iterations of the cycle.
+
+If $x_{i+1} = 0$, we must have $y_{i+1} < 0$, as we handle vertical sum-increasing cycles in Case 1.
+A $(0, -)$ cycle will however trivially preserve the desired inequality. It remains to consider
+major cycles that are either horizontally positive, or horizonally negative. In both cases we have
+$y_{i+1} = \varphi_{i+1} x_{i+1}$ and will endeavour to prove $\varphi_{i+1} x_{i+1} \leq \beta_{i+1} x_{i+1}$.
+But as we've noted before, we have $\varphi_{i+1} \leq \beta_{i+1}$ whenever $x_{i+1} > 0$, and the
+opposite inequality when $x_{i+1} < 0$, exactly as required to obtain $y_{i+1} \leq \beta_{i+1} x_{i+1}$.
+Thus,
+\[
+    Y_{i+1} = y + n_{i+1} y_{i+1} \leq S_{i+1} (1 + \beta_{i+1}) + \beta_{i+1} (x + n_{i+1} x_{i+1})
+    = S_{i+1} (1 + \beta_{i+1}) + \beta_{i+1} X_{i+1}.
+\]
+
+Hence we finish the induction and obtain \eqref{eq:steep-ind}, in particular for
+the final configuration $(0, a')$:
+\[
+    a' \ \leq \ C_1 (1 + \varphi_\mathrm{max}) \ \leq \ C_1 (1 + \norm\V).
+\]
+\sla{I think $\varphi_\text{max}\leq e\norm\V$, not 
+$\varphi_\text{max}\leq \norm\V$ \\}
+\sla{$\varphi_\text{max}$, the maximum of $\varphi_i$, should be defined}
+By setting $C := C_1 (1 + \norm\V)$, we obtain a contradiction.
+\end{proof}
+
+Take any cycles $c_i, c_j$, where $i<j$, as given by \Cref{claim:steep}. 
+Their horizontal effects
+satisfy $x_i>0$ and $x_j<0$, and hence
+%    positive integers $I, J$, 
+the sum of effects of $c_i^{x_j}$ and $c_j^{x_i}$ is vertical and equal 
+$(0,h)$ 
+for $h = x_j y_i + x_i y_j > 0$.
+Expanding $c_i^{n_i}$ with $c_i^{x_j}$ and $c_j^{n_j}$ with $c_j^{x_i}$ 
+yields a run ending in $q'(0,a'+D_\sigma)$, where $D_\sigma = h$.
+The proof of Case 3 is thus completed.
+
+\medskip
+
+It remains to estimate the values of $C$ and $D$.
+The norm of the effect of every cycle of length at most $e$ is bounded
+by $e\norm{\V}$, and hence
+all values $D_\sigma$ appearing in all the three cases 
+are bounded by $2(e_\text{max} \norm{\V})^2$, thus
+polynomially in $\mysize \V$.
+Taking as $D$ the least common multiple of all $D_\sigma$ is enough for the
+claim of the lemma.
+The sufficiently large value of $C$ is
+$C := C_1 (1 + \norm\V)$.
+Summing up, $C$ is polynomial and $D$ is expoenential in $\mysize \V$,
+as required.
+%
+% The constant $C$ must be large enough so that, even after forgetting of
+% the total effects of all transitions $t_0, \ldots, t_\ell$, the iterations of
+% cycles $c_1, \ldots, c_\ell$ increase the sum by the amount large enough so that
+% one of sum-incrasing cycles is iterated at least $2 C_0$ times (are required
+% by \Cref{claim:fireable}).
+% As $C_0$ is at most $e\cdot \norm \V$ and $\ell$ is polynomial in $\mysize \V$,
+% a polynomial value of $C$, \wrt $\mysize \V$, 
+% is sufficient to satisfy the above requirement.
+% \sla{complete the calculations}
+\end{proof}
+
+
+\section{Undecidability proof} \label{sec:undecid}
+
+In this section we prove \Cref{thm:undecid}
+\sla{TODO}
+
+
+\section{Complexity bound} \label{sec:complexity}
+
+\sla{\bf this section is very sketchy; Lukasz, can you make it more precise?}
+
+We conclude with some remarks on complexity estimates for our decision
+procedure outlined in \Cref{sec:outline}, 
+in terms of the size $n=\mysize \mach$ 
+of the unary representation of $\mach$, $s$ and $t$.
+
+\para{Bound for \Cref{lem:0star}}
+
+The constant $C$ of \Cref{lem:targetpump} is polynomial in $n$,
+and $D$ is exponential in $n$.
+Combining the linear-path-scheme (LPS) decomposition of 
+\cite[Thm.~1]{Blondin15} with bounds on bases and periods of the solution
+set of integer linear programming of \cite{Pottier91}
+(see also \cite[Prop.~4]{taming}),
+we conclude that the periodic sets \eqref{eq:per1}, \eqref{eq:per2} 
+in the proof of \Cref{lem:0star} have at most exponential periods 
+$N, N_c$ and at most exponential representations.
+In consequence, all the 1-\cm{s} $\mach^c_{q,q'}$ are at most 
+exponentially large, and in conseqence the 1-\cm $\mach'$
+ultimately constructed in the proof of \Cref{lem:0star} is at most
+doubly exponentially large (so is the least common multiplicity of
+all periods $N_c$).
+
+\para{Bound for \Cref{lem:compbackfor}}
+
+Applying the pushdown-automata saturation procedure of \cite{BEM97} 
+to $\mach'$, we conclude that
+the bases and period of $\stepp 0 \circ S$ and $S \circ \stepp 0$
+can be larger than 
+the corresponding quantities of $S$ by at a value at most 
+doubly exponential in $n$.
+Also, composition with $\stepp -$ or $\stepp +$ cannot increase
+bases or periods by larger quantity, due to the exponential bounds
+on bases and periods of semiminear descriptions given by commination
+of \cite{Blondin15} and \cite{taming}.
+We apply these observations to bound the bases of $D$-periodic sets 
+$X_i$ arising in the iterative computation in the proof of 
+\Cref{lem:compbackfor}.
+In every iteration, either a base is lowered, or a new base appers,
+namely $X_{i+1}(q,r) = m < \infty$ while $X_i(q,r)=\infty$.
+Whenever this happens, due to the above observations
+the new value $m$ is larger
+than the maximal base in $X_i$ by at most doubly exponential value.
+As thi happens at most $\mysize Q D$ times, 
+the largest base ever appearing any any of $X_i$ is at most
+doubly exponential.
+
+\medskip
+
+In consequence, the running time of our decision procedure is at
+most doubly exponential in $n$, the size of unary representation,
+and hence at most triply exponential in the size of binary representation.
+Narrowing the apparant complexity gap is left as future research.
+
+
