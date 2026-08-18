@@ -147,7 +147,7 @@ of every transition in $\sigma$ matches the source state of the next one.
 According to the linear-path-scheme (LPS) decomposition of 
 \cite[Thm.~1]{Blondin15}, 
 we may assume \mywlog that 
-$\widetilde\sigma$ is build of transitions 
+$\widetilde\sigma$ is built of transitions 
 $t_0, \ldots, t_\ell$ and cycles $c_1, \ldots, c_\ell$:
 \[
 \widetilde\sigma \ \in \ t_0 \ c_1^* \ t_1 \ c_2^* \ \ldots \ c_\ell^* \ t_\ell,
@@ -156,8 +156,8 @@ where the length of each cycle $c_i$ is at most $e$,
 and both $\ell$ and $e$ are bounded by a polynomial of $\mysize \V$,
 the size of unary representation of $\V$.
 Here by a \emph{cycle} we mean a path where source state of the first
-transition maches the target state of the last one.
-Note the we do not claim any bound the number $n_j$ of iterations of every 
+transition matches the target state of the last one.
+Note that we do not claim any bound the number $n_j$ of iterations of every 
 cycle $c_i$ in $\widetilde\sigma$.
 Let $C_0$ be the minimal value such that every cycle of $\V$
 of length at most $e$ is fireable at $(C_0, C_0)$.
@@ -276,8 +276,8 @@ for a major sum-increasing cycle.
 doesn't satisfy the claim below to show what we want to rule out.}
 
 
-\sla{\bf I had a couple of doubts/qustions in the proof of the claim below; 
-Maja: can you addres them?}
+\sla{\bf I had a couple of doubts/questions in the proof of the claim below; 
+Maja: can you address them?}
 
 \begin{claim} \label{claim:steep}
 There are some $i<j$ such that $c_i$ is a major sum-increasing cycle, $c_j$ is major and
@@ -354,7 +354,8 @@ $(x_{i+1}, y_{i+1})$ the effect of $c_{i+1}$.
 
 If $x_{i+1} = 0$, we must have $y_{i+1} < 0$, as we handle vertical sum-increasing cycles in Case 1.
 A $(0, -)$ cycle will however trivially preserve the desired inequality. It remains to consider
-major cycles that are either horizontally positive, or horizonally negative. In both cases we have
+major cycles that are either horizontally positive, or horizontally negative. 
+In both cases we have
 $y_{i+1} = \varphi_{i+1} x_{i+1}$ and will endeavour to prove $\varphi_{i+1} x_{i+1} \leq \beta_{i+1} x_{i+1}$.
 But as we've noted before, we have $\varphi_{i+1} \leq \beta_{i+1}$ whenever $x_{i+1} > 0$, and the
 opposite inequality when $x_{i+1} < 0$, exactly as required to obtain $y_{i+1} \leq \beta_{i+1} x_{i+1}$.
@@ -436,13 +437,13 @@ Combining the linear-path-scheme (LPS) decomposition of
 \cite[Thm.~1]{Blondin15} with bounds on bases and periods of the solution
 set of integer linear programming of \cite{Pottier91}
 (see also \cite[Prop.~4]{taming}),
-we conclude that the periodic sets \eqref{eq:per1}, \eqref{eq:per2} 
+we conclude that the ultimately periodic sets \eqref{eq:per1}, \eqref{eq:per2} 
 in the proof of \Cref{lem:0star} have at most exponential periods 
-$N, N_c$ and at most exponential representations.
+and thresholds.
 In consequence, all the 1-\cm{s} $\mach^c_{q,q'}$ are at most 
-exponentially large, and in conseqence the 1-\cm $\mach'$
+exponentially large, and in consequence the 1-\cm $\mach'$
 ultimately constructed in the proof of \Cref{lem:0star} is at most
-doubly exponentially large (so is the least common multiplicity of
+doubly exponentially large (so is the least common multiple of
 all periods $N_c$).
 
 \para{Bound for \Cref{lem:compbackfor}}
@@ -455,9 +456,9 @@ the corresponding quantities of $S$ by at a value at most
 doubly exponential in $n$.
 Also, composition with $\stepp -$ or $\stepp +$ cannot increase
 bases or periods by larger quantity, due to the exponential bounds
-on bases and periods of semiminear descriptions given by commination
+on bases and periods of semiminear descriptions given by combination
 of \cite{Blondin15} and \cite{taming}.
-We apply these observations to bound the bases of $D$-periodic sets 
+We apply these observations to bound the bases of $D$-\saturated sets 
 $X_i$ arising in the iterative computation in the proof of 
 \Cref{lem:compbackfor}.
 In every iteration, either a base is lowered, or a new base appers,
@@ -465,8 +466,8 @@ namely $X_{i+1}(q,r) = m < \infty$ while $X_i(q,r)=\infty$.
 Whenever this happens, due to the above observations
 the new value $m$ is larger
 than the maximal base in $X_i$ by at most doubly exponential value.
-As thi happens at most $\mysize Q D$ times, 
-the largest base ever appearing any any of $X_i$ is at most
+As this happens at most $\mysize Q D$ times, 
+the largest base ever appearing in any of $X_i$ is at most
 doubly exponential.
 
 \medskip
@@ -474,6 +475,6 @@ doubly exponential.
 In consequence, the running time of our decision procedure is at
 most doubly exponential in $n$, the size of unary representation,
 and hence at most triply exponential in the size of binary representation.
-Narrowing the apparant complexity gap is left as future research.
+Narrowing the apparent complexity gap is left as future research.
 
 

@@ -41,13 +41,13 @@ studied \cite{HKOW09,Ibarra78,HopcroftPansiot,FS00}
 since,
 as shown already by Minsky in the early 1960s \cite{Minsky61},
 in its full generality the model is Turing-complete:
-deterministic 2-counter machines can faithfully simulate Tuting machines
+deterministic 2-counter machines can faithfully simulate Turing machines
 and have undecidable halting problem. 
 
 The purpose of this paper is to understand the impact of
 \emph{symmetry} on the expressive power of \cm{s}. %counter machines.
 We investigate the \emph{nondeterministic} model, where
-a machine may choose between different istructions executable
+a machine may choose between different instructions executable
 in the same state.
 
 \para{Symmetric counter machines}
@@ -118,7 +118,7 @@ As our main result, we confirm the immense drop in case of
 (in this case, symmetricity amounts to invariance under all swaps of 
 counters).
 We prove decidability of the configuration-to-configuration reachability
-problem, when one aks if a given machine has a sequence of steps
+problem, when one asks if a given machine has a sequence of steps
 starting in a given source configuration and ending in
 a given target one:
 
@@ -128,7 +128,7 @@ The reachability problem  is decidable for symmetric 2-counter machines.
 
 Symmetric two-counter machines are thus not Turing-complete.
 We find this result quite surprising, as it applies to a model
-with resricted update instructions but unrestricted zero-test instructions.
+with restricted update instructions but unrestricted zero-test instructions.
 % 
 % \begin{remark}
 % In the proof we do not need symmetry of zero-test transitions,
@@ -138,40 +138,9 @@ zero-test transitions but not on update transitions, remains
 undecidable.
 % \end{remark}
 
-A natural question is whether \Cref{thm:main} extends to larger numbers of
-counters. 
-In particular, is the reachability problem still decidable
-for symmetric 3-counter machines, whose update transitions are invariant
-under all 6 permutations of the 3 counters?
-Our decidability argument does not extend to the 3-counter setting, 
-as the argument relies on a
-number of low-dimensional properties of reachable sets and reachability
-relations.
-We thus leave this intriguing question for further research, conjecturing
-decidability for any numner of counters:
+\smallskip
 
-\begin{conjecture}
-The reachability problem  is decidable for symmetric counter machines.
-\end{conjecture}
-
-Another question we leave open is the exact complexity of the problem.
-While one easily gets an elementary upper bound for our decision 
-procedure (triple exponential time),
-as the lower bound we known nothing more than 
-\pspace-hardness inherited from symmetric 2-\vass, if updates are
-encoded in binary \cite{KL24}.
-It is possible that the reachability problem is \pspace-complete
-in symmetric $d$-\cm{s} for every $d\leq 2$.
-
-Symmetric \cm{s} where the only update instructions are increments 
-or decrements of a single counter, constitute a syntactic fragment of our 
-setting. We leave for future investigations to establish the 
-expressive power of the fragmet, and the complexity of 
-its reachability problem.
-
-\medskip
-
-It is natural to consider invariance under certain subgroups
+It is natural to consider invariance under subgroups
 of permutations: for every subgroup $G\leq \symg d$
 one can consider the class of \emph{$G$-counter machines}
 ($G$-\cm{s}), namely 
@@ -196,6 +165,42 @@ for $\cycg 3$-counter machines:
 The reachability problem  is undecidable for $\cycg 3$-counter machines.
 \end{theorem}
 
+\para{Open questions}
+
+A fundamental question is whether \Cref{thm:main} extends to larger numbers 
+of counters. 
+In particular, is the reachability problem still decidable
+for symmetric 3-counter machines, whose update transitions are invariant
+under all 6 permutations of the 3 counters?
+Our decidability argument does not extend to 3 counters, 
+as the argument relies on a
+number of low-dimensional properties of reachable sets and reachability
+relations.
+We thus leave this intriguing question for further research, conjecturing
+decidability for any number of counters:
+
+\begin{conjecture}
+The reachability problem  is decidable for symmetric counter machines.
+\end{conjecture}
+
+We focus on decidability, thus
+leaving open the exact complexity of the reachability problem for 
+symmetric 2-\cm{s}.
+While one easily gets an elementary upper bound for our decision 
+procedure (triple exponential time),
+as the lower bound we only known  
+\pspace-hardness inherited from symmetric 2-\vass, if updates are
+encoded in binary \cite{KL25}.
+It is possible that the reachability problem is \pspace-complete
+in symmetric $d$-\cm{s} for every $d\leq 2$.
+
+Symmetric \cm{s} where the only update instructions are increments 
+or decrements of a single counter, constitute a syntactic fragment of our 
+setting. 
+It remains to be established the 
+expressive power of the fragment, and the complexity of 
+its reachability problem.
+
 
 \para{Related research}
 
@@ -210,9 +215,9 @@ vector addition systems with states
 The decidability extends to 
 \cm{s}
 with only one zero-tested counter \cite{Bonnet11},
-or with with nested zero-tests \cite{Reinhardt08,GCL25}.
+or with nested zero-tests \cite{Reinhardt08,GCL25}.
 On the other hand, most of natural restrictions of the counter model
-preserves Turing-completeness, as long as no constraint is imposed
+preserve Turing-completeness, as long as no constraint is imposed
 on zero-tests.
 For instance, considering deterministic \cm{s}, 
 the reachability problem is still undecidable
@@ -233,12 +238,12 @@ by 1-\cm{s}.
 % zero-tests.
 Restricting the use of zero-tests in 2-counter machines often
 leads not only to decidability, but even 
-to \pspace-completenss of the reachability problem.
+to \pspace-completeness of the reachability problem.
 Assuming binary encoding,
 the \pspace-completeness has been obtained for 2-\vass 
 \cite{Blondin15,BEFGHLMT21}
 (assuming unary encoding, we have \nl-completeness \cite{ELT16}),
-but also for the further restriction to symmetric 2-\vass \cite{KL24},
+but also for the further restriction to symmetric 2-\vass \cite{KL25},
 and for a relaxation of 2-\vass to 
 2-counter machines with just one zero-tested counter \cite{FLS18}.
 In all the three cases the reachability relation is effectively semilinear, which
@@ -273,7 +278,7 @@ Once we define the model in \Cref{sec:model}, the subsequent
 We proceed in a top-down manner, by consecutive reductions to more and
 more basic properties. 
 In \Cref{sec:outline} we provide the proof of \Cref{thm:main},
-buidling on effective
+buiding on effective
 semilinearity of certain reachability sets and relations in a
 symmetric 2-\cm.
 Then in \Cref{sec:sl} we prove the effective semilinearity,
@@ -282,7 +287,7 @@ in symmetric 2-\vass, that is subsequently shown in \Cref{sec:targetpump}.
 Technically, \Cref{sec:targetpump} is probably the most intricate part 
 of the paper, and the only one exploiting the symmetry of 2-\cm{s}.
 Finally, \Cref{sec:undecid} contains the proof of \Cref{thm:undecid},
-and the last \Cref{sec:complexity} discusses complexity bounds.
+and the last \Cref{sec:complexity} discusses upper complexity bound.
 
 
 \section{Symmetric counter machines} \label{sec:model}
@@ -298,8 +303,8 @@ stored by $\mach$.
 Formally, we define such a machine as 
 $\mach = (Q,T)$, where $Q$ is a finite set of control states,
 $T\subseteqfin Q\times\Instr\times Q$ is a finite set of 
-\emph{transiitons} of $\mach$,
-and the set $\Instr$ of \emph{istructions} is the union of
+\emph{transitions} of $\mach$,
+and the set $\Instr$ of \emph{instructions} is the union of
 update instructions and zero-testing instructions:
 \[
 \Instr \ = \ \setof{\updinstr{w}}{w\in\Z^d} \ \cup \ 
@@ -330,17 +335,16 @@ for a $d$-\cm without zero-test instructions.
 
 The symmetric group $\symg d$ acts naturally on vectors in $\Z^d$
 and hence also on update transitions:
-for $\sigma\in \symg d$ and $t=(q,w,q')\in T$, we define
-$\sigma(t)=(q,\sigma(w),q')$, where $\sigma(w)(\sigma(i))=w(i)$
+for $\sigma\in \symg d$ and $t=(q,\updinstr w,q')\in T$, we define
+$\sigma(t)=(q,\updinstr{\sigma(w)},q')$, where $\sigma(w)(\sigma(i))=w(i)$
 for every $i\in\setto d$.
 A $d$-\cm $\mach$ is \emph{symmetric} if its update transitions
 are invariant under the natural action: for every $\sigma\in \symg d$ 
-and $t\in T$, we have $\sigma(t)\in T$.
+and update transition $t\in T$, we have $\sigma(t)\in T$.
 Importantly, 
-we note that no restriction is imposed on zero-test transitons of $\mach$.
-Therefore we assume, \mywlog, 
-that every zero-test applies to a single counter.
-
+we note that no restriction is imposed on zero-test transitions of $\mach$.
+% We assume, \mywlog, that every zero-test applies to a single counter.
+% 
 In the sequel
 we mostly focus on symmetric 2-\cm{s},
 which are 2-\cm{s} whose set of transitions is invariant under the
@@ -413,7 +417,7 @@ Such a fragment, called \emph{segment} in the sequel,
 may be considered as a 2-\vass run
 that ends with one counter 0, and which counter is 0 is
 determined by the ending, zero-testing state.
-Fornally, we will concider a segment as a run in the
+Fornally, we will consider a segment as a run in the
 \emph{underlying} symmetric 2-\vass $\V$
 obtained by replacing every zero-test transition 
 $(q, \ztinstr i, q^t)$ by
@@ -424,7 +428,7 @@ $(q, \updinstr{0,0}, q^t)$.
 Furthermore, \mywlog we may assume that one counter is 0
 in both source and target configurations.
 For instance, if the source vector is $v=(v_1,v_2)$ with $0<v_1\leq v_2$,
-we replace it by $(0,v_2-v_1)$ and add one extra transition
+we replace it by $(0,v_2-v_1)$ and add one extra symmetric transition
 with update $(v_1,v_1)$.
 We thus assume, \mywlog, 
 that the source and target states are zero-testing as well.
@@ -436,7 +440,7 @@ that the source and target states are zero-testing as well.
 
 % The strategy of the proof is to 
 In the decidability proof we exploit the unique
-decompostion of a run $\rho$ from source $s$ to
+decomposition of a run $\rho$ from source $s$ to
 target $t$ 
 into segments:
 %\[ \rho=\rho_0 z_1 \rho_1 z_2 \dots \rho_{n-1}z_n\rho_n,\]
@@ -481,7 +485,7 @@ the underlying 2-\vass $\V$ has a corresponding run that does not
 visit zero-testing states except for the initial and final ones.
 % Without loss of generality, we also assume 
 % that both the source and target vector have at least one 0.
-Relying on Remark \ref{rem:wlog}, our taks is to decide if 
+Relying on Remark \ref{rem:wlog}, our task is to decide if 
 $s\reachrel^* t$
 for $s,t\in Q\times\N$,
 that is if the pair $(s,t)$ belongs to the reflexive-transitive
@@ -519,7 +523,7 @@ If $q(a) \reachrel q'(a')$, we write:
 See \Cref{fig:areas} for a graphical illustration.
 % 
 The precise definition of constant $C$ will be given in \Cref{sec:targetpump}.
-Thus the rechability relation is 
+Thus the reachability relation is 
 \[
 \reachrel^* \ = \ 
 \big(\stepp 0 \ \cup \ \stepp - \ \cup \ \stepp + \big)^*,
@@ -541,7 +545,7 @@ with \emph{the first} $\rho_i$ of the form $\stepp -$.
 \end{itemize}
 
 \noindent
-Clarly, the composition of the three phases yields
+Clearly, the composition of the three phases yields
 the reachability relation, that is
 \begin{align} \label{eq:reachrel}
 \reachrel^* \ = \ \Phi_1 \circ \Phi_2 \circ \Phi_3,
@@ -587,7 +591,7 @@ the image of relation $\Phi_1$ and inverse image of $\Phi_3$, are
 semilinear sets and their descriptions are computable
 given the underlying 2-\vass $\V$ and source and target
 $s, t\in Q\times\N$.
-Importantly, we only need to consider semilinar sets and relations
+Importantly, we only need to consider semilinear sets and relations
 in dimension $d=1$.
 
 
@@ -733,62 +737,50 @@ implies that $\stepp -$ is \emph{source-pumpable}, that is
 q(a)\stepp - q'(a') \quad \implies  \quad  q(a+D) \stepp - q'(a').
 \end{align}
 Note that we can assume the same $D$ in \eqref{eq:tpump} and 
-\eqref{eq:spump}, by taking the least common multiplicity of the
-two constants given by the two applications of \Cref{lem:targetpump}.
+\eqref{eq:spump}, by taking the least common multiple of the
+two constants given by the two applications of \Cref{lem:targetpump},
+and also the same $C$, by taking the maximum of the two constants.
 In the sequel, fix the constant 
 $D$ from \eqref{eq:tpump} and \eqref{eq:spump}.
 
 
-\para{Periodic sets}
+\para{\Saturated sets}
 
-A set $X \subseteq Q \times \N$ is \emph{ultimately $N$-periodic}
-(\emph{$N$-periodic} in short) if
-for all $(q,a) \in X$, also $(q,a+N) \in X$.
-It is a folklore that every semilinear set $X\subseteq Q\times\N$
-is $N$-periodic for some $N$. 
-An $N$-periodic set $X$ is representable by a function 
+It is folklore that semilinear sets $X\subseteq Q\times\N$
+are exactly \emph{ultimately periodic} sets, namely satisfying
+$q(a)\in X\iff q(a+N) \in X$ for some $N,M\in\N$, all $q\in Q$ 
+and all sufficiently large $a\geq M$.
+We call $N$ and $M$ a \emph{period} and \emph{threshold} of $X$.
+
+An subset $X\subseteq Q\times\N$ we call  \emph{$N$-\saturated} 
+if for all $(q,a) \in X$, also $(q,a+N) \in X$.
+% if $(q,a) \in X \implies (q,a+N) \in X$ for all $q\in Q$ and $a\in\N$.
+$N$-\saturated sets
+are ultimately periodic, and hence semilinear.
+% 
+An $N$-\saturated set $X$ is representable by a function 
 $\minf X : Q\times \setfromto 0 {N-1} \to \N \cup \{\infty\}$ 
 that maps a state $q\in Q$ and $r<N$ to the least number $n$ 
-whose reminder modulo $N$ equals $r$ and  $(q,n)\in X$ 
+whose remainder modulo $N$ equals $r$ and  $(q,n)\in X$ 
 (and to $\infty$ if there is no such number):
 \[
 \minf X (q,r) \ = \ \min\{n : (q,n) \in X, \ \ n \equiv r\!\!\mod N\}.
 \]
 We call $N$ a \emph{period} of $X$, and the numbers 
 $\setof{\minf X(q,r)}{\minf X(q,r)\in\N}$  its \emph{bases}.
-
-In the sequel it will be crucial that all semilinear sets we maintain
-are $D$-periodic with the same period $D$.
 % 
 For instance, in consequence of \eqref{eq:tpump} and \eqref{eq:spump}, 
 the image $S\circ \stepp +$ as well as the inverse image
-$\stepp - \circ S$ is always $D$-periodic, irrespectively of
+$\stepp - \circ\, S$ is always $D$-\saturated, irrespectively of
 $S\subseteq Q\times\N$.
-% 
-%Now define the three phases $\Phi_1, \Phi_2, \Phi_3$ as stated above.
-%
-%\begin{align} \label{eq:3phases}
-%\big(\stepp {0}^* \ \circ \ E \ \circ \ \stepp +)^* \ \circ \ \stepp {0}^* \ \circ \ E
-%\end{align}
-%where 
-%\[
-% E  \ = \ \big(\stepp - \ \circ \ \stepp {0}^*\big)^*.
-%\]
-%Thus we split every run into three phases: the first one ends with the last appearance of $\stepp +$,
-%the middle one consisting just of $\stepp {0}^*$, and the last one starting with $\stepp -$ and
-%iterating arbitratily many times $\stepp -$ and $\stepp 0$.
-%Each of the phases may be empty.
-% 
-In the proof of \Cref{lem:compbackfor}
-we compute increasing (actually, non-decreasing) chains 
-of $D$-periodic sets of configurations $X\subseteq Q\times\N$.
-%We represent these sets in vector form as functions
-%$X:Q\to \powset{\N}$, where $X(q)$ is pumpable for every $q\in Q$, namely $a\in X(q)\implies a+D\in X(q)$.
-Termination of computation is guaranteed by:
+For termination of our decision procedure it will be crucial that
+semilinear sets it maintains form
+non-decreasing chains 
+of $D$-\saturated sets $X\subseteq Q\times\N$, since we have:
 %  the following lemma:
 \begin{lemma} \label{lem:stab}
-    For every $D\in\N$, 
-    every non-decreasing chain of $X_1 \subseteq X_2 \subseteq \cdots$ of $D$-periodic subsets of $Q\times\N$ stabilizes.
+    For every $N\in\N$, 
+    every non-decreasing chain of $X_1 \subseteq X_2 \subseteq \cdots$ of $N$-\saturated subsets of $Q\times\N$ stabilizes.
 \end{lemma}
 % 
 \begin{proof}
@@ -796,7 +788,7 @@ The sequence $\minf {X_1}, \minf{X_2}, \ldots$ is a non-increasing
 chain of functions, ordered pointwise 
 (assuming $n<\infty$ for $n\in\N$), 
 and hence necessarily stabilises due to well-foundedness
-of the function space $Q\times \setfromto 0 {D-1} \to \N \cup \{\infty\}$.
+of the function space $Q\times \setfromto 0 {N-1} \to \N \cup \{\infty\}$.
 \end{proof}
 
 
@@ -808,11 +800,12 @@ The relations $\stepp 0, \ \stepp -, \ \stepp +$ are effectively semilinear.
 \end{lemma}
 \begin{proof}
 The reachability relation of the underlying 2-\vass $\V$
-is effectively semi-linear \cite{Blondin15},
-which implies that so is $\reachrel$, the restriction (section) thereof 
+is effectively semilinear \cite{Blondin15},
+which implies that so is $\reachrel$, the restriction thereof 
 enforcing a counter to be 0 initially or finally, 
-and also further Presburger-definable restrictions 
-$\stepp 0, \ \stepp -, \ \stepp +$.
+and forbidding zero-testing states except the source and target ones.
+In consequecnce, its further Presburger-definable restrictions 
+$\stepp 0, \ \stepp -, \ \stepp +$ are also effectively semilinear.
 \end{proof}
 
 
@@ -846,7 +839,7 @@ $\stepp 0, \ \stepp -, \ \stepp +$.
     \item 
     final counter value $n'=c$, where $c\leq C$, or 
     \item 
-    the different of initial and final counter values $n-n'=c$, where $-C\leq c\leq C$.
+    the difference of initial and final counter values $n-n'=c$, where $-C\leq c\leq C$.
     \end{enumerate}
 
     \noindent
@@ -858,8 +851,8 @@ $\stepp 0, \ \stepp -, \ \stepp +$.
     by subtracting $c$ from the counter and then zero-testing.
     % , and then adding $c$.
     Then $\mach^c_{q,q'}$ computes on its counter a nondeterministically chosen 
-    number from the effectively semilinear (and hence ultimately
-    $N$-periodic for some computable $N$)
+    number from the effectively semilinear (due to \Cref{lem:0-+}) 
+    % (and hence ultimately $N$-\saturated for some computable $N$)
     set
     \begin{align}\label{eq:per1}
     \setof{n'}{q(c)\stepp 0 q'(n')},
@@ -879,31 +872,37 @@ $\stepp 0, \ \stepp -, \ \stepp +$.
      X_c \ = \ \setof{n}{q(n)\stepp 0 q'(n-c)},
     \end{align}
     and then by subtracting $c$ from the counter,
-    and goind to state $q'$.
+    and going to state $q'$.
     Knowing that $X_c$ is effectively semilinear,
-    and hence ultimately $N_c$-periodic for some computable $N_c$,
+    and hence ultimately periodic with effectively computable 
+    period $N_c$ and threshold $M_c$, 
     we design the 1-\cm $\mach^c_{q,q'}$ to store, in its control state,
-    the reminder of current counter value modulo $N_c$. 
-    Then checking membership in $X_c$ amounts to an inequality test
-    if the initial counter value
-    is at least $m=\minf {X_c}(q,r)$, where $r$ is the reminder of 
-    the initial counter value modulo $N_c$.
-    The inequality test is doable by subtracting $m$, and then adding
-    $m$ back to the counter.
-    Clearly, if $\minf{X_c}(q,r)=\infty$, the 1-\cm stops without reaching
-    $q'$.
+    the remainder of current counter value modulo $N_c$. 
+    Then checking membership in $X_c$ reduces to checking
+    if the initial counter value is at least $M_c$
+    (doable by decrementing the counter by $M_c$, and then 
+    incrementing it by $M_c$ back)
+    or checking if the counter equals $m$ for some $m<M_c$
+   (doable similarly, by a decrement, zero-test, and increment).
+    % $m=\minf {X_c}(q,r)$, where $r$ is the remainder of 
+    % the initial counter value modulo $N_c$.
+    % The inequality test is 
+    % (doable by subtracting $M_c$, and then adding $M_c$ back to the
+    %  counter).
+    % Clearly, if $\minf{X_c}(q,r)=\infty$, the 1-\cm stops without reaching
+    % $q'$.
 
     \medskip
 
     We end by noting that for different values of $c$ between $-C$ and $C$,
     Case 3 may require the 1-\cm
-    $\mach^c_{q,q'}$ to store in control states the reminders
+    $\mach^c_{q,q'}$ to store in control states the remainders
     of current counter value modulo different numbers $N_c$.
     We unify all the 1-\cm{s} $\mach^c_{q,q'}$ by storing in the control
-    state the reminder modulo the least common multiplicity of all
-    $N_c$.
+    state the remainder modulo the least common multiple 
+    $N$ of all $N_c$.
     The forgetful function $q\mapsto \overline q$ simply forgets about the
-    reminider.
+    remainder.
     We have thus completed the effective construction of 1-\cm{s}
     $\mach_{q,q'}$ satisfying the condition \eqref{eq:mach},
     as the union of finitely many 1-\cm{s} $\mach^c_{q,q'}$.
@@ -921,22 +920,26 @@ $\stepp 0, \ \stepp -, \ \stepp +$.
 
     Now, the lemma follows by Parikh's Theorem 
     \cite{Parikh66,EGKL11}, 
-    since 1-\cm{s} are a special case of pushdown automata.
-    Fix a pair $q,q'\in Q'$ of states where the stored reminder is 0.
+    since the 1-\cm $\mach'$ is a special case of pushdown automaton.
+    Fix a pair $q,q'\in Q'$ of states where the stored remainder is 0.
     In order to apply Parikh's Theorem, take all the transitions of 
     $\mach'$ as unlabelled (labelled with $\varepsilon$), 
-    add a state $p$ with
-    an $a$-labelled self-loop transition that  adds 
-    $1$ to the counter, 
-    and another state $p'$ with a $b$-labelled self-loop transition that subtracts 1 from the counter, and 0-update transitions from
-    $p$ to $q$, and from $q'$ to $p'$. 
-    The language $L_{p,p'}$ of so obtained labelled 1-\cm
-    with initial configuration $p(0)$ and final configuration $p'(0)$,
+    add $N$ states $p_0 \ldots p_{N-1}$ forming 
+    an $a$-labelled cycle of transitions incrementing the counter by
+    $1$ (which assures storing the remainder modulo $N$
+    in states), 
+    add anothers $N$ state $p'_{N-1} \ldots p'_{0}$ forming 
+    a $b$-labelled cycle of transitions decrementing the counter by 1,
+    and finally add 0-update transitions from
+    $p_i$ to $q$, and from $q'$ to $p'_j$, for appropriate remainders 
+    $i,j$. 
+    The language $L_{p_0,p'_0}$ of so obtained labelled 1-\cm
+    with initial configuration $p_0(0)$ and final configuration $p'_0(0)$,
     corresponds to the reachability relation of $\mach'$ from $q$
-    to $q'$, namely $a^n b^{n'}\in L_{p,p'}$ if and only if
+    to $q'$, namely $a^n b^{n'}\in L_{p_0,p'_0}$ if and only if
     $q(n) \step^* q'(n')$ in $\mach'$.
-    As Parikh image of every $L_{p,p'}$ is effectively semilinear due to 
-    Parikh's Theorem, the lemma follows.
+    As Parikh image of $L_{p_0,p'_0}$ is effectively semilinear 
+    due to Parikh's Theorem, the lemma follows.
 % 
     % Since $\stepp 0$ is effectively semilinear, due to \Cref{lem:0-+},
     % its section $\setof{(n,n')}{q(n)\stepp 0 q'(n'), \ n=}$
@@ -958,7 +961,7 @@ $\stepp 0, \ \stepp -, \ \stepp +$.
 Recall that $\Phi_3 \ = \ (\stepp - \circ \stepp {0}^\ast)^\ast$.
 By \Cref{lem:0-+,lem:0star}, both the relations $\stepp -$ and
 $(\stepp 0)^*$ are effectively semilinear.
-Using the effective equivalence of semilinear sets and Presburger Aritmetic,
+Using the effective equivalence of semilinear sets and Presburger Arithmetic,
 the composed relation 
 $\stepp - \circ \stepp {0}^\ast$ is also effectively semilinear,
 as well as 
@@ -967,7 +970,7 @@ semilinear set $S$.
 Furthermore, as $\stepp -$ is source pumpable \eqref{eq:spump},
 and therefore the composed relation $\stepp - \circ \stepp {0}^\ast$
 is so as well, the set
-$(\stepp - \circ \stepp {0}^\ast) \circ S$ is forcedly $D$-periodic.
+$(\stepp - \circ \stepp {0}^\ast) \circ S$ is forcedly $D$-\saturated.
 
 In order to  argue that the set $\Phi_3 \circ \{t\}$
 is effectively semilinear, 
@@ -975,13 +978,14 @@ we use the above observations to deduce that the initial set
 \[
 X_0 \ := \ (\stepp - \circ \stepp {0}^\ast) \circ \{t\}
 \]
-is effectively semilinear and $D$-periodic, as well as every next iterate
+is effectively semilinear and $D$-\saturated, as well as every next iterate
 \[
 X_{i+1} \ := \ X_{i} \ \cup \ (\stepp - \circ \stepp {0}^\ast) \circ X_{i},
 \]
-for $0 = 1, 2, \ldots$. The seqeuence $X_0, X_1, \ldots$ is a 
+for $0 = 1, 2, \ldots$. 
+The sequence $X_0, X_1, \ldots$ is a 
 non-decreasing
-chain of $D$-periodic sets and hence stabilises, by \Cref{lem:stab}, namely
+chain of $D$-\saturated sets and hence stabilises, by \Cref{lem:stab}, namely
 \[
 X_j \ = \ X_{j+1} \ = \ X_{j+2} \ = \ \ldots
 \] 
@@ -993,7 +997,7 @@ the set
 \Phi_3\circ \{t\} \ = \ \{t\} \ \cup \ \bigcup_{i\in\N} X_i \ = \ 
 \{t\} \ \cup \ X_j
 \]
-is effectively semilinear (and $D$-periodic), as required.
+is effectively semilinear, as union of $\{t\}$ and a $D$-\saturated set.
 We conclude the first part by 
 noting that the proof is not specific to the starting set $\{t\}$
 and shows that $\Phi_3 \circ S$ is effectively 
@@ -1021,7 +1025,7 @@ we proceed by iterating the relation defined by the inner subexpression,
 that is we consider the initial set
 and the consecutive iterates:
 \[
-X_0 \ := \ f\bigl(\{t\}\bigr) 
+X_0 \ := \ f\bigl(\{s\}\bigr) 
 \qquad\qquad\qquad
 % \ \circ \ \bigl((\stepp 0)^* \ \circ \ \Phi_3 \ \circ \ \stepp +\bigr)
 % \]
@@ -1036,7 +1040,7 @@ f(S) \ = \ S \
 \circ \ \bigl((\stepp 0)^* \ \circ \ \Phi_3 \ \circ \ \stepp +\bigr).
 \]
 Similarly as before, knowing that $\stepp +$ is target pumpable, we know
-that all $X_i$ are $D$-periodic sets, and therefore the sequence 
+that all $X_i$ are $D$-\saturated sets, and therefore the sequence 
 $X_0, X_1, \ldots$ stabilises, and hence
 \[
 \{s\} \circ  \Phi_1 \ = \ 
@@ -1045,7 +1049,7 @@ $X_0, X_1, \ldots$ stabilises, and hence
 for some $j$, simiarly as before.
 The only missing ingredient is computability of the iteration
 $X_i \mapsto X_{i+1}$.
-However, in order to apply the previously shown computablility of 
+However, in order to apply the previously shown computability of 
 the function
 \begin{align} \label{eq:back}
 S \ \mapsto \ \Phi_3 \ \circ \ S
@@ -1061,7 +1065,7 @@ which proceeds 'forward', we need a trick.
 Note that the relation 
 $(\stepp 0)^* \ \circ \ \Phi_3 \ \circ \ \stepp +$ is always
 target-pumpable since $\stepp +$ is so \eqref{eq:tpump},
-and hence $f(S)$ is always $D$-periodic
+and hence $f(S)$ is always $D$-\saturated
 irrespectively of $S$.
 To compute $f(S)$, one first establishes, for every state $q\in Q$, 
 which remainders $r$ modulo $D$ appear in this set,
@@ -1072,7 +1076,7 @@ by applying the transformation \eqref{eq:back} to the set
 \end{align} 
 % where $M_r = r + D\cdot\N$ contains all numbers congruent to $r$ modulo $D$, 
 where $X_{q,r} = \setof{q(n)}{n\equiv r \!\!\mod D}$,
-and checking nomemptiness of intersection with 
+and checking nonemptiness of intersection with 
 the set 
 \begin{align} \label{eq:set2}
 S\ \circ \ (\stepp 0)^*.
@@ -1085,15 +1089,15 @@ and its intersection with \eqref{eq:set2}, are
 computable.
 Then one finds the representation
 $\minf{f(S)}$ of $f(S)$ by performing,
-for every positively verified state-reminder pair $(q,r)$,
+for every positively verified state-remainder pair $(q,r)$,
 an exhaustive search along the same lines as above:
 for consecutive $k=0, 1, \ldots$, 
 apply the transformation \eqref{eq:back} to the set
 \[
 \bigl(\stepp + \circ \ \{q(r+k\cdot D)\}\bigr)
 \]
-and ckeck nonemptiness of intersection with the set \eqref{eq:set2}.
-This concludes the proof of effective semilinearity and $D$-periodicity
+and check nonemptiness of intersection with the set \eqref{eq:set2}.
+This concludes the proof of effective semilinearity and $D$-\saturated
 of $f(S)$, and thus also the second part.
 \end{proof}
 
