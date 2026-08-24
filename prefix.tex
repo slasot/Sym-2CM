@@ -32,7 +32,7 @@ While the particular instruction sets may vary,
 common machine instructions are: counter increment, 
 counter decrement, and counter zero-test. 
 Many variants of the model have been introduced and studied,
-and both deterministic and nondetermistic 
+and both deterministic and nondeterministic 
 machines are widely studied in the literature 
 (often under different names, for instance 
 \emph{counter automata}).
@@ -188,7 +188,7 @@ leaving open the exact complexity of the reachability problem for
 symmetric 2-\cm{s}.
 While one easily gets an elementary upper bound for our decision 
 procedure (triple exponential time),
-as the lower bound we only known  
+as the lower bound we only know
 \pspace-hardness inherited from symmetric 2-\vass, if updates are
 encoded in binary \cite{KL25}.
 It is possible that the reachability problem is \pspace-complete
@@ -278,7 +278,7 @@ Once we define the model in \Cref{sec:model}, the subsequent
 We proceed in a top-down manner, by consecutive reductions to more and
 more basic properties. 
 In \Cref{sec:outline} we provide the proof of \Cref{thm:main},
-buiding on effective
+building on effective
 semilinearity of certain reachability sets and relations in a
 symmetric 2-\cm.
 Then in \Cref{sec:sl} we prove the effective semilinearity,
@@ -417,7 +417,7 @@ Such a fragment, called \emph{segment} in the sequel,
 may be considered as a 2-\vass run
 that ends with one counter 0, and which counter is 0 is
 determined by the ending, zero-testing state.
-Fornally, we will consider a segment as a run in the
+Formally, we will consider a segment as a run in the
 \emph{underlying} symmetric 2-\vass $\V$
 obtained by replacing every zero-test transition 
 $(q, \ztinstr i, q^t)$ by
@@ -523,7 +523,7 @@ If $q(a) \reachrel q'(a')$, we write:
 See \Cref{fig:areas} for a graphical illustration.
 % 
 The precise definition of constant $C$ will be given in \Cref{sec:targetpump}.
-Thus the reachability relation is 
+Thus, the reachability relation is 
 \[
 \reachrel^* \ = \ 
 \big(\stepp 0 \ \cup \ \stepp - \ \cup \ \stepp + \big)^*,
@@ -804,7 +804,7 @@ is effectively semilinear \cite{Blondin15},
 which implies that so is $\reachrel$, the restriction thereof 
 enforcing a counter to be 0 initially or finally, 
 and forbidding zero-testing states except the source and target ones.
-In consequecnce, its further Presburger-definable restrictions 
+In consequence, its further Presburger-definable restrictions 
 $\stepp 0, \ \stepp -, \ \stepp +$ are also effectively semilinear.
 \end{proof}
 
