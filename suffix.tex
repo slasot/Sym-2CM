@@ -311,7 +311,7 @@ Finally, denote by $\beta_i$ the steepness of
 the most recent cycle among $c_{k_1}, \ldots c_{k_s}$, 
 i.e. $\beta_i = \varphi_i$ if
 $i \in \{k_1, \ldots, k_s\}$, and $\beta_i = \beta_{i-1}$ otherwise. At the
-boundary, set $\beta_0 = S_0 = 0$, and $(X_0, Y_0) = (a, 0)$.
+boundary, set $S_0 = 0$, $\beta_0 = -1$, and $(X_0, Y_0) = (a, 0)$.
 
 Note that, if \Cref{claim:steep} indeed doesn't hold, we have $\beta_j \leq \varphi_j$ for any
 horizontally negative major cycle $c_j$, with the possible exception of cycles $j < k_1$.
@@ -325,7 +325,7 @@ By induction on $i$, we will now prove that the pair $(X_i,Y_i)$ of
 counter values %configuration
 will always satisfy
 \begin{equation} \label{eq:steep-ind}
-    Y_i \ \leq \ S_i (1 + \beta_i) \ + \ \beta_i X_i.
+    Y_i \ \leq \ S_i (1 + \beta_i) \ + \ \beta_i X_i + a
 \end{equation}
 \mei{TODO Figure.}
 At $i = 0$, equality trivially holds.
@@ -339,7 +339,7 @@ and thus moving $Y_i$ to the right-hand side and using the inequality
 \eqref{eq:steep-ind} we get
 \[
     y \ \leq \ S_{i+1} (1 + \beta_i)  \ + \ \beta_i x
-    \  \leq \ S_{i+1} (1 + \beta_{i+1}) \ + \ \beta_{i+1} x,
+    \  \leq \ S_{i+1} (1 + \beta_{i+1}) \ + \ \beta_{i+1} x
 \]
 where the latter inequality follows because $\beta$ is non-decreasing.
 
@@ -351,29 +351,28 @@ Let us thus
 focus on the case when $c_{i+1}$ is a major cycle, denoting by 
 $(x_{i+1}, y_{i+1})$ the effect of $c_{i+1}$.
 % of one of the $n_{i+1}$ iterations of the cycle.
-
 If $x_{i+1} = 0$, we must have $y_{i+1} < 0$, as we handle vertical sum-increasing cycles in Case 1.
 A $(0, -)$ cycle will however trivially preserve the desired inequality. It remains to consider
 major cycles that are either horizontally positive, or horizontally negative. 
 In both cases we have
 $y_{i+1} = \varphi_{i+1} x_{i+1}$ and will endeavour to prove $\varphi_{i+1} x_{i+1} \leq \beta_{i+1} x_{i+1}$.
 But as we've noted before, we have $\varphi_{i+1} \leq \beta_{i+1}$ whenever $x_{i+1} > 0$, and the
-opposite inequality when $x_{i+1} < 0$, exactly as required to obtain $y_{i+1} \leq \beta_{i+1} x_{i+1}$.
+opposite inequality when $x_{i+1} < 0$, exactly as required to obtain $y_{i+1} \leq \beta_{i+1} x_{i+1}$ (if $i < k_1 - 1$, then the cycle cannot be sum-increasing and $\beta_{i+1} = -1$, so the inequality holds trivially).
 Thus,
-\[
-    Y_{i+1} = y + n_{i+1} y_{i+1} \leq S_{i+1} (1 + \beta_{i+1}) + \beta_{i+1} (x + n_{i+1} x_{i+1})
-    = S_{i+1} (1 + \beta_{i+1}) + \beta_{i+1} X_{i+1}.
-\]
+\begin{equation*}
+    \begin{split}
+    Y_{i+1} = y + n_{i+1} y_{i+1} \leq S_{i+1} (1 + \beta_{i+1}) + \beta_{i+1} (x + n_{i+1} x_{i+1}) + a \\
+    = S_{i+1} (1 + \beta_{i+1}) + \beta_{i+1} X_{i+1} + a
+    \end{split}
+\end{equation*}
 
 Hence we finish the induction and obtain \eqref{eq:steep-ind}, in particular for
 the final configuration $(0, a')$:
 \[
-    a' \ \leq \ C_1 (1 + \varphi_\mathrm{max}) \ \leq \ C_1 (1 + \norm\V).
+    a' \ \leq \ C_1 (1 + \varphi_\mathrm{max}) + a \ \leq \ C_1 (1 + e\norm\V) + a
 \]
-\sla{I think $\varphi_\text{max}\leq e\norm\V$, not 
-$\varphi_\text{max}\leq \norm\V$ \\}
-\sla{$\varphi_\text{max}$, the maximum of $\varphi_i$, should be defined}
-By setting $C := C_1 (1 + \norm\V)$, we obtain a contradiction.
+where $\varphi_\mathrm{max}$ is the steepness of the steepest major sum-increasing cycle.
+By setting $C := C_1 (1 + e\norm\V)$, we obtain a contradiction.
 \end{proof}
 
 Take any cycles $c_i, c_j$, where $i<j$, as given by \Cref{claim:steep}. 
@@ -398,7 +397,7 @@ polynomially in $\mysize \V$.
 Taking as $D$ the least common multiple of all $D_\sigma$ is enough for the
 claim of the lemma.
 The sufficiently large value of $C$ is
-$C := C_1 (1 + \norm\V)$.
+$C := C_1 (1 + e\norm\V)$.
 Summing up, $C$ is polynomial and $D$ is expoenential in $\mysize \V$,
 as required.
 %
