@@ -202,13 +202,12 @@ vertical effect.
 Assume $(-,+)$ effect, the other case is similar.
 % 
 For our argument it is enough if the $n_j$ is large enough to guarantee that 
-in the middle
-of $c_j^{n_j}$, namely after the half of $n_j$ of iterations of $c_j$, the 
+somewhere in the middle of $c_j^{n_j}$, the 
 transposed cycle $\overline{c_j}$
-(existing due to the assumed symmetry of $\V$) is also enabled.
+(which exists due to the assumed symmetry of $\V$) is also enabled.
 (The transposed cycle $\overline{c_j}$ is obtained by transposing all transitions 
 along $c_j$.)
-We observe the key claim, relying on the fact that  
+We observe the following key claim, relying on the fact that  
 the effect of $c_j$ is nonzero on both coordinates
 (in particular note that we don't use the sum-increasing
 assumption for this claim):
@@ -300,9 +299,7 @@ of major sum-increasing cycles of increasing steepness, i.e. let $c_{k_1}$
 be the first major sum-increasing cycle of the run, and define
 $k_{i+1}>k_i$ so that
 $c_{k_{i+1}}$ is the first major sum-increasing cycle steeper than
-$c_{k_i}$. Moreover, let $S_i \leq C_1$ be the total norm 
-\sla{what is 'total norm'? Is it "sum of norms of all the 
-one-off andf minor cycles' transitions"?}
+$c_{k_i}$. Moreover, let $S_i \leq C_1$ be the sum of norms
 of all the one-off
 transitions and minor cycles which occurred up to $c_i$ (including $c_i$
 itself if it happens to be minor), and let $(X_i, Y_i)$ be the
@@ -345,8 +342,15 @@ where the latter inequality follows because $\beta$ is non-decreasing.
 
 If $c_{i+1}$ is a minor 
 \sla{isn't the induction over major cycles $c_i$ only?}
+\mei{Our $c_i$ index across all the cycles, not necessarily major, so I perform induction
+on $i$, walking through all the cycles. I rewrote it a tiny bit to hopefully more clearly
+convey the message of "minor cycles are basically one-off transitions".
+I do admit, however, that performing the induction over all the cycles like I'm doing here is quite
+formalist, possibly excessively so. Refactoring the proof to remove this quirk might be a good idea...}
 cycle, we can replace $(x, y)$ in the above reasoning by $(X_{i+1}, Y_{i+1})$,
-obtaining the inductive hypothesis. 
+already obtaining the inductive hypothesis --- essentially, we handle minor cycles
+exactly the same way as one-off transitions.
+
 Let us thus
 focus on the case when $c_{i+1}$ is a major cycle, denoting by 
 $(x_{i+1}, y_{i+1})$ the effect of $c_{i+1}$.
