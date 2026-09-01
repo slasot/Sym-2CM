@@ -123,8 +123,14 @@
 Counter machines are a particularly simple, Turing-complete
 model of computation.
 We study the expressive power of nondeterministic
-2-counter machines which are symmetric, that is their
-transitions are invariant under swapping of counters.
+2-counter machines which are symmetric, in that their
+transitions are closed under swapping of counters.
+    \mei{This used to say "invariant" under swapping of counters.
+    But to me that feels incorrect --- it sounds like each \emph{particular} transition 
+    would need to be unchanged by the permutation (effectively, the delta at
+    each counter would need to be equal).
+    If someone feels strongly about the wording, we could also
+    go for "their \emph{set of} transitions is invariant".}
 As the main result we demonstrate a dramatic impact of symmetry:
 we prove that symmetric 2-counter machines
 are not Turing-complete, by proving decidability of their 
@@ -133,14 +139,13 @@ reachability problem.
 %machines, and does not extend to 3 or more counters.
 We conjecture that the decidability extends to 
 machines with 3 or more counters that are symmetric, 
-namely their transitions are
-invariant under all permutations of counters. 
-We leave this problem open,
-even for 3 counters
-while identifying a limit of the impact of symmetry,
-namely we prove
+\ie whose transitions are
+closed under any permutation of counters. 
+We leave this problem open for machines with 3 and more counters,
+while identifying an upper bound on the impact of symmetry:
+we prove
 undecidability for 3-counter machines invariant under the
-cyclic permutation group.
+cyclic permutation group of order~3.
 \end{abstract}
 
 
