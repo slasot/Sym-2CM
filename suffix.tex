@@ -371,7 +371,8 @@ the final configuration $(0, a')$:
 \[
     a' \ \leq \ C_1 (1 + \varphi_\mathrm{max}) + a \ \leq \ C_1 (1 + e\norm\V) + a
 \]
-where $\varphi_\mathrm{max}$ is the steepness of the steepest major sum-increasing cycle.
+where $\varphi_\mathrm{max}$ is the steepness of the steepest major sum-increasing 
+cycle.
 By setting $C := C_1 (1 + e\norm\V)$, we obtain a contradiction.
 \end{proof}
 
@@ -398,7 +399,7 @@ Taking as $D$ the least common multiple of all $D_\sigma$ is enough for the
 claim of the lemma.
 The sufficiently large value of $C$ is
 $C := C_1 (1 + e\norm\V)$.
-Summing up, $C$ is polynomial and $D$ is expoenential in $\mysize \V$,
+Summing up, $C$ is polynomial and $D$ is exponential in $\mysize \V$,
 as required.
 %
 % The constant $C$ must be large enough so that, even after forgetting of
@@ -447,7 +448,7 @@ all periods $N_c$).
 
 \para{Bound for \Cref{lem:compbackfor}}
 
-Applying the pushdown-automata saturation procedure of \cite{BEM97} 
+Applying the pushdown automata saturation procedure of \cite{BEM97} 
 to $\mach'$, we conclude that
 the bases and period of $\stepp 0 \circ S$ and $S \circ \stepp 0$
 can be larger than 
@@ -455,12 +456,12 @@ the corresponding quantities of $S$ by at a value at most
 doubly exponential in $n$.
 Also, composition with $\stepp -$ or $\stepp +$ cannot increase
 bases or periods by larger quantity, due to the exponential bounds
-on bases and periods of semiminear descriptions given by combination
-of \cite{Blondin15} and \cite{taming}.
+on bases and periods of semilinear descriptions given by combination
+of \cite{Blondin15} and \cite{Pottier91}.
 We apply these observations to bound the bases of $D$-\saturated sets 
 $X_i$ arising in the iterative computation in the proof of 
 \Cref{lem:compbackfor}.
-In every iteration, either a base is lowered, or a new base appers,
+In every iteration, either a base is lowered, or a new base appears,
 namely $\minf{X_{i+1}}(q,r) = m < \infty$ while $\minf{X_i}(q,r)=\infty$.
 Whenever this happens, due to the above observations
 the new value $m$ is larger
