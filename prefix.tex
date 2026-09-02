@@ -28,8 +28,8 @@ Counter machines (\cm{s}) are a particularly simple
 model of computation \cite{Minsky67}.
 A counter machine has a number of registers, called \emph{counters},
 each register storing a natural number.
-While the particular instruction sets may vary, 
-common machine instructions are: counter increment, 
+Although the instruction set may vary, 
+a common one consists of: counter increment, 
 counter decrement, and counter zero-test. 
 Many variants of the model have been introduced and studied,
 and both deterministic and nondeterministic 
@@ -42,7 +42,7 @@ since,
 as shown already by Minsky in the early 1960s \cite{Minsky61},
 in its full generality the model is Turing-complete:
 deterministic 2-counter machines can faithfully simulate Turing machines
-and have undecidable halting problem. 
+and have an undecidable halting problem. 
 
 The purpose of this paper is to understand the impact of
 \emph{symmetry} on the expressive power of \cm{s}. %counter machines.
@@ -54,7 +54,7 @@ in the same state.
 As the starting point, we specifically choose the set of 
 machine instructions:
 counter \emph{updates} that simultaneously modify all counters  
-by given numbers, and counter \emph{zero-tests} that are 
+by corresponding deltas, and counter \emph{zero-tests}, which are 
 executable only if a given counter has value zero.
 Every \emph{transition} $(q,i,q')$ of a machine changes its state
 from $q$ to $q'$,
@@ -115,15 +115,15 @@ the complexity drops to
 only \pspace-complete for symmetric \vass \cite{KL25}.
 As our main result, we confirm the immense drop in case of 
 2-\cm{s}
-(in this case, symmetricity amounts to invariance under all swaps of 
+(in this case, symmetry amounts to invariance under all swaps of 
 counters).
 We prove decidability of the configuration-to-configuration reachability
-problem, when one asks if a given machine has a sequence of steps
+problem, where one asks if a given machine has a sequence of steps
 starting in a given source configuration and ending in
 a given target one:
 
 \begin{theorem} \label{thm:main}
-The reachability problem  is decidable for symmetric 2-counter machines.
+The reachability problem is decidable for symmetric 2-counter machines.
 \end{theorem}
 
 Symmetric two-counter machines are thus not Turing-complete.
@@ -172,7 +172,7 @@ of counters.
 In particular, is the reachability problem still decidable
 for symmetric 3-counter machines, whose update transitions are invariant
 under all 6 permutations of the 3 counters?
-Our decidability argument does not extend to 3 counters, 
+Our decidability proof does not extend to 3 counters, 
 as the argument relies on a
 number of low-dimensional properties of reachable sets and reachability
 relations.
@@ -193,6 +193,7 @@ as the lower bound we only know
 encoded in binary \cite{KL25}.
 It is possible that the reachability problem is \pspace-complete
 in symmetric $d$-\cm{s} for every $d\leq 2$.
+\mei{I'm 90\% sure that this should be $d \geq 2$.}
 
 Symmetric \cm{s} where the only update instructions are increments 
 or decrements of a single counter, constitute a syntactic fragment of our 
