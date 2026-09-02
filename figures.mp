@@ -69,17 +69,17 @@ beginfig(1);
     for j = .5 step .5 until u/C:
       if ((i*C < C) or (j*C < C) or (abs(i-j)*C < C)):
         %label(btex \tiny $0$ etex, (i*C,j*C));
-        my_label := thelabel(btex \tiny $0$ etex, (i*C,j*C));
+        my_label := thelabel(btex \scriptsize $0$ etex, (i*C,j*C));
         unfill bbox my_label;
         draw my_label;
       fi;
 
       if (i > 1) and (j > i+1):
-        label(btex \tiny $+$ etex, (i*C,j*C));
+        label(btex \scriptsize $+$ etex, (i*C,j*C));
       fi;
 
       if (j > 1) and (i > j+1):
-        label(btex \tiny $-$ etex, (i*C,j*C));
+        label(btex \scriptsize $-$ etex, (i*C,j*C));
       fi;
     endfor;
   endfor;

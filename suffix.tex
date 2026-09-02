@@ -133,7 +133,7 @@ that both $a$ and the difference $a'-a$ are sufficiently large (namely larger
 than some $C$, depending only on $\V$).
 As there will be only finitely many different numbers $D_\sigma$,
 we argue then that taking the least common multiple of all $D_\sigma$ yields a
-number $D$ satisfying the claim of the lemma.
+number $D$ satisfying the claim of the lemma, by setting $\gamma = D/D_\sigma$.
 
 Given $t=(q,\updinstr{w},q')\in T$, 
 we call states $q, q'$ the \emph{source} and
@@ -152,15 +152,16 @@ $t_0, \ldots, t_\ell$ and cycles $c_1, \ldots, c_\ell$:
 \[
 \widetilde\sigma \ \in \ t_0 \ c_1^* \ t_1 \ c_2^* \ \ldots \ c_\ell^* \ t_\ell,
 \]
-where the length of each cycle $c_i$ is at most $e$,
+where the length of each cycle $c_j$ is at most $e$,
 and both $\ell$ and $e$ are bounded by a polynomial of $\mysize \V$,
-the size of unary representation of $\V$.
+the size of the unary representation of $\V$.
 Here by a \emph{cycle} we mean a path where source state of the first
 transition matches the target state of the last one.
 Note that we do not claim any bound the number $n_j$ of iterations of every 
-cycle $c_i$ in $\widetilde\sigma$.
+cycle $c_j$ in $\widetilde\sigma$.
 Let $C_0$ be the minimal value such that every cycle of $\V$
 of length at most $e$ is fireable at $(C_0, C_0)$.
+\mei{Nitpick: we don't define "fireable" anywhere, do we consider that fine?}
 
 We now classify the cycles as follows: call a cycle $c_j$ \emph{major}
 if its number of iterations $n_j$ is larger than $2 C_0$, and \emph{minor} otherwise.
@@ -195,8 +196,8 @@ We classify these into three cases.
 \sla{TODO a figure}
 
 \para{Case 1: Some major sum-increasing cycle $c_j$ has vertical $(0,+)$ effect}
-One extra iteration of this cycle yields the claim with $D_\sigma$ equal to its
-vertical effect.
+One extra iteration of this cycle yields the claim, with the vertical effect
+of the cycle determining $D_\sigma$.
 
 \para{Case 2: Some major sum-increasing cycle $c_j$ has effect $(-,+)$ or $(+,-)$}
 Assume $(-,+)$ effect, the other case is similar.
@@ -213,16 +214,16 @@ the effect of $c_j$ is nonzero on both coordinates
 assumption for this claim):
 %
 \begin{claim}  \label{claim:fireable}
-If a cycle $c_j$ is repeated $n_j > 2C_0$ times, and $C_0 \leq i \leq n_j - C_0$,
-the transposed cycle $\overline{c_j}$ is fireable after $c_j^i$
-(regardless of the source configuration).
+If a cycle $c_j$ is repeated $n_j > 2C_0$ times starting at configuration $\kappa$,
+and $C_0 \leq i \leq n_j - C_0$,
+the transposed cycle $\overline{c_j}$ is fireable after $c_j^i$ is executed from $\kappa$.
 \end{claim}
 %
 \begin{proof}
-Denoting the effect of $c_j$ by $(x,y)$,
+Denoting the effect of $c_j$ by $(\Delta x,\Delta y)$,
 the $n_j+1$ source-target configurations along the run $c_j^{n_j}$
 form an arithmetic progression defined by
-$(x_i, y_i) = (x_0 + ix, y_0 + iy)$.
+$(x_i, y_i) = (x_0 + i\Delta x, y_0 + i\Delta y)$.
 %For a coordinate at which the
 %effect of the cycle is positive, say $x > 0$, we obtain $x_i \geq C_0$
 %for $i \geq C_0$. On the other hand, for a coordinate with a negative effect,
@@ -231,10 +232,10 @@ $(x_i, y_i) = (x_0 + ix, y_0 + iy)$.
 %As such, for $C_0 \leq i \leq n_j - C_0$, both coordinates are above $(C_0, C_0)$,
 %which suffices to obtain that $\overline{c_j}$ is fireable.
 It suffices to show that for appropriate $i$ we have $x_i, y_i \geq C_0$.
-For coordinates at which the effect is positive, say $x > 0$,
-we need $C_0 \leq i$; conversely for coordinates with negative effect, say $y < 0$,
-we need $i \leq n_j - C_0$. Note that for $n_j > 2C_0$, we can satisfy both
-inequalities.
+For coordinates at which the effect is positive, say $\Delta x > 0$,
+it suffices that $C_0 \leq i$; conversely for coordinates with negative effect, say $\Delta y < 0$,
+it's enough that $i \leq n_j - C_0$. Note that for $n_j > 2C_0$, there exist $i$ that satisfy both
+inequalities at the same time.
 \end{proof}
 %
 
@@ -243,7 +244,9 @@ after $c_j^{C_0+1}$. Equivalently, $c_j; \overline{c_j}$ is fireable after $c_j^
 Denoting by $(-x, y)$ the effect of $c_j$, we have that $y > x$, as the cycle is
 sum-increasing. Thus, the effect of $c_j; \overline{c_j}$, being $(y-x, y-x)$,
 is positive on both coordinates, and $c_j; \overline{c_j}$ may be fired arbitrarily
-many times at the midpoint of $c_j^{n_j}$, without interference with the remainder of the path.
+many times in the middle of $c_j^{n_j}$, without interference with the remainder of the path.
+% Explicitly "in the middle", not "at the midpoint", the latter might not even exist
+% if n_j happens to be odd.
 
 % Let $k$ be the least common multiplicity of $m_2 - m_1$ and $m_1$.  
 Now set $k:=x(y-x)$.

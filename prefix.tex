@@ -300,7 +300,7 @@ is a finite-state automaton whose transitions
 may perform two kinds of instructions,
 namely update and zero-test \emph{instructions},
 on $d$ \emph{counters}, namely nonnegative integer values
-stored by $\mach$.
+stored as part of the configuration.
 Formally, we define such a machine as 
 $\mach = (Q,T)$, where $Q$ is a finite set of control states,
 $T\subseteqfin Q\times\Instr\times Q$ is a finite set of 
@@ -311,10 +311,13 @@ update instructions and zero-testing instructions:
 \Instr \ = \ \setof{\updinstr{w}}{w\in\Z^d} \ \cup \ 
 \setof{\ztinstr{i}}{i\in d}.
 \]
+\mei{it is ambiguous here whether $i \in d$ is supposed to mean
+$\{0, ..., d-1\}$ or $\{1, ..., d\}$. We use the more explicit notation
+below, maybe we should do so here as well?}
 Execution of $\updinstr{w}$ amounts to adding
 the vector
 $w$ to the counters, and execution of 
-$\ztinstr{i}$ amounts to checking if counter $i$
+$\ztinstr{i}$ amounts to checking that counter $i$
 has value 0.
 Formally, we define the semantics of $\mach$ by considering
 its \emph{configurations} $c=(q,v) \in Q\times \N^d$, written $q(v)$, and
@@ -354,12 +357,17 @@ swap of counters.
 The reflexive-transitive closure $\step^*$ of $\step$ we call
 the \emph{reachability relation} (between configurations).
 The \emph{reachability problem} asks, given a \cm $\mach$ and two
-its configurations, source $c$ and target $c'$, whether $c \step^* c'$
+of its configurations, source $c$ and target $c'$, whether $c \step^* c'$
 (in which case we say that $c'$ is \emph{reachable} from $c$).
 A reachability certificate, namely any sequence $\rho$ of configurations
 \[
 c \ = \ c_0 \step c_1 \step \ldots \step c_n \ = \ c'
 \]
+\mei{The kerning here suggests the bracketing
+$c = (c_0 \step \cdots) = c'$, which becomes obviously wrong only once
+you try to actually parse the equation.
+Since the additional spacing was put in explicitly, I'd like to know
+why before fixing this.}
 related by the step relation,
 we call a \emph{run} from configuration $c$ to $c'$.
 
@@ -453,8 +461,8 @@ $\rho$.
 % we shall call the $\rho_i$ the \emph{\vass segments} of $\rho$.
 %
 Every $\rho_i$ is thus
-a run in the underlying 2-\vass $\V$
-of one of the following forms:
+a run in the underlying 2-\vass $\V$,
+having one of the following forms:
 \begin{alignat}{2} 
   \begin{aligned} \label{eq:4cases}
 q(a,0) &\step^\ast q'(0,a')\\
@@ -473,23 +481,23 @@ without specifying which of the four cases occurs,
 since the (zero-testing) states $q$, $q'$ uniquely determine that.
 We follow the notational shorthand %\eqref{eq:basictran} 
 throughout and, instead of 
-$\step^*$ which is a binary relation on $Q\times\N^2$,
+$\step^*$, which is a binary relation on $Q\times\N^2$,
 %  \  \subseteq  (Q\times\N^2)^2$
 we prefer to use 
 a binary relation on $Q\times\N$, 
 \[
 \reachrel \ \ \subseteq \ (Q\times\N)^2,
 \]
-defined as expected: $q(a)\reachrel q'(a')$ if and only if 
+where $q(a)\reachrel q'(a')$ if and only if 
 any of the four cases of \eqref{eq:4cases} holds, namely
 the underlying 2-\vass $\V$ has a corresponding run that does not
 visit zero-testing states except for the initial and final ones.
 % Without loss of generality, we also assume 
 % that both the source and target vector have at least one 0.
-Relying on Remark \ref{rem:wlog}, our task is to decide if 
+In view of Remark \ref{rem:wlog}, our task is to decide if 
 $s\reachrel^* t$
 for $s,t\in Q\times\N$,
-that is if the pair $(s,t)$ belongs to the reflexive-transitive
+that is whether a given pair $(s,t)$ belongs to the reflexive-transitive
 closure of $\reachrel$.
 
 \begin{figure}
@@ -503,45 +511,46 @@ but rather the initial and final values $a$ and $a'$ of a segment.}
 
 
 \para{Three types of segments}
-Every segment $\rho_i \colon q(a) \reachrel q'(a')$, 
-depending on the values of $a$, $a'$ and $a-a'$,
+As we will see in \Cref{sec:targetpump}, the relation $\reachrel$
+can be split into three disjoint areas with different properties,
+delineated by a machine-dependent constant~$C$
+(see \Cref{fig:areas}).
+Thus, every segment $\rho_i \colon q(a) \reachrel q'(a')$, 
+depending on the magnitude of $a$, $a'$, and $a-a'$,
 falls into one of three categories,
 %split the relation $\step^\ast$ into three subrelations,
 %which represent different kinds of \vass runs in $(Q\times\N^2)$:
 denoted by $\stepp +$, $\stepp -$, and $\stepp 0$.
-% We split the relation $\reachrel$ into three disjoint subrelations; 
-% depending on the value of $a$, $a'$, and $a'-a$. 
-If $q(a) \reachrel q'(a')$, we write:
+For a segment $q(a) \reachrel q'(a')$, we write:
 \begin{equation}
 % \left.
 \begin{aligned}\label{eq:tran0-+}
-& q(a) \stepp 0\, q'(a'),\quad && \text{if\ \ $a\leq C$ or $a'\leq C$ or $|a-a'|\leq C $};\\
+& q(a) \stepp + q'(a'),\quad && \text{if\ \ $a\phantom{'} > C$\ \ and\ \ $a' > a+C${}};\\
 & q(a) \stepp - q'(a'),\quad && \text{if\ \ $a' > C$\ \ and\ \ $a > a'+C${}};\\
-& q(a) \stepp + q'(a'),\quad && \text{if\ \ $a\phantom{'} > C$\ \ and\ \ $a' > a+C${}}.
+& q(a) \stepp 0\, q'(a'),\quad && \text{if\ \ $a\leq C$ or $a'\leq C$ or $|a-a'|\leq C $},
 \end{aligned}
 % \right\}
 \end{equation}
-See \Cref{fig:areas} for a graphical illustration.
 % 
-The precise definition of constant $C$ will be given in \Cref{sec:targetpump}.
-Thus, the reachability relation is 
+where the precise definition of the constant $C$ will be given in \Cref{sec:targetpump}.
+The reachability relation can now be expressed as
 \[
 \reachrel^* \ = \ 
 \big(\stepp 0 \ \cup \ \stepp - \ \cup \ \stepp + \big)^*,
 \] 
 an arbitrary composition
-of the three sub-relations arbitrarily many times.
-Note that the composition assures that \emph{control states match}.
-% 
+of the three sub-relations arbitrarily many times
+(note that the composition assures that \emph{control states match}).
+
 % \bigskip\noindent
 Using this categorization 
-we split the run $\rho$ into three \emph{phases} (possibly empty): 
+we split the run $\rho$ into three consecutive \emph{phases} (each possibly empty): 
 
 \begin{itemize}
-\item $\Phi_1$, which is the \emph{prefix} of $\rho$ and ends with the \emph{last} $\rho_i$ of the form $\stepp +$,
-\item $\Phi_2$, which is an \emph{infix} of $\rho$ and consists only of $\rho_i$'s of the form $\stepp {0}^*$, 
-\item $\Phi_3$, which is the remaining \emph{suffix} of $\rho$ starting 
-with \emph{the first} $\rho_i$ of the form $\stepp -$.
+\item $\Phi_1$, the \emph{prefix} of $\rho$ ending with the \emph{last} $\rho_i$ of the form $\stepp +$,
+\item $\Phi_2$, an \emph{infix} of $\rho$ consisting only of $\rho_i$'s of the form $\stepp {0}$, 
+\item $\Phi_3$, the remaining \emph{suffix} of $\rho$ starting 
+with \emph{the first remaining} $\rho_i$ of the form $\stepp -$.
 % (followed by other \vass segments of the forms $\stepp -$ and $\stepp 0$).
 \end{itemize}
 
@@ -555,7 +564,7 @@ for  the three relations defined by the following rational expressions:
 \begin{align}
   \begin{aligned} \label{eq:regexp}
 &\Phi_1 \ = \ ((\stepp 0 \ \cup \ \stepp -)^\ast \circ \stepp +)^\ast,\\
-&\Phi_2 \ = \ (\stepp 0)^\ast,\\
+&\Phi_2 \ = \ \ \stepp 0^\ast,\\
 &\Phi_3 \ = \ (\stepp - \circ \stepp {0}^\ast)^\ast.
   \end{aligned}
 \end{align}
@@ -587,10 +596,11 @@ is semilinear.
 
 \Cref{thm:main} is proved by showing that the relation $\Phi_2$, 
 as well as
-the image of relation $\Phi_1$ and inverse image of $\Phi_3$, are
-\emph{effectively semilinear}, which means that they are 
-semilinear sets and their descriptions are computable
-given the underlying 2-\vass $\V$ and source and target
+the image of relation $\Phi_1$ and inverse image of $\Phi_3$,
+are all
+\emph{effectively semilinear}, \ie they are 
+semilinear sets whose descriptions are computable
+given the underlying 2-\cm $\mach$ and source and target
 $s, t\in Q\times\N$.
 Importantly, we only need to consider semilinear sets and relations
 in dimension $d=1$.
@@ -774,8 +784,9 @@ For instance, in consequence of \eqref{eq:tpump} and \eqref{eq:spump},
 the image $S\circ \stepp +$ as well as the inverse image
 $\stepp - \circ\, S$ is always $D$-\saturated, irrespectively of
 $S\subseteq Q\times\N$.
+
 For termination of our decision procedure it will be crucial that
-semilinear sets it maintains form
+the semilinear sets it maintains form
 non-decreasing chains 
 of $D$-\saturated sets $X\subseteq Q\times\N$, since we have:
 %  the following lemma:
@@ -812,8 +823,8 @@ $\stepp 0, \ \stepp -, \ \stepp +$ are also effectively semilinear.
 
 \begin{proof}[Proof of \Cref{lem:0star}]
     In outline,
-    we prove that $\Phi_2 = (\stepp 0)^*$ is essentially the reachability
-    relation of an effectively constructible 1-\cm, and apply
+    we prove that $\Phi_2 = \ \stepp{0}^*$ is essentially the reachability
+    relation of an effectively constructible 1-\cm $\mach'$, and apply
     Parikh's theorem.
 
     \medskip
@@ -830,7 +841,7 @@ $\stepp 0, \ \stepp -, \ \stepp +$ are also effectively semilinear.
     % \setof{(n,n')}
     {q(n)\step^* q'(n') \text{ in } \mach_{q,q'}}.
     \end{align}
-    The 1-\cm $\mach'$ is the union of finitely many simpler 1-\cm{s} 
+    The 1-\cm $\mach_{q,q'}$ is the union of finitely many simpler 1-\cm{s} 
     $\mach^c_{q,q'}$ where,
     according to the definition of $\stepp 0$, each of them assumes either
 
@@ -913,9 +924,9 @@ $\stepp 0, \ \stepp -, \ \stepp +$ are also effectively semilinear.
     Finally,
     we define $\mach'$ as the union of all the 1-\cm{s} $\mach_{q,q'}$.
     By the very construction, the reachability relation of the 
-    1-\cm $\mach'$ is essentially $\Phi_2 = (\stepp 0)^*$, namely:
+    1-\cm $\mach'$ is essentially $\Phi_2 = \ \stepp{0}^\ast$, namely:
     \begin{align}\label{eq:1cm}
-        {\overline q(n) \ (\stepp 0)^* \ \overline q'(n')} \text{ in } \mach \ \iff \ 
+        {\overline q(n) \ \stepp{0}^\ast \ \overline q'(n')} \text{ in } \mach \ \iff \ 
     {q(n)\step^* q'(n') \text{ in } \mach'}.
     \end{align}
 
@@ -923,13 +934,15 @@ $\stepp 0, \ \stepp -, \ \stepp +$ are also effectively semilinear.
     \cite{Parikh66,EGKL11}, 
     since the 1-\cm $\mach'$ is a special case of pushdown automaton.
     Fix a pair $q,q'\in Q'$ of states where the stored remainder is 0.
+    \mei{Why do we single out remainder 0 here? I don't understand
+    how this sentence connects to the rest of the description.}
     In order to apply Parikh's Theorem, take all the transitions of 
     $\mach'$ as unlabelled (labelled with $\varepsilon$), 
     add $N$ states $p_0 \ldots p_{N-1}$ forming 
     an $a$-labelled cycle of transitions incrementing the counter by
     $1$ (which assures storing the remainder modulo $N$
     in states), 
-    add anothers $N$ state $p'_{N-1} \ldots p'_{0}$ forming 
+    add another $N$ states $p'_{N-1} \ldots p'_{0}$ forming 
     a $b$-labelled cycle of transitions decrementing the counter by 1,
     and finally add 0-update transitions from
     $p_i$ to $q$, and from $q'$ to $p'_j$, for appropriate remainders 
@@ -974,23 +987,25 @@ is so as well, the set
 $(\stepp - \circ \stepp {0}^\ast) \circ S$ is forcedly $D$-\saturated.
 
 In order to  argue that the set $\Phi_3 \circ \{t\}$
-is effectively semilinear, 
-we use the above observations to deduce that the initial set
-\[
-X_0 \ := \ (\stepp - \circ \stepp {0}^\ast) \circ \{t\}
-\]
-is effectively semilinear and $D$-\saturated, as well as every next iterate
+is effectively semilinear we make use of \Cref{lem:stab},
+iterating the transformation
 \[
 X_{i+1} \ := \ X_{i} \ \cup \ (\stepp - \circ \stepp {0}^\ast) \circ X_{i},
 \]
-for $0 = 1, 2, \ldots$. 
-The sequence $X_0, X_1, \ldots$ is a 
-non-decreasing
-chain of $D$-\saturated sets and hence stabilises, by \Cref{lem:stab}, namely
+starting from the initial set
+\[
+X_0 \ := \ (\stepp - \circ \stepp {0}^\ast) \circ \{t\},
+\]
+until a fixpoint is reached. By the above observations, we deduce that
+both the initial set $X_0$, as well as every successive iterate $X_{i+1}$,
+are effectively semilinear and $D$-\saturated; moreover it is
+self-evident that the sequence $X_0 \subseteq X_1 \subseteq \ldots$
+is non-decreasing.
+
+More explicitly, by \Cref{lem:stab} we have that at starting at some $j$,
 \[
 X_j \ = \ X_{j+1} \ = \ X_{j+2} \ = \ \ldots
 \] 
-for some $i$. 
 Since both the iteration
 $X_i \mapsto X_{i+1}$ and the equality test $X_i = X_{i+1}$ are effective,
 the set 
@@ -998,9 +1013,9 @@ the set
 \Phi_3\circ \{t\} \ = \ \{t\} \ \cup \ \bigcup_{i\in\N} X_i \ = \ 
 \{t\} \ \cup \ X_j
 \]
-is effectively semilinear, as union of $\{t\}$ and a $D$-\saturated set.
+is effectively semilinear.
 We conclude the first part by 
-noting that the proof is not specific to the starting set $\{t\}$
+noting that the proof is not specific to the starting set $\{t\}$,
 and shows that $\Phi_3 \circ S$ is effectively 
 semilinear given any semilinear $S\subseteq Q\times\N$,
 which will be useful in the second part.
@@ -1012,11 +1027,11 @@ the set $\{s\} \circ \Phi_1$ is effectively semilinear.
 To this aim we prefer to use another rational expression defining 
 $\Phi_1$, where $\Phi_3$ appears as a subexpression:
 \[
-\Phi_1 \ = \ ((\stepp 0)^* \ \circ \ \Phi_3 \ \circ \ \stepp +)^\ast;
+\Phi_1 \ = \ (\stepp{0}^* \ \circ \ \Phi_3 \ \circ \ \stepp +)^\ast;
 % \qquad\qquad\qquad
 % \text{recalling } \Phi_3 \ = \ (\stepp - \circ \stepp {0}^\ast)^\ast;
 \]
-indeed, as in \eqref{eq:regexp} in \Cref{sec:outline}, the inner subexpression $(\stepp 0)^*  \circ  \Phi_3  \circ  \stepp +$ 
+indeed, as in \eqref{eq:regexp} in \Cref{sec:outline}, the inner subexpression $\stepp{0}^*  \circ \  \Phi_3  \  \circ  \stepp +$ 
 describes an arbitrary
 composition of segments of type $\stepp 0$ and $\stepp -$ that ends 
 with one segment of type $\stepp +$.
@@ -1038,7 +1053,7 @@ f\bigl(X_i\bigr)
 where
 \[
 f(S) \ = \ S \ 
-\circ \ \bigl((\stepp 0)^* \ \circ \ \Phi_3 \ \circ \ \stepp +\bigr).
+\circ \ \bigl(\stepp{0}^* \ \circ \ \Phi_3 \ \circ \ \stepp +\bigr).
 \]
 Similarly as before, knowing that $\stepp +$ is target pumpable, we know
 that all $X_i$ are $D$-\saturated sets, and therefore the sequence 
@@ -1080,7 +1095,7 @@ where $X_{q,r} = \setof{q(n)}{n\equiv r \!\!\mod D}$,
 and checking nonemptiness of intersection with 
 the set 
 \begin{align} \label{eq:set2}
-S\ \circ \ (\stepp 0)^*.
+S\ \,\circ \ \stepp{0}^*.
 \end{align} 
 Both the sets \eqref{eq:set1}, \eqref{eq:set2} 
 are effectively semilinear due to 
