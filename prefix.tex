@@ -20,6 +20,7 @@
 % cyclic permutation group.
 % %\end{abstract}
 
+
 \bigskip
 
 \section{Introduction}
@@ -509,7 +510,9 @@ closure of $\reachrel$.
 \includegraphics[scale=0.8]{figures-1.eps}
 \caption{The three relations $\stepp +$, $\stepp -$, and $\stepp 0$.
 The axes do \emph{not} correspond to the counters, 
-but rather the initial and final values $a$ and $a'$ of a segment.}
+but rather the initial and final values $a$ and $a'$ of a segment.
+\sla{figure to be adapted}
+}
 \label{fig:areas}
 \end{figure}
 
@@ -521,7 +524,7 @@ can be split into three disjoint areas with different properties,
 delineated by a machine-dependent constant~$C$
 (see \Cref{fig:areas}).
 Thus, every segment $\rho_i \colon q(a) \reachrel q'(a')$, 
-depending on the magnitude of $a$, $a'$, and $a-a'$,
+depending on the value of $a-a'$,
 falls into one of three categories,
 %split the relation $\step^\ast$ into three subrelations,
 %which represent different kinds of \vass runs in $(Q\times\N^2)$:
@@ -530,9 +533,12 @@ For a segment $q(a) \reachrel q'(a')$, we write:
 \begin{equation}
 % \left.
 \begin{aligned}\label{eq:tran0-+}
-& q(a) \stepp + q'(a'),\quad && \text{if\ \ $a\phantom{'} > C$\ \ and\ \ $a' > a+C${}};\\
-& q(a) \stepp - q'(a'),\quad && \text{if\ \ $a' > C$\ \ and\ \ $a > a'+C${}};\\
-& q(a) \stepp 0\, q'(a'),\quad && \text{if\ \ $a\leq C$ or $a'\leq C$ or $|a-a'|\leq C $},
+& q(a) \stepp + q'(a'),\quad && 
+\text{if\ \ $a' > a\,+C${}};\\
+& q(a) \stepp - q'(a'),\quad && 
+\text{if\ \ $a\, > a'+C${}};\\
+& q(a) \stepp 0\, q'(a'),\quad && 
+\text{if\ \ $|a-a'|\leq C $},
 \end{aligned}
 % \right\}
 \end{equation}
@@ -580,8 +586,7 @@ The proof uses \emph{semilinear sets}.
 Any subset of $\N^d$ of the form
 \[
 % \lin b {\{p_1,\dots,p_n\}} = 
-\left\{ b + k_1 p_1 + \cdots + k_n p_n 
-\mid k_1, \dots, k_n \in \N \right\},
+\setof{b + k_1 p_1 + \cdots + k_n p_n}{k_1, \dots, k_n \in \N},
 \]
 for $b, p_1, \dots, p_n \in \N^d$,
 is called a
@@ -628,8 +633,8 @@ is effectively semilinear.
 \begin{lemma} \label{lem:compbackfor}
 Given a symmetric 2-\cm $\mach$ and source $s$ and target $t$, the sets
 \begin{alignat*}{6}
-&\Phi_3 \circ \{t\} \ := \  \{y &&\mid (y,t) \in \Phi_3 \hskip 0.5pt\}  \ \subseteq \ Q \times \N, \\
-&\{s\} \circ \Phi_1 \ := \  \{x &&\mid (s,x) \in \Phi_1 \} \ \subseteq \ Q \times \N
+&\Phi_3 \circ \{t\} \ := \  \setof{y}{(y,t) \in \Phi_3}  \ \subseteq \ Q \times \N, \\
+&\{s\} \circ \Phi_1 \ := \  \setof{x}{(s,x) \in \Phi_1} \ \subseteq \ Q \times \N
 \end{alignat*}
 are effectively semilinear.
 % One can compute 

@@ -109,22 +109,16 @@
 \section{Target pumping}\label{sec:targetpump}
 %
 
-\sla{\bf this section is technically the hardest, especially 
-\Cref{claim:steep};
-Krzysiek, can you verify all the details?
-}
-
-\sla{\bf a couple of figures is needed; Vaios, can you produce them?}
-
 We now prove \Cref{lem:targetpump}.
-We focus on proving point $\punkt 1 2$, noticing however that
+We focus on proving point $\punkt 2 2$, noticing however that
 literally the same argument 
-\sla{am I right?}
-works for point $\punkt 2 2$.
+works for point $\punkt 1 2$.
+\sla{swapped $\punkt 1 2$ with $\punkt 2 2$}
 The other two points, namely $\punkt 2 1$ and $\punkt 1 1$
-follow immediately, by swapping the coordinates.
+follow immediately, by swapping the coordinates, relying on the symmetry 
+assumption.
 
-To ease the discussion, we introduce the following definitions:
+To ease the presentation, we introduce the following definitions:
 \begin{itemize}
 \item For a transition $t = (q, \updinstr{w}, q') \in T$, the states $q, q'$
     are said to be the \emph{source} and \emph{target} of $t$ respectively,
@@ -151,7 +145,7 @@ To ease the discussion, we introduce the following definitions:
     If $\rho$ has effect $(a, b)$, $\overline{\rho}$ has effect $(b, a)$.
 \end{itemize}
 
-\begin{proof}[Proof of \Cref{lem:targetpump} $\punkt 1 2$]
+\begin{proof}[Proof of \Cref{lem:targetpump} $\punkt 2 2$]
 Consider a fixed symmetric 2-\vass $\V = (Q,T)$ and
 a run $\sigma : q(a,0)\step^* q'(0,a')$ for some $a, a'\in \N$.
 Assuming that the difference $a'-a$ is sufficiently large
@@ -172,7 +166,7 @@ $t_0, \ldots, t_\ell$ and cycles $c_1, \ldots, c_\ell$:
 \[
 \widetilde\sigma \ \in \ t_0 \ c_1^* \ t_1 \ c_2^* \ \ldots \ c_\ell^* \ t_\ell,
 \]
-where the lengths of each transition $t_i$ and cycle $c_j$ are at most $e$,
+where the lengths of each path $t_i$ and cycle $c_j$ are at most $e$,
 and both $\ell$ and $e$ are bounded by a polynomial of $\mysize \V$,
 the size of the unary representation of $\V$.
 Note that we do not claim any bound the number $n_j$ of iterations
@@ -193,7 +187,7 @@ $c_j$ \emph{sum-increasing} if its effect $(x_j, y_j)$ satisfies $x_j + y_j > 0$
 As we are assuming that $a' - a > C$, note that the sum of counters
 must increase by more than $C$ along $\sigma$. Thus, by setting an appropriately
 large $C$, we can ensure that at least one \emph{major sum-increasing cycle}
-will be present in the decomposition of $\sigma$.
+will be present in $\widetilde\sigma$.
 
 In particular, the total effect of the one-off paths
 $t_0, \ldots, t_\ell$ is bounded,
@@ -214,7 +208,6 @@ case analysis in terms of the sign of each coordinate of their effect.
 Specifically, the effect of a \emph{sum-increasing} cycle can be:
 vertical $(0,+)$, horizontal $(+,0)$, or one of $(+,-)$, $(+,+)$, or $(-,+)$.
 We classify these into three cases.
-\sla{TODO a figure}
 
 \para{Case 1: Some major sum-increasing cycle $c_j$ has vertical $(0,+)$ effect}
 One extra iteration of this cycle yields the claim, with the vertical effect
@@ -311,7 +304,7 @@ doesn't satisfy the claim below to show what we want to rule out.}
 %
 \begin{proof}
 For the purposes of this claim, we shall assume that all cycles within the run are major,
-by inlining any minor cycles $c_i$ into their neighbouring one-off paths $t_{i-1}$ and $t_i$,
+by inlining any minor cycles $c_i$ into their neighboring one-off paths $t_{i-1}$ and $t_i$,
 and renumbering so that the major cycles have consecutive indices.
 
 Suppose now that the claim doesn't hold. Let $c_{k_1}, \ldots c_{k_s}$ be the sequence
@@ -320,9 +313,13 @@ be the first sum-increasing cycle of the run, and define
 $k_{i+1}>k_i$ so that
 $c_{k_{i+1}}$ is the first sum-increasing cycle steeper than
 $c_{k_i}$. Moreover, let $S_i \leq C_1$ be the sum of norms
-of all the one-off
-transitions (and minor cycles) which occurred up to $c_i$ and let $(X_i, Y_i)$ be the
-counter values after $c_i^{n_i}$. 
+of all the transitions on one-off paths 
+(and minor cycles) which occurred up to $c_i$.
+In particular, let $S_{\ell+1}\leq C_1$ 
+be the sum of norms of \emph{all} transitions along 
+the run one-off paths (and minor cycles). 
+\sla{added $S_{\ell+1}$}
+Furthermore, let $(X_i, Y_i)$ be the counter values after $c_i^{n_i}$. 
 Finally, denote by $\beta_i$ the steepness of
 the most recent cycle among $c_{k_1}, \ldots c_{k_s}$, 
 i.e. $\beta_i = \varphi_i$ if
@@ -359,19 +356,19 @@ is $(x - X_i, y - Y_i)$, with both coordinates bounded in magnitude
 by $S_{i+1} - S_i$.
 In particular, we have
 \begin{align*}
-    y - Y_i &\leq S_{i+1} - S_i, \\
-    X_i - x &\leq S_{i+1} - S_i.
+    y - Y_i &\ \leq \ S_{i+1} - S_i, \\
+    X_i - x &\ \leq \ S_{i+1} - S_i.
 \end{align*}
 Multiplying the latter by $\beta_i$ and rearranging, we obtain
 \[
-    y - Y_i \, \leq \, (S_{i+1} - S_i)(1 + \beta_i) \, + \, \beta_i (x - X_i),
+    y - Y_i \ \leq \ (S_{i+1} - S_i)(1 + \beta_i) \, + \, \beta_i (x - X_i),
 \]
 and thus moving $Y_i$ to the right-hand side and using the inequality
 \eqref{eq:steep-ind} we get
 \begin{equation} \label{eq:steep-interm}
     \begin{split}
-        y \, &\leq \, a \, + \, S_{i+1} (1 + \beta_i)  \, + \, \beta_i x \\
-        \,  &\leq \, a \, + \, S_{i+1} (1 + \beta_{i+1}) \, + \, \beta_{i+1} x
+        y \ &\leq \ a \, + \, S_{i+1} (1 + \beta_i)  \, + \, \beta_i x \\
+        \  &\leq \ a \, + \, S_{i+1} (1 + \beta_{i+1}) \, + \, \beta_{i+1} x,
     \end{split}
 \end{equation}
 where the latter inequality follows because $\beta$ is non-decreasing.
@@ -389,25 +386,29 @@ $y_{i+1} = \varphi_{i+1} x_{i+1}$ and will endeavour to prove $\varphi_{i+1} x_{
 But as we've noted before, we have $\varphi_{i+1} \leq \beta_{i+1}$ whenever $x_{i+1} > 0$, and the
 opposite inequality when $x_{i+1} < 0$, exactly as required to obtain
 \[
-    y_{i+1} \,=\, \varphi_{i+1} x_{i+1} \,\leq\, \beta_{i+1} x_{i+1}.
+    y_{i+1} \ =\ \varphi_{i+1} x_{i+1} \ \leq\ \beta_{i+1} x_{i+1}.
 \]
 Together with \eqref{eq:steep-interm}, we get
 \[
     \begin{split}
-    Y_{i+1} \,=\, y \,+\, n_{i+1} y_{i+1}
-    &\,\leq\, a \,+\, S_{i+1} (1 + \beta_{i+1}) \,+\, \beta_{i+1} (x + n_{i+1} x_{i+1}) \\
-    &\,=\, a \,+\, S_{i+1} (1 + \beta_{i+1}) \,+\, \beta_{i+1} X_{i+1} 
+    Y_{i+1} \ =\ y \,+\, n_{i+1} y_{i+1}
+    &\ \leq\ a \,+\, S_{i+1} (1 + \beta_{i+1}) \,+\, \beta_{i+1} (x + n_{i+1} x_{i+1}) \\
+    &\ =\  a \,+\, S_{i+1} (1 + \beta_{i+1}) \,+\, \beta_{i+1} X_{i+1},
     \end{split}
 \]
-
-Hence we finish the induction and obtain \eqref{eq:steep-ind}, in particular for
-the final configuration $(0, a')$:
+thus completing the induction step and obtaining \eqref{eq:steep-ind}. 
+In particular, for
+the final configuration $(0, a')$ we instantiate the first inequality
+in \eqref{eq:steep-interm} with $i = \ell$  
+to get: 
+\sla{$S_\ell \mapsto S_{\ell+1}$}
 \[
     a'
-    \, \leq \, a \,+\, S_\ell (1 + \varphi_\mathrm{max})
-    \, \leq \, a \,+\, C_1 (1 + e\norm\V)
+    \ \leq \ a \,+\, S_{\ell+1} (1 + \varphi_\mathrm{max})
+    \ \leq \ a \,+\, C_1 (1 + e\norm\V)
 \]
-where $\varphi_\mathrm{max}$ is the steepness of the steepest major sum-increasing 
+where $\varphi_\mathrm{max} = \beta_{i+1}$ 
+is the steepness of the steepest major sum-increasing 
 cycle, a value we can bound by $e\norm\V$, as $\varphi_i \leq y_i$ for a horizontally
 positive cycle.
 
