@@ -124,66 +124,83 @@ works for point $\punkt 2 2$.
 The other two points, namely $\punkt 2 1$ and $\punkt 1 1$
 follow immediately, by swapping the coordinates.
 
-\begin{proof}[Proof of \Cref{lem:targetpump}$\punkt 1 2$]
-Consider a fixed 2-\vass $\V = (Q,T)$ and
-run $\sigma : q(a,0)\step^* q'(0,a')$ for some $a, a'\in \N$.
-We modify the run to lift the target configuration to $q'(0,a'+\gamma D_\sigma)$ for any
-$\gamma > 0$, for some particular $D_\sigma$ depending both on $\V$ and on $\sigma$, assuming
-that both $a$ and the difference $a'-a$ are sufficiently large (namely larger
-than some $C$, depending only on $\V$).
-As there will be only finitely many different numbers $D_\sigma$,
-we argue then that taking the least common multiple of all $D_\sigma$ yields a
-number $D$ satisfying the claim of the lemma, by setting $\gamma = D/D_\sigma$.
+To ease the discussion, we introduce the following definitions:
+\begin{itemize}
+\item For a transition $t = (q, \updinstr{w}, q') \in T$, the states $q, q'$
+    are said to be the \emph{source} and \emph{target} of $t$ respectively,
+    and the vector $w$ is said to be the \emph{effect} of $t$.
+\item A \emph{path} is a sequence of transitions such that the target
+    of each transition matches the source of the next transition
+    in the sequence. Unlike a run, a path does not fully specify
+    the source and target configurations.
 
-Given $t=(q,\updinstr{w},q')\in T$, 
-we call states $q, q'$ the \emph{source} and
-\emph{target} state of $t$, respectively,
-and the vector $w$ we call the \emph{effect} of $t$.
-% 
+    The source of the first transition is said to be the \emph{source of the path},
+    and the target of the final transition is said to be the \emph{target of the
+    path}. The \emph{effect of a path} is defined as the sum of the effects of its
+    transitions.
+\item A \emph{cycle} is a path whose source and target coincide.
+\item A path $\rho$ is said to be \emph{fireable} at a configuration $\kappa$
+    if there exists a configuration $\kappa'$ such that $\kappa \xstep{\rho} \kappa'$,
+    \ie $\rho$ can be executed starting from $\kappa$, without the counters
+    having to go negative along the way.
+\item A path $\rho_2$ is said to be \emph{fireable after} $\rho_1$, if for any
+    configuration $\kappa$ at which $\rho_1$ is fireable, the concatenation
+    $\rho_1; \rho_2$ is fireable as well.
+\item For a path $\rho$, the \emph{transposed path} $\overline{\rho}$ is obtained
+    by applying the symmetry assumption at each transition.
+    If $\rho$ has effect $(a, b)$, $\overline{\rho}$ has effect $(b, a)$.
+\end{itemize}
+
+\begin{proof}[Proof of \Cref{lem:targetpump} $\punkt 1 2$]
+Consider a fixed symmetric 2-\vass $\V = (Q,T)$ and
+a run $\sigma : q(a,0)\step^* q'(0,a')$ for some $a, a'\in \N$.
+Assuming that the difference $a'-a$ is sufficiently large
+(namely larger than some $C$, depending only on $\V$),
+we modify the run to lift the target configuration to $q'(0,a'+\gamma D_\sigma)$ for any
+multiple of some particular $D_\sigma$, which depends on both $\V$ and $\sigma$.
+Holding $\V$ fixed, $D_\sigma$ will only attain finitely many different values,
+hence we argue that taking the least common multiple of all $D_\sigma$ yields a
+constant $D$ satisfying the claim of the lemma.
+
 Denote by $\widetilde \sigma$ the sequence of transitions fired along
-$\sigma$.
-Clearly, $\widetilde \sigma$ is a \emph{path}, i.e., the target state
-of every transition in $\sigma$ matches the source state of the next one.
+the run $\sigma$, obtaining its corresponding path.
 According to the linear-path-scheme (LPS) decomposition of 
 \cite[Thm.~1]{Blondin15}, 
 we may assume \mywlog that 
-$\widetilde\sigma$ is built of transitions 
+$\widetilde\sigma$ is built of paths 
 $t_0, \ldots, t_\ell$ and cycles $c_1, \ldots, c_\ell$:
 \[
 \widetilde\sigma \ \in \ t_0 \ c_1^* \ t_1 \ c_2^* \ \ldots \ c_\ell^* \ t_\ell,
 \]
-where the length of each cycle $c_j$ is at most $e$,
+where the lengths of each transition $t_i$ and cycle $c_j$ are at most $e$,
 and both $\ell$ and $e$ are bounded by a polynomial of $\mysize \V$,
 the size of the unary representation of $\V$.
-Here by a \emph{cycle} we mean a path where source state of the first
-transition matches the target state of the last one.
-Note that we do not claim any bound the number $n_j$ of iterations of every 
-cycle $c_j$ in $\widetilde\sigma$.
+Note that we do not claim any bound the number $n_j$ of iterations
+in $\widetilde\sigma$ of the cycles $c_j$.
 Let $C_0$ be the minimal value such that every cycle of $\V$
-of length at most $e$ is \emph{fireable} at $\vr v_0=(C_0, C_0)$, namely
-for every cycle $c$ of length at most $e$, where $q$ is the source/target 
-state of $c$, the sequence $c$ of transitions yields a run
-$q(\vr v_0) \step^* q(\vr v)$ for some $\vr v\in \N^2$.
-\mei{Nitpick: we don't define "fireable" anywhere, do we consider that fine?}
-\sla{added a definition of fireable}
+of length at most $e$ is \emph{fireable} at $\vr v_0=(C_0, C_0)$.
+% for every cycle $c$ of length at most $e$, where $q$ is the source/target 
+% state of $c$, the sequence $c$ of transitions yields a run
+% $q(\vr v_0) \step^* q(\vr v)$ for some $\vr v\in \N^2$.
+% \mei{Nitpick: we don't define "fireable" anywhere, do we consider that fine?}
+% \sla{added a definition of fireable}
 
 We now classify the cycles as follows: call a cycle $c_j$ \emph{major}
 if its number of iterations $n_j$ is larger than $2 C_0$, and \emph{minor} otherwise.
 Moreover, call a cycle
-$c_j$ \emph{sum-increasing} if its effect $(x_j, y_j)$,
-defined as the sum of effects of its transitions, 
-satisfies $x_j + y_j > 0$.
+$c_j$ \emph{sum-increasing} if its effect $(x_j, y_j)$ satisfies $x_j + y_j > 0$.
 
 As we are assuming that $a' - a > C$, note that the sum of counters
 must increase by more than $C$ along $\sigma$. Thus, by setting an appropriately
 large $C$, we can ensure that at least one \emph{major sum-increasing cycle}
 will be present in the decomposition of $\sigma$.
 
-In particular, the total effect of the one-off transitions 
+In particular, the total effect of the one-off paths
 $t_0, \ldots, t_\ell$ is bounded,
-as each of them may increase the sum of the counters by at most $2 \norm \V$.
-Likewise, each minor cycle may only increase the sum of the counters by at most
-$4 C_0 e \norm \V$. Thus, it suffices to set
+as each of them may increase the sum of the counters by at most $2 e \norm \V$.
+Likewise, a single iteration of a cycle may only increase the sum of the counters by at most
+$2 e \norm \V$, and each minor cycle gets executed at most $2 C_0$ times.
+Thus, to ensure that a major sum-increasing cycle is present, it suffices to set
 \[
     C \ \geq \ C_1 \ = \ 
     (2 C_0 e_\mathrm{max} + 1)(\ell_\mathrm{max} + 1) 2\norm\V,
@@ -194,7 +211,7 @@ on $e$ and $\ell$, respectively.
 
 We now focus our attention on the major sum-increasing cycles, and perform
 case analysis in terms of the sign of each coordinate of their effect.
-Specifically, the effect of a sum-increasing cycle can be:
+Specifically, the effect of a \emph{sum-increasing} cycle can be:
 vertical $(0,+)$, horizontal $(+,0)$, or one of $(+,-)$, $(+,+)$, or $(-,+)$.
 We classify these into three cases.
 \sla{TODO a figure}
@@ -208,25 +225,23 @@ Assume $(-,+)$ effect, the other case is similar.
 % 
 For our argument it is enough if the $n_j$ is large enough to guarantee that 
 somewhere in the middle of $c_j^{n_j}$, the 
-transposed cycle $\overline{c_j}$
-(which exists due to the assumed symmetry of $\V$) is also enabled.
-(The transposed cycle $\overline{c_j}$ is obtained by transposing all transitions 
-along $c_j$.)
+transposed cycle $\overline{c_j}$ becomes fireable.
 We observe the following key claim, relying on the fact that  
 the effect of $c_j$ is nonzero on both coordinates
 (in particular note that we don't use the sum-increasing
 assumption for this claim):
 %
 \begin{claim}  \label{claim:fireable}
-If a cycle $c_j$ is repeated $n_j > 2C_0$ times starting at configuration $\kappa$,
+If a cycle $c_j$ is repeated $n_j > 2C_0$ times
 and $C_0 \leq i \leq n_j - C_0$,
-the transposed cycle $\overline{c_j}$ is fireable after $c_j^i$ is executed from $\kappa$.
+the transposed cycle $\overline{c_j}$ is fireable after $c_j^i$.
 \end{claim}
 %
 \begin{proof}
 Denoting the effect of $c_j$ by $(\Delta x,\Delta y)$,
-the $n_j+1$ source-target configurations along the run $c_j^{n_j}$
-form an arithmetic progression defined by
+the $n_j+1$ configurations at the boundaries between
+the iterations of $c_j$ within $c_j^{n_j}$
+form an arithmetic progression given by
 $(x_i, y_i) = (x_0 + i\Delta x, y_0 + i\Delta y)$.
 %For a coordinate at which the
 %effect of the cycle is positive, say $x > 0$, we obtain $x_i \geq C_0$
@@ -235,13 +250,17 @@ $(x_i, y_i) = (x_0 + i\Delta x, y_0 + i\Delta y)$.
 %thus $y_i \geq n_j - i$. Hence for $i \leq n_j - C_0$ we have $y_i \geq C_0$.
 %As such, for $C_0 \leq i \leq n_j - C_0$, both coordinates are above $(C_0, C_0)$,
 %which suffices to obtain that $\overline{c_j}$ is fireable.
+
 It suffices to show that for appropriate $i$ we have $x_i, y_i \geq C_0$.
-For coordinates at which the effect is positive, say $\Delta x > 0$,
-it suffices that $C_0 \leq i$; conversely for coordinates with negative effect, say $\Delta y < 0$,
-it's enough that $i \leq n_j - C_0$. Note that for $n_j > 2C_0$, there exist $i$ that satisfy both
+For coordinates at which the effect of $c_j$ is positive, say $\Delta x > 0$,
+it suffices that $C_0 \leq i$, as then we have
+$x_i = x_0 + i \Delta x \geq x_0 + i \geq C_0$.
+%
+Similarly, for coordinates with negative effect, say $\Delta y < 0$,
+it's enough that $i \leq n_j - C_0$.
+Observe that for $n_j > 2C_0$, there exist $i$ that satisfy both
 inequalities at the same time.
 \end{proof}
-%
 
 In consequence of \Cref{claim:fireable}, the cycle $\overline{c_j}$ is fireable
 after $c_j^{C_0+1}$. Equivalently, $c_j; \overline{c_j}$ is fireable after $c_j^{C_0}$.
@@ -263,131 +282,139 @@ Indeed, the effect of
 \]
 is $(0, (x+y)(y-x))$, and this cycle is still fireable in the middle of
 $c_j^{n_j}$.
+Moreover, as the effect is non-negative on both coordinates,
+we may insert it freely without interfering with the remaining iterations
+of $c_j$, and indeed the remaining parts of $\sigma$.
 We thus get the claim with $D_\sigma = (x+y)(y-x)$.
 
 \para{Case 3: All major sum-increasing cycles have $(+,0)$ or $(+,+)$ effect}
 We will aim at increasing 
 the repetition count of one of the major sum-increasing
-cycles, together with one other cycle occurring later in the run, 
-in order to obtain
-a vertical effect.
+cycles, together with one other major cycle, occurring later in the run, 
+in order to obtain a vertical effect.
+
 Let us restrict our attention to those major cycles $c_j$, whose effect 
 $(x_j,y_j)$ satisfies $x_j\neq 0$.
 Depending on whether $x_j>0$ or $x_j<0$, we call such cycles 
 \emph{horizontally positive}, or \emph{horizontally negative} respectively.
-We define \emph{steepness} of such a cycle $c_j$ as $y_j/x_j$ and denote it by $\varphi_j$.
-Note that, while in general the steepness may be negative, by assumption it will never be negative
-for a major sum-increasing cycle.
+Define the \emph{steepness} of such cycles $c_j$ as $y_j/x_j$, and denote it by $\varphi_j$.
+Note that, while in general the steepness may be negative,
+by assumption it will never be negative for a major sum-increasing cycle.
+
 \mei{TODO: Figure: demonstrate some non-trivial steepness comparisons; illustrate a run that
 doesn't satisfy the claim below to show what we want to rule out.}
 
-
-\sla{\bf I had a couple of doubts/questions in the proof of the claim below; 
-Maja: can you address them?}
-
 \begin{claim} \label{claim:steep}
-There are some $i<j$ such that $c_i$ is a major sum-increasing cycle, $c_j$ is major and
-horizontally negative, and $c_i$ is steeper than $c_j$ (i.e. $\varphi_i > \varphi_j$).
+    There are some $i<j$ such that $c_i$ is a major sum-increasing cycle, $c_j$ is
+    horizontally negative (and major), and $c_i$ is steeper than $c_j$ (i.e. $\varphi_i > \varphi_j$).
 \end{claim}
 %
 \begin{proof}
-%Define a \emph{segment} of a run as a sequence of consecutive major cycles that begins
-%with a sum-increasing cycle that is the steepest among the sum-increasing major cycles
-%that are part of the segment. We do not consider the minor cycles, nor the one-off
-%transitions, that occur between the major cycles of a segment, to be part of said segment,
-%and define the \emph{effect} of a segment to be the sum of the effects of only its major
-%cycles.
-%
-%Thus, we split the run, and its total effect, into (a) the one-off transitions and minor cycles,
-%(b) the major cycles that occur before the first sum-increasing major cycle, and
-%(c) a number of segments, each starting with a steeper sum-increasing cycle than the last.
-Suppose the claim doesn't hold. Let $c_{k_1}, \ldots c_{k_s}$ be the sequence
-of major sum-increasing cycles of increasing steepness, i.e. let $c_{k_1}$
-be the first major sum-increasing cycle of the run, and define
+For the purposes of this claim, we shall assume that all cycles within the run are major,
+by inlining any minor cycles $c_i$ into their neighbouring one-off paths $t_{i-1}$ and $t_i$,
+and renumbering so that the major cycles have consecutive indices.
+
+Suppose now that the claim doesn't hold. Let $c_{k_1}, \ldots c_{k_s}$ be the sequence
+of (major) sum-increasing cycles of increasing steepness, i.e. let $c_{k_1}$
+be the first sum-increasing cycle of the run, and define
 $k_{i+1}>k_i$ so that
-$c_{k_{i+1}}$ is the first major sum-increasing cycle steeper than
+$c_{k_{i+1}}$ is the first sum-increasing cycle steeper than
 $c_{k_i}$. Moreover, let $S_i \leq C_1$ be the sum of norms
 of all the one-off
-transitions and minor cycles which occurred up to $c_i$ (including $c_i$
-itself if it happens to be minor), and let $(X_i, Y_i)$ be the
+transitions (and minor cycles) which occurred up to $c_i$ and let $(X_i, Y_i)$ be the
 counter values after $c_i^{n_i}$. 
 Finally, denote by $\beta_i$ the steepness of
 the most recent cycle among $c_{k_1}, \ldots c_{k_s}$, 
 i.e. $\beta_i = \varphi_i$ if
-$i \in \{k_1, \ldots, k_s\}$, and $\beta_i = \beta_{i-1}$ otherwise. At the
-boundary, set $S_0 = 0$, $\beta_0 = -1$, and $(X_0, Y_0) = (a, 0)$.
+$i \in \{k_1, \ldots, k_s\}$, and $\beta_i = \beta_{i-1}$ otherwise.
+At the start of the run, set $S_0 = 0$, $\beta_0 = -1$, and $(X_0, Y_0) = (a, 0)$.
 
 Note that, if \Cref{claim:steep} indeed doesn't hold, we have $\beta_j \leq \varphi_j$ for any
-horizontally negative major cycle $c_j$, with the possible exception of cycles $j < k_1$.
-Indeed, otherwise we have $\varphi_i = \beta_j > \varphi_j$ as required.
-Note also that for horizontally positive major cycles $c_i$, we have $\varphi_i \leq \beta_i$,
-either by definition, for sum-increasing cycles, or trivially, as 
-$\varphi_i \leq 0 \leq \beta_i$ for 
+horizontally negative cycle $c_j$.
+Indeed, for $c_j$ occurring after $c_{k_1}$, we would otherwise get
+$\varphi_i = \beta_j > \varphi_j$, which satisfies \Cref{claim:steep}.
+On the other hand, for $c_j$ before the first sum-increasing cycle,
+we only need to show $-1 \leq \varphi_j$. But horizontally negative
+cycles of steepness lower than $-1$ are sum-increasing, and for
+the current case we are assuming that all major sum-increasing cycles
+are horizontally positive.
+
+On the other hand, for a horizontally \emph{positive} cycle $c_i$,
+we have $\varphi_i \leq \beta_i$, either by definition, for sum-increasing cycles,
+or trivially, as $\varphi_i \leq 0 \leq \beta_i$ for 
 horizontally positive cycles $c_i$ that are not sum-increasing.
 
 By induction on $i$, we will now prove that the pair $(X_i,Y_i)$ of
 counter values %configuration
 will always satisfy
 \begin{equation} \label{eq:steep-ind}
-    Y_i \ \leq \ S_i (1 + \beta_i) \ + \ \beta_i X_i + a
+    Y_i \, \leq \, a \, + \, S_i (1 + \beta_i) \, + \, \beta_i X_i
 \end{equation}
 \mei{TODO Figure.}
 At $i = 0$, equality trivially holds.
-Suppose then that the inequality holds at a specific $i$. Denoting by $(x, y)$ the counter
-values just before $c_{i+1}$, we have $y - Y_i \leq S_{i+1} - S_i$, and $X_i - x \leq S_{i+1} - S_i$.
+Suppose then that the inequality holds at a specific $i$.
+Denoting by $(x, y)$ the counter values just before $c_{i+1}$,
+we have that the effect of the one-off path between $c_i$ and $c_{i+1}$
+is $(x - X_i, y - Y_i)$, with both coordinates bounded in magnitude
+by $S_{i+1} - S_i$.
+In particular, we have
+\begin{align*}
+    y - Y_i &\leq S_{i+1} - S_i, \\
+    X_i - x &\leq S_{i+1} - S_i.
+\end{align*}
 Multiplying the latter by $\beta_i$ and rearranging, we obtain
 \[
-    y - Y_i \ \leq \ (S_{i+1} - S_i)(1 + \beta_i) \ + \ \beta_i (x - X_i),
+    y - Y_i \, \leq \, (S_{i+1} - S_i)(1 + \beta_i) \, + \, \beta_i (x - X_i),
 \]
 and thus moving $Y_i$ to the right-hand side and using the inequality
 \eqref{eq:steep-ind} we get
-\[
-    y \ \leq \ S_{i+1} (1 + \beta_i)  \ + \ \beta_i x
-    \  \leq \ S_{i+1} (1 + \beta_{i+1}) \ + \ \beta_{i+1} x
-\]
+\begin{equation} \label{eq:steep-interm}
+    \begin{split}
+        y \, &\leq \, a \, + \, S_{i+1} (1 + \beta_i)  \, + \, \beta_i x \\
+        \,  &\leq \, a \, + \, S_{i+1} (1 + \beta_{i+1}) \, + \, \beta_{i+1} x
+    \end{split}
+\end{equation}
 where the latter inequality follows because $\beta$ is non-decreasing.
 
-If $c_{i+1}$ is a minor 
-\sla{isn't the induction over major cycles $c_i$ only?}
-\mei{Our $c_i$ index across all the cycles, not necessarily major, so I perform induction
-on $i$, walking through all the cycles. I rewrote it a tiny bit to hopefully more clearly
-convey the message of "minor cycles are basically one-off transitions".
-I do admit, however, that performing the induction over all the cycles like I'm doing here is quite
-formalist, possibly excessively so. Refactoring the proof to remove this quirk might be a good idea...}
-cycle, we can replace $(x, y)$ in the above reasoning by $(X_{i+1}, Y_{i+1})$,
-already obtaining the inductive hypothesis --- essentially, we handle minor cycles
-exactly the same way as one-off transitions.
-
-Let us thus
-focus on the case when $c_{i+1}$ is a major cycle, denoting by 
-$(x_{i+1}, y_{i+1})$ the effect of $c_{i+1}$.
+Having handled the movement of the counter values caused by the one-off path
+$t_{i+1}$, let $(x_{i+1}, y_{i+1})$ be the effect of the (major) cycle $c_{i+1}$.
 % of one of the $n_{i+1}$ iterations of the cycle.
-If $x_{i+1} = 0$, we must have $y_{i+1} < 0$, as we handle vertical sum-increasing cycles in Case 1.
-A $(0, -)$ cycle will however trivially preserve the desired inequality. It remains to consider
+If $x_{i+1} = 0$, we must have $y_{i+1} \leq 0$,
+as we handle vertical sum-increasing cycles in Case 1.
+A $(0, -)$ cycle will however trivially preserve the desired inequality.
+Hence, it remains to consider
 major cycles that are either horizontally positive, or horizontally negative. 
 In both cases we have
 $y_{i+1} = \varphi_{i+1} x_{i+1}$ and will endeavour to prove $\varphi_{i+1} x_{i+1} \leq \beta_{i+1} x_{i+1}$.
 But as we've noted before, we have $\varphi_{i+1} \leq \beta_{i+1}$ whenever $x_{i+1} > 0$, and the
-opposite inequality when $x_{i+1} < 0$, exactly as required to obtain $y_{i+1} \leq \beta_{i+1} x_{i+1}$ (if $i < k_1 - 1$, then the cycle cannot be sum-increasing and $\beta_{i+1} = -1$, so the inequality holds trivially).
-Thus,
-\begin{equation*}
+opposite inequality when $x_{i+1} < 0$, exactly as required to obtain
+\[
+    y_{i+1} \,=\, \varphi_{i+1} x_{i+1} \,\leq\, \beta_{i+1} x_{i+1}.
+\]
+Together with \eqref{eq:steep-interm}, we get
+\[
     \begin{split}
-    Y_{i+1} = y + n_{i+1} y_{i+1} \leq S_{i+1} (1 + \beta_{i+1}) + \beta_{i+1} (x + n_{i+1} x_{i+1}) + a \\
-    = S_{i+1} (1 + \beta_{i+1}) + \beta_{i+1} X_{i+1} + a
+    Y_{i+1} \,=\, y \,+\, n_{i+1} y_{i+1}
+    &\,\leq\, a \,+\, S_{i+1} (1 + \beta_{i+1}) \,+\, \beta_{i+1} (x + n_{i+1} x_{i+1}) \\
+    &\,=\, a \,+\, S_{i+1} (1 + \beta_{i+1}) \,+\, \beta_{i+1} X_{i+1} 
     \end{split}
-\end{equation*}
+\]
 
 Hence we finish the induction and obtain \eqref{eq:steep-ind}, in particular for
 the final configuration $(0, a')$:
 \[
-    a' \ \leq \ C_1 (1 + \varphi_\mathrm{max}) + a \ \leq \ C_1 (1 + e\norm\V) + a
+    a'
+    \, \leq \, a \,+\, S_\ell (1 + \varphi_\mathrm{max})
+    \, \leq \, a \,+\, C_1 (1 + e\norm\V)
 \]
 where $\varphi_\mathrm{max}$ is the steepness of the steepest major sum-increasing 
-cycle.
-By setting $C := C_1 (1 + e\norm\V)$, we obtain a contradiction.
+cycle, a value we can bound by $e\norm\V$, as $\varphi_i \leq y_i$ for a horizontally
+positive cycle.
+
+Observe however, that nothing prevents us from setting $C := C_1 (1 + e\norm\V)$ and thus we obtain a contradiction.
 \end{proof}
 
-Take any cycles $c_i, c_j$, where $i<j$, as given by \Cref{claim:steep}. 
+Take any cycles $c_i$, $c_j$, where $i<j$, as given by \Cref{claim:steep}. 
 Their horizontal effects
 satisfy $x_i>0$ and $x_j<0$, and hence
 %    positive integers $I, J$, 
@@ -465,7 +492,7 @@ of a transition
 will get rapidly cut short by a failing zero-test.
 
 To simulate a transition of the form $(q, \updinstr{x, y}, q') \in T$,
-we include to $T'$ the following transitions:
+we include in $T'$ the following transitions:
 \[ \begin{split}
     q&(3a + 2, && 3b + 2, && 0)
     \xstep{\updinstr{3x - 1, 3y - 1, 0}} \\
@@ -483,11 +510,11 @@ so it now remains to see that the cyclic shifts of the above instructions,
 which we must also include within $T'$, do not cause any issues.
 
 Let us first consider the $\updinstr{3x-1, 3y-1, 0}$ instruction above.
-As the vector contains only one zero, executing any cyclic rotation will
+As the update vector contains only one zero, executing any cyclic rotation will
 disturb the auxiliary counter, making it non-zero.
 Moreover, because the main counters have a remainder of $2 \bmod 3$
 before the transition, no cyclic rotation of the update instruction
-can make them zero, as only remainders 2 and 0 are
+can make them zero: only remainders 2 and 0 are
 present within the update instruction.
 Hence, should any cyclic rotation of the first update instruction execute,
 the zero-test that follows will fail.
@@ -495,7 +522,7 @@ the zero-test that follows will fail.
 The reasoning for the $\updinstr{1, 1, 0}$ instruction is similar:
 any cyclic rotation will increase the auxiliary counter to 1,
 and neither of the main counters may decrease to 0,
-as the vector is non-negative.
+as the vector is non-negative on all coordinates.
 
 It remains to simulate the zero-test transitions of $\mach$.
 For concreteness, let us focus on the case where the first counter
@@ -516,7 +543,7 @@ $\mach'$ performs the following steps:
     q'&(2, && 3b + 2, && 0).
 \end{split} \]
 As the instruction $\updinstr{-2, -1, +2}$ has only one non-negative number,
-any other of its rotations will attempt to make the auxiliary counter negative,
+any of its other rotations will attempt to make the auxiliary counter negative,
 and thus will not be able to execute. Then, the first $\ztinstr{\ast}$
 is performed. As the counters have remainders $(0, 1, 2) \bmod 3$ respectively,
 this zero-test will only succeed when $3a = 0$, exactly as required
@@ -526,7 +553,8 @@ To finish simulating the zero-test, $\updinstr{+2, +1, -2}$ undoes
 the modifications of the counters. As we now know that the first counter is
 zero, and all numbers in the update instruction are non-zero, we can infer that
 no rotation can leave the first counter at zero. Moreover, the second counter
-has remainder $1 \bmod 3$, therefore the sole negative number $-2$ cannot
+has remainder $1 \bmod 3$, therefore the sole negative number in the update
+instruction, having value $-2$, cannot
 make that counter be zero either. Thus, for the final zero-test to pass,
 it is the auxiliary counter that must become zero, and this can only happen
 if the $-2$ is appropriately aligned, which rules out all unwanted rotations.
