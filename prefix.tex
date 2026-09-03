@@ -280,7 +280,7 @@ In \Cref{sec:outline} we provide the proof of \Cref{thm:main},
 building on effective
 semilinearity of certain reachability sets and relations in a
 symmetric 2-\cm.
-Then in \Cref{sec:sl} we prove the effective semilinearity,
+Then in \Cref{sec:sl,sec:sl2} we prove the effective semilinearity,
 building on the central property of target (resp.~source) pumping
 in symmetric 2-\vass, that is subsequently shown in \Cref{sec:targetpump}.
 Technically, \Cref{sec:targetpump} is probably the most intricate part 
@@ -466,10 +466,11 @@ a run in the underlying 2-\vass $\V$,
 having one of the following forms:
 \begin{alignat}{2} 
   \begin{aligned} \label{eq:4cases}
-q(a,0) &\step^\ast q'(0,a')\\
-q(0,a) &\step^\ast q'(0,a')\\
-q(0,a) &\step^\ast q'(a',0)\\
-q(a,0) &\step^\ast q'(a',0),
+q(a,0) &\step^\ast q'(0,a') \qquad\qquad  & q(0,a) &\step^\ast q'(a',0)\\
+q(0,a) &\step^\ast q'(0,a') \qquad\qquad  & q(a,0) &\step^\ast q'(a',0),
+% \\
+% q(0,a) &\step^\ast q'(a',0)\\
+% q(a,0) &\step^\ast q'(a',0),
   \end{aligned}
 \end{alignat}
 where the initial and final states $q$ and $q'$ are zero-testing states, and no zero-testing
@@ -685,7 +686,7 @@ It thus remains to demonstrate the two key lemmas.
 
 
 
-\section{Effective semilinearity} \label{sec:sl}
+\section{Effective semilinearity: Proof of \Cref{lem:compbackfor}} \label{sec:sl}
 
 For complexity considerations,
 we denote by $\mysize \mach$ the size of unary representation of $\mach$,
@@ -823,156 +824,6 @@ and forbidding zero-testing states except the source and target ones.
 In consequence, its further Presburger-definable restrictions 
 $\stepp 0, \ \stepp -, \ \stepp +$ are also effectively semilinear.
 \end{proof}
-
-
-\begin{proof}[Proof of \Cref{lem:0star}]
-    In outline,
-    we prove that $\Phi_2 = \ \stepp{0}^*$ is essentially the reachability
-    relation of an effectively constructible 1-\cm $\mach'$, and apply
-    Parikh's theorem.
-
-    \medskip
-\sla{to be improved}
-    We start by constructing a 1-\cm for the non-iterated  
-    relation $\stepp 0$; namely, 
-    for a fixed pair $q,q'\in Q$ of zero-testing control states, 
-    we define a
-    1-\cm $\mach_{q,q'}$ with control states $Q'$ and a surjective
-    forgetful function $q\mapsto \overline q :Q'\to Q$ such that, for every $n,n'\in\N$, we have
-    \begin{align} \label{eq:mach}
-    % \setof{(n,n')}
-    {\overline q(n) \stepp 0 \overline {q}'(n')} \text{ in } \mach \ \iff \ 
-    % \setof{(n,n')}
-    {q(n)\step^* q'(n') \text{ in } \mach_{q,q'}}.
-    \end{align}
-    The 1-\cm $\mach_{q,q'}$ is the union of finitely many simpler 1-\cm{s} 
-    $\mach^c_{q,q'}$ where,
-    according to the definition of $\stepp 0$, each of them assumes either
-
-    \begin{enumerate}
-    \item
-    initial counter value $n=c$, where $c\leq C$, or 
-    \item 
-    final counter value $n'=c$, where $c\leq C$, or 
-    \item 
-    the difference of initial and final counter values $n-n'=c$, where $-C\leq c\leq C$.
-    \end{enumerate}
-
-    \noindent
-    We define $\mach^c_{q,q'}$ separately in each case.
-
-    \para{Case 1: $n=c$}
-
-    The 1-\cm $\mach^c_{q,q'}$ starts by checking if $n=c$, which is done
-    by subtracting $c$ from the counter and then zero-testing.
-    % , and then adding $c$.
-    Then $\mach^c_{q,q'}$ computes on its counter a nondeterministically chosen 
-    number from the effectively semilinear (due to \Cref{lem:0-+}) 
-    % (and hence ultimately $N$-\saturated for some computable $N$)
-    set
-    \begin{align}\label{eq:per1}
-    \setof{n'}{q(c)\stepp 0 q'(n')},
-    \end{align}
-    and goes to state $q'$.
-
-    \para{Case 2: $n'=c$}
-
-    Similarly to the previous case, using the fact that
-    1-\cm{s} are closed under reverse.
-
-    \para{Case 3: $n' = n-c$}
-
-    The 1-\cm $\mach^c_{q,q'}$ proceeds by first checking whether the
-    initial value of its counter belongs to
-    \begin{align}\label{eq:per2}
-     X_c \ = \ \setof{n}{q(n)\stepp 0 q'(n-c)},
-    \end{align}
-    and then by subtracting $c$ from the counter,
-    and going to state $q'$.
-    Knowing that $X_c$ is effectively semilinear,
-    and hence ultimately periodic with effectively computable 
-    period $N_c$ and threshold $M_c$, 
-    we design the 1-\cm $\mach^c_{q,q'}$ to store, in its control state,
-    the remainder of current counter value modulo $N_c$. 
-    Then checking membership in $X_c$ reduces to checking
-    if the initial counter value is at least $M_c$
-    (doable by decrementing the counter by $M_c$, and then 
-    incrementing it by $M_c$ back)
-    or checking if the counter equals $m$ for some $m<M_c$
-   (doable similarly, by a decrement, zero-test, and increment).
-    % $m=\minf {X_c}(q,r)$, where $r$ is the remainder of 
-    % the initial counter value modulo $N_c$.
-    % The inequality test is 
-    % (doable by subtracting $M_c$, and then adding $M_c$ back to the
-    %  counter).
-    % Clearly, if $\minf{X_c}(q,r)=\infty$, the 1-\cm stops without reaching
-    % $q'$.
-
-    \medskip
-
-    We end by noting that for different values of $c$ between $-C$ and $C$,
-    Case 3 may require the 1-\cm
-    $\mach^c_{q,q'}$ to store in control states the remainders
-    of current counter value modulo different numbers $N_c$.
-    We unify all the 1-\cm{s} $\mach^c_{q,q'}$ by storing in the control
-    state the remainder modulo the least common multiple 
-    $N$ of all $N_c$.
-    The forgetful function $q\mapsto \overline q$ simply forgets about the
-    remainder.
-    We have thus completed the effective construction of 1-\cm{s}
-    $\mach_{q,q'}$ satisfying the condition \eqref{eq:mach},
-    as the union of finitely many 1-\cm{s} $\mach^c_{q,q'}$.
-
-    \medskip
-
-    Finally,
-    we define $\mach'$ as the union of all the 1-\cm{s} $\mach_{q,q'}$.
-    By the very construction, the reachability relation of the 
-    1-\cm $\mach'$ is essentially $\Phi_2 = \ \stepp{0}^\ast$, namely:
-    \begin{align}\label{eq:1cm}
-        {\overline q(n) \ \stepp{0}^\ast \ \overline q'(n')} \text{ in } \mach \ \iff \ 
-    {q(n)\step^* q'(n') \text{ in } \mach'}.
-    \end{align}
-
-    Now, the lemma follows by Parikh's Theorem 
-    \cite{Parikh66,EGKL11}, 
-    since the 1-\cm $\mach'$ is a special case of pushdown automaton.
-    Fix a pair $q,q'\in Q'$ of states where the stored remainder is 0.
-    \mei{Why do we single out remainder 0 here? I don't understand
-    how this sentence connects to the rest of the description.}
-    In order to apply Parikh's Theorem, take all the transitions of 
-    $\mach'$ as unlabelled (labelled with $\varepsilon$), 
-    add $N$ states $p_0 \ldots p_{N-1}$ forming 
-    an $a$-labelled cycle of transitions incrementing the counter by
-    $1$ (which assures storing the remainder modulo $N$
-    in states), 
-    add another $N$ states $p'_{N-1} \ldots p'_{0}$ forming 
-    a $b$-labelled cycle of transitions decrementing the counter by 1,
-    and finally add 0-update transitions from
-    $p_i$ to $q$, and from $q'$ to $p'_j$, for appropriate remainders 
-    $i,j$. 
-    The language $L_{p_0,p'_0}$ of so obtained labelled 1-\cm
-    with initial configuration $p_0(0)$ and final configuration $p'_0(0)$,
-    corresponds to the reachability relation of $\mach'$ from $q$
-    to $q'$, namely $a^n b^{n'}\in L_{p_0,p'_0}$ if and only if
-    $q(n) \step^* q'(n')$ in $\mach'$.
-    As Parikh image of $L_{p_0,p'_0}$ is effectively semilinear 
-    due to Parikh's Theorem, the lemma follows.
-% 
-    % Since $\stepp 0$ is effectively semilinear, due to \Cref{lem:0-+},
-    % its section $\setof{(n,n')}{q(n)\stepp 0 q'(n'), \ n=}$
-    % as then $\mach'$ is obtained as the union of all $\mach'_{q,q'}$.
-    % We split $\Phi_2$ into finitely many state projections $\Phi^{q,q'}_2$,
-    % where for a pair of states $q,q'\in Q$ we define
-    % \[
-    % \Phi^{q.q'}_2 \ := \ \setof{(n,n')}{(q(n),q'(n'))\in \Phi_2} 
-    % \]
-    % It is enough to prove that for every pair of states $q,q'\in Q$,
-    % the relation
-    % \[
-    % \Phi_2 \ = \ \setof{(q(n),q'(n'))}{q(n)\step^* q'(n') \text{ in } \mach'}.
-    % \]
-    \end{proof}
 
 
 \begin{proof}[Proof of \Cref{lem:compbackfor}]
@@ -1121,3 +972,151 @@ This concludes the proof of effective semilinearity and $D$-\saturation
 of $f(S)$, and thus also the proof of the second part of the lemma.
 \end{proof}
 
+
+\section{Effective semilinearity: Proof of \Cref{lem:0star}} \label{sec:sl2}
+
+% \begin{proof}[Proof of \Cref{lem:0star}]
+    In outline,
+    we prove that $\Phi_2 = \ \stepp{0}^*$ is essentially the reachability
+    relation of an effectively constructible 1-\cm $\mach'$, and apply
+    Parikh's theorem.
+
+    \medskip
+
+    For any pair of zero-testing control states $q,q'\in Q$ and 
+    $c\in\setfromto{-C} C$, consider
+    the set of pairs of initial and final counter values $(n,n')$ such that
+    $n'=n+c$ and $q(n)\stepp 0 q'(n')$.
+    As $c$ is fixed, we can conveniently consider the set of initial counter 
+    values only:
+    \begin{align}\label{eq:per2}
+     X^c_{q,q'} \ = \ \setof{n}{q(n)\stepp 0 q'(n-c)}.
+    \end{align}
+    The set  effectively semilinear,
+    being the intersection of the effectively semilinear relation $\stepp 0$ 
+    with the semilinear set $\setof{\bigl(q(n),q'(n')\bigr)}{n'=n+c}$,
+    and hence $X^c_{q,q'}$ is
+    ultimately periodic with effectively computable 
+    period $N^c_{q,q'}$ and threshold $M^c_{q,q'}$.
+    Let $N$ be the least common multiple of all the periods $N^c_{q,q'}$.
+
+    \para{Control states of $\mach'$}
+    
+    % We start by constructing a 1-\cm $\mach'$ for the non-iterated  
+    % relation $\stepp 0$.
+    Except for auxiliary states, to be clear from the construction below,
+    the control states $Q'$ of $\mach'$ are the control states of $\mach$ 
+    enriched with a number representing the remainder modulo $N$ of the 
+    current counter value.
+    Thus
+    \[
+    Q' \ = \ Q \times \setfromto 0 {N-1} \ \cup \ \text{(auxiliary states)}.
+    \]
+    We write $q[r]$, instead of $(q,r)$, 
+    for the control state of $\mach'$ corresponding 
+    to $q\in Q$ and remainder $r<N$.
+    According to our construction, 
+    counter values $n$ reachable in state $q[r]$ in $\mach'$ always satisfy 
+    $n\equiv r \mod N$.
+    % The initial control state of $\mach'$ is $q_0[0]$, where $q_0$ is the 
+    % initial control state of $\mach$.
+    The construction of transitions of the 1-\cm $\mach'$, 
+    to be detailed below, ensures
+    the following correctness claim, 
+    for every pair $q,q'\in Q$ of zero-testing control states and
+    $c\in\setfromto {-C} C$:
+    \begin{align} \label{eq:mach}
+    % \setof{(n,n')}
+    {q(n) \stepp 0 {q}'(n+c)} \text{ in } \mach \ \iff \ 
+    % \setof{(n,n')}
+    {q[r](n)\auxstep^* q'[r'](n+c) \text{ in } \mach'},
+    \end{align}
+    where $r$ and $r'$ are the remainders of $n$ and $n+c$ modulo $N$, 
+    respectively, and $\auxstep^*$ denotes the subset of the reachability 
+    relation $\step^*$ of $\mach'$ where all the intermediate states are 
+    auxiliary.
+    Intuitively, $\mach'$ realizes the non-iterated relation $\stepp 0$ 
+    of $\mach$ by starting and ending in non-auxiliary states, 
+    while all the intermediate states are auxiliary.
+    
+    \para{Transitions of $\mach'$}
+
+    In control state $q[r]$, the 1-\cm $\mach'$ non-deterministically 
+    chooses a number $c\in\setfromto{-C} C$, and a next zero-testing state 
+    $q'\in Q$ such that
+    the current counter value $n$ belongs to the set 
+    $X^c_{q,q'}$ \eqref{eq:per2}.
+    Then it  
+    increments the counter by $c$ and goes to the next state $q'[r']$, 
+    where $r'$  is the remainder of $r+c$ (or of $n+c$, equivalently) 
+    modulo $N$.
+    As the remainder of $n$ modulo $N^c_{q,q'}$ is fixed and determined by 
+    $r$,
+    checking membership $n\in X^c_{q,q'}$ reduces to checking
+    if $n\geq M^c_{q,q'}$
+    (doable by decrementing the counter by $M^c_{q,q'}$, and then 
+    incrementing it by $M^c_{q,q'}$ back)
+    or checking if $n=m$ for some $m<M^c_{q,q'}$
+   (doable similarly, by decrementing the counter by $m$, a zero-test, 
+   and incrementing the counter by $m$ back).
+   Auxiliary states are used as intermediate states to perform the above 
+   steps.
+  The construction assures the equivalence \eqref{eq:mach}, which implies
+  that for every pair $q,q'\in Q$ of zero-testing control states, 
+    $c\in\setfromto {-C} C$, and $n,n'\in\N$ we have:    
+    \begin{align} \label{eq:mach2}
+    {q(n) \stepp {0}^* {q}'(n')} \text{ in } \mach \ \iff \ 
+    {q[r](n)\step^* q'[r'](n') \text{ in } \mach'},
+    \end{align}
+    where $r$ and $r'$ are the remainders of $n$ and $n'$ modulo $N$,
+    respectively, and $\step^*$ is the full reachability relation of $\mach'$.
+    The construction of $\mach'$ is effective.
+    %  and its size is doubly exponential in $\mysize \mach$.
+    
+    \para{Effective semilinearity of $\stepp 0^*$}
+    Now, \Cref{lem:0star} follows by Parikh's Theorem 
+    \cite{Parikh66,EGKL11}, 
+    since 1-\cm{s} are a special case of pushdown automata.
+    In order to apply Parikh's Theorem,
+    we will extend the 1-\cm $\mach'$ to a \emph{labelled} 1-\cm, where
+    every transition is labelled with a symbol from the alphabet $\{a,b\}$,
+    or with $\varepsilon$.
+    % Fix a pair $q,q'\in Q'$ of states where the stored remainder is 0.
+    % \mei{Why do we single out remainder 0 here? I don't understand
+    % how this sentence connects to the rest of the description.}
+    Fix a pair of zero-testing states $q,q'\in Q$,
+    take all the transitions of 
+    $\mach'$ as unlabelled (labelled with $\varepsilon$), 
+    add $N$ extra states $p[0] \ldots p[N-1]$ forming 
+    an $a$-labelled cycle of transitions incrementing the counter by
+    $1$:
+    \[
+    (p[i], \updinstr{1}, p[i+1 \!\! \mod N]) \qquad \text{for all } 
+    i\in\setfromto 0 {N-1}
+    \] 
+    (which assures storing the remainder modulo $N$ in states), 
+    add another $N$ extra states $p'[N-1] \ldots p'[0]$ forming 
+    a $b$-labelled cycle of transitions decrementing the counter by 1:
+    \[
+    (p'[i], \updinstr{-1}, p[i-1 \!\! \mod N]) \qquad \text{for all } 
+    i\in\setfromto 0 {N-1},
+    \]
+    and finally add 0-update transitions from
+    $p[i]$ to $q[i]$, and from $q'[i]$ to $p'[i]$:
+    \[
+    (p[i], \updinstr{0}, q[i]), 
+    \quad 
+    (q'[i], \updinstr{0}, p'[i]) \qquad \text{for all } 
+    i\in\setfromto 0 {N-1}.
+    \]
+    The language $L_{q,q'}$     of so extended labelled 1-\cm
+    with initial configuration $p[0](0)$ and final configuration $p'[0](0)$,
+    corresponds to the reachability relation of $\mach'$ from $q$
+    to $q'$, namely $a^n b^{n'}\in L_{q,q'}$ if and only if
+    $q[r](n) \step^* q'[r'](n')$ in $\mach'$, where
+    $r$ and $r'$ are the remainders of $n$ and $n'$ modulo $N$, respectively.
+    By \eqref{eq:mach2}, this is equivalent to
+    $q(n) \stepp {0}^* q'(n')$ in $\mach$.
+    As Parikh image of $L_{q,q'}$ is effectively semilinear 
+    due to Parikh's Theorem, the lemma follows. 
+    % \end{proof}
