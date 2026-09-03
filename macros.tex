@@ -9,8 +9,10 @@
 \newcommand{\minf}[1]{\textsc{min}(#1)}
 \newcommand{\setto}[1]{\{1\ldots #1\}}
 \newcommand{\setfromto}[2]{\{#1\ldots #2\}}
-\newcommand{\updinstr}[1]{\textbf{update}(#1)}
-\newcommand{\ztinstr}[1]{\textbf{zero-test}(#1)}
+\newcommand{\xupdinstr}{\textbf{update}}
+\newcommand{\xztinstr}{\textbf{zero-test}}
+\newcommand{\updinstr}[1]{\xupdinstr(#1)}
+\newcommand{\ztinstr}[1]{\xztinstr(#1)}
 \newcommand{\mach}{\mathcal{M}}
 \newcommand{\Instr}{\mathcal{I}}
 \newcommand{\powset}[1]{\mathcal{P}(#1)}
@@ -30,7 +32,7 @@
 \newcommand{\donevasr}{1-\text{\sc dvasr}\xspace}
 \newcommand{\donepn}{1-\text{\sc dpn}\xspace}
 
-\newcommand{\cycg}[1]{\textsc{Z}_{#1}}
+\newcommand{\cycg}[1]{\mathbb{Z}_{#1}}
 \newcommand{\symg}[1]{\textsc{S}_{#1}}
 \newcommand{\sym}{\text{Sym}\xspace}
 

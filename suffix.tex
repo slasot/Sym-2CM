@@ -427,8 +427,108 @@ as required.
 
 \section{Undecidability proof} \label{sec:undecid}
 
-In this section we prove \Cref{thm:undecid}
-\sla{TODO}
+We now turn to $\cycg 3$-counter machines, and prove that their reachability
+problem is undecidable, in contrast with symmetric 2-\cm{s}.
+We proceed by reducing from the reachability problem of general 2-\cm{s},
+which was famously shown to be undecidable by Minsky \cite{Minsky67}.
+Our reduction readily generalizes to a reduction from general $(n-1)$-\cm{s}
+to $\cycg{n}$-\cm{s}, showing that $\cycg{n}$-\cm{s} have an undecidable
+reachability problem for $n \geq 3$. For concreteness, however, we focus
+on the case where $n = 3$.
+
+\begin{proof}[Proof of \Cref{thm:undecid}]
+Recall that a $\cycg 3$-\cm is a 3-\cm satisfying the condition that,
+for any transition labeled by $\updinstr{x,y,z}$, the transitions
+$\updinstr{y,z,x}$ and $\updinstr{z,x,y}$ are also present
+between the same pair of states. Note however, that the $\cycg 3$-\cm
+we construct here also satisfies a stronger condition, where the $\xztinstr$
+transitions are required to be symmetric as well, effectively testing
+that an \emph{unspecified} counter is zero. We write this as
+$\ztinstr{\ast}$.
+
+For any 2-\cm $\mach = (Q, T)$, we shall construct a $\cycg 3$-\cm
+$\mach' = (Q', T')$ that simulates it,
+where $Q'$ is of a copy of $Q$ with auxiliary states adjoined.
+
+For a configuration $q(a, b)$ of $\mach$, the corresponding configuration
+of $\mach'$ shall have the form $q(3a+2, 3b+2, 0)$,
+with two \emph{main counters} keeping track of the values
+of the counters of $\mach$,
+and one \emph{auxiliary counter}, which is almost always kept at 0.
+Thanks to the presence of the auxiliary counter,
+we will be able to ``anchor'' each transition as it executes,
+in such a way that any run making use of an unwanted cyclic rotation
+of a transition
+will get rapidly cut short by a failing zero-test.
+
+To simulate a transition of the form $(q, \updinstr{x, y}, q') \in T$,
+we perform the following steps:
+\[ \begin{split}
+    q&(3a + 2, && 3b + 2, && 0)
+    \xstep{\updinstr{3x - 1, 3y - 1, 0}} \\
+    &(3(a + x) + 1, && 3(b + y) + 1, && 0)
+    \xstep{\ztinstr{\ast}} \\
+    &(3(a + x) + 1, && 3(b + y) + 1, && 0)
+    \xstep{\updinstr{1, 1, 0}} \\
+    &(3(a + x) + 2, && 3(b + y) + 2, && 0)
+    \xstep{\ztinstr{\ast}} \\
+    q'&(3(a + x) + 2, && 3(b + y) + 2, && 0),
+\end{split} \]
+as well as their cyclic rotations.
+Clearly, this forms a run reflecting the intended semantics of the transition,
+so it now remains to see that the cyclic shifts of the above instructions,
+which we must also include within $T'$, do not cause any issues.
+
+Let us first consider the $\updinstr{3x-1, 3y-1, 0}$ instruction above.
+As only one of the deltas is zero, executing any cyclic rotation will
+disturb the auxiliary counter, making it non-zero.
+Moreover, because the main counters have a remainder of $2 \bmod 3$
+before the transition, no cyclic rotation of the update instruction
+can make them zero, as only deltas with remainders 2 and 0 are
+present within the update instruction.
+Hence, should any cyclic rotation of the first update instruction execute,
+the zero-test that follows will fail.
+
+The reasoning for the $\updinstr{1, 1, 0}$ instruction is similar:
+any cyclic rotation will increase the auxiliary counter to 1,
+and neither of the main counters may decrease to 0,
+as all the deltas are non-negative.
+
+It remains to translate the zero-test transitions.
+For concreteness, let us focus on the case where the first counter
+is being zero-tested;
+a zero-test of the second counter is handled analogously.
+
+To simulate a transition $(q, \ztinstr{1}, q') \in T$ of $\mach$,
+$\mach'$ performs the following steps:
+\[ \begin{split}
+    q&(3a + 2, && 3b + 2, && 0)
+    \xstep{\updinstr{-2, -1, +2}} \\
+    &(3a, && 3b + 1, && 2)
+    \xstep{\ztinstr{\ast}} \\
+    &(0, && 3b + 1, && 2)
+    \xstep{\updinstr{+2, +1, -2}} \\
+    &(2, && 3b + 2, && 0)
+    \xstep{\ztinstr{\ast}} \\
+    q'&(2, && 3b + 2, && 0).
+\end{split} \]
+As the instruction $\updinstr{-2, -1, +2}$ has only one non-negative delta,
+any other of its rotations will attempt to make the auxiliary counter negative,
+and thus will not be able to execute. Then, the first $\ztinstr{\ast}$
+is performed. As the counters have remainders $(0, 1, 2) \bmod 3$ respectively,
+this zero-test will only succeed when $3a = 0$, exactly as required
+to simulate a $\ztinstr{1}$ instruction.
+
+To finish simulating the zero-test, $\updinstr{+2, +1, -2}$ undoes
+the modifications of the counters. As we now know that the first counter is
+zero, and all deltas of the update instruction are non-zero, we can infer that
+no rotation can leave the first counter at zero. Moreover, the second counter
+has remainder $1 \bmod 3$, therefore the sole negative delta of $-2$ cannot
+make that counter be zero either. Thus, for the final zero-test to pass,
+it is the auxiliary counter that must become zero, and this can only happen
+if the $-2$ is appropriately aligned, which rules out all rotations other than
+the intended one.
+\end{proof}
 
 
 \section{Complexity bound} \label{sec:complexity}
