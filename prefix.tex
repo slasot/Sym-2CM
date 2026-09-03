@@ -16,7 +16,7 @@
 % of counters. 
 % We leave the status for symmetric 3-counter machines open, but
 % identify a bound on the impact of symmetry by proving
-% undecidabilty for 3-counter machines invariant under the
+% undecidability for 3-counter machines invariant under the
 % cyclic permutation group.
 % %\end{abstract}
 
@@ -235,8 +235,6 @@ the former being \pspace-hard while the latter \np-complete,
 thus proving that symmetric 2-\cm{s} are not (easily) simulated
 by 1-\cm{s}.
 
-% (Symmetric) 2-counter machines are an extesion of (symmetric) 2-\vass by 
-% zero-tests.
 Restricting the use of zero-tests in 2-counter machines often
 leads not only to decidability, but even 
 to \pspace-completeness of the reachability problem.
@@ -676,7 +674,7 @@ It thus remains to demonstrate the two key lemmas.
 %Notationally, we allows ourselves to compose a relation $R\subseteq (Q\times\N)^2$ 
 %with a set $X\subseteq Q\times\N$ to denote the set inverse image $R\circ X\subseteq Q\times\N$, 
 %or the image $X\circ R \subseteq Q\times\N$.
-%% Let $I_s = \{(s,s)\}$ be the relation containg exactly one pair, where $s$ is the source configuration.
+%% Let $I_s = \{(s,s)\}$ be the relation containing exactly one pair, where $s$ is the source configuration.
 %% Likewise, let $I_t = \{(t,t)\}$.
 %We will be able to decide if $s\step^* t$, given source and target configurations $s,t\in Q\times\N$,
 %as long as we prove the two following fact: one can (backward) compute the inverse image
@@ -805,7 +803,7 @@ of $D$-\saturated sets $X\subseteq Q\times\N$, since we have:
 The sequence $\minf {X_1}, \minf{X_2}, \ldots$ is a non-increasing
 chain of functions, ordered pointwise 
 (assuming $n<\infty$ for $n\in\N$), 
-and hence necessarily stabilises due to well-foundedness
+and hence necessarily stabilizes due to well-foundedness
 of the function space $Q\times \setfromto 0 {N-1} \to \N \cup \{\infty\}$.
 \end{proof}
 
@@ -1063,12 +1061,12 @@ f(S) \ = \ S \
 \]
 Similarly as before, knowing that $\stepp +$ is target pumpable, we know
 that all $X_i$ are $D$-\saturated sets, and therefore the sequence 
-$X_0, X_1, \ldots$ stabilises, and hence
+$X_0, X_1, \ldots$ stabilizes, and hence
 \[
 \{s\} \circ  \Phi_1 \ = \ 
  \{s\} \ \cup \  X_j
 \]
-for some $j$, simiarly as before.
+for some $j$, similarly as before.
 The only missing ingredient is computability of the iteration
 $X_i \mapsto X_{i+1}$.
 However, in order to apply the previously shown computability of 
