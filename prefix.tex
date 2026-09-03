@@ -192,8 +192,8 @@ as the lower bound we only know
 \pspace-hardness inherited from symmetric 2-\vass, if updates are
 encoded in binary \cite{KL25}.
 It is possible that the reachability problem is \pspace-complete
-in symmetric $d$-\cm{s} for every $d\leq 2$.
-\mei{I'm 90\% sure that this should be $d \geq 2$.}
+in symmetric $d$-\cm{s} for every $d\geq 2$.
+% \mei{I'm 90\% sure that this should be $d \geq 2$.}
 
 Symmetric \cm{s} where the only update instructions are increments 
 or decrements of a single counter, constitute a syntactic fragment of our 
@@ -306,14 +306,14 @@ $\mach = (Q,T)$, where $Q$ is a finite set of control states,
 $T\subseteqfin Q\times\Instr\times Q$ is a finite set of 
 \emph{transitions} of $\mach$,
 and the set $\Instr$ of \emph{instructions} is the union of
-update instructions and zero-testing instructions:
+update instructions and zero-test instructions:
 \[
 \Instr \ = \ \setof{\updinstr{w}}{w\in\Z^d} \ \cup \ 
-\setof{\ztinstr{i}}{i\in d}.
+\setof{\ztinstr{i}}{i\in \setto d}.
 \]
-\mei{it is ambiguous here whether $i \in d$ is supposed to mean
-$\{0, ..., d-1\}$ or $\{1, ..., d\}$. We use the more explicit notation
-below, maybe we should do so here as well?}
+% \mei{it is ambiguous here whether $i \in d$ is supposed to mean
+% $\{0, ..., d-1\}$ or $\{1, ..., d\}$. We use the more explicit notation
+% below, maybe we should do so here as well?}
 Execution of $\updinstr{w}$ amounts to adding
 the vector
 $w$ to the counters, and execution of 
@@ -342,9 +342,9 @@ and hence also on update transitions:
 for $\sigma\in \symg d$ and $t=(q,\updinstr w,q')\in T$, we define
 $\sigma(t)=(q,\updinstr{\sigma(w)},q')$, where $\sigma(w)(\sigma(i))=w(i)$
 for every $i\in\setto d$.
-A $d$-\cm $\mach$ is \emph{symmetric} if its update transitions
-are invariant under the natural action: for every $\sigma\in \symg d$ 
-and update transition $t\in T$, we have $\sigma(t)\in T$.
+A $d$-\cm $\mach$ is \emph{symmetric} if its set of update transitions
+is invariant under the natural action: for every $\sigma\in \symg d$ 
+and $(q,\updinstr w,q')\in T$, we have $(q,\updinstr {\sigma (w)},q')\in T$.
 Importantly, 
 we note that no restriction is imposed on zero-test transitions of $\mach$.
 % We assume, \mywlog, that every zero-test applies to a single counter.
@@ -361,13 +361,14 @@ of its configurations, source $c$ and target $c'$, whether $c \step^* c'$
 (in which case we say that $c'$ is \emph{reachable} from $c$).
 A reachability certificate, namely any sequence $\rho$ of configurations
 \[
-c \ = \ c_0 \step c_1 \step \ldots \step c_n \ = \ c'
+c_0 \step c_1 \step \ldots \step c_n
 \]
-\mei{The kerning here suggests the bracketing
-$c = (c_0 \step \cdots) = c'$, which becomes obviously wrong only once
-you try to actually parse the equation.
-Since the additional spacing was put in explicitly, I'd like to know
-why before fixing this.}
+with $c=c_0$ and $c'=c_n$,
+% \mei{The kerning here suggests the bracketing
+% $c = (c_0 \step \cdots) = c'$, which becomes obviously wrong only once
+% you try to actually parse the equation.
+% Since the additional spacing was put in explicitly, I'd like to know
+% why before fixing this.}
 related by the step relation,
 we call a \emph{run} from configuration $c$ to $c'$.
 
@@ -500,7 +501,9 @@ for $s,t\in Q\times\N$,
 that is whether a given pair $(s,t)$ belongs to the reflexive-transitive
 closure of $\reachrel$.
 
-\begin{figure}
+\medskip
+
+\begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{figures-1.eps}
 \caption{The three relations $\stepp +$, $\stepp -$, and $\stepp 0$.
@@ -509,6 +512,7 @@ but rather the initial and final values $a$ and $a'$ of a segment.}
 \label{fig:areas}
 \end{figure}
 
+\vspace{-2mm}
 
 \para{Three types of segments}
 As we will see in \Cref{sec:targetpump}, the relation $\reachrel$
@@ -772,11 +776,11 @@ are ultimately periodic, and hence semilinear.
 An $N$-\saturated set $X$ is representable by a function 
 $\minf X : Q\times \setfromto 0 {N-1} \to \N \cup \{\infty\}$ 
 that maps a state $q\in Q$ and $r<N$ to the least number $n$ 
-whose remainder modulo $N$ equals $r$ and  $(q,n)\in X$ 
-(and to $\infty$ if there is no such number):
+whose remainder modulo $N$ equals $r$ and  $(q,n)\in X$,
 \[
-\minf X (q,r) \ = \ \min\{n : (q,n) \in X, \ \ n \equiv r\!\!\mod N\}.
+\minf X (q,r) \ = \ \min\{n : (q,n) \in X, \ \ n \equiv r\!\!\mod N\},
 \]
+and to $\infty$ if there is no such number $n$.
 We call $N$ a \emph{period} of $X$, and the numbers 
 $\setof{\minf X(q,r)}{\minf X(q,r)\in\N}$  its \emph{bases}.
 % 

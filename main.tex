@@ -67,30 +67,21 @@
 
 \Copyright{Clotilde~Biziere, Wojciech~Czerwi{\'n}ski, Roland~Guttenberg, {\L}ukasz~Kami{\'n}ski, S{\l}awomir~Lasota, {\L}ukasz~Orlikowski, Vaios~Michalakis} %TODO mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
 
-%\ccsdesc[100]{\textcolor{red}{Replace ccsdesc macro with valid one}} %TODO mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm
+%\ccsdesc[100]{\textcolor{red}{Replace ccsdesc macro with valid one}} 
+%TODO mandatory: Please choose ACM 2012 classifications from 
+% https://dl.acm.org/ccs/ccs_flat.cfm
 \begin{CCSXML}
 <ccs2012>
 <concept>
-<concept_id>10003752.10003766.10003770</concept_id>
-<concept_desc>Theory of computation~Automata over infinite objects</concept_desc>
-<concept_significance>500</concept_significance>
-</concept>
-<concept>
-<concept_id>10003752.10003766.10003773.10003775</concept_id>
-<concept_desc>Theory of computation~Quantitative automata</concept_desc>
-<concept_significance>500</concept_significance>
-</concept>
-<concept>
-<concept_id>10003752.10003790.10002990</concept_id>
-<concept_desc>Theory of computation~Logic and verification</concept_desc>
+<concept_id>10003752.10003753.10003754</concept_id>
+<concept_desc>Theory of computation~Computability</concept_desc>
 <concept_significance>500</concept_significance>
 </concept>
 </ccs2012>
 \end{CCSXML}
 
-\ccsdesc[500]{Theory of computation~Automata over infinite objects}
-\ccsdesc[500]{Theory of computation~Quantitative automata}
-\ccsdesc[500]{Theory of computation~Logic and verification}
+\ccsdesc[500]{Theory of computation~Computability}
+
 
 \keywords{Counter machines, vector addition systems, halting problem, reachability problem} %TODO mandatory; please add comma-separated list of keywords
 
@@ -123,24 +114,24 @@
 Counter machines are a particularly simple, Turing-complete
 model of computation.
 We study the expressive power of nondeterministic
-2-counter machines which are symmetric, in that their
-transitions are closed under swapping of counters.
-    \mei{This used to say "invariant" under swapping of counters.
-    But to me that feels incorrect --- it sounds like each \emph{particular} transition 
-    would need to be unchanged by the permutation (effectively, the delta at
-    each counter would need to be equal).
-    If someone feels strongly about the wording, we could also
-    go for "their \emph{set of} transitions is invariant".}
+2-counter machines which are symmetric, in that their set of
+transitions is invariant under swapping of counters.
+    % \mei{This used to say "invariant" under swapping of counters.
+    % But to me that feels incorrect --- it sounds like each \emph{particular} transition 
+    % would need to be unchanged by the permutation (effectively, the delta at
+    % each counter would need to be equal).
+    % If someone feels strongly about the wording, we could also
+    % go for "their \emph{set of} transitions is invariant".}
 As the main result we demonstrate a dramatic impact of symmetry:
-we prove that symmetric 2-counter machines
+we show that symmetric 2-counter machines
 are not Turing-complete, by proving decidability of their 
 reachability problem.
 %Our approach builds on specific properties of 2-counter
 %machines, and does not extend to 3 or more counters.
 We conjecture that the decidability extends to 
 machines with 3 or more counters that are symmetric, 
-\ie whose transitions are
-closed under any permutation of counters. 
+\ie whose set of transitions is
+invariant under any permutation of counters. 
 We leave this problem open for machines with 3 and more counters,
 while identifying an upper bound on the impact of symmetry:
 we prove
