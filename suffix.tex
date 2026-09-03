@@ -160,8 +160,12 @@ transition matches the target state of the last one.
 Note that we do not claim any bound the number $n_j$ of iterations of every 
 cycle $c_j$ in $\widetilde\sigma$.
 Let $C_0$ be the minimal value such that every cycle of $\V$
-of length at most $e$ is fireable at $(C_0, C_0)$.
+of length at most $e$ is \emph{fireable} at $\vr v_0=(C_0, C_0)$, namely
+for every cycle $c$ of length at most $e$, where $q$ is the source/target 
+state of $c$, the sequence $c$ of transitions yields a run
+$q(\vr v_0) \step^* q(\vr v)$ for some $\vr v\in \N^2$.
 \mei{Nitpick: we don't define "fireable" anywhere, do we consider that fine?}
+\sla{added a definition of fireable}
 
 We now classify the cycles as follows: call a cycle $c_j$ \emph{major}
 if its number of iterations $n_j$ is larger than $2 C_0$, and \emph{minor} otherwise.

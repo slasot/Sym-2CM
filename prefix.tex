@@ -320,7 +320,7 @@ $w$ to the counters, and execution of
 $\ztinstr{i}$ amounts to checking that counter $i$
 has value 0.
 Formally, we define the semantics of $\mach$ by considering
-its \emph{configurations} $c=(q,v) \in Q\times \N^d$, written $q(v)$, and
+its \emph{configurations} $(q,v) \in Q\times \N^d$, written $q(v)$, and
 the step relation between configurations determined by 
 transitions of $\mach$:
 $q(v) \step q'(v')$ if 
@@ -357,20 +357,22 @@ swap of counters.
 The reflexive-transitive closure $\step^*$ of $\step$ we call
 the \emph{reachability relation} (between configurations).
 The \emph{reachability problem} asks, given a \cm $\mach$ and two
-of its configurations, source $c$ and target $c'$, whether $c \step^* c'$
-(in which case we say that $c'$ is \emph{reachable} from $c$).
+of its configurations, source $s\in Q\times\N^2$ and target $t\in Q\times\N^2$, 
+whether 
+$s \step^* t$
+(in which case we say that $t$ is \emph{reachable} from $s$).
 A reachability certificate, namely any sequence $\rho$ of configurations
 \[
-c_0 \step c_1 \step \ldots \step c_n
+q_0(\vr v_0) \step q_1(\vr v_1) \step \ldots \step q_n(\vr v_n)
 \]
-with $c=c_0$ and $c'=c_n$,
+with $s = q_0(\vr v_0)$ and $t = q_n(\vr v_n)$,
 % \mei{The kerning here suggests the bracketing
 % $c = (c_0 \step \cdots) = c'$, which becomes obviously wrong only once
 % you try to actually parse the equation.
 % Since the additional spacing was put in explicitly, I'd like to know
 % why before fixing this.}
 related by the step relation,
-we call a \emph{run} from configuration $c$ to $c'$.
+we call a \emph{run} from configuration $s$ to $t$.
 
 % A 2-\vass $\V$ is symmetric if whenever it has a transition
 % $q \xstep{(x_1,x_2)} q'$
@@ -832,7 +834,7 @@ $\stepp 0, \ \stepp -, \ \stepp +$ are also effectively semilinear.
     Parikh's theorem.
 
     \medskip
-
+\sla{to be improved}
     We start by constructing a 1-\cm for the non-iterated  
     relation $\stepp 0$; namely, 
     for a fixed pair $q,q'\in Q$ of zero-testing control states, 
