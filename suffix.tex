@@ -314,10 +314,11 @@ $k_{i+1}>k_i$ so that
 $c_{k_{i+1}}$ is the first sum-increasing cycle steeper than
 $c_{k_i}$. Moreover, let $S_i \leq C_1$ be the sum of norms
 of all the transitions on one-off paths 
-(and minor cycles) which occurred up to $c_i$.
+(and minor cycles) which occurred before $c_i$.
 In particular, let $S_{\ell+1}\leq C_1$ 
 be the sum of norms of \emph{all} transitions along 
-the run one-off paths (and minor cycles). 
+the run one-off paths (and minor cycles),
+including $t_\ell$.
 \sla{added $S_{\ell+1}$}
 Furthermore, let $(X_i, Y_i)$ be the counter values after $c_i^{n_i}$. 
 Finally, denote by $\beta_i$ the steepness of
@@ -453,7 +454,7 @@ as required.
 \end{proof}
 
 
-\section{Undecidability proof} \label{sec:undecid}
+\section{Undecidability for $\cycg 3$-\cm{s}} \label{sec:undecid}
 
 We now turn to $\cycg 3$-counter machines, and prove that their reachability
 problem is undecidable, in contrast with symmetric 2-\cm{s}.

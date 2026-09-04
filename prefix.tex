@@ -273,7 +273,7 @@ becomes decidable under the reversibility restriction.
 
 \para{Outline} 
 Once we define the model in \Cref{sec:model}, the subsequent
-\Cref{sec:outline,sec:sl,sec:targetpump} are devoted to the proof of
+\Cref{sec:outline,sec:sl,sec:sl2,sec:targetpump} are devoted to the proof of
 \Cref{thm:main}.
 We proceed in a top-down manner, by consecutive reductions to more and
 more basic properties. 
@@ -281,13 +281,13 @@ In \Cref{sec:outline} we provide the proof of \Cref{thm:main},
 building on effective
 semilinearity of certain reachability sets and relations in a
 symmetric 2-\cm.
-Then in \Cref{sec:sl,sec:sl2} we prove the effective semilinearity,
+Then, in \Cref{sec:sl,sec:sl2}, we prove the effective semilinearity,
 building on the central property of target (resp.~source) pumping
 in symmetric 2-\vass, that is subsequently shown in \Cref{sec:targetpump}.
 Technically, \Cref{sec:targetpump} is probably the most intricate part 
 of the paper, and the only one exploiting the symmetry of 2-\cm{s}.
 Finally, \Cref{sec:undecid} contains the proof of \Cref{thm:undecid},
-and the last \Cref{sec:complexity} discusses upper complexity bound.
+and the last \Cref{sec:complexity} discusses the upper complexity bound.
 
 
 \section{Symmetric counter machines} \label{sec:model}
@@ -371,7 +371,7 @@ with $s = q_0(\vr v_0)$ and $t = q_n(\vr v_n)$,
 % Since the additional spacing was put in explicitly, I'd like to know
 % why before fixing this.}
 related by the step relation,
-we call a \emph{run} from configuration $s$ to $t$.
+is said to be a \emph{run} from configuration $s$ to $t$.
 
 % A 2-\vass $\V$ is symmetric if whenever it has a transition
 % $q \xstep{(x_1,x_2)} q'$
@@ -399,7 +399,7 @@ we call a \emph{run} from configuration $s$ to $t$.
 Consider a given symmetric 2-\cm $\mach = (Q,T)$ and 
 two configurations, source $s$ and target $t$  ($s,t \in Q\times\N^2$).
 
-\para{Decomposition of run into segments}
+\para{Decomposing a run into segments}
 For convenience, we perform on $\mach$ the following notational
 preprocessing:
 we replace every zero-test transition
@@ -691,7 +691,7 @@ It thus remains to demonstrate the two key lemmas.
 
 
 
-\section{Effective semilinearity: Proof of \Cref{lem:compbackfor}} \label{sec:sl}
+\section{Effective semilinearity for $\Phi_1$ and $\Phi_3$: Proof of \Cref{lem:compbackfor}} \label{sec:sl}
 
 For complexity considerations,
 we denote by $\mysize \mach$ the size of unary representation of $\mach$,
@@ -732,13 +732,15 @@ Moreover, $C$ is polynomial in $\mysize \V$ and $D$ is exponential in $\mysize \
 
 \begin{remark}
 It is worth noting that the proof of \Cref{lem:targetpump},
-to be given in \Cref{sec:targetpump}, is that part of
+to be given in \Cref{sec:targetpump}, is the part of
 our development that unavoidably relies on symmetry.
 \Cref{lem:targetpump} fails for non-symmetric 2-\vass,
 for instance point $\punkt 1 2$ fails 
 for a 2-\vass with one state $q$ and one transition $(q,(-1,2),q)$.
-\Cref{lem:targetpump} is a cornerstone of the proof
-of \Cref{lem:compbackfor}.
+% \Cref{lem:targetpump} is a cornerstone of the proof
+% of \Cref{lem:compbackfor}.
+% \mei{We already said this just above the statement
+% of the lemma, let's not repeat ourselves}
 \end{remark}
 
 We apply \Cref{lem:targetpump} to the underlying 
@@ -978,54 +980,64 @@ of $f(S)$, and thus also the proof of the second part of the lemma.
 \end{proof}
 
 
-\section{Effective semilinearity: Proof of \Cref{lem:0star}} \label{sec:sl2}
+\section{Effective semilinearity for $\stepp{0}^*$: Proof of \Cref{lem:0star}} \label{sec:sl2}
 
 % \begin{proof}[Proof of \Cref{lem:0star}]
     In outline,
     we prove that $\Phi_2 = \ \stepp{0}^*$ is essentially the reachability
-    relation of an effectively constructible 1-\cm $\mach'$, and apply
+    relation of an effectively constructible 1-\cm $\mach'$, to which we apply
     Parikh's theorem.
 
     \medskip
 
-    For any pair of zero-testing control states $q,q'\in Q$ and 
+    The key observation which makes the construction of $\mach'$ possible,
+    is that the relation $\stepp 0$ is \emph{essentially} one-dimensional:
+    for any pair of zero-testing control states $q,q'\in Q$ and
     $c\in\setfromto{-C} C$, consider
     the set of pairs of initial and final counter values $(n,n')$ such that
     $n'=n+c$ and $q(n)\stepp 0 q'(n')$.
-    As $c$ is fixed, we can conveniently consider the set of initial counter 
-    values only:
+    We may describe this set in one dimension, defining
     \begin{align}\label{eq:per2}
-     X^c_{q,q'} \ = \ \setof{n}{q(n)\stepp 0 q'(n-c)}.
+     X^c_{q,q'} \ = \ \setof{n}{q(n)\stepp 0 q'(n+c)}.
     \end{align}
-    The set  effectively semilinear,
+    \mei{I flipped the sign in the above definition,
+    please check that $q'(n+c)$ is indeed what it should be
+    (rather than the $q'(n-c)$ that was there before).}
+    Since the values of $n$ and $c$ together determine $n'$,
+    the finite collection of sets $X^c_{q,q'}$ fully describes
+    the $\stepp 0$ relation.
+
+    Moreover, each set $X^c_{q,q'}$ is effectively semilinear,
     being the intersection of the effectively semilinear relation $\stepp 0$ 
     with the semilinear set $\setof{\bigl(q(n),q'(n')\bigr)}{n'=n+c}$,
-    and hence $X^c_{q,q'}$ is
-    ultimately periodic with effectively computable 
+    projected down to one dimension.
+    Hence, each $X^c_{q,q'}$ is
+    ultimately periodic, with an effectively computable 
     period $N^c_{q,q'}$ and threshold $M^c_{q,q'}$.
-    Let $N$ be the least common multiple of all the periods $N^c_{q,q'}$.
+
+    Define $N$ as the least common multiple of all the periods $N^c_{q,q'}$,
+    across all choices of $c$, $q$ and $q'$.
 
     \para{Control states of $\mach'$}
-    
     % We start by constructing a 1-\cm $\mach'$ for the non-iterated  
     % relation $\stepp 0$.
     Except for auxiliary states, to be clear from the construction below,
     the control states $Q'$ of $\mach'$ are the control states of $\mach$ 
     enriched with a number representing the remainder modulo $N$ of the 
-    current counter value.
-    Thus
+    current counter value:
     \[
     Q' \ = \ Q \times \setfromto 0 {N-1} \ \cup \ \text{(auxiliary states)}.
     \]
     We write $q[r]$, instead of $(q,r)$, 
     for the control state of $\mach'$ corresponding 
     to $q\in Q$ and remainder $r<N$.
-    According to our construction, 
+    As an invariant of our construction, 
     counter values $n$ reachable in state $q[r]$ in $\mach'$ always satisfy 
     $n\equiv r \mod N$.
     % The initial control state of $\mach'$ is $q_0[0]$, where $q_0$ is the 
     % initial control state of $\mach$.
-    The construction of transitions of the 1-\cm $\mach'$, 
+
+    The construction, % of transitions of the 1-\cm $\mach'$, 
     to be detailed below, ensures
     the following correctness claim, 
     for every pair $q,q'\in Q$ of zero-testing control states and
@@ -1036,25 +1048,28 @@ of $f(S)$, and thus also the proof of the second part of the lemma.
     % \setof{(n,n')}
     {q[r](n)\auxstep^* q'[r'](n+c) \text{ in } \mach'},
     \end{align}
-    where $r$ and $r'$ are the remainders of $n$ and $n+c$ modulo $N$, 
-    respectively, and $\auxstep^*$ denotes the subset of the reachability 
-    relation $\step^*$ of $\mach'$ where all the intermediate states are 
+    where $r$ and $r'$ are the remainders of $n$ and $n+c$ modulo $N$,
+    respectively, and $\auxstep^*$ denotes the subset of the reachability
+    relation $\step^*$ of $\mach'$ where all the intermediate states are
     auxiliary.
-    Intuitively, $\mach'$ realizes the non-iterated relation $\stepp 0$ 
-    of $\mach$ by starting and ending in non-auxiliary states, 
-    while all the intermediate states are auxiliary.
+
+    In other words, when $\mach'$ is restricted to runs whose intermediate
+    states are all auxiliary,
+    it realizes the non-iterated relation $\stepp 0$ of $\mach$.
+    Once this restriction is lifted, $\mach'$ computes
+    the iterated $\stepp{0}^\ast$ relation.
     
     \para{Transitions of $\mach'$}
 
     In control state $q[r]$, the 1-\cm $\mach'$ non-deterministically 
     chooses a number $c\in\setfromto{-C} C$, and a next zero-testing state 
-    $q'\in Q$ such that
+    $q'\in Q$, such that
     the current counter value $n$ belongs to the set 
-    $X^c_{q,q'}$ \eqref{eq:per2}.
-    Then it  
-    increments the counter by $c$ and goes to the next state $q'[r']$, 
-    where $r'$  is the remainder of $r+c$ (or of $n+c$, equivalently) 
-    modulo $N$.
+    $X^c_{q,q'}$ as defined in \eqref{eq:per2}.
+    Then, it
+    increments the counter by $c$ and goes to the next state
+    $q'[r + c \bmod N]$.
+
     As the remainder of $n$ modulo $N^c_{q,q'}$ is fixed and determined by 
     $r$,
     checking membership $n\in X^c_{q,q'}$ reduces to checking
@@ -1066,31 +1081,43 @@ of $f(S)$, and thus also the proof of the second part of the lemma.
    and incrementing the counter by $m$ back).
    Auxiliary states are used as intermediate states to perform the above 
    steps.
-  The construction assures the equivalence \eqref{eq:mach}, which implies
-  that for every pair $q,q'\in Q$ of zero-testing control states, 
+
+  This construction assures the equivalence \eqref{eq:mach}. Considering
+  now the unrestricted reachability relation $\step^*$ of $\mach'$,
+  for every pair $q,q'\in Q$ of zero-testing control states, 
     $c\in\setfromto {-C} C$, and $n,n'\in\N$ we have:    
     \begin{align} \label{eq:mach2}
     {q(n) \stepp {0}^* {q}'(n')} \text{ in } \mach \ \iff \ 
     {q[r](n)\step^* q'[r'](n') \text{ in } \mach'},
     \end{align}
     where $r$ and $r'$ are the remainders of $n$ and $n'$ modulo $N$,
-    respectively, and $\step^*$ is the full reachability relation of $\mach'$.
+    respectively.
     The construction of $\mach'$ is effective.
     %  and its size is doubly exponential in $\mysize \mach$.
     
     \para{Effective semilinearity of $\stepp 0^*$}
-    Now, \Cref{lem:0star} follows by Parikh's Theorem 
-    \cite{Parikh66,EGKL11}, 
-    since 1-\cm{s} are a special case of pushdown automata.
-    In order to apply Parikh's Theorem,
-    we will extend the 1-\cm $\mach'$ to a \emph{labelled} 1-\cm, where
+    As 1-\cm{s} are a special case of pushdown automata,
+    we may now obtain \Cref{lem:0star} by Parikh's Theorem:
+    for each pair of zero-testing states $q, q' \in Q$,
+    we build a pushdown automata recognizing the language
+    \[
+        L_{q, q'} = \setof{ a^n b^{n'} }{ q(n) \stepp{0}^* q'(n') },
+    \]
+    or, equivalently,
+    \[
+        \setof{ a^n b^{n'} }{ q[n \bmod N](n) \step_{\mach'}^* q'[n' \bmod N](n') }.
+    \]
+    Applying Parikh's Theorem to this language, we get that
+    the relation $\stepp{0}^*$ is effectively semilinear
+    \cite{Parikh66,EGKL11}.
+
+    In order to construct the aforementioned pushdown automata,
+    we extend the 1-\cm $\mach'$ to a \emph{labelled} 1-\cm, where
     every transition is labelled with a symbol from the alphabet $\{a,b\}$,
     or with $\varepsilon$.
-    % Fix a pair $q,q'\in Q'$ of states where the stored remainder is 0.
-    % \mei{Why do we single out remainder 0 here? I don't understand
-    % how this sentence connects to the rest of the description.}
-    Fix a pair of zero-testing states $q,q'\in Q$,
-    take all the transitions of 
+    Fix a pair of zero-testing states $q,q'\in Q$ for which
+    $L_{q, q'}$ is to be recognized.
+    Take all the transitions of 
     $\mach'$ as unlabelled (labelled with $\varepsilon$), 
     add $N$ extra states $p[0] \ldots p[N-1]$ forming 
     an $a$-labelled cycle of transitions incrementing the counter by
@@ -1114,14 +1141,16 @@ of $f(S)$, and thus also the proof of the second part of the lemma.
     (q'[i], \updinstr{0}, p'[i]) \qquad \text{for all } 
     i\in\setfromto 0 {N-1}.
     \]
-    The language $L_{q,q'}$     of so extended labelled 1-\cm
-    with initial configuration $p[0](0)$ and final configuration $p'[0](0)$,
-    corresponds to the reachability relation of $\mach'$ from $q$
-    to $q'$, namely $a^n b^{n'}\in L_{q,q'}$ if and only if
-    $q[r](n) \step^* q'[r'](n')$ in $\mach'$, where
-    $r$ and $r'$ are the remainders of $n$ and $n'$ modulo $N$, respectively.
-    By \eqref{eq:mach2}, this is equivalent to
-    $q(n) \stepp {0}^* q'(n')$ in $\mach$.
-    As Parikh image of $L_{q,q'}$ is effectively semilinear 
-    due to Parikh's Theorem, the lemma follows. 
+    A labelled 1-\cm extended in this manner recognizes
+    the language $L_{q,q'}$ when considered
+    with initial configuration $p[0](0)$ and final configuration $p'[0](0)$.
+    By the previous discussion, the lemma follows by Parikh's theorem.
+    % corresponds to the reachability relation of $\mach'$ from $q$
+    % to $q'$, namely $a^n b^{n'}\in L_{q,q'}$ if and only if
+    % $q[r](n) \step^* q'[r'](n')$ in $\mach'$, where
+    % $r$ and $r'$ are the remainders of $n$ and $n'$ modulo $N$, respectively.
+    % By \eqref{eq:mach2}, this is equivalent to
+    % $q(n) \stepp {0}^* q'(n')$ in $\mach$.
+    % As Parikh image of $L_{q,q'}$ is effectively semilinear 
+    % due to Parikh's Theorem, the lemma follows. 
     % \end{proof}
