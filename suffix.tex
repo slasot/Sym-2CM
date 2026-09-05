@@ -115,9 +115,10 @@ literally the same argument
 works for point $\punkt 1 2$.
 \sla{swapped $\punkt 1 2$ with $\punkt 2 2$}
 The other two points, namely $\punkt 2 1$ and $\punkt 1 1$
-follow immediately, by swapping the coordinates, relying on the symmetry 
-assumption. \mei{I don't think the symmetry assumption is necessary
+follow immediately, by swapping the coordinates.
+\mei{I don't think the symmetry assumption is necessary
 for this particular step.}
+\sla{right, i've removed the symmetry assumption.}
 
 To ease the presentation, we introduce the following definitions:
 \begin{itemize}
@@ -567,7 +568,11 @@ if the $-2$ is appropriately aligned, which rules out all unwanted rotations.
 
 \section{Complexity bound} \label{sec:complexity}
 
-\sla{\bf this section is very sketchy; Lukasz, can you make it more precise?}
+\sla{\bf this section is very sketchy and containts a significant gap.
+After discussions with Lukasz, 
+it seems we can bound doubly-exponentially all the steps except for
+the exhaustive search at the end of the proof of \Cref{lem:compbackfor}...
+}
 
 We conclude with some remarks on complexity estimates for our decision
 procedure outlined in \Cref{sec:outline}, 

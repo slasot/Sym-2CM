@@ -691,7 +691,8 @@ It thus remains to demonstrate the two key lemmas.
 
 
 
-\section{Effective semilinearity for $\Phi_1$ and $\Phi_3$: Proof of \Cref{lem:compbackfor}} \label{sec:sl}
+\section{Effective semilinearity for $\Phi_1$ and $\Phi_3$: 
+Proof of \Cref{lem:compbackfor}} \label{sec:sl}
 
 For complexity considerations,
 we denote by $\mysize \mach$ the size of unary representation of $\mach$,
@@ -786,7 +787,7 @@ $\minf X : Q\times \setfromto 0 {N-1} \to \N \cup \{\infty\}$
 that maps a state $q\in Q$ and $r<N$ to the least number $n$ 
 whose remainder modulo $N$ equals $r$ and  $(q,n)\in X$,
 \[
-\minf X (q,r) \ = \ \min\{n : (q,n) \in X, \ \ n \equiv r\!\!\mod N\},
+\minf X (q,r) \ = \ \min\{n : (q,n) \in X, \ \ n \equiv r \bmod N\},
 \]
 and to $\infty$ if there is no such number $n$.
 We call $N$ a \emph{period} of $X$, and the numbers 
@@ -953,7 +954,7 @@ by applying the transformation \eqref{eq:back} to the set
 ,
 \end{align} 
 % where $M_r = r + D\cdot\N$ contains all numbers congruent to $r$ modulo $D$, 
-where $X_{q,r} = \setof{q(n)}{n\equiv r \!\!\mod D}$,
+where $X_{q,r} = \setof{q(n)}{n\equiv r \bmod D}$,
 and checking nonemptiness of intersection with 
 the set 
 \begin{align} \label{eq:set2}
@@ -963,24 +964,28 @@ Both the sets \eqref{eq:set1}, \eqref{eq:set2}
 are effectively semilinear due to 
 \Cref{lem:0-+,lem:0star}, and hence the set
 $\Phi_3 \ \circ \ \bigl(\stepp + \circ \ X_{q,r}\bigr)$,
-and its intersection with \eqref{eq:set2}, are
+and its intersection $Y_{q,r}$ with \eqref{eq:set2}, are
 computable.
 Then one finds the representation
-$\minf{f(S)}$ of $f(S)$ by performing,
-for every positively verified state-remainder pair $(q,r)$,
-an exhaustive search along the same lines as above:
-for consecutive $k=0, 1, \ldots$, 
+$\minf{f(S)}$ of $f(S)$ by an \emph{exhaustive search}.
+For every positively verified state-remainder pair $(q,r)$,
+namely one with $Y_{q,r}\neq\emptyset$, 
+one finds the least number $n$ such that
+$q(n)\in f(S)$ and $n\equiv r \bmod D$ by
+an exhaustive search:
+for consecutive candidates $k=0, 1, \ldots$, 
 apply the transformation \eqref{eq:back} to the set
 \[
 \bigl(\stepp + \circ \ \{q(r+k\cdot D)\}\bigr)
 \]
-and check nonemptiness of intersection with the set \eqref{eq:set2}.
-This concludes the proof of effective semilinearity and $D$-\saturation
-of $f(S)$, and thus also the proof of the second part of the lemma.
+and check nonemptiness of intersection with the set \eqref{eq:set2},
+until nonempty intersection is found.
+This concludes the proof of effective $D$-\saturation
+of $f(S)$, and thus also the proof of the second part of \Cref{lem:compbackfor}.
 \end{proof}
 
 
-\section{Effective semilinearity for $\stepp{0}^*$: Proof of \Cref{lem:0star}} \label{sec:sl2}
+\section{Effective semilinearity of $\stepp{0}^*$: Proof of \Cref{lem:0star}} \label{sec:sl2}
 
 % \begin{proof}[Proof of \Cref{lem:0star}]
     In outline,
@@ -1000,9 +1005,9 @@ of $f(S)$, and thus also the proof of the second part of the lemma.
     \begin{align}\label{eq:per2}
      X^c_{q,q'} \ = \ \setof{n}{q(n)\stepp 0 q'(n+c)}.
     \end{align}
-    \mei{I flipped the sign in the above definition,
-    please check that $q'(n+c)$ is indeed what it should be
-    (rather than the $q'(n-c)$ that was there before).}
+    % \mei{I flipped the sign in the above definition,
+    % please check that $q'(n+c)$ is indeed what it should be
+    % (rather than the $q'(n-c)$ that was there before).}
     Since the values of $n$ and $c$ together determine $n'$,
     the finite collection of sets $X^c_{q,q'}$ fully describes
     the $\stepp 0$ relation.
@@ -1033,7 +1038,7 @@ of $f(S)$, and thus also the proof of the second part of the lemma.
     to $q\in Q$ and remainder $r<N$.
     As an invariant of our construction, 
     counter values $n$ reachable in state $q[r]$ in $\mach'$ always satisfy 
-    $n\equiv r \mod N$.
+    $n\equiv r \bmod N$.
     % The initial control state of $\mach'$ is $q_0[0]$, where $q_0$ is the 
     % initial control state of $\mach$.
 
@@ -1099,7 +1104,7 @@ of $f(S)$, and thus also the proof of the second part of the lemma.
     As 1-\cm{s} are a special case of pushdown automata,
     we may now obtain \Cref{lem:0star} by Parikh's Theorem:
     for each pair of zero-testing states $q, q' \in Q$,
-    we build a pushdown automata recognizing the language
+    we build a pushdown automaton recognizing the language
     \[
         L_{q, q'} = \setof{ a^n b^{n'} }{ q(n) \stepp{0}^* q'(n') },
     \]
@@ -1123,14 +1128,14 @@ of $f(S)$, and thus also the proof of the second part of the lemma.
     an $a$-labelled cycle of transitions incrementing the counter by
     $1$:
     \[
-    (p[i], \updinstr{1}, p[i+1 \!\! \mod N]) \qquad \text{for all } 
+    (p[i], \updinstr{1}, p[i+1  \bmod N]) \qquad \text{for all } 
     i\in\setfromto 0 {N-1}
     \] 
     (which assures storing the remainder modulo $N$ in states), 
     add another $N$ extra states $p'[N-1] \ldots p'[0]$ forming 
     a $b$-labelled cycle of transitions decrementing the counter by 1:
     \[
-    (p'[i], \updinstr{-1}, p[i-1 \!\! \mod N]) \qquad \text{for all } 
+    (p'[i], \updinstr{-1}, p[i-1 \bmod N]) \qquad \text{for all } 
     i\in\setfromto 0 {N-1},
     \]
     and finally add 0-update transitions from
