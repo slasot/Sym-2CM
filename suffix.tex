@@ -301,6 +301,8 @@ by assumption it will never be negative for a major sum-increasing cycle
 illustrate a run that
 doesn't satisfy the claim below to show what we want to rule out.}
 \sla{I did sth}
+\mei{I modified the caption on the counterexample figure to make the point
+I wanted to make, I'll adjust the other figure as well later.}
 
 \begin{figure}[h]
 \centering
@@ -418,15 +420,22 @@ doesn't satisfy the claim below to show what we want to rule out.}
 
 \end{tikzpicture}
 
-\caption{A run violating Claim~13.  
+\caption{A run violating \Cref{claim:steep}.
 Thick lines represent iterated major cycles, and dotted lines represent 
 one-off paths.
 The cycles $c_1$ and $c_2$ are 
 (horizontally positive) major and sum-increasing, the latter steeper than
 the former, and $c_3$ is a horizontally negative major (sum-decreasing) cycle
 steeper than $c_1$ and $c_2$.
-Thus none of major sum-increasing cycles is followed by a less steep
-horizontally negative cycle.}
+% Thus none of major sum-increasing cycles is followed by a less steep
+% horizontally negative cycle.
+Observe how this run gets further away from the Y axis as it progresses.
+Intuitively, runs violating \Cref{claim:steep} are ruled out, because
+we're considering runs that end \emph{on} the Y axis,
+above the starting point of the run.
+To extend the run and have it reach such an endpoint, one would need to either add
+a cycle steeper than $c_2$, or add a horizontally-negative sum-increasing cycle,
+putting the run in the jurisdiction of Case 2.}
 \label{fig:claim13-counterexample}
 \end{figure}
 
