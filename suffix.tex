@@ -290,6 +290,10 @@ We thus get the claim with $D_\sigma = (x+y)(y-x)$.
     every node/.style={font=\small}
 ]
     \begin{scope}
+        \fill[green!10] (0,0) rectangle (3,2);
+        \fill[green!10] (0,0) rectangle (-3,-2);
+        \fill[red!10] (0,0) rectangle (-3,2);
+        \fill[red!10] (0,0) rectangle (3,-2);
       % axes
       \draw[->] (-3,0) -- (3,0) node[right] {$x$};
       \draw[->] (0,-2.0) -- (0,2.0) node[above] {$y$};
@@ -321,9 +325,9 @@ We thus get the claim with $D_\sigma = (x+y)(y-x)$.
       % \node[below right] at (4.3,0.34) {horizontal effect};
       % \node[above left] at (-0.2,2.09) {vertical effect};
 
-      % sign labels
-      \node at (2.1,-0.3) {$x_2>0$};
-      \node at (-2.0,-0.3) {$x_1,x_3<0$};
+        % sign labels
+        \node[scale=0.8] at (2.1,-0.3) {$x_2>0$};
+        \node[scale=0.8] at (-2.0,-0.3) {$x_1,x_3<0$};
     \end{scope}
 
     \begin{scope}[xshift=8cm]
@@ -334,11 +338,11 @@ We thus get the claim with $D_\sigma = (x+y)(y-x)$.
         \draw[->, very thick] (0,0) -- (a)
             node[right] {$c_i$};
         \draw[->, thick, dotted, green!50!black] (a) -- (0, 1.5)
-            node[left, black] {$c_{j_1}$};
+            node[left] {$c_{j_1}$};
         \draw[->, thick, dotted, green!50!black] (a) -- (0, 0.7)
-            node[left, black] {$c_{j_2}$};
+            node[left] {$c_{j_2}$};
         \draw[->, thick, dotted, red!50!black] (a) -- (0, -1.0)
-            node[left, black] {$c_{j_3}$};
+            node[left] {$c_{j_3}$};
     \end{scope}
 \end{tikzpicture}
 \caption{
@@ -348,10 +352,11 @@ We thus get the claim with $D_\sigma = (x+y)(y-x)$.
   $c_1$, $c_2$, and $c_3$, where $c_2$ is horizontally
   positive and the other two are horizontally negative.
   The cycle $c_1$ is steeper than $c_2$, and $c_2$ is steeper than $c_3$.
+  Cycles whose effect lies within the area shaded green (resp. red) have positive (resp. negative) steepness.
   Right: A horizontally-positive sum-increasing cycle $c_i$,
-  with three candidates for a horizontally-negative cycle $c_j$, illustrated
+  with three candidates for a subsequent horizontally-negative cycle $c_j$, illustrated
   in terms of their combined effect
-  (when scaled such that said effect lands on the vertical axis).
+  (when combined with coefficients chosen to put said effect on the vertical axis).
   Observe how the vertical effect obtained this way is positive exactly
   when $c_i$ is steeper than $c_j$ (cf. \Cref{claim:steep}).
 }

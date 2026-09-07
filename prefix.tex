@@ -579,14 +579,14 @@ with \emph{the first remaining} $\rho_i$ of the form $\stepp -$.
 Clearly, the composition of the three phases yields
 the reachability relation, that is
 \begin{align} \label{eq:reachrel}
-\reachrel^* \ = \ \Phi_1 \circ \Phi_2 \circ \Phi_3,
+{\reachrel^*} \ = \ \Phi_1 \circ \Phi_2 \circ \Phi_3,
 \end{align}
 for  the three relations defined by the following rational expressions:
 \begin{align}
   \begin{aligned} \label{eq:regexp}
-&\Phi_1 \ = \ ((\stepp 0 \ \cup \ \stepp -)^\ast \circ \stepp +)^\ast,\\
-&\Phi_2 \ = \ \ \stepp 0^\ast,\\
-&\Phi_3 \ = \ (\stepp - \circ \stepp {0}^\ast)^\ast.
+      &\Phi_1 \ = \ (({\stepp 0} \ \cup \ {\stepp -})^\ast \circ\, {\stepp +})^\ast,\\
+      &\Phi_2 \ = \ {\stepp 0^\ast},\\
+      &\Phi_3 \ = \ ({\stepp -} \,\circ\, {\stepp{0}^\ast})^\ast.
   \end{aligned}
 \end{align}
 
@@ -627,7 +627,7 @@ in dimension $d=1$.
 
 
 \begin{lemma} \label{lem:0star}
-Given a symmetric 2-\cm $\mach$, the relation
+Given a 2-\cm $\mach$, the relation
 $\Phi_2 \subseteq (Q \times \N)^2$ 
 is effectively semilinear.
 % The relation $\stepp {0}^*$ is effectively semilinear.
@@ -642,10 +642,10 @@ is effectively semilinear.
 
 \begin{lemma} \label{lem:compbackfor}
 Given a symmetric 2-\cm $\mach$ and source $s$ and target $t$, the sets
-\begin{alignat*}{6}
-&\Phi_3 \circ \{t\} \ := \  \setof{y}{(y,t) \in \Phi_3}  \ \subseteq \ Q \times \N, \\
-&\{s\} \circ \Phi_1 \ := \  \setof{x}{(s,x) \in \Phi_1} \ \subseteq \ Q \times \N
-\end{alignat*}
+\begin{align*}
+    \Phi_3 \circ \{t\} \ &:= \  \setof{y}{(y,t) \in \Phi_3}  \ \subseteq \ Q \times \N, \\
+    \{s\} \circ \Phi_1 \ &:= \  \setof{x}{(s,x) \in \Phi_1} \ \subseteq \ Q \times \N
+\end{align*}
 are effectively semilinear.
 % One can compute 
 % the set 
@@ -671,15 +671,15 @@ the proof of \Cref{lem:compbackfor} that crucially uses the symmetry assumption.
 
 Relying on effective 
 semilinearity given in \Cref{lem:0star,lem:compbackfor},
-and on the effective equivalence of semilinear sets and Presburger 
+and on the effective equivalence between semilinear sets and Presburger 
 Arithmetic \cite{GS66},
 the proof of \Cref{thm:main} is immediate:
 the reachability question $s\reachrel^* t$
 which, according to \eqref{eq:reachrel}, is equivalent to%
 %\( (s,t) \in \Phi_1\circ\Phi_2\circ\Phi_3,\) \ie 
 \begin{equation}
-\exists\, x,y \in Q\times\N \ : \  x \in \{s\} \circ \Phi_1 \ \wedge \ (x,y) \in \Phi_2 
-\ \wedge \ y\in \Phi_3 \circ \{t\},
+    \exists\, x,y \in Q\times\N \ : \  x \in (\{s\} \circ \Phi_1) \ \wedge \ (x,y) \in \Phi_2 
+    \ \wedge \ y\in (\Phi_3 \circ \{t\}),
 \end{equation}
 is effectively 
 expressible in Presburger Arithmetic, and hence decidable 
@@ -848,29 +848,30 @@ $\stepp 0, \ \stepp -, \ \stepp +$ are also effectively semilinear.
 
 
 \begin{proof}[Proof of \Cref{lem:compbackfor}]
-Recall that $\Phi_3 \ = \ (\stepp - \circ \stepp {0}^\ast)^\ast$.
+Recall that $\Phi_3 \ = \ ({\stepp -} \circ\, {\stepp{0}^\ast})^\ast$.
 By \Cref{lem:0-+,lem:0star}, both the relations $\stepp -$ and
-$(\stepp 0)^*$ are effectively semilinear.
-Using the effective equivalence of semilinear sets and Presburger Arithmetic,
+$\stepp{0}^*$ are effectively semilinear.
+Using the effective equivalence between semilinear sets and Presburger Arithmetic,
 the composed relation 
-$\stepp - \circ \stepp {0}^\ast$ is also effectively semilinear,
-as well as 
-$(\stepp - \circ \stepp {0}^\ast) \circ S$ for every given 
+${\stepp -} \circ\, {\stepp{0}^\ast}$ is also effectively semilinear,
+in particular meaning that
+the set
+$({\stepp -} \circ\, {\stepp{0}^\ast}) \,\circ\, S$ is semilinear for every given 
 semilinear set $S$.
 Furthermore, as $\stepp -$ is source pumpable \eqref{eq:spump},
-and therefore the composed relation $\stepp - \circ \stepp {0}^\ast$
+and therefore the composed relation ${\stepp -} \circ\, {\stepp {0}^\ast}$
 is so as well, the set
-$(\stepp - \circ \stepp {0}^\ast) \circ S$ is forcedly $D$-\saturated.
+$({\stepp -} \circ\, {\stepp{0}^\ast}) \,\circ\, S$ is always $D$-\saturated.
 
 In order to  argue that the set $\Phi_3 \circ \{t\}$
 is effectively semilinear we make use of \Cref{lem:stab},
 iterating the transformation
 \[
-X_{i+1} \ := \ X_{i} \ \cup \ (\stepp - \circ \stepp {0}^\ast) \circ X_{i},
+    X_{i+1} \ := \ X_{i} \ \cup \ ({\stepp -} \,\circ\  {\stepp{0}^\ast}) \ \circ\ \! X_{i},
 \]
 starting from the initial set
 \[
-X_0 \ := \ (\stepp - \circ \stepp {0}^\ast) \circ \{t\},
+    X_0 \ := \ ({\stepp -} \,\circ\ {\stepp{0}^\ast}) \ \circ\ \{t\},
 \]
 until a fixpoint is reached. By the above observations, we deduce that
 both the initial set $X_0$, as well as every successive iterate $X_{i+1}$,
@@ -892,8 +893,8 @@ the set
 is effectively semilinear.
 We conclude the first part by 
 noting that the proof is not specific to the starting set $\{t\}$,
-and shows that $\Phi_3 \circ S$ is effectively 
-semilinear given any semilinear $S\subseteq Q\times\N$,
+and shows that $\Phi_3 \circ T$ is effectively 
+semilinear given any semilinear $T\subseteq Q\times\N$,
 which will be useful in the second part.
 
 \medskip
@@ -944,7 +945,7 @@ $X_i \mapsto X_{i+1}$.
 However, in order to apply the previously shown computability of 
 the function
 \begin{align} \label{eq:back}
-S \ \mapsto \ \Phi_3 \ \circ \ S
+T \ \mapsto \ \Phi_3 \ \circ \ T
 \end{align}
 which proceeds 'backward', for computability
 of the function
@@ -955,7 +956,7 @@ S \, \mapsto  f(S)
 $
 which proceeds 'forward', we need a trick.
 Note that the relation 
-$(\stepp 0)^* \ \circ \ \Phi_3 \ \circ \ \stepp +$ is always
+${\stepp{0}^*} \  \circ \ \Phi_3 \ \circ \  {\stepp +}$ is always
 target-pumpable since $\stepp +$ is so \eqref{eq:tpump},
 and hence $f(S)$ is always $D$-\saturated
 irrespectively of $S$.
@@ -1002,7 +1003,7 @@ of $f(S)$, and thus also the proof of the second part of \Cref{lem:compbackfor}.
 
 % \begin{proof}[Proof of \Cref{lem:0star}]
     In outline,
-    we prove that $\Phi_2 = \ \stepp{0}^*$ is essentially the reachability
+    we prove that $\Phi_2 = {\stepp{0}^*}$ is essentially the reachability
     relation of an effectively constructible 1-\cm $\mach'$, to which we apply
     Parikh's theorem.
 
@@ -1032,7 +1033,6 @@ of $f(S)$, and thus also the proof of the second part of \Cref{lem:compbackfor}.
     Hence, each $X^c_{q,q'}$ is
     ultimately periodic, with an effectively computable 
     period $N^c_{q,q'}$ and threshold $M^c_{q,q'}$.
-
     Define $N$ as the least common multiple of all the periods $N^c_{q,q'}$,
     across all choices of $c$, $q$ and $q'$.
 
