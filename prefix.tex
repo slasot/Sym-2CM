@@ -151,7 +151,7 @@ when $G=\symg d$, the general definition instantiates to
 symmetric $d$-\cm{s}.
 On the opposite end, when $G$ is the trivial group one gets classical counter
 machines.
-Between the two extremities there is a landscape of models, 
+Between the two extremes there is a landscape of models, 
 whose expressive power is related according to the permutation subgroup relation:
 whenever $G\leq H$, every $H$-\cm is automatically a
 $G$-\cm.
@@ -207,18 +207,18 @@ its reachability problem.
 \para{Related research}
 
 Identifying decidable restrictions of counter machines
-is a very active line of research since 1960s, for instance 
+is a very active line of research since the 1960s, for instance 
 1-counter, reversal-bounded, or restricted 2-counter machines 
 \cite{HKOW09,Ibarra78,FS00}.
 A prominent example is counter machines without zero-tests, that is
 vector addition systems with states
-(\vass), shown to have decidable reachability in early 1980s
+(\vass), shown to have decidable reachability in the early 1980s
 \cite{Mayr81,Kosaraju82,Lambert92}.
 The decidability extends to 
 \cm{s}
 with only one zero-tested counter \cite{Bonnet11},
 or with nested zero-tests \cite{Reinhardt08,GCL25}.
-On the other hand, most of natural restrictions of the counter model
+On the other hand, most natural restrictions of the counter model
 preserve Turing-completeness, as long as no constraint is imposed
 on zero-tests.
 For instance, considering deterministic \cm{s}, 
@@ -255,14 +255,14 @@ but it is possible that the complexity remains \pspace.
 Furthermore, we do not know if the reachability relation of a
 symmetric 2-counter machine is semilinear, but we believe it is so.
 
-Contrarily to the above-mentioned restrictions of zero-tests, 
+Contrary to the above-mentioned restrictions of zero-tests, 
 our model leaves the zero-tests unrestricted, which makes
 \Cref{thm:main} particularly interesting.
 We conclude by recalling another recently obtained decidability result that
 also does not assume any explicit restriction of zero-tests \cite{Dudenhefner22}.
 % , and hence seems as surprising as our \Cref{thm:main}.
 It amounts to observing that
-the above-mentioned Turing-completeness of 
+the above-mentioned Turing-completeness of
 reversible counter machines seems to be very fragile with respect
 to the choice of instruction set of a \cm.
 As shown in \cite{Dudenhefner22},
@@ -522,7 +522,6 @@ closure of $\reachrel$.
 \caption{The three relations $\stepp +$, $\stepp -$, and $\stepp 0$.
 The axes do \emph{not} correspond to the counters, 
 but rather the initial and final values $a$ and $a'$ of a segment.
-\sla{figure to be adapted}
 }
 \label{fig:areas}
 \end{figure}
@@ -686,6 +685,9 @@ is effectively
 expressible in Presburger Arithmetic, and hence decidable 
 \cite{Presburger30,Oppen78}.
 It thus remains to demonstrate the two key lemmas.
+Continuing in a top-down manner, we first focus on
+\Cref{lem:compbackfor}, whose proof makes use of
+\Cref{lem:0star}.
 
 
 %Notationally, we allows ourselves to compose a relation $R\subseteq (Q\times\N)^2$ 

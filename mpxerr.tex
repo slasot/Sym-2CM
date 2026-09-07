@@ -5,7 +5,7 @@
 \begin{document}
 
 \gdef\mpxshipout{\shipout\hbox\bgroup
-  \setbox0=\hbox\bgroup}
+  \setbox0=\hbox\bgroup}%
 \gdef\stopmpxshipout{\egroup  \dimen0=\ht0 \advance\dimen0\dp0
   \dimen1=\ht0 \dimen2=\dp0
   \setbox0=\hbox\bgroup
@@ -13,47 +13,20 @@
     \ifnum\dimen0>0 \vrule width1sp height\dimen1 depth\dimen2 
     \else \vrule width1sp height1sp depth0sp\relax
     \fi\egroup
-  \ht0=0pt \dp0=0pt \box0 \egroup}
-\mpxshipout% line 43 ./figures.mp
+  \ht0=0pt \dp0=0pt \box0 \egroup}%
+\mpxshipout% line 38 ./figures.mp
 $C$%
 \stopmpxshipout
-\mpxshipout% line 44 ./figures.mp
-$2C$%
-\stopmpxshipout
-\mpxshipout% line 45 ./figures.mp
+\mpxshipout% line 39 ./figures.mp
 $C$%
 \stopmpxshipout
-\mpxshipout% line 46 ./figures.mp
-$2C$%
+\mpxshipout% line 42 ./figures.mp
+$\big \Longrightarrow_+$%
 \stopmpxshipout
-\mpxshipout% line 51 ./figures.mp
-$\0$%
-\stopmpxshipout
-\mpxshipout% line 52 ./figures.mp
-$\0$%
-\stopmpxshipout
-\mpxshipout% line 53 ./figures.mp
-$\0$%
-\stopmpxshipout
-\mpxshipout% line 54 ./figures.mp
-$\0$%
-\stopmpxshipout
-\mpxshipout% line 59 ./figures.mp
-$0$%
-\stopmpxshipout
-\mpxshipout% line 63 ./figures.mp
-$\bm+$%
-\stopmpxshipout
-\mpxshipout% line 67 ./figures.mp
-$\bm-$%
-\stopmpxshipout
-\mpxshipout% line 73 ./figures.mp
-$\bm0$%
-\stopmpxshipout
-\mpxshipout% line 79 ./figures.mp
+\mpxshipout% line 78 ./figures.mp
 $a$%
 \stopmpxshipout
-\mpxshipout% line 80 ./figures.mp
+\mpxshipout% line 79 ./figures.mp
 $a'$%
 \stopmpxshipout
 \end{document}
