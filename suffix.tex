@@ -114,8 +114,8 @@ We focus on proving point $\punkt 2 2$, noticing however that
 literally the same argument 
 works for point $\punkt 1 2$.
 \sla{swapped $\punkt 1 2$ with $\punkt 2 2$}
-The other two points, namely $\punkt 2 1$ and $\punkt 1 1$
-follow immediately, by swapping the coordinates.
+The other two points, namely $\punkt 2 1$ and $\punkt 1 1$,
+follow immediately by swapping the coordinates.
 % \mei{I don't think the symmetry assumption is necessary
 % for this particular step.}
 % \sla{right, i've removed the symmetry assumption.}
@@ -135,12 +135,12 @@ To ease the presentation, we introduce the following definitions:
     path}. The \emph{effect of a path} is defined as the sum of the effects of its
     transitions.
 \item A \emph{cycle} is a path whose source and target coincide.
-\item A path $\rho$ is said to be \emph{fireable} at a configuration $\kappa$
-    if there exists a configuration $\kappa'$ such that $\kappa \xstep{\rho} \kappa'$,
-    \ie $\rho$ can be executed starting from $\kappa$, without the counters
+\item A path $\rho$ is said to be \emph{fireable} at a configuration $q(\vr v)$
+    if there exists a configuration $q'(\vr v')$ such that $q(\vr v) \xstep{\rho} q'(\vr v')$,
+    \ie $\rho$ can be executed starting from $q(\vr v)$, without the counters
     having to go negative along the way.
-\item A path $\rho_2$ is said to be \emph{fireable after} $\rho_1$, if for any
-    configuration $\kappa$ at which $\rho_1$ is fireable, the concatenation
+\item A path $\rho_2$ is said to be \emph{fireable after} a path $\rho_1$, if for any
+    configuration $q(\vr v)$ at which $\rho_1$ is fireable, the concatenation
     $\rho_1; \rho_2$ is fireable as well.
 \item For a path $\rho$, the \emph{transposed path} $\overline{\rho}$ is obtained
     by applying the symmetry assumption at each transition.
@@ -149,11 +149,11 @@ To ease the presentation, we introduce the following definitions:
 
 \begin{proof}[Proof of \Cref{lem:targetpump} $\punkt 2 2$]
 Consider a fixed symmetric 2-\vass $\V = (Q,T)$ and
-a run $\sigma : q(a,0)\step^* q'(0,a')$ for some $a, a'\in \N$.
+a run $\sigma : q(0,a)\step^* q'(0,a')$ for some $a, a'\in \N$.
 Assuming that the difference $a'-a$ is sufficiently large
 (namely larger than some $C$, depending only on $\V$),
 we modify the run to lift the target configuration to $q'(0,a'+\gamma D_\sigma)$ for any
-multiple of some particular $D_\sigma$, which depends on both $\V$ and $\sigma$.
+multiple $\gamma in \N$ of some particular $D_\sigma$, which depends on both $\V$ and $\sigma$.
 Holding $\V$ fixed, $D_\sigma$ will only attain finitely many different values,
 hence we argue that taking the least common multiple of all $D_\sigma$ yields a
 constant $D$ satisfying the claim of the lemma.
