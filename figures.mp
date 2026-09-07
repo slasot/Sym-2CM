@@ -13,13 +13,15 @@ etex
 
 beginfig(1);
 
-  numeric u, C;
+  numeric u, C, ca, cb;
   u := 5cm;
   C := 1/5u;
+  ca := 0.9;
+  cb := 1 - ca;
 
-  fill (0,C) -- (u-C,u) -- (0,u) -- cycle withcolor 0.8white+0.2green;
-  fill (C,0) -- (u,u-C) -- (u,0) -- cycle withcolor 0.8white+0.2blue;
-  fill (0,0) -- (0,C) -- (u-C,u) -- (u,u) -- (u,u-C) -- (C,0) -- cycle withcolor 0.8white;
+  fill (0,C) -- (u-C,u) -- (0,u) -- cycle withcolor ca*white+cb*green;
+  fill (C,0) -- (u,u-C) -- (u,0) -- cycle withcolor ca*white+cb*blue;
+  fill (0,0) -- (0,C) -- (u-C,u) -- (u,u) -- (u,u-C) -- (C,0) -- cycle withcolor ca*white;
 
   pickup pencircle scaled 1.5pt;
 
