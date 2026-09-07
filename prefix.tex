@@ -449,7 +449,7 @@ $(q, \updinstr{0,0}, q^t)$.
 \begin{remark} \label{rem:wlog}
 Furthermore, \mywlog we may assume that one counter is 0
 in both source and target configurations.
-For instance, if the source vector is $v=(v_1,v_2)$ with $0<v_1\leq v_2$,
+For instance, if the source vector is $\vr v=(v_1,v_2)$ with $0<v_1\leq v_2$,
 we replace it by $(0,v_2-v_1)$ and add one extra symmetric transition
 with update $(v_1,v_1)$.
 We thus assume, \mywlog, 
@@ -557,7 +557,7 @@ where the precise definition of the constant $C$ will be given in \Cref{sec:targ
 The reachability relation can now be expressed as
 \[
 \reachrel^* \ = \ 
-\big(\stepp 0 \ \cup \ \stepp - \ \cup \ \stepp + \big)^*,
+\big({\stepp 0} \ \cup \ {\stepp -} \,\cup \ {\stepp +} \big)^*,
 \] 
 an arbitrary composition
 of the three sub-relations arbitrarily many times
@@ -936,7 +936,7 @@ Similarly as before, knowing that $\stepp +$ is target pumpable, we know
 that all $X_i$ are $D$-\saturated sets, and therefore the sequence 
 $X_0, X_1, \ldots$ stabilizes, and hence
 \[
-\{s\} \circ  \Phi_1 \ = \ 
+\{s\} \,\circ\, \Phi_1 \ = \ 
  \{s\} \ \cup \  X_j
 \]
 for some $j$, similarly as before.
@@ -980,22 +980,21 @@ are effectively semilinear due to
 $\Phi_3 \ \circ \ \bigl(\stepp + \circ \ X_{q,r}\bigr)$,
 and its intersection $Y_{q,r}$ with \eqref{eq:set2}, are
 computable.
-Then one finds the representation
+Then one finds the precise representation
 $\minf{f(S)}$ of $f(S)$ by an \emph{exhaustive search}.
 For every positively verified state-remainder pair $(q,r)$,
 namely one with $Y_{q,r}\neq\emptyset$, 
 one finds the least number $n$ such that
-$q(n)\in f(S)$ and $n\equiv r \bmod D$ by
-an exhaustive search:
-for consecutive candidates $k=0, 1, \ldots$, 
+$q(n)\in f(S)$ and $n\equiv r \bmod D$.
+For consecutive candidates $k=0, 1, \ldots$, 
 apply the transformation \eqref{eq:back} to the set
 \[
 \bigl(\stepp + \circ \ \{q(r+k\cdot D)\}\bigr)
 \]
 and check nonemptiness of intersection with the set \eqref{eq:set2},
-until nonempty intersection is found.
-This concludes the proof of effective $D$-\saturation
-of $f(S)$, and thus also the proof of the second part of \Cref{lem:compbackfor}.
+until a nonempty intersection is found.
+This shows that the $D$-\saturated representation of $f(S)$ may be
+computed, concluding the proof of the second part of \Cref{lem:compbackfor}.
 \end{proof}
 
 
