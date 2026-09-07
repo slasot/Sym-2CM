@@ -337,22 +337,23 @@ doesn't satisfy the claim below to show what we want to rule out.}
       node[pos=.62, above] {$c_3$};
 
   % angle / steepness indication
-  \node at (5.1,2.0) {$\varphi_1>\varphi_2>\varphi_3$};
+  \node at (6.1,2.3) {$\varphi_1>\varphi_2>\varphi_3$};
 
   % labels
-  \node[below right] at (4.3,0.27) {horizontal effect};
-  \node[above left] at (-0.2,2.07) {vertical effect};
+  \node[below right] at (4.3,0.34) {horizontal effect};
+  \node[above left] at (-0.2,2.09) {vertical effect};
 
   % sign labels
-  \node at (2.1,-0.3) {$x_1,x_2>0$};
-  \node at (-2.0,-0.3) {$x_3<0$};
+  \node at (2.1,-0.3) {$x_2>0$};
+  \node at (-2.0,-0.3) {$x_1,x_3<0$};
 \end{tikzpicture}
 \caption{
   The steepness comparison used in
   \Cref{claim:steep}.
   The vectors represent the effects of three cycles
-  $c_1$, $c_2$, and $c_3$, where $c_1$ is horizontally
+  $c_1$, $c_2$, and $c_3$, where $c_2$ is horizontally
   positive and the other two are horizontally negative.
+  The cycle $c_1$ is steeper than $c_2$, and $c_2$ is steeper than $c_3$.
 }
 \label{fig:steep}
 \end{figure}
@@ -371,8 +372,8 @@ doesn't satisfy the claim below to show what we want to rule out.}
 % ------------------------------------------------------------
 
 % Axes
-\draw[->] (0,0) -- (11,0) node[right] {$x$};
-\draw[->] (0,0) -- (0,5) node[left] {$y$};
+\draw[->] (0,0) -- (11.8,0) node[right] {$x$};
+\draw[->] (0,0) -- (0,4.5) node[above] {$y$};
 
 % Configurations along the run
 \coordinate (P0) at (0.0,2.1);
@@ -413,7 +414,7 @@ doesn't satisfy the claim below to show what we want to rule out.}
 \node[below] at (P3e) {$(X_3, Y_3)$};
 
   % angle / steepness indication
-  \node at (10.1,1.0) {$\varphi_1<\varphi_2<\varphi_3$};
+  \node at (11,5.0) {$\varphi_1<\varphi_2<\varphi_3$};
 
 \end{tikzpicture}
 
@@ -421,10 +422,10 @@ doesn't satisfy the claim below to show what we want to rule out.}
 Thick lines represent iterated major cycles, and dotted lines represent 
 one-off paths.
 The cycles $c_1$ and $c_2$ are 
-(horizontally positive) major sum-increasing cycles, the latter steeper than
+(horizontally positive) major and sum-increasing, the latter steeper than
 the former, and $c_3$ is a horizontally negative major (sum-decreasing) cycle
 steeper than $c_1$ and $c_2$.
-Thus none of major sum-increasing§ cycles is followed by a steeper
+Thus none of major sum-increasing cycles is followed by a less steep
 horizontally negative cycle.}
 \label{fig:claim13-counterexample}
 \end{figure}
