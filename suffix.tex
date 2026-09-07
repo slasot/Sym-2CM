@@ -294,10 +294,141 @@ Depending on whether $x_j>0$ or $x_j<0$, we call such cycles
 \emph{horizontally positive}, or \emph{horizontally negative} respectively.
 Define the \emph{steepness} of such cycles $c_j$ as $y_j/x_j$, and denote it by $\varphi_j$.
 Note that, while in general the steepness may be negative,
-by assumption it will never be negative for a major sum-increasing cycle.
+by assumption it will never be negative for a major sum-increasing cycle
+(see \Cref{fig:steep} for illustration).
 
-\mei{TODO: Figure: demonstrate some non-trivial steepness comparisons; illustrate a run that
+\mei{TODO: Figure: demonstrate some non-trivial steepness comparisons; 
+illustrate a run that
 doesn't satisfy the claim below to show what we want to rule out.}
+\sla{I did sth}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+    >=stealth,
+    scale=0.8,
+    every node/.style={font=\small}
+]
+  % axes
+  \draw[->] (-3.4,0) -- (3.8,0) node[right] {$x$};
+  \draw[->] (0,-2.0) -- (0,2.0) node[above] {$y$};
+
+  % horizontal reference
+  \draw[dashed] (0,0) -- (3.0,0);
+
+  % rays corresponding to steepnesses
+  \draw[dashed] (0,0) -- (-1.75,-2.0)
+      node[pos=.92, right] {$\varphi_1$};
+
+  \draw[dashed] (0,0) -- (2.4,1.2)
+      node[pos=.92, below] {$\varphi_2$};
+
+  \draw[dashed] (0,0) -- (-2.5,1.3)
+      node[pos=.75, above] {$\varphi_3$};
+
+  % cycle effects
+  \draw[->, very thick] (0,0) -- (-1.3,-1.5)
+      node[pos=.62, right] {$c_1$};
+
+  \draw[->, very thick] (0,0) -- (1.7,0.88)
+      node[pos=.82, below] {$c_2$};
+
+  \draw[->, very thick] (0,0) -- (-1.8,0.95)
+      node[pos=.62, above] {$c_3$};
+
+  % angle / steepness indication
+  \node at (5.1,2.0) {$\varphi_1>\varphi_2>\varphi_3$};
+
+  % labels
+  \node[below right] at (4.3,0.27) {horizontal effect};
+  \node[above left] at (-0.2,2.07) {vertical effect};
+
+  % sign labels
+  \node at (2.1,-0.3) {$x_1,x_2>0$};
+  \node at (-2.0,-0.3) {$x_3<0$};
+\end{tikzpicture}
+\caption{
+  The steepness comparison used in
+  \Cref{claim:steep}.
+  The vectors represent the effects of three cycles
+  $c_1$, $c_2$, and $c_3$, where $c_1$ is horizontally
+  positive and the other two are horizontally negative.
+}
+\label{fig:steep}
+\end{figure}
+
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[
+    >=stealth,
+    scale=0.9,
+    every node/.style={font=\small}
+]
+
+% ------------------------------------------------------------
+% Run in configuration space
+% ------------------------------------------------------------
+
+% Axes
+\draw[->] (0,0) -- (11,0) node[right] {$x$};
+\draw[->] (0,0) -- (0,5) node[left] {$y$};
+
+% Configurations along the run
+\coordinate (P0) at (0.0,2.1);
+\coordinate (P1) at (0.5,1.0);
+\coordinate (P1e) at (4.2,1.4);
+\coordinate (P2) at (4.7,2.2);
+\coordinate (P2e) at (7.0,4.5);
+\coordinate (P3) at (8.0,5.0);
+\coordinate (P3e) at (7.2,2.0);
+\coordinate (P4) at (8.2,2.2);
+
+% Ordinary path segments
+\draw[dotted,->] (P0) -- (P1);
+\draw[->,very thick] (P1) -- (P1e) node[pos=.55,below] {$c_1^{n_1}$};
+\draw[dotted,->] (P1e) -- (P2);
+\draw[->,very thick] (P2) -- (P2e) node[pos=.45,right] {$c_2^{n_2}$};
+\draw[dotted,->] (P2e) -- (P3);
+\draw[->,very thick] (P3) -- (P3e) node[pos=.55,right] {$c_3^{n_3}$};
+\draw[dotted,->] (P3e) -- (P4);
+
+
+% ------------------------------------------------------------
+% Configuration labels
+% ------------------------------------------------------------
+
+\fill (P0) circle (1.5pt);
+\fill (P1) circle (1.5pt);
+\fill (P2) circle (1.5pt);
+\fill (P3) circle (1.5pt);
+\fill (P1e) circle (1.5pt);
+\fill (P2e) circle (1.5pt);
+\fill (P3e) circle (1.5pt);
+\fill (P4) circle (1.5pt);
+
+\node[above right] at (P0) {$(X_0, Y_0)=(0, a)$};
+\node[below right]      at (P1e) {$(X_1, Y_1)$};
+\node[above left]      at (P2e) {$(X_2, Y_2)$};
+\node[below] at (P3e) {$(X_3, Y_3)$};
+
+  % angle / steepness indication
+  \node at (10.1,1.0) {$\varphi_1<\varphi_2<\varphi_3$};
+
+\end{tikzpicture}
+
+\caption{A run violating Claim~13.  
+Thick lines represent iterated major cycles, and dotted lines represent 
+one-off paths.
+The cycles $c_1$ and $c_2$ are 
+(horizontally positive) major sum-increasing cycles, the latter steeper than
+the former, and $c_3$ is a horizontally negative major (sum-decreasing) cycle
+steeper than $c_1$ and $c_2$.
+Thus none of major sum-increasing§ cycles is followed by a steeper
+horizontally negative cycle.}
+\label{fig:claim13-counterexample}
+\end{figure}
+
 
 \begin{claim} \label{claim:steep}
     There are some $i<j$ such that $c_i$ is a major sum-increasing cycle, $c_j$ is
@@ -309,7 +440,10 @@ For the purposes of this claim, we shall assume that all cycles within the run a
 by inlining any minor cycles $c_i$ into their neighboring one-off paths $t_{i-1}$ and $t_i$,
 and renumbering so that the major cycles have consecutive indices.
 
-Suppose now that the claim doesn't hold. Let $c_{k_1}, \ldots c_{k_s}$ be the sequence
+Suppose now that the claim doesn't hold
+(see \Cref{fig:claim13-counterexample} for illustration).
+Then, for any horizontally negative cycle $c_j$,
+Let $c_{k_1}, \ldots c_{k_s}$ be the sequence
 of (major) sum-increasing cycles of increasing steepness, i.e. let $c_{k_1}$
 be the first sum-increasing cycle of the run, and define
 $k_{i+1}>k_i$ so that
@@ -327,7 +461,8 @@ Finally, denote by $\beta_i$ the steepness of
 the most recent cycle among $c_{k_1}, \ldots c_{k_s}$, 
 i.e. $\beta_i = \varphi_i$ if
 $i \in \{k_1, \ldots, k_s\}$, and $\beta_i = \beta_{i-1}$ otherwise.
-At the start of the run, set $S_0 = 0$, $\beta_0 = -1$, and $(X_0, Y_0) = (a, 0)$.
+At the start of the run, set $S_0 = 0$, $\beta_0 = -1$, and 
+$(X_0, Y_0) = (0, a)$.
 
 Note that, if \Cref{claim:steep} indeed doesn't hold, we have $\beta_j \leq \varphi_j$ for any
 horizontally negative cycle $c_j$.
@@ -351,6 +486,8 @@ will always satisfy
     Y_i \, \leq \, a \, + \, S_i (1 + \beta_i) \, + \, \beta_i X_i
 \end{equation}
 \mei{TODO Figure.}
+
+
 At $i = 0$, equality trivially holds.
 Suppose then that the inequality holds at a specific $i$.
 Denoting by $(x, y)$ the counter values just before $c_{i+1}$,
