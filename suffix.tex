@@ -106,10 +106,10 @@
 
 
 
-\section{Target pumping}\label{sec:targetpump}
+\section{Target pumping: Proof of \Cref{lem:targetpump}}\label{sec:targetpump}
 %
 
-We now prove \Cref{lem:targetpump}.
+% We now prove \Cref{lem:targetpump}.
 We focus on proving point $\punkt 2 2$, noticing however that
 literally the same argument 
 works for point $\punkt 1 2$.
@@ -147,6 +147,14 @@ To ease the presentation, we introduce the following definitions:
     If $\rho$ has effect $(a, b)$, $\overline{\rho}$ has effect $(b, a)$.
 \end{itemize}
 
+We define the \emph{norm} of a vector $w = (w_1,w_2) \in \Z^2$ 
+to be the maximal absolute value of its components,
+$\norm{w}=\max\{|w_1|,|w_2|\}$, and 
+the norm of a 2-\vass $\V=(Q,T)$ to be the maximal norm of the effects 
+of its transitions, 
+$\norm \V = \max\{\norm{w} \mid (q,\updinstr{w},q')\in T\}$.
+
+
 \begin{proof}[Proof of \Cref{lem:targetpump} $\punkt 2 2$]
 Consider a fixed symmetric 2-\vass $\V = (Q,T)$ and
 a run $\sigma : q(0,a)\step^* q'(0,a')$ for some $a, a'\in \N$.
@@ -165,9 +173,9 @@ According to the linear-path-scheme (LPS) decomposition of
 we may assume \mywlog that 
 $\widetilde\sigma$ is built of paths 
 $t_0, \ldots, t_\ell$ and cycles $c_1, \ldots, c_\ell$:
-\[
+\begin{align}\label{eq:lps}
 \widetilde\sigma \ \in \ t_0 \ c_1^* \ t_1 \ c_2^* \ \ldots \ c_\ell^* \ t_\ell,
-\]
+\end{align}
 where the lengths of each path $t_i$ and cycle $c_j$ are at most $e$,
 and both $\ell$ and $e$ are bounded by a polynomial of $\mysize \V$,
 the size of the unary representation of $\V$.
@@ -596,21 +604,6 @@ for $h = -x_j y_i + x_i y_j > 0$.
 Expanding $c_i^{n_i}$ with $c_i^{-x_j}$ and $c_j^{n_j}$ with $c_j^{x_i}$ 
 yields a run ending in $q'(0,a'+D_\sigma)$, where $D_\sigma = h$.
 The proof of Case 3 is thus completed.
-
-\medskip
-
-It remains to estimate the values of $C$ and $D$.
-The norm of the effect of every cycle of length at most $e$ is bounded
-by $e\norm{\V}$, and hence
-all values $D_\sigma$ appearing in all the three cases 
-are bounded by $2(e_\text{max} \norm{\V})^2$, thus
-polynomially in $\mysize \V$.
-Taking as $D$ the least common multiple of all $D_\sigma$ is enough for the
-claim of the lemma.
-The sufficiently large value of $C$ is
-$C := C_1 (1 + e\norm\V)$.
-Summing up, $C$ is polynomial and $D$ is exponential in $\mysize \V$,
-as required.
 %
 % The constant $C$ must be large enough so that, even after forgetting of
 % the total effects of all transitions $t_0, \ldots, t_\ell$, the iterations of
@@ -621,6 +614,12 @@ as required.
 % a polynomial value of $C$, \wrt $\mysize \V$, 
 % is sufficient to satisfy the above requirement.
 % \sla{complete the calculations}
+
+\medskip
+
+Summing up, in all the three cases 
+the sufficiently large value of $C$ is $C := C_1 (1 + e\norm\V)$.
+The proof of \Cref{lem:targetpump} is thus completed.
 \end{proof}
 
 
@@ -736,37 +735,147 @@ if the $-2$ is appropriately aligned, which rules out all unwanted rotations.
 
 \section{Complexity bound} \label{sec:complexity}
 
-\sla{\bf this section is very sketchy and containts a significant gap.
-After discussions with Lukasz, 
-it seems we can bound doubly-exponentially all the steps except for
-the exhaustive search at the end of the proof of \Cref{lem:compbackfor}...
-}
+% \sla{\bf this section is very sketchy and containts a significant gap.
+% After discussions with Lukasz, 
+% it seems we can bound doubly-exponentially all the steps except for
+% the exhaustive search at the end of the proof of \Cref{lem:compbackfor}...
+% }
 
-We conclude with some remarks on complexity estimates for our decision
-procedure outlined in \Cref{sec:outline}, 
-in terms of the size $n=\mysize \mach$ 
-of the unary representation of $\mach$, $s$ and $t$.
+In this section we provide an upper complexity bound for our decision procedure
+outlined in \Cref{sec:outline}.
+We will measure the size of input instances of the reachability problem 
+as the size of \emph{unary}
+representation of a 2-\cm $\mach$, the source $s=q(w)$ 
+and the target $t=q'(w')$, namely
+\[
+\mysize \mach = 
+\mysize Q + 2 \cdot \norm \mach \cdot \mysize {T_\text{\tiny upd}}
+\ + \ \norm w \ + \ \norm w',
+\]
+where $T_\text{\tiny upd}$ is the set of update transitions of $\mach$.
+Note that $\mysize \mach = \mysize \V$, namely we do not distinguish
+between the size of $\mach$ and of the underlying 
+2-\vass $\V$.
+Our objective is to provide an elementary upper bound
+in terms of the unary size $n=\mysize \mach$, rather than
+optimizing the number of exponentials, 
+and we will be content with a triply exponential bound.
+
+
+\para{Bounds for \Cref{lem:targetpump}}
+
+We estimate the values of constants $C$ and 
+$D$.
+The constant 
+\[
+C\ = \ C_1 (1 + e\norm\V), 
+\qquad \text{where } \quad
+C_1 \ = \ (2 C_0 e_\mathrm{max} + 1)(\ell_\mathrm{max} + 1) 2\norm\V
+\] 
+is polynomial in $\mysize \V$.
+The norm of the effect of every cycle of length at most $e$ is bounded
+by $e\norm{\V}$, and hence
+all values $D_\sigma$ appearing in all the three cases
+in the proof of \Cref{lem:targetpump} 
+are bounded by $2(e_\text{max} \norm{\V})^2$, thus
+polynomially in $\mysize \V$.
+Taking as $D$ the least common multiple of all $D_\sigma$ is enough for the
+claim of the lemma.
+Summing up:
+
+\begin{claim} \label{claim:bounds}
+  The constants $C$ and $D$ of \Cref{lem:targetpump} are bounded
+  polynomially and exponentially in $n$, respectively.
+\end{claim}
+
+
+
+\para{Bounds for \Cref{lem:0-+}}
+
+According to the linear-path-scheme decomposition of 
+\cite[Thm.~1]{Blondin15}, whenever 
+a configuration $t$ is reachable from $s$
+in the underlying 2-\vass $\V$ of $\mach$,
+$t$ is also reachable from $s$ by a run 
+\begin{align} \label{eq:lps2}
+\sigma \ \in \ 
+t_0 \ c_1^{*} \ t_1 \ c_2^{*} \ \ldots \ c_\ell^{*} \ t_\ell,
+\end{align}
+where 
+$\ell$ is polynomial in $\mysize \mach$, and
+$t_0, \ldots, t_\ell$ are paths and $c_1, \ldots, c_\ell$ are cycles of
+length polynomial in $\mysize \mach$ (cf.~\eqref{eq:lps}).
+As shown in \cite{Blondin15},
+once $\ell$, $t_0, \ldots, t_\ell$ and $c_1, \ldots, c_\ell$ are fixed, 
+the reachability relation along all runs of the form \eqref{eq:lps2} 
+is (the projection of) the solution set of an instance $I$ of the integer
+linear programming problem of size polynomial in $\ell$, 
+and hence effectively semilinear.
+Moroever, numbers appearing in $I$ are bounded exponentially in
+$n$, and hence by the bound of \cite{Pottier91}
+(see also \cite[Prop.~4]{taming}), the norms of bases and periods
+of the reachability relation along all runs of the form \eqref{eq:lps2}
+are bounded exponentially in $n$.
+Summing over all choices of $\ell$, $t_0, \ldots, t_\ell$ and 
+$c_1, \ldots, c_\ell$, we conclude that
+the reachability relation $\step^*$ of $\V$ is effectively semilinear, 
+and the norms of bases and periods of its semilinear description
+are bounded exponentially in $n$.
+The same applies to the relation $\reachrel\ \subseteq(Q\times\N)^2$,
+a section of the reachability relation of $\V$.
+Finally, we transfer the same effective bounds to the three subrelations
+$\stepp 0, \stepp +, \stepp -$ by noticing that each of them is
+the intersection of $\reachrel$ with a semilinear set
+whose bases and periods are of norm at most $C$, the constant of
+\Cref{lem:targetpump}
+(which is polynomial in $n$),
+and intersection of linear sets in fixed dimension (here 2) 
+increases the norms of bases and periods at most polynomially.
+We have thus shown:
+
+\begin{claim} \label{claim:sl}
+  The relations $\stepp 0, \stepp +, \stepp -$ are effectively semilinear,
+  and the norms of bases and periods of their semilinear descriptions
+  are bounded exponentially in $n$.
+\end{claim}
 
 \para{Bound for \Cref{lem:0star}}
 
-The constant $C$ of \Cref{lem:targetpump} is polynomial in $n$,
-and $D$ is exponential in $n$.
-Combining the linear-path-scheme (LPS) decomposition of 
-\cite[Thm.~1]{Blondin15} with bounds on bases and periods of the solution
-set of integer linear programming of \cite{Pottier91}
-(see also \cite[Prop.~4]{taming}),
+By the above effective exponential bounds on bases and periods of 
+$\stepp 0$,
 we conclude that the ultimately periodic sets %\eqref{eq:per1},
  \eqref{eq:per2} 
 in the proof of \Cref{lem:0star} have at most exponential periods 
-and thresholds.
-In consequence, all the 1-\cm{s} $\mach^c_{q,q'}$ are at most 
-exponentially large, and in consequence the 1-\cm $\mach'$
-ultimately constructed in the proof of \Cref{lem:0star} is at most
+and bases.
+In consequence, the 1-\cm $\mach'$
+constructed in the proof of \Cref{lem:0star} is at most
 doubly exponentially large (so is the least common multiple $N$ of
-all periods $N^c_{q,q'}$).
+all the periods $N^c_{q,q'}$, across all choices of $c, q$ and $q'$).
+This, combined with the exponential bound of Parikh's theorem,
+yields a triple-exponential bound on the norms of bases and periods of 
+the relation $\stepp 0^*$.
+We have thus shown:
+
+\begin{claim} \label{claim:sl2}
+  The relation ${\stepp 0}^*$ is effectively semilinear,
+  and the norms of bases and periods of its semilinear description
+  are bounded triply-exponentially in $n$.
+\end{claim}
+
 
 \para{Bound for \Cref{lem:compbackfor}}
 
+Composition of two semilinear relations, very much like intersection,
+increases the norms of bases and periods at most polynomially.
+This allows us, in combination with \Cref{claim:sl2}, to conclude:
+
+\begin{claim} \label{claim:sl3}
+  The relation $\stepp - \circ \ {\stepp 0}^*$ is effectively semilinear,
+  and the norms of bases and periods of its semilinear description
+  are bounded triply-exponentially in $n$.
+\end{claim}
+
+\sla{to be finished}
 Applying the pushdown automata saturation procedure of \cite{BEM97} 
 to $\mach'$, we conclude that
 the bases and period of $\stepp 0 \circ S$ and $S \circ \stepp 0$

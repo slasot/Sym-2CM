@@ -594,10 +594,10 @@ for  the three relations defined by the following rational expressions:
 
 The proof uses \emph{semilinear sets}.
 Any subset of $\N^d$ of the form
-\[
+\begin{align} \label{eq:linset}
 % \lin b {\{p_1,\dots,p_n\}} = 
 \setof{b + k_1 p_1 + \cdots + k_n p_n}{k_1, \dots, k_n \in \N},
-\]
+\end{align}
 for $b, p_1, \dots, p_n \in \N^d$,
 is called a
 \emph{linear} set with base $b$ and periods $p_1, \dots, p_n$.
@@ -707,11 +707,6 @@ Continuing in a top-down manner, we first focus on
 \section{Effective semilinearity for $\Phi_1$ and $\Phi_3$: 
 Proof of \Cref{lem:compbackfor}} \label{sec:sl}
 
-For complexity considerations,
-we denote by $\mysize \mach$ the size of unary representation of $\mach$,
-and by $\norm \mach$ the max-norm of $\mach$, namely the maximal absolute value of all numbers appearing in update transitions.
-% Clearly, $\mysize \mach \geq \norm \mach$.
-
 
 \para{Target and source pumping}
 
@@ -741,7 +736,6 @@ $a, a'\in\N$ such that $a' > a + C$,%
 &\punkt 1 1 \qquad
 \text{if} \quad q(a,0)\step^* q'(a',0) \quad &&\text{then}  \quad  q(a,0) \step^* q'(a'+D,0).
 \end{alignat*}
-Moreover, $C$ is polynomial in $\mysize \V$ and $D$ is exponential in $\mysize \V$.
 \end{lemma}
 
 \begin{remark}
@@ -842,8 +836,10 @@ is effectively semilinear \cite{Blondin15},
 which implies that so is $\reachrel$, the restriction thereof 
 enforcing a counter to be 0 initially or finally, 
 and forbidding zero-testing states except the source and target ones.
-In consequence, its further Presburger-definable restrictions 
-$\stepp 0, \ \stepp -, \ \stepp +$ are also effectively semilinear.
+In consequence, its further restrictions 
+$\stepp 0, \ \stepp -, \ \stepp +$, each of them
+obtained by intersecting with a semilinear
+set, are also effectively semilinear.
 \end{proof}
 
 
