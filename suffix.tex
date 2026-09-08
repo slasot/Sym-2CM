@@ -770,7 +770,7 @@ The constant
 \[
 C\ = \ C_1 (1 + e\norm\V), 
 \qquad \text{where } \quad
-C_1 \ = \ (2 C_0 e_\mathrm{max} + 1)(\ell_\mathrm{max} + 1) 2\norm\V
+C_1 \ = \ (2 C_0 e_\mathrm{max} + 1)(\ell_\mathrm{max} + 1) 2\norm\V,
 \] 
 is polynomial in $\mysize \V$.
 The norm of the effect of every cycle of length at most $e$ is bounded
@@ -857,7 +857,7 @@ the relation $\stepp 0^*$.
 We have thus shown:
 
 \begin{claim} \label{claim:sl2}
-  The relation ${\stepp 0}^*$ is effectively semilinear,
+  The relation $\stepp{0}^*$ is effectively semilinear,
   and the norms of bases and periods of its semilinear description
   are bounded triply-exponentially in $n$.
 \end{claim}
@@ -865,44 +865,166 @@ We have thus shown:
 
 \para{Bound for \Cref{lem:compbackfor}}
 
-Composition of two semilinear relations, very much like intersection,
+Composition of two semilinear relations in fixed dimension, 
+very much like intersection,
 increases the norms of bases and periods at most polynomially.
-This allows us, in combination with \Cref{claim:sl2}, to conclude:
-
-\begin{claim} \label{claim:sl3}
-  The relation $\stepp - \circ \ {\stepp 0}^*$ is effectively semilinear,
+Using \Cref{claim:sl2} we conclude
+that the relation
+  $(\stepp - \circ \, \stepp{0}^*)$ is effectively semilinear,
   and the norms of bases and periods of its semilinear description
   are bounded triply-exponentially in $n$.
+This allows us further to deduce:
+
+\begin{claim}\label{claim:sl3}
+  Given a semilinear ($D$-saturated) set $S\subseteq Q\times\N$, 
+  the bases of the $D$-saturated
+  set  $(\stepp - \circ \, \stepp{0}^*) \,\circ\, S$
+  are larger than the bases of $S$ by at most
+  triply exponential multiplicative factor.
 \end{claim}
 
-\sla{to be finished}
-Applying the pushdown automata saturation procedure of \cite{BEM97} 
-to $\mach'$, we conclude that
-the bases and period of $\stepp 0 \circ S$ and $S \circ \stepp 0$
-can be larger than 
-the corresponding quantities of $S$ by at a value at most 
-doubly exponential in $n$.
-Also, composition with $\stepp -$ or $\stepp +$ cannot increase
-bases or periods by larger quantity, due to the exponential bounds
-on bases and periods of semilinear descriptions given by combination
-of \cite{Blondin15} and \cite{Pottier91}.
-We apply these observations to bound the bases of $D$-\saturated sets 
-$X_i$ arising in the iterative computation in the proof of 
-\Cref{lem:compbackfor}.
-In every iteration, either a base is lowered, or a new base appears,
-namely $\minf{X_{i+1}}(q,r) = m < \infty$ while $\minf{X_i}(q,r)=\infty$.
-Whenever this happens, due to the above observations
-the new value $m$ is larger
-than the maximal base in $X_i$ by at most doubly exponential value.
-As this happens at most $\mysize Q D$ times, 
-the largest base ever appearing in any of $X_i$ is at most
-doubly exponential.
+For future use we also state a dual bound:
+
+\begin{claim}\label{claim:sl3a}
+  Given a semilinear set $S\subseteq Q\times\N$, 
+  the bases of the semilinear
+  set  $S \,\circ\,(\stepp - \circ \, \stepp{0}^*)$
+  are larger than the bases of $S$ by at most
+  triply exponential multiplicative factor.
+\end{claim}
+
+
+Concerning the first part of \Cref{lem:compbackfor},
+we bound the number of iterations of the transformation
+\begin{align}\label{eq:tra}
+S \quad \mapsto \quad S \ \cup \ 
+(\stepp - \, \circ \, \stepp{0}^*)  \circ  S
+\end{align}
+needed to compute the fixpoint $\Phi_3 \circ \{t\}$, starting from
+$X_0 = ({\stepp -} \,\circ\ {\stepp{0}^\ast})  \circ \{t\}$.
+Due to \Cref{claim:sl3}, the bases of the $D$-saturated 
+set $X_0$ are bounded triply exponentially in $n$.
+Then every base of every next $D$-saturated set
+\[
+    X_{i+1} \ := \ X_{i} \ \cup \ 
+    ({\stepp -} \,\circ\, \stepp{0}^\ast) \, \circ\,  X_{i},
+\]
+as $X_i \subseteq X_{i+1}$,
+is either smaller than some base of $X_i$, or is 
+\emph{newly created}, namely
+ $\minf{X_{i+1}}(q,r) = m < \infty$ while $\minf{X_i}(q,r)=\infty$
+ for some $q\in Q$ and $r\in\setfromto 0 {D-1}$.
+ A newly created base may appear at most $\mysize Q \cdot D$ 
+ times (exponentially many times) during the whole iteration, and is
+ larger than a base of $X_i$ by
+ at most triply-exponential multiplicative factor, due to 
+ \Cref{claim:sl3}.
+ Multiplying a triple exponential value exponentially many times
+ yields still a triple exponential value,  
+therefore all newly created bases are bounded triply exponentially.
+In consequence, the total number of iterations of \eqref{eq:tra} 
+before 
+a fixpoint is reached is at most triply exponential as well.
+Our reasoning was not specific to the starting set $\{t\}$,
+and we have actually shown:
+
+\begin{claim}\label{claim:sl4}
+  Given a semilinear ($D$-saturated) set $S\subseteq Q\times\N$, 
+  the bases of the $D$-saturated
+  set  $\Phi_3 \circ S$, as well as the number of iterations needed
+  to compute it,
+  are larger than the bases of $S$ by at most
+  triply exponential multiplicative factor.
+\end{claim}
+
+% \smallskip
+
+Concerning the second part of \Cref{lem:compbackfor},
+we need to bound the number of iterations 
+of the transformation
+\begin{align}\label{eq:tra2}
+S \quad \mapsto \quad S \ \cup \ f(S),
+\qquad \text{ where } \quad
+f(S) \ = \ S \ 
+\circ \ \bigl(\stepp{0}^* \ \circ \ \Phi_3 \ \circ \ \stepp +\bigr),
+\end{align}
+needed to compute the
+fixpoint $\{s\} \circ \Phi_1$, starting from
+$X_0 =  f\bigl(\{s\}\bigr)$. 
+We should also provide an upper bound on computation of $X_0$,
+and computation of every iteration
+$
+X_{i+1}  :=  X_i  \cup f\bigl(X_i\bigr).
+$
 
 \medskip
 
-In consequence, the running time of our decision procedure is at
-most doubly exponential in $n$, the size of unary representation,
-and hence at most triply exponential in the size of binary representation.
+We start with the computation of $X_0$.
+By \Cref{claim:sl4} applied to $S= (\stepp + \circ \ X_{q,r})$,
+the $D$-saturated set $(\Phi_3 \circ \stepp +)\circ X_{q,r}$
+is computable in at most triply exponentially many iterations
+of the transformation \eqref{eq:tra}, and its intersection $Y$
+with the set $(S \, \circ \stepp{0}^*)$, 
+\[
+Y \ = \ (S \, \circ \stepp{0}^*) \ \cap \ 
+\bigl((\Phi_3 \, \circ \stepp +)\circ X_{q,r}\bigr)
+\]
+(relying on \Cref{claim:sl2} and on polynomial blowup of intersection
+of semilinear sets in fixed dimension)
+has bases and periods of at most triply exponential norm. 
+Now, a key observation is that since  the set
+$(\Phi_3 \circ \stepp +)\circ X_{q,r}$ is computed in at most
+triply exponentially many (say $m$) iterations of \eqref{eq:tra},
+the set 
+\[ Y \ \circ \ (\stepp - \, \circ \, \stepp{0}^*)^m
+\]
+has necessarily nonempty intersection with $X_{q,r}$, and moreover
+the intersection contains, due to \Cref{claim:sl3a}, a number
+which is at most triply exponential in $n$.
+This provides a triply exponential bound on the exhaustive search 
+in the proof of \Cref{lem:compbackfor}, and thus the bound
+on the computing time for $X_0$.
+In the same way one obtains the bound on the computing time for every
+next iterate $X_{i+1}$.
+
+Finally, the triple exponential bound on the number of iterations 
+\eqref{eq:tra2} before a fixpoint is reached in show similarly
+as in the first part.
+This completes the complexity analysis of the second part of 
+\Cref{lem:compbackfor}.
+
+\medskip
+
+% Applying the pushdown automata saturation procedure of \cite{BEM97} 
+% to $\mach'$, we conclude that
+% the bases and period of $\stepp 0 \circ S$ and $S \circ \stepp 0$
+% can be larger than 
+% the corresponding quantities of $S$ by at a value at most 
+% doubly exponential in $n$.
+% Also, composition with $\stepp -$ or $\stepp +$ cannot increase
+% bases or periods by larger quantity, due to the exponential bounds
+% on bases and periods of semilinear descriptions given by combination
+% of \cite{Blondin15} and \cite{Pottier91}.
+% We apply these observations to bound the bases of $D$-\saturated sets 
+% $X_i$ arising in the iterative computation in the proof of 
+% \Cref{lem:compbackfor}.
+% In every iteration, either a base is lowered, or a new base appears,
+% namely $\minf{X_{i+1}}(q,r) = m < \infty$ while $\minf{X_i}(q,r)=\infty$.
+% Whenever this happens, due to the above observations
+% the new value $m$ is larger
+% than the maximal base in $X_i$ by at most doubly exponential value.
+% As this happens at most $\mysize Q D$ times, 
+% the largest base ever appearing in any of $X_i$ is at most
+% doubly exponential.
+
+\medskip
+
+Summing up, the running time of our decision procedure is at
+most triply exponential in $n$, the size of unary representation,
+and hence at most quadruply exponential in the size of binary 
+representation,
+while the only known lower bound is \pspace-hardness
+(in binary representation).
 Narrowing the apparent complexity gap is left as future research.
 
 
