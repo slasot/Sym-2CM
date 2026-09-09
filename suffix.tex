@@ -788,6 +788,23 @@ Summing up:
   polynomially and exponentially in $n$, respectively.
 \end{claim}
 
+\para{Terminology}
+In the sequel we say that a semilinear set $X$ is 
+\emph{(triply) exponentially semilinear} if given $\mach$,
+some base-period representation of $X$ can be computed in time
+(triply) exponential in $n$, and all computed bases and periods
+are at most (triply) exponential in $n$.
+Furthermore,
+a mapping $S \mapsto f(S)$ transforming a semilinear set $S$
+into a semilinear set $f(S)$ we call 
+\emph{(triply) exponentially based} if
+  given $\mach$ and a base-period representation of 
+  $S\subseteq Q\times\N$ where all numbers are bounded by $m$, 
+  some base-period description of $f(S)$ is computable in time
+  $m$ times (triply) exponential in $n$, and the norms of 
+  all the computed bases 
+  are larger than the largest norm of a base of $S$ by at most
+  (triply) exponential multiplicative factor in $n$.
 
 
 \para{Bounds for \Cref{lem:0-+}}
@@ -818,11 +835,10 @@ of the reachability relation along all runs of the form \eqref{eq:lps2}
 are bounded exponentially in $n$.
 Summing over all choices of $\ell$, $t_0, \ldots, t_\ell$ and 
 $c_1, \ldots, c_\ell$, we conclude that
-the reachability relation $\step^*$ of $\V$ is effectively semilinear, 
-and the norms of bases and periods of its semilinear description
-are bounded exponentially in $n$.
+the reachability relation $\step^*$ of $\V$ is exponentially semilinear.
 The same applies to the relation $\reachrel\ \subseteq(Q\times\N)^2$,
-a section of the reachability relation of $\V$.
+which is essentially the intersection of $\step^*$ with a linear set
+fixing some coordinates to 0.
 Finally, we transfer the same effective bounds to the three subrelations
 $\stepp 0, \stepp +, \stepp -$ by noticing that each of them is
 the intersection of $\reachrel$ with a semilinear set
@@ -834,9 +850,9 @@ increases the norms of bases and periods at most polynomially.
 We have thus shown:
 
 \begin{claim} \label{claim:sl}
-  The relations $\stepp 0, \stepp +, \stepp -$ are effectively semilinear,
-  and the norms of bases and periods of their semilinear descriptions
-  are bounded exponentially in $n$.
+  The relations $\stepp 0, \stepp +, \stepp -$ are exponentially semilinear.
+%   and the norms of bases and periods of their semilinear descriptions
+%   are bounded exponentially in $n$.
 \end{claim}
 
 \para{Bound for \Cref{lem:0star}}
@@ -851,15 +867,16 @@ In consequence, the 1-\cm $\mach'$
 constructed in the proof of \Cref{lem:0star} is at most
 doubly exponentially large (so is the least common multiple $N$ of
 all the periods $N^c_{q,q'}$, across all choices of $c, q$ and $q'$).
-This, combined with the exponential bound of Parikh's theorem,
+This, combined with the exponential blow-up of Parikh's theorem,
 yields a triple-exponential bound on the norms of bases and periods of 
 the relation $\stepp 0^*$.
-We have thus shown:
+As both construction of $\mach'$ and Parikh's theorem are effective,
+we have thus shown:
 
 \begin{claim} \label{claim:sl2}
-  The relation $\stepp{0}^*$ is effectively semilinear,
-  and the norms of bases and periods of its semilinear description
-  are bounded triply-exponentially in $n$.
+  The relation $\stepp{0}^*$ is triply exponetially semilinear.
+%   and the norms of bases and periods of its semilinear description
+%   are bounded triply-exponentially in $n$.
 \end{claim}
 
 
@@ -870,27 +887,20 @@ very much like intersection,
 increases the norms of bases and periods at most polynomially.
 Using \Cref{claim:sl2} we conclude
 that the relation
-  $(\stepp - \circ \, \stepp{0}^*)$ is effectively semilinear,
-  and the norms of bases and periods of its semilinear description
-  are bounded triply-exponentially in $n$.
-This allows us further to deduce:
+  $(\stepp - \circ \, \stepp{0}^*)$ is triply exponentially semilinear,
+which allows us further to deduce the bounds on bases
+of the (necessarily $D$-saturated) inverse image of the relation,
+as well as on the bases of the semilinear image thereof:
 
 \begin{claim}\label{claim:sl3}
-  Given a semilinear ($D$-saturated) set $S\subseteq Q\times\N$, 
-  the bases of the $D$-saturated
-  set  $(\stepp - \circ \, \stepp{0}^*) \,\circ\, S$
-  are larger than the bases of $S$ by at most
-  triply exponential multiplicative factor.
+The mapping $S \mapsto (\stepp - \circ \, \stepp{0}^*) \,\circ\, S$
+  is triply exponentially based.
 \end{claim}
 
-For future use we also state a dual bound:
-
 \begin{claim}\label{claim:sl3a}
-  Given a semilinear set $S\subseteq Q\times\N$, 
-  the bases of the semilinear
-  set  $S \,\circ\,(\stepp - \circ \, \stepp{0}^*)$
-  are larger than the bases of $S$ by at most
-  triply exponential multiplicative factor.
+    The mapping
+  set  $S\mapsto S \,\circ\,(\stepp - \circ \, \stepp{0}^*)$
+  is triply exponentially based.
 \end{claim}
 
 
@@ -920,7 +930,7 @@ is either smaller than some base of $X_i$, or is
  at most triply-exponential multiplicative factor, due to 
  \Cref{claim:sl3}.
  Multiplying a triple exponential value exponentially many times
- yields still a triple exponential value,  
+ yields still a triple exponential quantity,  
 therefore all newly created bases are bounded triply exponentially.
 In consequence, the total number of iterations of \eqref{eq:tra} 
 before 
@@ -929,12 +939,9 @@ Our reasoning was not specific to the starting set $\{t\}$,
 and we have actually shown:
 
 \begin{claim}\label{claim:sl4}
-  Given a semilinear ($D$-saturated) set $S\subseteq Q\times\N$, 
-  the bases of the $D$-saturated
-  set  $\Phi_3 \circ S$, as well as the number of iterations needed
-  to compute it,
-  are larger than the bases of $S$ by at most
-  triply exponential multiplicative factor.
+    The mapping $S\mapsto \Phi_3 \circ S$
+  is triply exponentially based and computable in
+  at most triply exponentially many iterations of \eqref{eq:tra}.
 \end{claim}
 
 % \smallskip
@@ -981,7 +988,8 @@ the set
 has necessarily nonempty intersection with $X_{q,r}$, and moreover
 the intersection contains, due to \Cref{claim:sl3a}, a number
 which is at most triply exponential in $n$.
-This provides a triply exponential bound on the exhaustive search 
+This provides a triply exponential bound on the number of iterations 
+of the exhaustive search 
 in the proof of \Cref{lem:compbackfor}, and thus the bound
 on the computing time for $X_0$.
 In the same way one obtains the bound on the computing time for every
