@@ -163,7 +163,7 @@ a run $\sigma : q(0,a)\step^* q'(0,a')$ for some $a, a'\in \N$.
 Assuming that the difference $a'-a$ is sufficiently large
 (namely larger than some $C$, depending only on $\V$),
 we modify the run to lift the target configuration to $q'(0,a'+\gamma D_\sigma)$ for any
-multiple $\gamma in \N$ of some particular $D_\sigma$, which depends on both $\V$ and $\sigma$.
+multiple $\gamma \in \N$ of some particular $D_\sigma$, which depends on both $\V$ and $\sigma$.
 Holding $\V$ fixed, $D_\sigma$ will only attain finitely many different values,
 hence we argue that taking the least common multiple of all $D_\sigma$ yields a
 constant $D$ satisfying the claim of the lemma.
@@ -242,7 +242,7 @@ assumption for this claim):
 \end{claim}
 %
 \begin{proof}
-Denoting the effect of $c_j$ by $(\Delta x,\Delta y)$,
+Denoting the effect of $c_j$ by $(\Delta x,\Delta y)$ \sla{$(x_j,y_j)$},
 the $n_j+1$ configurations at the boundaries between
 the iterations of $c_j$ within $c_j^{n_j}$
 form an arithmetic progression given by
@@ -272,7 +272,7 @@ $\overline{c_j}$ is fireable after the first $C_0 + 1$ iterations
 of $c_j$ within $\sigma$. Equivalently, the concatenation $c_j; \overline{c_j}$
 is fireable after $c_j^{C_0}$.
 
-Denoting by $(-x, y)$ the effect of $c_j$, we have that $y > x$, as the cycle is
+Denoting by $(-x, y)$  \sla{$(x_j,y_j)$} the effect of $c_j$, we have that $y > x$, as the cycle is
 sum-increasing. Thus, the effect of $c_j; \overline{c_j}$, being $(y-x, y-x)$,
 is positive on both coordinates, and $c_j; \overline{c_j}$ may be fired arbitrarily
 many times in the middle of $c_j^{n_j}$, without interference with the remainder of $\sigma$.
@@ -503,7 +503,8 @@ Define $(X^\pre_i, Y^\pre_i)$ and $(X^\post_i, Y^\post_i)$ to be the counter val
 the run achieves immediately before and after $c_i^{n_i}$, respectively.
 Let $k$ be the index of the first sum-increasing cycle of the run.
 For $i \geq k$, define $S_i \leq C_1$ as the sum of the norms of
-the effects of all one-off paths between $c_k$ and $c_i$, \ie
+the effects of all one-off paths between $c_k$ and $c_i$, \ie,
+writing $\norm {t}$ for the sum of norms of transitions along a path $t$,
 \[
     S_i = \sum_{j=k}^{i-1} \norm{t_j}
 \]
@@ -544,7 +545,7 @@ that $(X^\post_i, Y^\post_i)$ stays below the same line, \ie
     Y^\post_i \, \leq \, Y^\pre_k \, + \, S_i (1 + \beta_i) \, + \, \beta_i X^\post_i.
 \end{equation}
 \mei{This step would work well as a figure, I'll try to find the time to make one.}
-Writing $X^\post_i = X^\pre_i + n_i x_i$ and $Y^\post_i = Y^\pre + n_i y_i$, we see that
+Writing $X^\post_i = X^\pre_i + n_i x_i$ and $Y^\post_i = Y^\pre_i + n_i y_i$, we see that
 our aim is to prove $y_i \leq \beta_i x_i$.
 The first case, easily handled, is when $x_i = 0$. Indeed, we handle cycles of vertical effect
 $(0, +)$ in Case 1, so if we encounter such a cycle here, then $y_i \leq 0$ must hold.
@@ -565,6 +566,7 @@ would satisfy \Cref{claim:steep}. As we are assuming that the claim doesn't hold
 we indeed have $\varphi_i \geq \beta_i$, thereby establishing \eqref{eq:steep-ind-post}.
 \mei{$i$ and $j$ ended up having the opposite meaning to the statement of the claim,
 maybe we should swap them.}
+\sla{no need to swap}
 
 Our next focus shall be proving that
 \begin{equation} \label{eq:steep-ind-pre1}
@@ -618,12 +620,12 @@ before the first sum-increasing cycle of the run, so any increase above the init
 counter sum of $a$ is fully attributable to the effects of the one-off paths before $c_k$.
 Thus, we get $Y^\pre_k \leq a + C_1$. In summary, we obtain
 \[
-    a' \, \leq \, a \, + \, C_1 \, + \, C_1 (1 + e' \norm \V) \,=\, a \, + \, C_1 (2 + e' \norm \V)
+    a' \, \leq \, a \, + \, C_1 \, + \, C_1 (1 + e' \norm \V) \,=\, a \, + \, C_1 (2 + e' \norm \V).
 \]
 As the assumption of the lemma is that $a' - a > C$, we can obtain a contradiction
 by setting
 \[
-    C := C_1 (2 + e'_\mathrm{max} \norm \V)
+    C := C_1 (2 + e'_\mathrm{max} \norm \V).
     \qedhere
 \]
 \end{proof}
