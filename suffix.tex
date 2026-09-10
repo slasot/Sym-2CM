@@ -139,9 +139,11 @@ To ease the presentation, we introduce the following definitions:
     if there exists a configuration $q'(\vr v')$ such that $q(\vr v) \xstep{\rho} q'(\vr v')$,
     \ie $\rho$ can be executed starting from $q(\vr v)$, without the counters
     having to go negative along the way.
-\item A path $\rho_2$ is said to be \emph{fireable after} a path $\rho_1$, if for any
-    configuration $q(\vr v)$ at which $\rho_1$ is fireable, the concatenation
-    $\rho_1; \rho_2$ is fireable as well.
+    We denote the target configuration $q'(\vr v')$ thus obtained by $q(\vr v); \rho$.
+\item For paths $\rho_1$ and $\rho_2$, denote their concatenation by $\rho_1; \rho_2$.
+% \item A path $\rho_2$ is said to be \emph{fireable after} a path $\rho_1$, if for any
+%     configuration $q(\vr v)$ at which $\rho_1$ is fireable, the concatenation
+%     $\rho_1; \rho_2$ is fireable as well.
 \item For a path $\rho$, the \emph{transposed path} $\overline{\rho}$ is obtained
     by applying the symmetry assumption at each transition.
     If $\rho$ has effect $(a, b)$, $\overline{\rho}$ has effect $(b, a)$.
@@ -181,49 +183,47 @@ and both $\ell$ and $e$ are bounded by a polynomial of $\mysize \V$,
 the size of the unary representation of $\V$.
 Note that we do not claim any bound the number $n_j$ of iterations
 in $\widetilde\sigma$ of the cycles $c_j$.
-Let $C_0$ be the minimal value such that every cycle of $\V$
+
+Let $C_0 \leq e \norm \V$ be the minimal value such that every cycle of $\V$
 of length at most $e$ is \emph{fireable} at $\vr v_0=(C_0, C_0)$.
-% for every cycle $c$ of length at most $e$, where $q$ is the source/target 
-% state of $c$, the sequence $c$ of transitions yields a run
-% $q(\vr v_0) \step^* q(\vr v)$ for some $\vr v\in \N^2$.
-% \mei{Nitpick: we don't define "fireable" anywhere, do we consider that fine?}
-% \sla{added a definition of fireable}
+Call a cycle $c_j$ \emph{major} if its number of iterations $n_j$ is larger
+than $2 C_0$, and \emph{minor} otherwise.
+\Mywlog we may assume that all cycles are major,
+by inlining any minor cycles $c_i$ into their neighboring one-off paths $t_{i-1}$ and $t_i$.
+After this operation, the length of the one-off paths becomes bounded by
+$e' := 2e (C_0 + 1)$.
 
-We now classify the cycles as follows: call a cycle $c_j$ \emph{major}
-if its number of iterations $n_j$ is larger than $2 C_0$, and \emph{minor} otherwise.
-Moreover, call a cycle
-$c_j$ \emph{sum-increasing} if its effect $(x_j, y_j)$ satisfies $x_j + y_j > 0$.
+Call a cycle $c_j$ \emph{sum-increasing} if its effect $(x_j, y_j)$ satisfies $x_j + y_j > 0$.
+We claim that, by setting a large enough value of $C$, we can guarantee that the run
+will contain at least one (major) sum-increasing cycle.
 
-As we are assuming that $a' - a > C$, note that the sum of counters
-must increase by more than $C$ along $\sigma$. Thus, by setting an appropriately
-large $C$, we can ensure that at least one \emph{major sum-increasing cycle}
-will be present in $\widetilde\sigma$.
-
-In particular, the total effect of the one-off paths
-$t_0, \ldots, t_\ell$ is bounded,
-as each of them may increase the sum of the counters by at most $2 e \norm \V$.
-Likewise, a single iteration of a cycle may only increase the sum of the counters by at most
-$2 e \norm \V$, and each minor cycle gets executed at most $2 C_0$ times.
-Thus, to ensure that a major sum-increasing cycle is present, it suffices to set
+Indeed, we are assuming that $a' - a > C$, the sum of counters
+must increase by more than $C$ along $\sigma$.
+% In particular, the total effect of the one-off paths
+% $t_0, \ldots, t_\ell$ is bounded,
+% as each of them may increase the sum of the counters by at most $2 e \norm \V$.
+% Likewise, a single iteration of a cycle may only increase the sum of the counters by at most
+% $2 e \norm \V$, and each minor cycle gets executed at most $2 C_0$ times.
+Thus, it suffices to set
 \[
     C \ \geq \ C_1 \ := \ 
-    (2 C_0 e_\mathrm{max} + 1)(\ell_\mathrm{max} + 1) 2\norm\V,
+    e'_\mathrm{max} 2\norm\V (\ell_\mathrm{max} + 1),
 \]
-where $e_\mathrm{max}$ and $\ell_\mathrm{max}$ are the (polynomial in $\mysize\V$) bounds
-on $e$ and $\ell$, respectively.
+where $e'_\mathrm{max}$ and $\ell_\mathrm{max}$ are the (polynomial in $\mysize\V$) bounds
+on $e'$ and $\ell$, respectively.
 
 
-We now focus our attention on the major sum-increasing cycles, and perform
+We now focus our attention on the sum-increasing cycles, and perform
 case analysis in terms of the sign of each coordinate of their effect.
 Specifically, the effect of a \emph{sum-increasing} cycle can be:
 vertical $(0,+)$, horizontal $(+,0)$, or one of $(+,-)$, $(+,+)$, or $(-,+)$.
 We classify these into three cases.
 
-\para{Case 1: Some major sum-increasing cycle $c_j$ has vertical $(0,+)$ effect}
+\para{Case 1: Some sum-increasing cycle $c_j$ has vertical $(0,+)$ effect}
 One extra iteration of this cycle yields the claim, with the vertical effect
 of the cycle determining $D_\sigma$.
 
-\para{Case 2: Some major sum-increasing cycle $c_j$ has effect $(-,+)$ or $(+,-)$}
+\para{Case 2: Some sum-increasing cycle $c_j$ has effect $(-,+)$ or $(+,-)$}
 Assume $(-,+)$ effect, the other case is similar.
 % 
 For our argument it is enough if the $n_j$ is large enough to guarantee that 
@@ -235,9 +235,10 @@ the effect of $c_j$ is nonzero on both coordinates
 assumption for this claim):
 %
 \begin{claim}  \label{claim:fireable}
-If a cycle $c_j$ is repeated $n_j > 2C_0$ times
-and $C_0 \leq i \leq n_j - C_0$,
-the transposed cycle $\overline{c_j}$ is fireable after $c_j^i$.
+    If $c_j^{n_j}$ is fireable at $q(\vr v)$, then for any
+    repetition count $i$ satisfying
+    $C_0 \leq i \leq n_j - C_0$,
+    the transposed cycle $\overline{c_j}$ is fireable at $q(\vr v); c_j^i$.
 \end{claim}
 %
 \begin{proof}
@@ -261,33 +262,34 @@ $x_i = x_0 + i \Delta x \geq x_0 + i \geq C_0$.
 %
 Similarly, for coordinates with negative effect, say $\Delta y < 0$,
 it's enough that $i \leq n_j - C_0$.
-Observe that for $n_j > 2C_0$, there exist $i$ that satisfy both
-inequalities at the same time.
 \end{proof}
 
-In consequence of \Cref{claim:fireable}, the cycle $\overline{c_j}$ is fireable
-after $c_j^{C_0+1}$. Equivalently, $c_j; \overline{c_j}$ is fireable after $c_j^{C_0}$.
+Recall now that, having eliminated all minor cycles by inlining,
+we have $n_j > 2C_0$ and therefore
+the range of values of $i$ admissible for \Cref{claim:fireable}
+is non-empty. Setting $i := C_0 + 1$, we have that the transposed cycle
+$\overline{c_j}$ is fireable after the first $C_0 + 1$ iterations
+of $c_j$ within $\sigma$. Equivalently, the concatenation $c_j; \overline{c_j}$
+is fireable after $c_j^{C_0}$.
+
 Denoting by $(-x, y)$ the effect of $c_j$, we have that $y > x$, as the cycle is
 sum-increasing. Thus, the effect of $c_j; \overline{c_j}$, being $(y-x, y-x)$,
 is positive on both coordinates, and $c_j; \overline{c_j}$ may be fired arbitrarily
-many times in the middle of $c_j^{n_j}$, without interference with the remainder of the path.
+many times in the middle of $c_j^{n_j}$, without interference with the remainder of $\sigma$.
 % Explicitly "in the middle", not "at the midpoint", the latter might not even exist
 % if n_j happens to be odd.
 
 % Let $k$ be the least common multiplicity of $m_2 - m_1$ and $m_1$.  
-Now set $k:=x(y-x)$.
+Now set $u:=x(y-x)$.
 By iterating $x$ times the cycle $c_j; \overline{c_j}$,
-we get a cycle with effect $(k,k)$, and then appending
-$c_j^{y-x}$ we get the vertical effect.
+we get a cycle with effect $(u,u)$, and then appending
+$c_j^{y-x}$ we get the desired vertical effect.
 Indeed, the effect of
 \[
 \big(c_j; \overline{c_j}\big)^{x}; c_j^{y-x}
 \]
 is $(0, (x+y)(y-x))$, and this cycle is still fireable in the middle of
 $c_j^{n_j}$.
-Moreover, as the effect is non-negative on both coordinates,
-we may insert it freely without interfering with the remaining iterations
-of $c_j$, and indeed the remaining parts of $\sigma$.
 We thus get the claim with $D_\sigma = (x+y)(y-x)$.
 
 \begin{figure}[h]
@@ -320,7 +322,7 @@ We thus get the claim with $D_\sigma = (x+y)(y-x)$.
       \draw[->, very thick] (0,0) -- (-1.3,-1.5)
           node[pos=.82, right] {$c_1$};
 
-      \draw[->, very thick] (0,0) -- (1.7,0.88)
+      \draw[->, very thick] (0,0) -- (1.8,0.9)
           node[pos=.82, below] {$c_2$};
 
       \draw[->, very thick] (0,0) -- (-1.8,0.95)
@@ -343,14 +345,14 @@ We thus get the claim with $D_\sigma = (x+y)(y-x)$.
         \draw[->] (0,-2) -- (0,2) node[above] {$y$};
 
         \coordinate (a) at (2.0,1.0);
+        \draw[->, thick, dotted, green!50!black] (a) -- (0, 1.5)
+            node[left] {$\checkmark c_{j_1}$};
+        \draw[->, thick, dotted, green!50!black] (a) -- (0, 0.7)
+            node[left] {$\checkmark c_{j_2}$};
+        \draw[->, thick, dotted, red!50!black] (a) -- (0, -1.0)
+            node[left] {$\times c_{j_3}$};
         \draw[->, very thick] (0,0) -- (a)
             node[right] {$c_i$};
-        \draw[->, thick, dotted, green!50!black] (a) -- (0, 1.5)
-            node[left] {$c_{j_1}$};
-        \draw[->, thick, dotted, green!50!black] (a) -- (0, 0.7)
-            node[left] {$c_{j_2}$};
-        \draw[->, thick, dotted, red!50!black] (a) -- (0, -1.0)
-            node[left] {$c_{j_3}$};
     \end{scope}
 \end{tikzpicture}
 \caption{
@@ -371,19 +373,19 @@ We thus get the claim with $D_\sigma = (x+y)(y-x)$.
 \label{fig:steep}
 \end{figure}
 
-\para{Case 3: All major sum-increasing cycles have $(+,0)$ or $(+,+)$ effect}
-Let us restrict our attention to those major cycles $c_j$, whose effect 
+\para{Case 3: All sum-increasing cycles have $(+,0)$ or $(+,+)$ effect}
+Let us restrict our attention to those cycles $c_j$, whose effect 
 $(x_j,y_j)$ satisfies $x_j\neq 0$.
 Depending on whether $x_j>0$ or $x_j<0$, we call such cycles 
 \emph{horizontally positive}, or \emph{horizontally negative} respectively.
 Define the \emph{steepness} of such cycles $c_j$ as $y_j/x_j$, and denote it by $\varphi_j$.
 Note that, while in general the steepness may be negative,
-by assumption it will never be negative for a major sum-increasing cycle
+by assumption it will never be negative for a sum-increasing cycle
 (see \Cref{fig:steep}, left).
 
 We will now aim at increasing 
-the repetition count of one of the major sum-increasing
-cycles, together with one other major cycle, occurring later in the run, 
+the repetition count of one of the sum-increasing
+cycles, together with one other cycle, occurring later in the run, 
 in order to obtain a vertical effect (see \Cref{fig:steep}, right).
 That suitable cycles exist is stated by the following claim.
 
@@ -447,13 +449,13 @@ That suitable cycles exist is stated by the following claim.
 \end{tikzpicture}
 
 \caption{A hypothetical run violating \Cref{claim:steep}.
-Thick lines represent iterated major cycles, and dotted lines represent 
+Thick lines represent iterated cycles, and dotted lines represent 
 one-off paths.
 The cycles $c_1$ and $c_2$ are 
 horizontally positive and sum-increasing, the latter steeper than
 the former, and $c_3$ is a horizontally negative (sum-decreasing) cycle
 steeper than both $c_1$ and $c_2$.
-% Thus none of major sum-increasing cycles is followed by a less steep
+% Thus none of sum-increasing cycles is followed by a less steep
 % horizontally negative cycle.
 Observe how this run gets further away from the Y axis as it progresses.
 Intuitively, runs violating \Cref{claim:steep} like this one are ruled out, because
@@ -473,17 +475,11 @@ putting the run in the purview of Case 2.}
 \end{claim}
 %
 \begin{proof}
-For the purposes of this claim, we shall assume that all cycles within the run are major,
-by inlining any minor cycles $c_i$ into their neighboring one-off paths $t_{i-1}$ and $t_i$,
-and renumbering so that the major cycles have consecutive indices.
-The cycles $c_i$ and $c_j$ we will show to exist will thus necessarily be major,
-but we do not make use of this fact.
-
-Suppose now that the claim doesn't hold
+Suppose that the claim doesn't hold
 (see \Cref{fig:steep-counterexample} for illustration).
-Then, for any horizontally negative cycle $c_j$,
+%Then, for any horizontally negative cycle $c_j$,
 Let $c_{k_1}, \ldots c_{k_s}$ be the sequence
-of (major) sum-increasing cycles of increasing steepness, i.e. let $c_{k_1}$
+of sum-increasing cycles of increasing steepness, i.e. let $c_{k_1}$
 be the first sum-increasing cycle of the run, and define
 $k_{i+1}>k_i$ so that
 $c_{k_{i+1}}$ is the first sum-increasing cycle steeper than
@@ -510,7 +506,7 @@ $\varphi_i = \beta_j > \varphi_j$, which satisfies \Cref{claim:steep}.
 On the other hand, for $c_j$ before the first sum-increasing cycle,
 we only need to show $-1 \leq \varphi_j$. But horizontally negative
 cycles of steepness lower than $-1$ are sum-increasing, and for
-the current case we are assuming that all major sum-increasing cycles
+the current case we are assuming that all sum-increasing cycles
 are horizontally positive.
 
 On the other hand, for a horizontally \emph{positive} cycle $c_j$,
@@ -559,13 +555,13 @@ and thus moving $Y_i$ to the right-hand side and using the inequality
 where the latter inequality follows because $\beta$ is non-decreasing.
 
 Having handled the movement of the counter values caused by the one-off path
-$t_{i+1}$, let $(x_{i+1}, y_{i+1})$ be the effect of the (major) cycle $c_{i+1}$.
+$t_{i+1}$, let $(x_{i+1}, y_{i+1})$ be the effect of the cycle $c_{i+1}$.
 % of one of the $n_{i+1}$ iterations of the cycle.
 If $x_{i+1} = 0$, we must have $y_{i+1} \leq 0$,
 as we handle vertical sum-increasing cycles in Case 1.
 A $(0, -)$ cycle will however trivially preserve the desired inequality.
 Hence, it remains to consider
-major cycles that are either horizontally positive, or horizontally negative. 
+cycles that are either horizontally positive, or horizontally negative. 
 In both cases we have
 $y_{i+1} = \varphi_{i+1} x_{i+1}$ and will endeavour to prove $\varphi_{i+1} x_{i+1} \leq \beta_{i+1} x_{i+1}$.
 But as we've noted before, we have $\varphi_{i+1} \leq \beta_{i+1}$ whenever $x_{i+1} > 0$, and the
@@ -602,7 +598,7 @@ to get:
     \ \leq \ a \,+\, C_1 (1 + e\norm\V)
 \]
 where $\varphi_\mathrm{max} = \beta_{i+1}$ 
-is the steepness of the steepest major sum-increasing 
+is the steepness of the steepest sum-increasing 
 cycle, a value we can bound by $e\norm\V$, as $\varphi_i \leq y_i$ for a horizontally
 positive cycle.
 
