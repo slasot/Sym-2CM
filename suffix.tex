@@ -552,8 +552,10 @@ and thus moving $Y_i$ to the right-hand side and using the inequality
         y \ &\leq \ a \, + \, S_{i+1} (1 + \beta_i)  \, + \, \beta_i x 
         & \sla{y - S^y_{i+1} \, \leq \, a \, + \, \beta_i (x-S^x_{i+1})} \\
         \  &\leq \ a \, + \, S_{i+1} (1 + \beta_{i+1}) \, + \, \beta_{i+1} x,
+        & \mei{\not \leq a \, + \, \beta_{i+1} (x-S^x_{i+1})}
     \end{split}
 \end{equation}
+\mei{($x - S^x_{i+1}$ can be negative!)}
 where the latter inequality follows because $\beta$ is non-decreasing.
 
 Having handled the movement of the counter values caused by the one-off path
