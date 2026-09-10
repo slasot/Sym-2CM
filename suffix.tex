@@ -475,145 +475,170 @@ putting the run in the purview of Case 2.}
 \end{claim}
 %
 \begin{proof}
-Suppose that the claim doesn't hold
-(see \Cref{fig:steep-counterexample} for illustration).
 %Then, for any horizontally negative cycle $c_j$,
-Let $c_{k_1}, \ldots c_{k_s}$ be the sequence
-of sum-increasing cycles of increasing steepness, i.e. let $c_{k_1}$
-be the first sum-increasing cycle of the run, and define
-$k_{i+1}>k_i$ so that
-$c_{k_{i+1}}$ is the first sum-increasing cycle steeper than
-$c_{k_i}$. Moreover, let $S_i \leq C_1$ be the sum of norms
-of all the transitions on one-off paths 
-(and minor cycles) which occurred before $c_i$.
-In particular, let $S_{\ell+1}\leq C_1$ 
-be the sum of norms of \emph{all} transitions along 
-the run one-off paths (and minor cycles),
+Call a sum-increasing cycle \emph{record-breaking} if it is
+steeper than all sum-increasing cycles that came before it,
+and suppose that the claim doesn't hold
+(see \Cref{fig:steep-counterexample} for illustration).
+In outline, we will define a sequence of straight lines in the configuration space,
+each parallel to the effect of the most recent record-breaking cycle,
+such that the counter values will always stay below the current line.
+We will then show that the supposed target configuration of the run
+is above the final line, to derive a contradiction.
+\mei{TODO Figure. Probably add to \Cref{fig:steep-counterexample}?}
+
+To this end, for a cycle $c_i$, denote by $\beta_i$ the steepness of
+the most recent record-breaking cycle, \ie
+\[
+    \beta_i = \begin{cases}
+        \max(\beta_{i-1}, \varphi_i) & \text{if $c_i$ sum-increasing} \\
+        \beta_{i-1} & \text{otherwise}
+    \end{cases}
+\]
+with $\beta_0 = 0$ as the initial value.
+As one would expect, the value of $\beta_i$ will define the slope of each line.
+Concretely specifying the $y$-intercept, however, requires a bit more work.
+
+Define $(X^\pre_i, Y^\pre_i)$ and $(X^\post_i, Y^\post_i)$ to be the counter values
+the run achieves immediately before and after $c_i^{n_i}$, respectively.
+Let $k$ be the index of the first sum-increasing cycle of the run.
+For $i \geq k$, define $S_i \leq C_1$ as the sum of the norms of
+the effects of all one-off paths between $c_k$ and $c_i$, \ie
+\[
+    S_i = \sum_{j=k}^{i-1} \norm{t_j}
+\]
+We extend the definitions in a natural way to $i = \ell + 1$ where relevant:
+let $(X^\pre_{\ell + 1}, Y^\pre_{\ell + 1})$ be the counter values
+of the run's target configuration, and denote by $S_{\ell + 1}$
+the sum of norms of effects of all one-off paths after $c_k$, up to and
 including $t_\ell$.
-\sla{added $S_{\ell+1}$}
-Furthermore, let $(X_i, Y_i)$ be the counter values after $c_i^{n_i}$. 
-Finally, denote by $\beta_i$ the steepness of
-the most recent cycle among $c_{k_1}, \ldots c_{k_s}$, 
-i.e. $\beta_i = \varphi_i$ if
-$i \in \{k_1, \ldots, k_s\}$, and $\beta_i = \beta_{i-1}$ otherwise.
-At the start of the run, set $S_0 = 0$, $\beta_0 = -1$, and 
-$(X_0, Y_0) = (0, a)$.
 
-Note that, if \Cref{claim:steep} indeed doesn't hold, we have $\beta_j \leq \varphi_j$ for any
-horizontally negative cycle $c_j$.
-Indeed, for $c_j$ occurring after $c_{k_1}$, we would otherwise get
-$\varphi_i = \beta_j > \varphi_j$, which satisfies \Cref{claim:steep}.
-On the other hand, for $c_j$ before the first sum-increasing cycle,
-we only need to show $-1 \leq \varphi_j$. But horizontally negative
-cycles of steepness lower than $-1$ are sum-increasing, and for
-the current case we are assuming that all sum-increasing cycles
-are horizontally positive.
+% Note that, if \Cref{claim:steep} indeed doesn't hold, we have $\beta_j \leq \varphi_j$ for any
+% horizontally negative cycle $c_j$.
+% Indeed, for $c_j$ occurring after $c_{k_1}$, we would otherwise get
+% $\varphi_i = \beta_j > \varphi_j$, which satisfies \Cref{claim:steep}.
+% On the other hand, for $c_j$ before the first sum-increasing cycle,
+% we only need to show $-1 \leq \varphi_j$. But horizontally negative
+% cycles of steepness lower than $-1$ are sum-increasing, and for
+% the current case we are assuming that all sum-increasing cycles
+% are horizontally positive.
+%
+% On the other hand, for a horizontally \emph{positive} cycle $c_j$,
+% we have $\varphi_j \leq \beta_j$, either by definition, for sum-increasing cycles,
+% or trivially, as $\varphi_j \leq -1 \leq \beta_j$ for 
+% horizontally positive cycles $c_j$ that are not sum-increasing.
 
-On the other hand, for a horizontally \emph{positive} cycle $c_j$,
-we have $\varphi_j \leq \beta_j$, either by definition, for sum-increasing cycles,
-or trivially, as $\varphi_j \leq -1 \leq \beta_j$ for 
-horizontally positive cycles $c_j$ that are not sum-increasing.
-
-By induction on $i$, we will now prove that the pair $(X_i,Y_i)$ of
-counter values %configuration
-will always satisfy
+By induction on $i \geq k$, we will now prove that the pair $(X^\pre_i,Y^\pre_i)$ of
+counter values will always satisfy
 \begin{equation} \label{eq:steep-ind}
-    Y_i \, \leq \, a \, + \, S_i (1 + \beta_i) \, + \, \beta_i X_i
-    \qquad\qquad
-    \sla{Y_i - S^y_i \, \leq \, a \, + \, \beta_i (X_i-S^x_i)}
+    Y^\pre_i \, \leq \, Y^\pre_k \, + \, S_i (1 + \beta_i) \, + \, \beta_i X^\pre_i.
 \end{equation}
-\mei{TODO Figure.}
-\sla{on the right: porposed invariant; $(S^x_i,S^y_i)$ is the one-off effect}
 
-At $i = 0$, equality trivially holds.
-Suppose then that the inequality holds at a specific $i$.
-Denoting by $(x, y)$ the counter values just before $c_{i+1}$,
-we have that the effect of the one-off path between $c_i$ and $c_{i+1}$
-is $(x - X_i, y - Y_i)$, with both coordinates bounded in magnitude
-by $S_{i+1} - S_i$.
-In particular, we have
+At $i = k$, the inequality trivially holds.
+Suppose then that the inequality holds at a specific $i \geq k$,
+aiming to prove it for $i+1$.
+
+We shall follow the structure of the run, aiming first to prove that
+that $(X^\post_i, Y^\post_i)$ stays below the same line, \ie
+\begin{equation} \label{eq:steep-ind-post}
+    Y^\post_i \, \leq \, Y^\pre_k \, + \, S_i (1 + \beta_i) \, + \, \beta_i X^\post_i.
+\end{equation}
+\mei{This step would work well as a figure, I'll try to find the time to make one.}
+Writing $X^\post_i = X^\pre_i + n_i x_i$ and $Y^\post_i = Y^\pre + n_i y_i$, we see that
+our aim is to prove $y_i \leq \beta_i x_i$.
+The first case, easily handled, is when $x_i = 0$. Indeed, we handle cycles of vertical effect
+$(0, +)$ in Case 1, so if we encounter such a cycle here, then $y_i \leq 0$ must hold.
+
+In the interesting case where $x_i \neq 0$, we apply the definition
+of $\varphi_i$ to express the desired inequality as $\varphi_i x_i \leq \beta_i x_i$,
+and consider the sign of $x_i$.
+For a horizontally positive cycle, \ie $x_i > 0$, we need $\varphi_i \leq \beta_i$.
+If $c_i$ is sum-increasing, this holds by definition;
+otherwise note $\varphi_i \leq 0 \leq \beta_i$.
+
+Finally, let $c_i$ be a horizontally negative cycle. In that situation, we need
+$\varphi_i \geq \beta_i$.
+Let $j$ be the most recent record-breaking cycle before $i$, which must
+exist, as $i \geq k$ (and $i = k$ is ruled out by $c_i$ being horizontally negative).
+Now note that if we had $\varphi_i < \beta_i = \varphi_j$, cycles $c_j$ and $c_i$
+would satisfy \Cref{claim:steep}. As we are assuming that the claim doesn't hold,
+we indeed have $\varphi_i \geq \beta_i$, thereby establishing \eqref{eq:steep-ind-post}.
+\mei{$i$ and $j$ ended up having the opposite meaning to the statement of the claim,
+maybe we should swap them.}
+
+Our next focus shall be proving that
+\begin{equation} \label{eq:steep-ind-pre1}
+    Y^\pre_{i+1} \, \leq \, Y^\pre_k \, + \, S_{i+1} (1 + \beta_i) \, + \, \beta_i X^\pre_{i+1}.
+\end{equation}
+With $(\Delta x, \Delta y)$ denoting the effect of the one-off path $t_i$,
+we have $X^\pre_{i+1} = X^\post_i + \Delta x$, and analogously,
+$Y^\pre_{i+1} = Y^\post_i + \Delta y$. Comparing with \eqref{eq:steep-ind-post}, we
+see that it'll suffice to show
+\[
+    \Delta y \, \leq \, \norm{t_i} (1 + \beta_i) \, + \, \beta_i \Delta x
+\]
+(recall that $S_{i+1} = S_i + \norm{t_i}$). As both $|\Delta x|$ and $|\Delta y|$
+are bounded by $\norm{t_i}$, we have
 \begin{align*}
-    y - Y_i &\ \leq \ S_{i+1} - S_i,     & \sla{y - Y_i \ = \ S^y_{i+1} - S^y_i}, \\
-    X_i - x &\ \leq \ S_{i+1} - S_i. & \sla{x - X_i \ = \ S^x_{i+1} - S^x_i}
+    \Delta y \, &\leq \, \norm{t_i}, \\
+    - \Delta x \, &\leq \, \norm{t_i}.
 \end{align*}
-Multiplying the latter by $\beta_i$ and rearranging, \mei{this doesn't work for $\beta_0 = -1$} we obtain
+Multiplying the latter by $\beta_i$ and adding the two inequalities together,
+we obtain
 \[
-    y - Y_i \ \leq \ (S_{i+1} - S_i)(1 + \beta_i) \, + \, \beta_i (x - X_i),
-    \qquad\qquad\sla{niepotrzebne}
+    \Delta y - \beta_i \Delta x \, \leq \norm{t_i} (1 + \beta_i),
 \]
-and thus moving $Y_i$ to the right-hand side and using the inequality
-\eqref{eq:steep-ind} we get
-\begin{equation} \label{eq:steep-interm}
-    \begin{split}
-        y \ &\leq \ a \, + \, S_{i+1} (1 + \beta_i)  \, + \, \beta_i x 
-        & \sla{y - S^y_{i+1} \, \leq \, a \, + \, \beta_i (x-S^x_{i+1})} \\
-        \  &\leq \ a \, + \, S_{i+1} (1 + \beta_{i+1}) \, + \, \beta_{i+1} x,
-        & \mei{\not \leq a \, + \, \beta_{i+1} (x-S^x_{i+1})}
-    \end{split}
-\end{equation}
-\mei{($x - S^x_{i+1}$ can be negative!)}
-where the latter inequality follows because $\beta$ is non-decreasing.
+as required.
 
-Having handled the movement of the counter values caused by the one-off path
-$t_{i+1}$, let $(x_{i+1}, y_{i+1})$ be the effect of the cycle $c_{i+1}$.
-% of one of the $n_{i+1}$ iterations of the cycle.
-If $x_{i+1} = 0$, we must have $y_{i+1} \leq 0$,
-as we handle vertical sum-increasing cycles in Case 1.
-A $(0, -)$ cycle will however trivially preserve the desired inequality.
-Hence, it remains to consider
-cycles that are either horizontally positive, or horizontally negative. 
-In both cases we have
-$y_{i+1} = \varphi_{i+1} x_{i+1}$ and will endeavour to prove $\varphi_{i+1} x_{i+1} \leq \beta_{i+1} x_{i+1}$.
-But as we've noted before, we have $\varphi_{i+1} \leq \beta_{i+1}$ whenever $x_{i+1} > 0$, and the
-opposite inequality when $x_{i+1} < 0$, exactly as required to obtain
-\[
-    y_{i+1} \ =\ \varphi_{i+1} x_{i+1} \ \leq\ \beta_{i+1} x_{i+1}.
-\]
-Together with \eqref{eq:steep-interm}, we get
+Having now established \eqref{eq:steep-ind-pre1}, we note that
+$\beta_i \leq \beta_{i+1}$, and moreover both
+$S_{i+1}$ and $X^\pre_{i+1}$ are nonnegative, so we have
 \[
     \begin{split}
-    Y_{i+1} \ =\ y \,+\, n_{i+1} y_{i+1}
-    &\ \leq\ a \,+\, S_{i+1} (1 + \beta_{i+1}) \,+\, \beta_{i+1} (x + n_{i+1} x_{i+1}) \\
-    &\ =\  a \,+\, S_{i+1} (1 + \beta_{i+1}) \,+\, \beta_{i+1} X_{i+1},\\
-    % &\sla{Y_{i+1} - S^y_{i+1} \, \leq \, a \, + \, \beta_i (X_{i+1}-S^x_{i+1})}
+        Y^\pre_{i+1} \, &\leq \, Y^\pre_k \, + \, S_{i+1} (1 + \beta_i) \, + \, \beta_i X^\pre_{i+1}
+    \\
+        &\leq \, Y^\pre_k \, + \, S_{i+1} (1 + \beta_{i+1}) \, + \, \beta_{i+1} X^\pre_{i+1}.
     \end{split}
 \]
-\sla{new proposed version below}
+This ends the induction, and so we get \eqref{eq:steep-ind} up to and including $i = \ell + 1$.
+As $(X^\pre_{\ell + 1}, Y^\pre_{\ell + 1}) = (0, a')$ is the final configuration, we have:
 \[
-    \begin{split}
-    Y_{i+1} - S^y_{i+1} \ =\ y \,+\, n_{i+1} y_{i+1}  - S^y_{i+1} 
-    &\ \leq\ a \,+\, \beta_{i+1} (x + n_{i+1} x_{i+1} - S^x_{i+1}) \\
-    &\ =\  a \,+\, \beta_{i+1} (X_{i+1}-S^x_{i+1}),\\
-    \end{split}
+    a' \, \leq \, Y^\pre_k \, + \, S_{\ell + 1} (1 + \beta_{\ell + 1}).
 \]
-thus completing the induction step and obtaining \eqref{eq:steep-ind}. 
-In particular, for
-the final configuration $(0, a')$ we instantiate the first inequality
-in \eqref{eq:steep-interm} with $i = \ell$  
-to get: 
-\sla{$S_\ell \mapsto S_{\ell+1}$}
-\[
-    a'
-    \ \leq \ a \,+\, S_{\ell+1} (1 + \varphi_\mathrm{max})
-    \ \leq \ a \,+\, C_1 (1 + e\norm\V)
-\]
-where $\varphi_\mathrm{max} = \beta_{i+1}$ 
-is the steepness of the steepest sum-increasing 
-cycle, a value we can bound by $e\norm\V$, as $\varphi_i \leq y_i$ for a horizontally
-positive cycle.
 
-Observe however, that nothing prevents us from setting $C := C_1 (1 + e\norm\V)$ and thus we obtain a contradiction.
+Let us now focus on establishing an upper bound for each expression occurring
+on the right-hand side. Firstly, we have $S_{\ell + 1} \leq C_1$, which should
+be clear from the definition of the latter.
+Next, note that for any cycle $c_i$ we have $\varphi_i = y_i / x_i \leq |y_i| \leq e' \norm\V$,
+and therefore $\beta_{\ell + 1} \leq e' \norm\V$.
+
+Finally, for $Y^\pre_k$, we note that $Y^\pre_k \leq X^\pre_k + Y^\pre_k$, and analyze
+the latter instead. Recall that $(X^\pre_k, Y^\pre_k)$ are the counter values immediately
+before the first sum-increasing cycle of the run, so any increase above the initial
+counter sum of $a$ is fully attributable to the effects of the one-off paths before $c_k$.
+Thus, we get $Y^\pre_k \leq a + C_1$. In summary, we obtain
+\[
+    a' \, \leq \, a \, + \, C_1 \, + \, C_1 (1 + e' \norm \V) \,=\, a \, + \, C_1 (2 + e' \norm \V)
+\]
+As the assumption of the lemma is that $a' - a > C$, we can obtain a contradiction
+by setting
+\[
+    C := C_1 (2 + e'_\mathrm{max} \norm \V)
+    \qedhere
+\]
 \end{proof}
 
 Take any cycles $c_i$, $c_j$, where $i<j$, as given by \Cref{claim:steep}. 
 Their horizontal effects
 satisfy $x_i>0$ and $x_j<0$, and hence
 %    positive integers $I, J$, 
-the sum of effects of $c_i^{-x_j}$ and $c_j^{x_i}$ is vertical and equal 
+the sum of the effects of $c_i^{-x_j}$ and $c_j^{x_i}$ is vertical and equal 
 $(0,h)$ 
 for $h = -x_j y_i + x_i y_j > 0$.
 Expanding $c_i^{n_i}$ with $c_i^{-x_j}$ and $c_j^{n_j}$ with $c_j^{x_i}$ 
 yields a run ending in $q'(0,a'+D_\sigma)$, where $D_\sigma = h$.
+Moreover, this modification will never decrease any intermediate value
+of the counters, as compared to the original run $\sigma$.
 The proof of Case 3 is thus completed.
 %
 % The constant $C$ must be large enough so that, even after forgetting of
@@ -629,7 +654,7 @@ The proof of Case 3 is thus completed.
 \medskip
 
 Summing up, in all the three cases 
-the sufficiently large value of $C$ is $C := C_1 (1 + e\norm\V)$.
+the sufficiently large value of $C$ is $C := C_1 (2 + e'_\mathrm{max}\norm\V)$.
 The proof of \Cref{lem:targetpump} is thus completed.
 \end{proof}
 
