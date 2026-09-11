@@ -190,7 +190,7 @@ Call a cycle $c_j$ \emph{major} if its number of iterations $n_j$ is larger
 than $2 C_0$, and \emph{minor} otherwise.
 \Mywlog we may assume that all cycles are major,
 by inlining any minor cycles $c_i$ into their neighboring one-off paths $t_{i-1}$ and $t_i$.
-After this operation, the length of the one-off paths becomes bounded by
+After this operation, lengths of the one-off paths are bounded by
 $e' := 2e (C_0 + 1)$.
 
 Call a cycle $c_j$ \emph{sum-increasing} if its effect $(x_j, y_j)$ satisfies $x_j + y_j > 0$.
@@ -204,13 +204,17 @@ must increase by more than $C$ along $\sigma$.
 % as each of them may increase the sum of the counters by at most $2 e \norm \V$.
 % Likewise, a single iteration of a cycle may only increase the sum of the counters by at most
 % $2 e \norm \V$, and each minor cycle gets executed at most $2 C_0$ times.
-Thus, it suffices to set
+Thus, it is enough when
 \[
     C \ \geq \ C_1 \ := \ 
     e'_\mathrm{max} 2\norm\V (\ell_\mathrm{max} + 1),
 \]
 where $e'_\mathrm{max}$ and $\ell_\mathrm{max}$ are the (polynomial in $\mysize\V$) bounds
 on $e'$ and $\ell$, respectively.
+\lukasz{Does it make sense to introduce $e'_\mathrm{max}$ and $\ell_\mathrm{max}$?
+It is enough to say that $\ell$ and $e'$ are polynomially bounded 
+to avoid introducing new variables.
+}
 
 
 We now focus our attention on the sum-increasing cycles, and perform
@@ -224,14 +228,16 @@ One extra iteration of this cycle yields the claim, with the vertical effect
 of the cycle determining $D_\sigma$.
 
 \para{Case 2: Some sum-increasing cycle $c_j$ has effect $(-,+)$ or $(+,-)$}
-Assume $(-,+)$ effect, the other case is similar.
+Assume that $c_j$ has effect $(-x,y)$ for some positive integers $x,y$.
+Observe that $y > x$.
+The case of $(+,-)$ effect is analogous.
 % 
 For our argument it is enough if the $n_j$ is large enough to guarantee that 
 somewhere in the middle of $c_j^{n_j}$, the 
 transposed cycle $\overline{c_j}$ becomes fireable.
 We observe the following key claim, relying on the fact that  
 the effect of $c_j$ is nonzero on both coordinates
-(in particular note that we don't use the sum-increasing
+(in particular note that we do not use the sum-increasing
 assumption for this claim):
 %
 \begin{claim}  \label{claim:fireable}
@@ -242,11 +248,10 @@ assumption for this claim):
 \end{claim}
 %
 \begin{proof}
-Denoting the effect of $c_j$ by $(\Delta x,\Delta y)$ \sla{$(x_j,y_j)$},
-the $n_j+1$ configurations at the boundaries between
+The $n_j+1$ configurations at the boundaries between
 the iterations of $c_j$ within $c_j^{n_j}$
 form an arithmetic progression given by
-$(x_i, y_i) = (x_0 + i\Delta x, y_0 + i\Delta y)$.
+$(x_i, y_i) = (x_0 - i x, y_0 + i y)$.
 %For a coordinate at which the
 %effect of the cycle is positive, say $x > 0$, we obtain $x_i \geq C_0$
 %for $i \geq C_0$. On the other hand, for a coordinate with a negative effect,
@@ -254,25 +259,27 @@ $(x_i, y_i) = (x_0 + i\Delta x, y_0 + i\Delta y)$.
 %thus $y_i \geq n_j - i$. Hence for $i \leq n_j - C_0$ we have $y_i \geq C_0$.
 %As such, for $C_0 \leq i \leq n_j - C_0$, both coordinates are above $(C_0, C_0)$,
 %which suffices to obtain that $\overline{c_j}$ is fireable.
-
-It suffices to show that for appropriate $i$ we have $x_i, y_i \geq C_0$.
-For coordinates at which the effect of $c_j$ is positive, say $\Delta x > 0$,
-it suffices that $C_0 \leq i$, as then we have
-$x_i = x_0 + i \Delta x \geq x_0 + i \geq C_0$.
+%It suffices to show that for appropriate $i$ we have $x_i, y_i \geq C_0$.
+%For coordinates at which the effect of $c_j$ is positive, say $x > 0$,
+%It suffices that $C_0 \leq i \leq n_j - C_0$, as then we have
+%$x_i = x_0 - i x \leq x_0 - i \geq C_0$ and 
+Observe that for $C_0 \leq i \leq n_j - C_0$
+we have $y_i = y_0 + iy \geq y_0 + i \geq C_0$ 
+and $x_i = x_0 - ix \geq x_0 + (C_0 - n_j)x \geq C_0$.
 %
-Similarly, for coordinates with negative effect, say $\Delta y < 0$,
-it's enough that $i \leq n_j - C_0$.
+%Similarly, for coordinates with negative effect, say $y < 0$,
+%it's enough that $i \leq n_j - C_0$.
 \end{proof}
 
 Recall now that, having eliminated all minor cycles by inlining,
 we have $n_j > 2C_0$ and therefore
 the range of values of $i$ admissible for \Cref{claim:fireable}
-is non-empty. Setting $i := C_0 + 1$, we have that the transposed cycle
-$\overline{c_j}$ is fireable after the first $C_0 + 1$ iterations
+is non-empty. Setting $i := C_0$, we have that the transposed cycle
+$\overline{c_j}$ is fireable after the first $C_0$ iterations
 of $c_j$ within $\sigma$. Equivalently, the concatenation $c_j; \overline{c_j}$
 is fireable after $c_j^{C_0}$.
 
-Denoting by $(-x, y)$  \sla{$(x_j,y_j)$} the effect of $c_j$, we have that $y > x$, as the cycle is
+Recall we have that $y > x$, as the cycle is
 sum-increasing. Thus, the effect of $c_j; \overline{c_j}$, being $(y-x, y-x)$,
 is positive on both coordinates, and $c_j; \overline{c_j}$ may be fired arbitrarily
 many times in the middle of $c_j^{n_j}$, without interference with the remainder of $\sigma$.
@@ -360,7 +367,7 @@ We thus get the claim with $D_\sigma = (x+y)(y-x)$.
   Left: An illustration of the properties of steepness.
   The vectors represent the effects of three cycles
   $c_1$, $c_2$, and $c_3$, where $c_2$ is horizontally
-  positive and the other two are horizontally negative.
+  positive, and the other two are horizontally negative.
   The cycle $c_1$ is steeper than $c_2$, and $c_2$ is steeper than $c_3$.
   Cycles whose effect lies within the area shaded green (resp. red) have positive (resp. negative) steepness.
   Right: A horizontally-positive sum-increasing cycle $c_i$,
@@ -471,7 +478,7 @@ putting the run in the purview of Case 2.}
 
 \begin{claim} \label{claim:steep}
     There are some $i<j$ such that $c_i$ is a sum-increasing cycle, $c_j$ is
-    horizontally negative, and $c_i$ is steeper than $c_j$ (i.e. $\varphi_i > \varphi_j$).
+    horizontally negative, and $c_i$ is steeper than $c_j$ (\ie $\varphi_i > \varphi_j$).
 \end{claim}
 %
 \begin{proof}
@@ -539,7 +546,7 @@ At $i = k$, the inequality trivially holds.
 Suppose then that the inequality holds at a specific $i \geq k$,
 aiming to prove it for $i+1$.
 
-We shall follow the structure of the run, aiming first to prove that
+We shall follow the structure of the run, aiming first to prove
 that $(X^\post_i, Y^\post_i)$ stays below the same line, \ie
 \begin{equation} \label{eq:steep-ind-post}
     Y^\post_i \, \leq \, Y^\pre_k \, + \, S_i (1 + \beta_i) \, + \, \beta_i X^\post_i.
@@ -762,7 +769,7 @@ To finish simulating the zero-test, $\updinstr{+2, +1, -2}$ undoes
 the modifications of the counters. As we now know that the first counter is
 zero, and all numbers in the update instruction are non-zero, we can infer that
 no rotation can leave the first counter at zero. Moreover, the second counter
-has remainder $1 \bmod 3$, therefore the sole negative number in the update
+has a remainder $1 \bmod 3$, therefore the sole negative number in the update
 instruction, having value $-2$, cannot
 make that counter be zero either. Thus, for the final zero-test to pass,
 it is the auxiliary counter that must become zero, and this can only happen
@@ -810,6 +817,14 @@ C\ = \ C_1 (1 + e\norm\V),
 \qquad \text{where } \quad
 C_1 \ = \ (2 C_0 e_\mathrm{max} + 1)(\ell_\mathrm{max} + 1) 2\norm\V,
 \] 
+\lukasz{
+I think it should be
+\[
+    C := C_1 (2 + e'_\mathrm{max}\norm\V), 
+    \qquad \text{where } \quad
+    C_1 = e'_\mathrm{max} 2\norm\V (\ell_\mathrm{max} + 1),
+\]
+}
 is polynomial in $\mysize \V$.
 The norm of the effect of every cycle of length at most $e$ is bounded
 by $e\norm{\V}$, and hence
@@ -827,22 +842,36 @@ Summing up:
 \end{claim}
 
 \para{Terminology}
-In the sequel we say that a semilinear set $X$ is 
+For $k \in \N$ we denote $\exptriple(k) = 2^{2^{2^k}}$.
+Let $X$ be a semilinear 
+given by some base-period representation.
+We denote by $\norm{X}$ the maximum of norms 
+and periods of this representation.
+In the sequel 
+we say that a semilinear set $X$ is 
 \emph{(triply) exponentially semilinear} if given $\mach$,
 some base-period representation of $X$ can be computed in time
-(triply) exponential in $n$, and all computed bases and periods
-are at most (triply) exponential in $n$.
+(triply) exponential in $n$, 
+and $\norm{X} \leq \exptriple(p(n))$ for some polynomial $p$.
+%and all computed bases and periods
+%are at most (triply) exponential in $n$.
 Furthermore,
 a mapping $S \mapsto f(S)$ transforming a semilinear set $S$
 into a semilinear set $f(S)$ we call 
 \emph{(triply) exponentially based} if
   given $\mach$ and a base-period representation of 
-  $S\subseteq Q\times\N$ where all numbers are bounded by $m$, 
-  some base-period description of $f(S)$ is computable in time
-  $m$ times (triply) exponential in $n$, and the norms of 
-  all the computed bases 
-  are larger than the largest norm of a base of $S$ by at most
-  (triply) exponential multiplicative factor in $n$.
+  $S\subseteq Q\times\N$, some 
+  representation of $f(S)$ can be computed in time 
+  (triply) exponential in $n$ and 
+  $\norm{f(S)} \leq \norm{S}^d \cdot \exptriple(p(n))$
+  for some polynomial $p$.
+  
+
+%  some base-period description of $f(S)$ is computable in time
+%  $m$ times (triply) exponential in $n$, and the norms of 
+%  all the computed bases 
+%  are larger than the largest norm of a base of $S$ by at most
+%  (triply) exponential multiplicative factor in $n$.
 
 
 \para{Bounds for \Cref{lem:0-+}}
@@ -866,7 +895,7 @@ the reachability relation along all runs of the form \eqref{eq:lps2}
 is (the projection of) the solution set of an instance $I$ of the integer
 linear programming problem of size polynomial in $\ell$, 
 and hence effectively semilinear.
-Moroever, numbers appearing in $I$ are bounded exponentially in
+Moreover, numbers appearing in $I$ are bounded exponentially in
 $n$, and hence by the bound of \cite{Pottier91}
 (see also \cite[Prop.~4]{taming}), the norms of bases and periods
 of the reachability relation along all runs of the form \eqref{eq:lps2}
@@ -917,13 +946,51 @@ we have thus shown:
 %   are bounded triply-exponentially in $n$.
 \end{claim}
 
+\para{Composition of semilinar relations}
+
+Before we continue the analysis we first
+have to prove that fact 
+that that composition of 
+semilinear relations increase their norms 
+polynomially.
+
+\begin{lemma}\label{lem:composition}
+    There is a number $d \in \N$ such that
+    for semilinear relations $r_1, r_2 \subseteq (Q\times\N)^2$
+    we have $\norm{r_1 \circ r_2} \leq O((\norm{r_1} \cdot \norm{r_2})^d)$.
+\end{lemma}
+\begin{proof}
+    We denote $r_3 = r_1 \circ r_2$.
+    \Mywlog assume $Q = \{0, \ldots, h\}$.
+    For $i = 1,2,3$ we define $r_i' \subseteq \N^2$ as
+    \[
+        r_i' := \setof{(ah + q, a'h+q') \in \N^2  }{  ((q,a), (q',a')) \in r_i }.
+    \]
+    Observe that $\norm{r_i'} = h \cdot \norm{r_i}$
+    and $r_3' = r_1' \circ r_2'$.
+    We define also 
+    \[
+        r_1'' = \setof{(a,b,i) \in \N^3}{(a,b) \in r_1', i \in \N}, \qquad    
+        r_2'' = \setof{(i,a,b) \in \N^3}{(a,b) \in r_2', i \in \N}, 
+    \]
+    and observe that $r_3'$ is obtained from $r_1'' \cap r_2''$
+    by projecting away the middle coordinate.
+    Furthermore,
+    $\norm{r_1''} = \norm{r_1'}$, $\norm{r_2''} = \norm{r_2'}$.
+    We conclude from \cite[Thm.~6]{taming} that there is a polynomial 
+    $p$ independent of sets $r_1,r_2$, such that 
+    $\norm{r_3'} \leq p(\norm{r_1''}, \norm{r_2''})$.
+    Hence, the lemma follows.
+\end{proof}
+
 
 \para{Bound for \Cref{lem:compbackfor}}
 
-Composition of two semilinear relations in fixed dimension, 
-very much like intersection,
-increases the norms of bases and periods at most polynomially.
-Using \Cref{claim:sl2} we conclude
+%Composition of two semilinear relations in fixed dimension, 
+%very much like intersection,
+%increases the norms of bases and periods at most polynomially.
+
+Using \Cref{claim:sl2} and \Cref{lem:composition} we conclude
 that the relation
   $(\stepp - \circ \, \stepp{0}^*)$ is triply exponentially semilinear,
 which allows us further to deduce the bounds on bases
@@ -963,16 +1030,32 @@ is either smaller than some base of $X_i$, or is
  $\minf{X_{i+1}}(q,r) = m < \infty$ while $\minf{X_i}(q,r)=\infty$
  for some $q\in Q$ and $r\in\setfromto 0 {D-1}$.
  A newly created base may appear at most $\mysize Q \cdot D$ 
- times (exponentially many times) during the whole iteration, and is
- larger than a base of $X_i$ by
- at most triply-exponential multiplicative factor, due to 
- \Cref{claim:sl3}.
- Multiplying a triple exponential value exponentially many times
- yields still a triple exponential quantity,  
-therefore all newly created bases are bounded triply exponentially.
-In consequence, the total number of iterations of \eqref{eq:tra} 
+ times (exponentially many times) during the whole iteration.
+ Due to \Cref{claim:sl3}
+ there is $d \in \N$ and polynomial $p$ such that if new base appears in $X_{i+1}$ then
+ \[
+    \norm{X_{i+1}} \leq \norm{X_i}^{d} \cdot \exptriple(p(n)),
+ \]
+ \lukasz{Probably it would be possible to prove that $X_{i+1}$ is only multiplied 
+ by some triply exponential factor, without the exponent $d$.
+ However, at the moment I don't see how, and the complexity is the same anyway.}
+ otherwise $\norm{X_{i+1}} \leq \max\{\norm{X_i}, D\}$.
+ %larger than a base of $X_i$ by
+ %at most triply-exponential multiplicative factor, due to 
+ %\Cref{claim:sl3}.
+In consequence for every $X_i$ we 
+have $\norm{X_i} \leq \norm{X_0}^{d \cdot \mysize Q \cdot D} \exptriple(p'(n))$
+for some polynomial $p'$,
+which yields a triply exponential bound on $\norm{X_i}$.
+Therefore, the total number of iterations of \eqref{eq:tra} 
 before 
 a fixpoint is reached is at most triply exponential as well.
+% Multiplying a triple exponential value exponentially many times
+% yields still a triple exponential quantity,  
+%therefore all newly created bases are bounded triply exponentially.
+%In consequence, the total number of iterations of \eqref{eq:tra} 
+%before 
+%a fixpoint is reached is at most triply exponential as well.
 Our reasoning was not specific to the starting set $\{t\}$,
 and we have actually shown:
 
@@ -1015,7 +1098,7 @@ Y \ = \ (S \, \circ \stepp{0}^*) \ \cap \
 \bigl((\Phi_3 \, \circ \stepp +)\circ X_{q,r}\bigr)
 \]
 (relying on \Cref{claim:sl2} and on polynomial blowup of intersection
-of semilinear sets in fixed dimension)
+of semilinear sets in fixed dimension \cite[Thm.~6]{taming})
 has bases and periods of at most triply exponential norm. 
 Now, a key observation is that since  the set
 $(\Phi_3 \circ \stepp +)\circ X_{q,r}$ is computed in at most
