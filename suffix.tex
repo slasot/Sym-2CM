@@ -215,7 +215,7 @@ on $e'$ and $\ell$, respectively.
 It is enough to say that $\ell$ and $e'$ are polynomially bounded 
 to avoid introducing new variables.
 }
-
+\sla{let's keep them. at least $l_{max}$ we need}
 
 We now focus our attention on the sum-increasing cycles, and perform
 case analysis in terms of the sign of each coordinate of their effect.
@@ -812,26 +812,26 @@ and we will be content with a triply exponential bound.
 We estimate the values of constants $C$ and 
 $D$.
 The constant 
-\[
-C\ = \ C_1 (1 + e\norm\V), 
-\qquad \text{where } \quad
-C_1 \ = \ (2 C_0 e_\mathrm{max} + 1)(\ell_\mathrm{max} + 1) 2\norm\V,
-\] 
-\lukasz{
-I think it should be
+% \[
+% C\ = \ C_1 (1 + e\norm\V), 
+% \qquad \text{where } \quad
+% C_1 \ = \ (2 C_0 e_\mathrm{max} + 1)(\ell_\mathrm{max} + 1) 2\norm\V,
+% \] 
+% \lukasz{
+% I think it should be
 \[
     C := C_1 (2 + e'_\mathrm{max}\norm\V), 
     \qquad \text{where } \quad
     C_1 = e'_\mathrm{max} 2\norm\V (\ell_\mathrm{max} + 1),
 \]
-}
-is polynomial in $\mysize \V$.
-The norm of the effect of every cycle of length at most $e$ is bounded
-by $e\norm{\V}$, and hence
+% x}
+is polynomial in $n$.
+The norm of the effect of every cycle of length at most $e_\text{max}$ is bounded
+by $e_\text{max}\norm{\V}$, and hence
 all values $D_\sigma$ appearing in all the three cases
 in the proof of \Cref{lem:targetpump} 
 are bounded by $2(e_\text{max} \norm{\V})^2$, thus
-polynomially in $\mysize \V$.
+polynomially in $n$.
 Taking as $D$ the least common multiple of all $D_\sigma$ is enough for the
 claim of the lemma.
 Summing up:
@@ -843,7 +843,7 @@ Summing up:
 
 \para{Terminology}
 For $k \in \N$ we denote $\exptriple(k) = 2^{2^{2^k}}$.
-Let $X$ be a semilinear 
+Let $X$ be a semilinear set 
 given by some base-period representation.
 We denote by $\norm{X}$ the maximum of norms 
 and periods of this representation.
@@ -913,7 +913,12 @@ whose bases and periods are of norm at most $C$, the constant of
 \Cref{lem:targetpump}
 (which is polynomial in $n$),
 and intersection of linear sets in fixed dimension (here 2) 
-increases the norms of bases and periods at most polynomially.
+increases the norms of bases and periods at most polynomially
+(see \cite[Thm.~6]{taming}):
+\begin{claim} \label{claim:cap}
+Semilinear sets $r_1,r_2\subseteq (Q\times\N)^2$ satisfy
+$\norm{r_1 \cap r_2} \leq (\norm{r_1} \cdot \norm{r_2})^{O(1)}$.
+\end{claim}
 We have thus shown:
 
 \begin{claim} \label{claim:sl}
@@ -946,51 +951,65 @@ we have thus shown:
 %   are bounded triply-exponentially in $n$.
 \end{claim}
 
-\para{Composition of semilinar relations}
 
-Before we continue the analysis we first
-have to prove that fact 
-that that composition of 
-semilinear relations increase their norms 
-polynomially.
 
-\begin{lemma}\label{lem:composition}
-    There is a number $d \in \N$ such that
-    for semilinear relations $r_1, r_2 \subseteq (Q\times\N)^2$
-    we have $\norm{r_1 \circ r_2} \leq O((\norm{r_1} \cdot \norm{r_2})^d)$.
-\end{lemma}
-\begin{proof}
-    We denote $r_3 = r_1 \circ r_2$.
-    \Mywlog assume $Q = \{0, \ldots, h\}$.
-    For $i = 1,2,3$ we define $r_i' \subseteq \N^2$ as
-    \[
-        r_i' := \setof{(ah + q, a'h+q') \in \N^2  }{  ((q,a), (q',a')) \in r_i }.
-    \]
-    Observe that $\norm{r_i'} = h \cdot \norm{r_i}$
-    and $r_3' = r_1' \circ r_2'$.
-    We define also 
-    \[
-        r_1'' = \setof{(a,b,i) \in \N^3}{(a,b) \in r_1', i \in \N}, \qquad    
-        r_2'' = \setof{(i,a,b) \in \N^3}{(a,b) \in r_2', i \in \N}, 
-    \]
-    and observe that $r_3'$ is obtained from $r_1'' \cap r_2''$
-    by projecting away the middle coordinate.
-    Furthermore,
-    $\norm{r_1''} = \norm{r_1'}$, $\norm{r_2''} = \norm{r_2'}$.
-    We conclude from \cite[Thm.~6]{taming} that there is a polynomial 
-    $p$ independent of sets $r_1,r_2$, such that 
-    $\norm{r_3'} \leq p(\norm{r_1''}, \norm{r_2''})$.
-    Hence, the lemma follows.
-\end{proof}
+% \para{Composition of semilinar relations}
+
+% Before we continue the analysis we first
+% have to prove that fact 
+% that that composition of 
+% semilinear relations increase their norms 
+% polynomially.
+
+% \begin{lemma}\label{lem:composition}
+%     There is a number $d \in \N$ such that
+%     for semilinear relations $r_1, r_2 \subseteq (Q\times\N)^2$
+%     we have $\norm{r_1 \circ r_2} \leq O((\norm{r_1} \cdot \norm{r_2})^d)$.
+% \end{lemma}
+% \begin{proof}
+%     We denote $r_3 = r_1 \circ r_2$.
+%     \Mywlog assume $Q = \{0, \ldots, h\}$.
+%     For $i = 1,2,3$ we define $r_i' \subseteq \N^2$ as
+%     \[
+%         r_i' := \setof{(ah + q, a'h+q') \in \N^2  }{  ((q,a), (q',a')) \in r_i }.
+%     \]
+%     Observe that $\norm{r_i'} = h \cdot \norm{r_i}$
+%     and $r_3' = r_1' \circ r_2'$.
+%     We define also 
+%     \[
+%         r_1'' = \setof{(a,b,i) \in \N^3}{(a,b) \in r_1', i \in \N}, \qquad    
+%         r_2'' = \setof{(i,a,b) \in \N^3}{(a,b) \in r_2', i \in \N}, 
+%     \]
+%     and observe that $r_3'$ is obtained from $r_1'' \cap r_2''$
+%     by projecting away the middle coordinate.
+%     Furthermore,
+%     $\norm{r_1''} = \norm{r_1'}$, $\norm{r_2''} = \norm{r_2'}$.
+%     We conclude from \cite[Thm.~6]{taming} that there is a polynomial 
+%     $p$ independent of sets $r_1,r_2$, such that 
+%     $\norm{r_3'} \leq p(\norm{r_1''}, \norm{r_2''})$.
+%     Hence, the lemma follows.
+% \end{proof}
 
 
 \para{Bound for \Cref{lem:compbackfor}}
 
-%Composition of two semilinear relations in fixed dimension, 
-%very much like intersection,
-%increases the norms of bases and periods at most polynomially.
+Composition of two semilinear relations in fixed dimension, 
+very much like intersection,
+increases the norms of bases and periods at most polynomially:
 
-Using \Cref{claim:sl2} and \Cref{lem:composition} we conclude
+\begin{claim} \label{claim:circ}
+Semilinear relations $r_1,r_2\subseteq (Q\times\N)^2$ satisfy
+$\norm{r_1 \circ r_2} \leq (\norm{r_1} \cdot \norm{r_2})^{O(1)}$.
+\end{claim}
+Indeed, ignoring $Q$ fro simplicity, \Cref{claim:circ} 
+follows immediately from \cite[Thm.~6]{taming}, similarly to 
+\Cref{claim:cap}, as
+the composition $r_1 \circ r_2$ is the projection to the first and last coordinate
+of 
+\[
+(r_1 \times \N) \ \cap \ (\N\times r_2).
+\]
+Using \Cref{claim:sl2} and \Cref{claim:circ} we conclude
 that the relation
   $(\stepp - \circ \, \stepp{0}^*)$ is triply exponentially semilinear,
 which allows us further to deduce the bounds on bases
