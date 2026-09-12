@@ -514,23 +514,28 @@ That suitable cycles exist is stated by the following claim.
 \draw[->] (0,0) -- (0,4.5) node[above] {$y$};
 
 % Configurations along the run
-\coordinate (P0) at (0.0,2.1);
-\coordinate (P1) at ($ (P0) + (0.5,-1.1) $);
-\coordinate (P1e) at ($ (P1) + (3.7,0.4) $);
+\coordinate (P0) at (0.0,1.5);
+\coordinate (P1) at ($ (P0) + (0.5,-0.6) $);
+\coordinate (P1e) at ($ (P1) + (1.7,0.2) $);
 \coordinate (P2) at ($ (P1e) + (0.5,0.8) $);
 \coordinate (P2e) at ($ (P2) + (2.3,2.3) $);
 \coordinate (P3) at ($ (P2e) + (1.0,0.5) $);
 \coordinate (P3e) at ($ (P3) + (-0.8,-3) $);
 \coordinate (P4) at ($ (P3e) + (1.0,0.2) $);
+\coordinate (P4e) at ($ (P4) + (1.5,1.0) $);
+\coordinate (P5) at ($ (P4e) + (0.5,1.0) $);
+\coordinate (target) at (0,4);
 
 % Ordinary path segments
 \draw[dotted,->] (P0) -- (P1);
-\draw[->,very thick] (P1) -- (P1e) node[pos=.55,below] {$c_1^{n_1}$};
+\draw[->,very thick,green!70!black] (P1) -- (P1e) node[pos=.55,above,black] {$c_1^{n_1}$};
 \draw[dotted,->] (P1e) -- (P2);
-\draw[->,very thick] (P2) -- (P2e) node[pos=.45,right] {$c_2^{n_2}$};
+\draw[->,very thick,green!70!black] (P2) -- (P2e) node[pos=.45,right,black] {$c_2^{n_2}$};
 \draw[dotted,->] (P2e) -- (P3);
-\draw[->,very thick] (P3) -- (P3e) node[pos=.55,right] {$c_3^{n_3}$};
+\draw[->,red!70!black] (P3) -- (P3e) node[pos=.55,right,black] {$c_3^{n_3}$};
 \draw[dotted,->] (P3e) -- (P4);
+\draw[->,green!70!black] (P4) -- (P4e) node[pos=.45,above,black] {$c_4^{n_4}$};
+\draw[dotted,->] (P4e) -- (P5);
 
 
 % ------------------------------------------------------------
@@ -545,34 +550,54 @@ That suitable cycles exist is stated by the following claim.
 \fill (P2e) circle (1.5pt);
 \fill (P3e) circle (1.5pt);
 \fill (P4) circle (1.5pt);
+\fill (P4e) circle (1.5pt);
+\fill (P5) circle (1.5pt);
+\fill (target) circle (1.5pt);
 
-\node[above right] at (P0) {$(0, a)$};
-\node[below right]      at (P1e) {$(X_1, Y_1)$};
-\node[above left]      at (P2e) {$(X_2, Y_2)$};
-\node[below] at (P3e) {$(X_3, Y_3)$};
+\node[scale=0.7,left] at (P0) {$(0, a)$};
+\node[scale=0.7,left] at (target) {$(0, a')$};
+\node[scale=0.7,below right]      at (P1) {$(X^\pre_1, Y^\pre_1)$};
+\node[scale=0.7,below right]      at (P1e) {$(X^\post_1, Y^\post_1)$};
+\node[scale=0.7,below right]      at (P2) {$(X^\pre_2, Y^\pre_2)$};
+\node[scale=0.7,above left]      at (P2e) {$(X^\post_2, Y^\post_2)$};
+\node[scale=0.7,right]      at (P3) {$(X^\pre_3, Y^\pre_3)$};
+\node[scale=0.7,below] at (P3e) {$(X^\post_3, Y^\post_3)$};
+\node[scale=0.7,below right]      at (P4) {$(X^\pre_4, Y^\pre_4)$};
+\node[scale=0.7,below right] at (P4e) {$(X^\post_4, Y^\post_4)$};
+\node[scale=0.7,right]      at (P5) {$(X^\pre_5, Y^\pre_5)$};
 
   % angle / steepness indication
-  \node at (11,5.0) {$\varphi_1<\varphi_2<\varphi_3$};
+  % \node at (11,5.0) {$\varphi_1<\varphi_2<\varphi_3$};
 
+% invariant lines
+\draw[dashed,thick,blue!70!black] ($ (0,2) + -0.2*(1.7,0.2) $) -- +($ 1.7*(1.7,0.2) $);
+\draw[dashed,thick,blue!70!black] ($ (0,2.5) + -0.2*(1,1) $) -- +($ 2.7*(1,1) $);
 \end{tikzpicture}
 
-\caption{A hypothetical run violating \Cref{claim:steep}.
-Thick lines represent iterated cycles, and dotted lines represent 
-one-off paths.
-The cycles $c_1$ and $c_2$ are 
-horizontally positive and sum-increasing, the latter steeper than
-the former, and $c_3$ is a horizontally negative (sum-decreasing) cycle
-steeper than both $c_1$ and $c_2$.
+\caption{A run prefix that does not yet satisfy \Cref{claim:steep}.
+Solid lines represent iterated cycles, and dotted lines represent 
+one-off paths. Record-breaking cycles are drawn using thicker lines;
+the color of the cycle indicates whether the cycle increases
+or decreases the counter sum.
+Parallel to each record-breaking cycle, dashed lines represent
+the successive invariant lines, below which the configuration
+will stay.
+Note the target configuration $(0,a')$, above both invariant lines.
+% The cycles $c_1$ and $c_2$ are 
+% horizontally positive and sum-increasing, the latter steeper than
+% the former, and $c_3$ is a horizontally negative (sum-decreasing) cycle
+% steeper than both $c_1$ and $c_2$.
 % Thus none of sum-increasing cycles is followed by a less steep
 % horizontally negative cycle.
-Observe how this run gets further away from the Y axis as it progresses.
-Intuitively, runs violating \Cref{claim:steep} like this one are ruled out, because
-we're considering runs that end \emph{on} the Y axis,
-above the starting point of the run.
-To extend the run and have it reach such an endpoint, one would need to extend it
-with a horizontally-negative cycle that's either 
-less steep than $c_2$, or sum-increasing, with the latter option
-putting the run in the purview of Case 2.}
+% Observe how this run gets further away from the Y axis as it progresses.
+% Intuitively, runs violating \Cref{claim:steep} like this one are ruled out, because
+% we're considering runs that end \emph{on} the Y axis,
+% above the starting point of the run.
+% To extend the run and have it reach such an endpoint, one would need to extend it
+% with a horizontally-negative cycle that's either 
+% less steep than $c_2$, or sum-increasing, with the latter option
+% putting the run in the purview of Case 2.
+}
 \label{fig:steep-counterexample}
 \end{figure}
 
@@ -586,16 +611,15 @@ putting the run in the purview of Case 2.}
 %Then, for any horizontally negative cycle $c_j$,
 Call a sum-increasing cycle \emph{record-breaking} if it is
 steeper than all sum-increasing cycles that came before it,
-and suppose that the claim doesn't hold
-(see \Cref{fig:steep-counterexample} for illustration).
+and suppose that the claim doesn't hold.
 In outline, we will define a sequence of straight lines in the configuration space,
 each parallel to the effect of the most recent record-breaking cycle,
-such that the counter values will always stay below the current line.
+such that the counter values will always stay below the current line
+(see \Cref{fig:steep-counterexample}).
 We will then show that the supposed target configuration of the run
-is above the final line, to derive a contradiction.
-\mei{TODO Figure. Probably add to \Cref{fig:steep-counterexample}?}
+is \emph{above} all the invariant lines, to derive a contradiction.
 
-To this end, for a cycle $c_i$, denote by $\beta_i$ the steepness of
+For a cycle $c_i$, denote by $\beta_i$ the steepness of
 the most recent record-breaking cycle, \ie
 \[
     \beta_i = \begin{cases}
