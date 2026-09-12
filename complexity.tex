@@ -15,10 +15,12 @@ representation of a 2-\cm $\mach$, the source $s=q(w)$
 and the target $t=q'(w')$, namely
 \[
 \mysize \mach = 
-\mysize Q + 2 \cdot \norm \mach \cdot \mysize {T_\text{\tiny upd}}
-\ + \ \norm w \ + \ \norm w',
+\mysize Q + 2 \cdot \norm \mach \cdot \mysize {T_\mathrm{upd}}
+\ + \ \norm w \ + \ \norm{w'},
 \]
-where $T_\text{\tiny upd}$ is the set of update transitions of $\mach$.
+\mei{wait, do we want to include $w$ and $w'$ within
+$\mysize \mach$? Doesn't feel right...}
+where $T_\mathrm{upd}$ is the set of update transitions of $\mach$.
 Note that $\mysize \mach = \mysize \V$, namely we do not distinguish
 between the size of $\mach$ and of the underlying 
 2-\vass $\V$.
@@ -361,8 +363,8 @@ which is at most triply exponential in $n$.
 This provides a triply exponential bound on the number of iterations 
 of the exhaustive search 
 in the proof of \Cref{lem:compbackfor}, and thus the bound
-on the computing time for $X_0$.
-In the same way one obtains the bound on the computing time for every
+on the computation time for $X_0$.
+In the same way one obtains the bound on the computation time for every
 next iterate $X_{i+1}$.
 
 Finally, the triple exponential bound on the number of iterations 
