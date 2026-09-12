@@ -62,30 +62,34 @@ Summing up:
   polynomially and exponentially in $n$, respectively.
 \end{claim}
 
+\newcommand{\poly}[1]{\text{poly}(#1)}
 \para{Terminology}
-For $k \in \N$ we denote $\exptriple(k) = 2^{2^{2^k}}$.
-Let $X$ be a semilinear set 
-given by some base-period representation.
-We denote by $\norm{X}$ the maximum of norms 
+We use the triple exponential function $\exptriple(k) = 2^{2^{2^k}}$.
+For a semilinear set $X$ 
+with some given base-period representation
+\sla{reprezentacji moze byc oczywiscie wiele, mam nadzieje ze to jest
+zrozumiale}, we write
+$\norm{X}$ for the maximum of norms of bases \sla{dodałem bases} 
 and periods of this representation.
-In the sequel 
-we say that a semilinear set $X$ is 
+In the sequel we say that a semilinear set $X$ is 
 \emph{(triply) exponentially semilinear} if given $\mach$,
 some base-period representation of $X$ can be computed in time
 (triply) exponential in $n$, 
-and $\norm{X} \leq \exptriple(p(n))$ for some polynomial $p$.
+and $\norm X$ is bounded (triply) exponentially in $n$:
+$\norm X \leq 2^{\poly n}$, resp.~$\norm X \leq \exptriple(\poly n)$.
 %and all computed bases and periods
 %are at most (triply) exponential in $n$.
 Furthermore,
 a mapping $S \mapsto f(S)$ transforming a semilinear set $S$
 into a semilinear set $f(S)$ we call 
-\emph{(triply) exponentially based} if
+\emph{triply exponentially bounded} \sla{zmiana nazwy based--->bounded} if
   given $\mach$ and a base-period representation of 
   $S\subseteq Q\times\N$, some 
   representation of $f(S)$ can be computed in time 
-  (triply) exponential in $n$ and 
-  $\norm{f(S)} \leq \norm{S}^d \cdot \exptriple(p(n))$
-  for some polynomial $p$.
+  ${\norm S}^{O(1)}\cdot \exptriple(\poly n)$,
+  % polynomial in $\norm S$ and triply exponential in $n$, 
+  and 
+  $\norm{f(S)} \leq {\norm S}^{O(1)}\cdot \exptriple(\poly n)$.
   
 
 %  some base-period description of $f(S)$ is computable in time
@@ -239,13 +243,13 @@ as well as on the bases of the semilinear image thereof:
 
 \begin{claim}\label{claim:sl3}
 The mapping $S \mapsto (\stepp - \circ \, \stepp{0}^*) \,\circ\, S$
-  is triply exponentially based.
+  is triply exponentially bounded.
 \end{claim}
 
 \begin{claim}\label{claim:sl3a}
     The mapping
   set  $S\mapsto S \,\circ\,(\stepp - \circ \, \stepp{0}^*)$
-  is triply exponentially based.
+  is triply exponentially bounded.
 \end{claim}
 
 
@@ -271,21 +275,27 @@ is either smaller than some base of $X_i$, or is
  for some $q\in Q$ and $r\in\setfromto 0 {D-1}$.
  A newly created base may appear at most $\mysize Q \cdot D$ 
  times (exponentially many times) during the whole iteration.
- Due to \Cref{claim:sl3}
- there is $d \in \N$ and polynomial $p$ such that if new base appears in $X_{i+1}$ then
+ Due to \Cref{claim:sl3},
+%  there is $d \in \N$ and polynomial $p$ such that 
+ if new base appears in $X_{i+1}$ then
  \[
-    \norm{X_{i+1}} \leq \norm{X_i}^{d} \cdot \exptriple(p(n)),
+    \norm{X_{i+1}} \leq \norm{X_i}^{O(1)} \cdot \exptriple(\poly n),
  \]
- \lukasz{Probably it would be possible to prove that $X_{i+1}$ is only multiplied 
- by some triply exponential factor, without the exponent $d$.
- However, at the moment I don't see how, and the complexity is the same anyway.}
- otherwise $\norm{X_{i+1}} \leq \max\{\norm{X_i}, D\}$.
+%  \lukasz{Probably it would be possible to prove that $X_{i+1}$ is only multiplied 
+%  by some triply exponential factor, without the exponent $d$.
+%  However, at the moment I don't see how, and the complexity is the same anyway.}
+ otherwise 
+ $\norm{X_{i+1}} \leq \norm{X_i}$.
+ \sla{bylo $\norm{X_{i+1}} \leq \max\{\norm{X_i}, D\}$.}
  %larger than a base of $X_i$ by
  %at most triply-exponential multiplicative factor, due to 
  %\Cref{claim:sl3}.
-In consequence for every $X_i$ we 
-have $\norm{X_i} \leq \norm{X_0}^{d \cdot \mysize Q \cdot D} \exptriple(p'(n))$
-for some polynomial $p'$,
+In consequence, for every $X_i$ we 
+have 
+\[
+\norm{X_i} \leq \norm{X_0}^{O(\mysize Q \cdot D)} \cdot \exptriple(\poly n),
+\]
+% for some polynomial $p'$,
 which yields a triply exponential bound on $\norm{X_i}$.
 Therefore, the total number of iterations of \eqref{eq:tra} 
 before 
@@ -301,7 +311,7 @@ and we have actually shown:
 
 \begin{claim}\label{claim:sl4}
     The mapping $S\mapsto \Phi_3 \circ S$
-  is triply exponentially based and computable in
+  is triply exponentially bounded and computable in
   at most triply exponentially many iterations of \eqref{eq:tra}.
 \end{claim}
 
@@ -337,14 +347,13 @@ with the set $(S \, \circ \stepp{0}^*)$,
 Y \ = \ (S \, \circ \stepp{0}^*) \ \cap \ 
 \bigl((\Phi_3 \, \circ \stepp +)\circ X_{q,r}\bigr)
 \]
-(relying on \Cref{claim:sl2} and on polynomial blowup of intersection
-of semilinear sets in fixed dimension \cite[Thm.~6]{taming})
+(relying on \Cref{claim:sl2} and \Cref{claim:cap})
 has bases and periods of at most triply exponential norm. 
 Now, a key observation is that since  the set
 $(\Phi_3 \circ \stepp +)\circ X_{q,r}$ is computed in at most
 triply exponentially many (say $m$) iterations of \eqref{eq:tra},
 the set 
-\[ Y \ \circ \ (\stepp - \, \circ \, \stepp{0}^*)^m
+\[ Y \ \circ \ (\stepp - \, \circ \, \stepp{0}^*)^{\leq m}
 \]
 has necessarily nonempty intersection with $X_{q,r}$, and moreover
 the intersection contains, due to \Cref{claim:sl3a}, a number
