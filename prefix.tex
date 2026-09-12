@@ -95,12 +95,12 @@ six transitions, including five symmetric update transitions
 \node (q1) [state, scale=1.2, fill=blue!20, right = of q0] {$q$};
 % Arrows
 \path [-stealth, thick]
-   (q0) edge[bend left] node[scale=1.3] {\tiny{$\ztinstr 1$}}  (q1)
-   (q1) edge[bend left] node[scale=1.3] {\tiny$\updinstr{1,1}$}  (q0)
-   (q0) edge [loop above] node[scale=1.3] {\tiny$\updinstr{-1, 3}$}()
-   (q0) edge [loop below] node[scale=1.3] {\tiny$\updinstr{3, -1}$}()
-   (q1) edge [loop below] node[scale=1.3] {\tiny$\updinstr{1, -1}$}()
-   (q1) edge [loop above] node[scale=1.3] {\tiny$\updinstr{-1, 1}$}();
+   (q0) edge[bend left] node {\scriptsize{$\ztinstr 1$}}  (q1)
+   (q1) edge[bend left] node {\scriptsize$\updinstr{1,1}$}  (q0)
+   (q0) edge [loop above] node {\scriptsize$\updinstr{-1, 3}$}()
+   (q0) edge [loop below] node {\scriptsize$\updinstr{3, -1}$}()
+   (q1) edge [loop below] node {\scriptsize$\updinstr{1, -1}$}()
+   (q1) edge [loop above] node {\scriptsize$\updinstr{-1, 1}$}();
 \end{tikzpicture}}
 \end{center}
 % \caption{A symmetric 2-counter machine.}
