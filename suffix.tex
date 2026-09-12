@@ -219,11 +219,54 @@ to avoid introducing new variables.
 \mei{yup, as currently written, $e'$ and $\ell$ are run-specific, and
 then we take the max over all runs}
 
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+    >=stealth,
+    %scale=0.8,
+    every node/.style={font=\small}
+]
+    \fill[blue!10] (0,0) rectangle (2,2);
+    \fill[orange!10] (0,0) -- (0,2) -- (-2,2) -- cycle;
+    \fill[orange!10] (0,0) -- (2,0) -- (2,-2) -- cycle;
+    \fill[black!10] (-2,-2) -- (2,-2) -- (-2,2) -- cycle;
+    % axes
+    \draw[->, black!50] (-2,0) -- (2,0);
+    \draw[->, black!50] (0,-2) -- (0,2);
+
+    \draw[->, very thick, green!70!black] (0,0) -- (0,2)
+        node[above, green!50!black] {\footnotesize Case 1};
+    \draw[->, very thick, blue!70!black] (0,0) -- (2,0)
+        node[right, blue!50!black] {\footnotesize Case 3};
+    \node at (1,1) {Case 3};
+    \node[rotate=-45] at (1.4,-0.6) {\footnotesize Case 2};
+    \node[rotate=-45] at (-0.6,1.4) {\footnotesize Case 2};
+
+    % boundary of sum-increasing effects
+    \draw[very thick] (-2,2) -- (2,-2);
+
+    \node[rotate=-45,align=center] at (-0.6,-0.6)
+        {Not sum-increasing \\ (irrelevant)};
+    %\draw[
+\end{tikzpicture}
+\caption{
+    An illustration of how the possible runs get split into
+    three cases, based on the effects of the sum-increasing cycles
+    present in the run.
+    Cases 1--2 have \emph{priority}, in that as long as at least one
+    cycle in the relevant area is present, the run is handled
+    by one of these two cases. On the other hand,
+    Case 3 is the \emph{fallback}: it handles runs where
+    all sum-increasing cycles fall in the area labeled ``Case 3'' (blue).
+}
+\label{fig:cases}
+\end{figure}
+
 We now focus our attention on the sum-increasing cycles, and perform
 case analysis in terms of the sign of each coordinate of their effect.
 Specifically, the effect of a \emph{sum-increasing} cycle can be:
 vertical $(0,+)$, horizontal $(+,0)$, or one of $(+,-)$, $(+,+)$, or $(-,+)$.
-We classify these into three cases.
+We classify these into three cases (\Cref{fig:cases}).
 
 \para{Case 1: Some sum-increasing cycle $c_j$ has vertical $(0,+)$ effect}
 One extra iteration of this cycle yields the claim, with the vertical effect
@@ -309,13 +352,15 @@ We thus get the claim with $D_\sigma = (x+y)(y-x)$.
     every node/.style={font=\small}
 ]
     \begin{scope}
-        \fill[green!10] (0,0) rectangle (3,2);
-        \fill[green!10] (0,0) rectangle (-3,-2);
-        \fill[red!10] (0,0) rectangle (-3,2);
-        \fill[red!10] (0,0) rectangle (3,-2);
+        \fill[green!10] (0,0) rectangle (3,3);
+        \fill[green!10] (0,0) rectangle (-3,-3);
+        \fill[red!10] (0,0) rectangle (-3,3);
+        \fill[black!15] (0,0) rectangle (3,-3);
+        \fill[black!15] (0,0) -- (0,3) -- (-3,3) -- cycle;
+        \fill[red!10] (0,0) -- (0,-3) -- (3,-3) -- cycle;
       % axes
       \draw[->] (-3,0) -- (3,0) node[right] {$x$};
-      \draw[->] (0,-2.0) -- (0,2.0) node[above] {$y$};
+      \draw[->] (0,-3) -- (0,3) node[above] {$y$};
 
       % rays corresponding to steepnesses
       \draw[dashed] (0,0) -- (1.75,2.0)
@@ -335,7 +380,7 @@ We thus get the claim with $D_\sigma = (x+y)(y-x)$.
           node[pos=.82, below] {$c_2$};
 
       \draw[->, very thick] (0,0) -- (-1.8,0.95)
-          node[pos=.62, above] {$c_3$};
+          node[pos=.82, below] {$c_3$};
 
       % angle / steepness indication
       % \node at (6.1,2.3) {$\varphi_1>\varphi_2>\varphi_3$};
@@ -350,15 +395,15 @@ We thus get the claim with $D_\sigma = (x+y)(y-x)$.
     \end{scope}
 
     \begin{scope}[xshift=8cm]
-        \draw[->] (-2.5,0) -- (2.5,0) node[right] {$x$};
-        \draw[->] (0,-2) -- (0,2) node[above] {$y$};
+        \draw[->] (-3,0) -- (3,0) node[right] {$x$};
+        \draw[->] (0,-3) -- (0,3) node[above] {$y$};
 
-        \coordinate (a) at (2.0,1.0);
-        \draw[->, thick, dotted, green!50!black] (a) -- (0, 1.5)
+        \coordinate (a) at (2.5,1.5);
+        \draw[->, thick, dotted, green!50!black] (a) -- (0, 2.0)
             node[left] {$\checkmark c_{j_1}$};
-        \draw[->, thick, dotted, green!50!black] (a) -- (0, 0.7)
+        \draw[->, thick, dotted, green!50!black] (a) -- (0, 1.0)
             node[left] {$\checkmark c_{j_2}$};
-        \draw[->, thick, dotted, red!50!black] (a) -- (0, -1.0)
+        \draw[->, thick, dotted, red!50!black] (a) -- (0, -1.5)
             node[left] {$\times c_{j_3}$};
         \draw[->, very thick] (0,0) -- (a)
             node[right] {$c_i$};
@@ -366,18 +411,20 @@ We thus get the claim with $D_\sigma = (x+y)(y-x)$.
 \end{tikzpicture}
 \caption{
   The steepness comparison central to the proof strategy of Case 3.
-  Left: An illustration of the properties of steepness.
+  \textsf{\textbf{Left:}} An illustration of the properties of steepness.
   The vectors represent the effects of three cycles
   $c_1$, $c_2$, and $c_3$, where $c_2$ is horizontally
   positive, and the other two are horizontally negative.
   The cycle $c_1$ is steeper than $c_2$, and $c_2$ is steeper than $c_3$.
   Cycles whose effect lies within the area shaded green (resp. red) have positive (resp. negative) steepness.
-  Right: A horizontally-positive sum-increasing cycle $c_i$,
-  with three candidates for a subsequent horizontally-negative cycle $c_j$, illustrated
-  in terms of their combined effect
-  (when combined with coefficients chosen to put said effect on the vertical axis).
+  The area shaded gray corresponds to sum-increasing cycles that get handled in Case 2,
+  and thus cannot occur in Case 3.
+  \textsf{\textbf{Right:}} A sum-increasing cycle $c_i$,
+  with three candidates for a subsequent horizontally-negative cycle $c_j$ (cf. \Cref{claim:steep}),
+  illustrated in terms of their combined effect.
+  %(when combined with coefficients chosen to put said effect on the vertical axis).
   Observe how the vertical effect obtained this way is positive exactly
-  when $c_i$ is steeper than $c_j$ (cf. \Cref{claim:steep}).
+  when $c_i$ is steeper than $c_j$.
 }
 \label{fig:steep}
 \end{figure}
