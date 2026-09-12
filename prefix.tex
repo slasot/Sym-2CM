@@ -377,7 +377,7 @@ is said to be a \emph{run} from configuration $s$ to $t$.
 For relations $R \subseteq A \times B$,
 $R' \subseteq B \times C$, we denote by
 $R \circ R' \subseteq A \times C$
-the diagramatic-order composition of the relations.
+the diagrammatic-order composition of the relations.
 In particular, whenever convenient we consider sets
 $S \subseteq A, T \subseteq B$ as
 relations from/to the singleton set, denoting
@@ -686,6 +686,9 @@ which, according to \eqref{eq:reachrel}, is equivalent to%
 is effectively 
 expressible in Presburger Arithmetic, and hence decidable 
 \cite{Presburger30,Oppen78}.
+\lukasz{Strictly speaking, using Presburger arithmetic increases the complexity to sometheing 
+like $7ExpSpace$. 
+Maybe it is better to write about intersection of semilinear sets which is cheap.}
 It thus remains to demonstrate the two key lemmas.
 Continuing in a top-down manner, we first focus on
 \Cref{lem:compbackfor}, whose proof makes use of
