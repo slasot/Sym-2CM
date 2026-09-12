@@ -635,7 +635,7 @@ Define $(X^\pre_i, Y^\pre_i)$ and $(X^\post_i, Y^\post_i)$ to be the counter val
 the run achieves immediately before and after $c_i^{n_i}$, respectively.
 Let $k$ be the index of the first sum-increasing cycle of the run.
 For $i \geq k$, define $S_i \leq C_1$ as the sum of the norms of
-the effects of all one-off paths between $c_k$ and $c_i$, \ie,
+the effects of all one-off paths between $c_k$ and $c_i$, \ie
 writing $\norm {t}$ for the sum of norms of transitions along a path $t$,
 \[
     S_i = \sum_{j=k}^{i-1} \norm{t_j}
@@ -666,18 +666,86 @@ counter values will always satisfy
 \begin{equation} \label{eq:steep-ind}
     Y^\pre_i \, \leq \, Y^\pre_k \, + \, S_i (1 + \beta_i) \, + \, \beta_i X^\pre_i.
 \end{equation}
+Geometrically, this defines the dashed lines in \Cref{fig:steep-counterexample}.
 
 At $i = k$, the inequality trivially holds.
 Suppose then that the inequality holds at a specific $i \geq k$,
 aiming to prove it for $i+1$.
 
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[
+    >=stealth,
+    scale=0.9,
+    every node/.style={font=\small}
+]
+    \begin{scope}
+        \draw[->] (0,0) -- (3,0) node[right] {$x$};
+        \draw[->] (0,0) -- (0,3) node[above] {$y$};
+
+        \draw[dashed,thick,blue!70!black] ($ (0,1.5) + -0.2*(1,0.3) $) -- +($ 3.5*(1,0.3) $);
+
+        \coordinate (conf) at (1.7,1.7);
+        \fill (conf) circle (1.5pt);
+        \draw[->, green!70!black] (conf) -- +($ 1.5*(1,0.3) $);
+        \draw[->, green!70!black] (conf) -- +($ 0.6*(1.3,-2) $);
+        \draw[->, red!70!black] (conf) -- +($ -1.5*(1,0.3) $);
+        \draw[->, red!70!black] (conf) -- +($ 0.6*(-1,-2) $);
+        \draw[->, dotted, thick] (conf) -- +($ 1.5*(-1,0.3) $);
+    \end{scope}
+
+    \begin{scope}[xshift=5cm]
+        \draw[->] (0,0) -- (3,0) node[right] {$x$};
+        \draw[->] (0,0) -- (0,3) node[above] {$y$};
+
+        \coordinate (conf) at (1.5,1.5);
+        \coordinate (slope) at (0.5,0.9);
+        \coordinate (shift) at (-0.5,0);
+        \draw[dashed,thick,blue!70!black] ($ (conf) + -1.5*(slope) $) -- +($ 2.5*(slope) $);
+        \draw[dashed,thick,blue!70!black] ($ (conf) + (shift) + -0.5*(slope) $) -- +($ 2.5*(slope) $);
+        \draw[->, dotted] (conf) -- +(shift);
+        \draw[->, dotted] (conf) -- +(0,0.9);
+        \fill (conf) circle (1.5pt);
+    \end{scope}
+
+    \begin{scope}[xshift=10cm]
+        \draw[->] (0,0) -- (3,0) node[right] {$x$};
+        \draw[->] (0,0) -- (0,3) node[above] {$y$};
+        \coordinate (root) at (0,0.5);
+        \coordinate (conf) at (1.5,0.5);
+        \coordinate (slope1) at (1,0.3);
+        \coordinate (slope2) at (1,0.7);
+        \draw[dashed,thick,blue!70!black] ($ (root) + -0.4*(slope1) $) -- +($ 3.5*(slope1) $);
+        \draw[dashed,thick,blue!70!black] ($ (root) + -0.4*(slope2) $) -- +($ 3.5*(slope2) $);
+        \draw[->,dotted] ($ (root) + 3*(slope1) $) arc (30:45:3.8cm);
+        \fill (conf) circle (1.5pt);
+    \end{scope}
+\end{tikzpicture}
+\caption{
+    A geometric intuition for why the inductive invariant gets preserved.
+    \figleft Horizontally positive cycles (green) stay below the invariant line,
+    as by construction they are at most as steep as the invariant's slope;
+    horizontally negative cycles either stay below the invariant line (red)
+    or satisfy \Cref{claim:steep} (dotted black).
+    \figcenter One-off paths may force the invariant line to be raised,
+    but this can be bounded ahead of time. The greatest upwards
+    movement per unit effect is forced by a path %whose effect is pointing
+    going
+    directly left, when the slope of the invariant line is high.
+    \figright Because the configuration is guaranteed to stay at $x \geq 0$,
+    we may freely make the invariant line steeper as long as the $y$-intercept
+    doesn't get lowered in the process.
+}
+\label{fig:induction}
+\end{figure}
 We shall follow the structure of the run, aiming first to prove
-that $(X^\post_i, Y^\post_i)$ stays below the same line, \ie
+that after executing the effect of $c_i$, the configuration
+$(X^\post_i, Y^\post_i)$ stays below the same line, \ie
 \begin{equation} \label{eq:steep-ind-post}
     Y^\post_i \, \leq \, Y^\pre_k \, + \, S_i (1 + \beta_i) \, + \, \beta_i X^\post_i.
 \end{equation}
-\mei{This step would work well as a figure, I'll try to find the time to make one.}
-Writing $X^\post_i = X^\pre_i + n_i x_i$ and $Y^\post_i = Y^\pre_i + n_i y_i$, we see that
+See \Cref{fig:induction} (left) for an illustration of this step.
+Symbolically, writing $X^\post_i = X^\pre_i + n_i x_i$ and $Y^\post_i = Y^\pre_i + n_i y_i$, we see that
 our aim is to prove $y_i \leq \beta_i x_i$.
 The first case, easily handled, is when $x_i = 0$. Indeed, we handle cycles of vertical effect
 $(0, +)$ in Case 1, so if we encounter such a cycle here, then $y_i \leq 0$ must hold.
@@ -696,11 +764,11 @@ exist, as $i \geq k$ (and $i = k$ is ruled out by $c_i$ being horizontally negat
 Now note that if we had $\varphi_i < \beta_i = \varphi_j$, cycles $c_j$ and $c_i$
 would satisfy \Cref{claim:steep}. As we are assuming that the claim doesn't hold,
 we indeed have $\varphi_i \geq \beta_i$, thereby establishing \eqref{eq:steep-ind-post}.
-\mei{$i$ and $j$ ended up having the opposite meaning to the statement of the claim,
-maybe we should swap them.}
-\sla{no need to swap}
+% \mei{$i$ and $j$ ended up having the opposite meaning to the statement of the claim,
+% maybe we should swap them.}
+% \sla{no need to swap}
 
-Our next focus shall be proving that
+Our next focus shall be handling the effect of $t_i$ (\Cref{fig:induction}, center), proving that
 \begin{equation} \label{eq:steep-ind-pre1}
     Y^\pre_{i+1} \, \leq \, Y^\pre_k \, + \, S_{i+1} (1 + \beta_i) \, + \, \beta_i X^\pre_{i+1}.
 \end{equation}
@@ -724,7 +792,10 @@ we obtain
 \]
 as required.
 
-Having now established \eqref{eq:steep-ind-pre1}, we note that
+Having now established \eqref{eq:steep-ind-pre1}, it
+remains to raise the slope of the invariant line to $\beta_{i+1}$
+(compare \Cref{fig:induction}, right).
+we note that
 $\beta_i \leq \beta_{i+1}$, and moreover both
 $S_{i+1}$ and $X^\pre_{i+1}$ are nonnegative, so we have
 \[
