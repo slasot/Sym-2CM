@@ -216,6 +216,8 @@ It is enough to say that $\ell$ and $e'$ are polynomially bounded
 to avoid introducing new variables.
 }
 \sla{let's keep them. at least $l_{max}$ we need}
+\mei{yup, as currently written, $e'$ and $\ell$ are run-specific, and
+then we take the max over all runs}
 
 We now focus our attention on the sum-increasing cycles, and perform
 case analysis in terms of the sign of each coordinate of their effect.
@@ -662,7 +664,7 @@ The proof of Case 3 is thus completed.
 
 \medskip
 
-Summing up, in all the three cases 
+To summarize, in all the three cases 
 the sufficiently large value of $C$ is $C := C_1 (2 + e'_\mathrm{max}\norm\V)$.
 The proof of \Cref{lem:targetpump} is thus completed.
 \end{proof}
