@@ -207,7 +207,7 @@ must increase by more than $C$ along $\sigma$.
 Thus, it is enough when
 \[
     C \ \geq \ C_1 \ := \ 
-    e'_\mathrm{max} 2\norm\V (\ell_\mathrm{max} + 1),
+    2\norm\V e'_\mathrm{max} (\ell_\mathrm{max} + 1),
 \]
 where $e'_\mathrm{max}$ and $\ell_\mathrm{max}$ are the (polynomial in $\mysize\V$) bounds
 on $e'$ and $\ell$, respectively.
@@ -257,7 +257,8 @@ then we take the max over all runs}
     \draw[->] (0,-2) -- (0,2) node[above] {$y$};
 
     % target direction
-    \draw[->, very thick, green!60!black] (0,0) -- (0, 1.5);
+    \draw[->, very thick, green!60!black] (0,0) -- (0, 1.5)
+        node[above right, black, pos=0.8, scale=0.8] {$(0, D_\sigma)$};
 
     % cycle effects
     \draw[->, very thick] (0,0) -- (-0.8, 1.6)
@@ -274,20 +275,22 @@ then we take the max over all runs}
 \end{scope}
 \end{tikzpicture}
 \caption{
-    \figleft An illustration of how the possible runs get split into
+    A view of the $(\Delta x, \Delta y)$ space of effects of individual cycles.
+    \figleft An illustration of how the runs are split into
     three cases, based on the effects of the sum-increasing cycles
     present in the run.
     Cases 1--2 have \emph{priority}, in that as long as at least one
     cycle in the relevant area is present, the run is handled
-    by one of these two cases. On the other hand,
+    by one of these cases. On the other hand,
     Case 3 is the \emph{fallback}: it handles runs where
-    all sum-increasing cycles fall in the area labeled ``Case 3'' (blue).
+    \emph{all} sum-increasing cycles fall in the area labeled ``Case 3'' (blue).
     \figright Proof strategy for Case 2.
     Given a cycle $c_j$, we make use of the symmetry assumption
     to obtain the transposed cycle $\overline{c_j}$.
     The shaded area demarcates the effects we can obtain from linear
     combinations of $c_j$ and $\overline{c_j}$ with positive coefficients.
-    Observe that the shaded area contains the desired vertical effect.
+    Observe that the shaded area contains the desired vertical effect
+    (green, not to scale).
 }
 \label{fig:cases}
 \end{figure}
