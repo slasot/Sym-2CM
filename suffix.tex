@@ -515,13 +515,13 @@ That suitable cycles exist is stated by the following claim.
 
 % Configurations along the run
 \coordinate (P0) at (0.0,2.1);
-\coordinate (P1) at (0.5,1.0);
-\coordinate (P1e) at (4.2,1.4);
-\coordinate (P2) at (4.7,2.2);
-\coordinate (P2e) at (7.0,4.5);
-\coordinate (P3) at (8.0,5.0);
-\coordinate (P3e) at (7.2,2.0);
-\coordinate (P4) at (8.2,2.2);
+\coordinate (P1) at ($ (P0) + (0.5,-1.1) $);
+\coordinate (P1e) at ($ (P1) + (3.7,0.4) $);
+\coordinate (P2) at ($ (P1e) + (0.5,0.8) $);
+\coordinate (P2e) at ($ (P2) + (2.3,2.3) $);
+\coordinate (P3) at ($ (P2e) + (1.0,0.5) $);
+\coordinate (P3e) at ($ (P3) + (-0.8,-3) $);
+\coordinate (P4) at ($ (P3e) + (1.0,0.2) $);
 
 % Ordinary path segments
 \draw[dotted,->] (P0) -- (P1);
@@ -546,7 +546,7 @@ That suitable cycles exist is stated by the following claim.
 \fill (P3e) circle (1.5pt);
 \fill (P4) circle (1.5pt);
 
-\node[above right] at (P0) {$(X_0, Y_0)=(0, a)$};
+\node[above right] at (P0) {$(0, a)$};
 \node[below right]      at (P1e) {$(X_1, Y_1)$};
 \node[above left]      at (P2e) {$(X_2, Y_2)$};
 \node[below] at (P3e) {$(X_3, Y_3)$};
