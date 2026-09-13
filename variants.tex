@@ -1,0 +1,79 @@
+
+\section{Variants} \label{sec:variants}
+
+We now discuss the consequences of imposing the following 
+restrictions on symmetric \cm{s}:
+% 
+\begin{itemize}
+\item the set of $\xztinstr$ transitions is also \emph{symmetric}, 
+that is invariant under permutations of counters; 
+\item all $\xupdinstr$ transitions $(q,\updinstr{w},q')$ are 
+\emph{single-counter}, that is $w$  is nonzero on at most one coordinate.
+\end{itemize}
+
+
+\para{Symmetric zero-tests}
+
+For simplicity, let's focus on 2-\cm{s} below.
+Symmetric $\xztinstr$ transitions, effectively testing
+that an \emph{unspecified} counter is zero,
+written $\ztinstr{\ast}$,
+can surprisingly simulate unrestricted ones.
+To this aim, a configuration $q(v_1,v_2)$ of a symmetric 2-\cm would 
+be simulated by $q(2v_1,2v_2+1)$, thus doubling the counter values and 
+distinguishing them by parity.
+Consequently, a transition $(q,\updinstr{w_1,w_2},q')$ is simulated
+a transition $(q,\updinstr{2w_1,2w_2},q')$.
+Therefore the $\xupdinstr$ transitions, even symmetric ones, preserve
+parity of both counters.
+Due to parity distinction, a transition
+$(q,\ztinstr{\ast},q')$ checking if an unspecified counter is 0,
+in fact checks if counter 1 is 0.
+On the other hand,
+simulation of transition $(q,\ztinstr 2, q')$
+is done in three steps,
+using two auxiliary intermediate states $p_t,p'_t$:
+\begin{align} \label{eq:sim3}
+(q,\updinstr{1,-1},p_t) \qquad
+(p_t, \ztinstr{\ast}, p'_t) \qquad
+(p'_t, \updinstr{-1,1},q').
+\end{align}
+Observe that the first and the last transition swap parity of
+counters, and likewise do their swapped versions.
+Therefore a successful $\ztinstr{\ast}$ is only possible on
+counter 2, which rules out possibility of use of swapped versions
+of the first and last transition.
+
+The above considerations generalise 
+to $G$-\cm{s}, that is to 
+an arbitrary number $d>2$ of counters, and arbitrary permutation group
+$G\leq\symg d$.
+To this aim we distinguish between the counters by remainders modulo 
+$d$, simulate a configuration $q(a_1, \ldots, a_d)$ by 
+\[q(d a_1, d a_2 + 1, \ldots, d a_d + d-1),\]
+and simulate a transition $(q,\updinstr{\vr v}, q')$ by
+$(q,\updinstr{d\vr v}, q')$.
+Furthermore, to correctly simulate a zero-test of counter $j$, 
+say a transition $(q,\ztinstr j,q')$,
+we replace the vectors $(1,-1)$ and $(-1,1)$ in the first
+and last transition of \eqref{eq:sim3} by
+\[
+(d,\ldots,d,-(j-1), d, \ldots, d)
+\qquad\text{ and } \qquad
+(-d,\ldots,-d,j-1, -d, \ldots, -d),
+\]
+respectively, where the value $j-1$, respectively~$-(j-1)$, appears on 
+the $j$th coordinate.
+
+\para{Symmetric zero-tests and single-counter updates}
+We do not know how much weaker is the fragment with only 
+single-counter $\xupdinstr$ transitions (but unrestricted
+$\xztinstr$ transitions).
+However, imposing both restrictions results in a degeneracy,
+namely the model is simulated by (and equivalent to) 1-\vass.
+Indeed, 
+whenever a symmetric \cm has a run $q(0,0)\step^* q'(0,0)$, it also has a
+\emph{simple} run, in which all counter updates are performed on
+counter 1, while all zero-tests are (trivially) performed on counter 2.
+The zero-tests are thus void, and simple runs are essentially
+runs of a 1-\vass.

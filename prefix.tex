@@ -73,10 +73,13 @@ is invariant under all permutations $\sigma$ of counters:
 for every transition $(q,i,q')$, the machine has also a transition
 $(q,\sigma(i), q')$, where $\sigma(i)$ is the result of 
 applying $\sigma$ to the counters in the instruction $i$.
-Specifically, we choose to impose the invariance only on update transitions
+We thus choose to impose the invariance only on update transitions
 (when the instruction $i$ is a counter update), but
-not on zero-test transitions, as the latter restriction is not 
-necessary for our proofs to work.
+not on zero-test transitions.
+Imposing the invariance (symmetry) 
+also on zero-tests is not needed for our main 
+decidability proof.
+
 Here is an illustrative example of a 2-\cm (a \cm having two counters)
 with
 two control states and
@@ -160,11 +163,17 @@ a $\cycg 3$-\cm, for the cyclic
 permutation group $\cycg 3 \leq \symg 3$.
 As an additional result, we identify a bound on the impact of symmetry,
 already for 3-counter machines, namely we prove undecidability 
-for $\cycg 3$-counter machines:
+for $\cycg 3$-counter machines
+(even under an additional assumption that zero-tests are \emph{symmetric}):
 
 \begin{theorem} \label{thm:undecid}
 The reachability problem  is undecidable for $\cycg 3$-counter machines.
 \end{theorem}
+% 
+Both the above results hold in the hardest case: decidability with
+unrestricted zero-tests, and undecidability with symmetric ones. 
+This is expectable, as we observe that assuming symmetry of zero-tests
+does not weaken the model.
 
 \para{Open questions}
 
@@ -187,11 +196,12 @@ The reachability problem  is decidable for symmetric counter machines.
 We focus on decidability, thus
 leaving open the exact complexity of the reachability problem for 
 symmetric 2-\cm{s}.
-While one easily gets an elementary upper bound for our decision 
+While we obtain an elementary upper bound for our decision 
 procedure (quadruple exponential time),
 as the lower bound we only know
-\pspace-hardness inherited from symmetric 2-\vass, if updates are
-encoded in binary \cite{KL25}.
+\pspace-hardness inherited from symmetric 2-\vass
+% , if updates are encoded in binary 
+\cite{KL25}.
 It is possible that the reachability problem is \pspace-complete
 in symmetric $d$-\cm{s} for every $d\geq 2$.
 % \mei{I'm 90\% sure that this should be $d \geq 2$.}
@@ -203,73 +213,6 @@ It remains to be established the
 expressive power of the fragment, and the complexity of 
 its reachability problem.
 
-
-\para{Related research}
-
-Identifying decidable restrictions of counter machines
-is a very active line of research since the 1960s, for instance 
-1-counter, reversal-bounded, or restricted 2-counter machines 
-\cite{HKOW09,Ibarra78,FS00}.
-A prominent example is counter machines without zero-tests, that is
-vector addition systems with states
-(\vass), shown to have decidable reachability in the early 1980s
-\cite{Mayr81,Kosaraju82,Lambert92}.
-The decidability extends to 
-\cm{s}
-with only one zero-tested counter \cite{Bonnet11},
-or with nested zero-tests \cite{Reinhardt08,GCL25}.
-On the other hand, most natural restrictions of the counter model
-preserve Turing-completeness, as long as no constraint is imposed
-on zero-tests.
-For instance, considering deterministic \cm{s}, 
-the reachability problem is still undecidable
-in the subclass of \emph{reversible} \cm{s},
-where the step relation is reverse deterministic, and hence every step
-may be uniquely undone \cite{Morita96}.
-
-In the special case of 1 counter the symmetry requirement is void,
-and the reachability problem is \np-complete 
-if transition updates are encoded in binary, and \nl-complete 
-in unary encoding \cite{HKOW09}.
-The known complexity bounds separate symmetric 2-\cm{s} from 1-\cm{s}, 
-the former being \pspace-hard while the latter \np-complete,
-thus proving that symmetric 2-\cm{s} are not (easily) simulated
-by 1-\cm{s}.
-
-Restricting the use of zero-tests in 2-counter machines often
-leads not only to decidability, but even 
-to \pspace-completeness of the reachability problem.
-Assuming binary encoding,
-the \pspace-completeness has been obtained for 2-\vass 
-\cite{Blondin15,BEFGHLMT21}
-(assuming unary encoding, we have \nl-completeness \cite{ELT16}),
-but also for the further restriction to symmetric 2-\vass \cite{KL25},
-and for a relaxation of 2-\vass to 
-2-counter machines with just one zero-tested counter \cite{FLS18}.
-In all the three cases the reachability relation is effectively semilinear, which
-is a key for obtaining the \pspace upper complexity bound, and which 
-fails when the number of counters is at least 3 (even for 3-\vass) 
-\cite{HopcroftPansiot}.
-We do not know the exact complexity of symmetric 2-counter machines,
-but it is possible that the complexity remains \pspace.
-Furthermore, we do not know if the reachability relation of a
-symmetric 2-counter machine is semilinear, but we believe it is so.
-
-Contrary to the above-mentioned restrictions of zero-tests, 
-our model leaves the zero-tests unrestricted, which makes
-\Cref{thm:main} particularly interesting.
-We conclude by recalling another recently obtained decidability result that
-also does not assume any explicit restriction of zero-tests \cite{Dudenhefner22}.
-% , and hence seems as surprising as our \Cref{thm:main}.
-It amounts to observing that
-the above-mentioned Turing-completeness of
-reversible counter machines seems to be very fragile with respect
-to the choice of instruction set of a \cm.
-As shown in \cite{Dudenhefner22},
-for certain 
-choice of instruction set, the Turing-complete model of 2-\cm{s}
-becomes decidable under the reversibility restriction.
-% 
 
 \para{Outline} 
 Once we define the model in \Cref{sec:model}, the subsequent
@@ -287,7 +230,79 @@ in symmetric 2-\vass, that is subsequently shown in \Cref{sec:targetpump}.
 Technically, \Cref{sec:targetpump} is probably the most intricate part 
 of the paper, and the only one exploiting the symmetry of 2-\cm{s}.
 Finally, \Cref{sec:undecid} contains the proof of \Cref{thm:undecid},
-and the last \Cref{sec:complexity} discusses the upper complexity bound.
+and the last two,  \Cref{sec:variants,sec:complexity}, discuss
+variants of the model, and an upper complexity bound.
+
+
+\para{Related research}
+
+Identifying decidable restrictions of \cm{s}
+is a very active line of research since the 1960s, for instance 
+1-counter, reversal-bounded, or restricted 2-counter machines 
+\cite{HKOW09,Ibarra78,FS00}.
+A prominent example is \cm{s} without zero-tests, that is
+vector addition systems with states
+(\vass), shown to have decidable reachability in the early 1980s
+\cite{Mayr81,Kosaraju82,Lambert92}.
+The decidability extends to 
+\cm{s}
+with only one zero-tested counter \cite{Bonnet11},
+or with nested zero-tests \cite{Reinhardt08,GCL25}.
+On the other hand, most natural restrictions
+preserve Turing-completeness, as long as no constraint is imposed
+on zero-tests.
+For instance, considering deterministic \cm{s}, 
+the reachability problem is still undecidable
+in the subclass of \emph{reversible} \cm{s},
+where the step relation is reverse deterministic, and hence every step
+may be uniquely undone \cite{Morita96}.
+
+In the special case of 1 counter the symmetry requirement is void,
+and the reachability problem is \np-complete 
+if transition updates are encoded in binary, and \nl-complete 
+in unary encoding \cite{HKOW09}.
+The known complexity bounds separate symmetric 2-\cm{s} from 1-\cm{s}, 
+the former being \pspace-hard while the latter \np-complete,
+thus proving that symmetric 2-\cm{s} are not (easily) simulated
+by 1-\cm{s}.
+
+Restricting the use of zero-tests in 2-\cm{s} often
+leads not only to decidability, but even 
+to \pspace-completeness.
+Assuming binary encoding,
+the \pspace-completeness has been obtained for 2-\vass 
+\cite{Blondin15,BEFGHLMT21}
+(assuming unary encoding, we have \nl-completeness \cite{ELT16}),
+but also for the further restriction to symmetric 2-\vass \cite{KL25},
+and for a relaxation of 2-\vass to 
+2-\cm{s} with just one zero-tested counter \cite{FLS18}.
+In all these cases 
+the reachability relation is effectively semilinear, which
+is a key for obtaining \pspace upper bound, but which 
+fails already for 3-\vass 
+\cite{HopcroftPansiot}.
+We do not know the exact complexity of symmetric 2-\cm{s}.
+% but it is possible that the complexity remains \pspace.
+Neither we know if the reachability relation of a
+symmetric 2-\cm is semilinear, but we believe it is so.
+
+Contrary to the above-mentioned restrictions of zero-tests, 
+our model leaves the zero-tests unrestricted, 
+% which makes \Cref{thm:main} particularly interesting.
+% We conclude by recalling another recently obtained decidability result that
+% also does not assume any explicit restriction of zero-tests 
+similarly to \cite{Dudenhefner22} showing that
+% , and hence seems as surprising as our \Cref{thm:main}.
+% It amounts to observing that
+% the above-mentioned Turing-completeness of
+% reversible counter machines seems to be very fragile with respect
+% to the choice of instruction set of a \cm.
+% As shown in \cite{Dudenhefner22},
+for certain 
+choice of instruction set, the reversible 2-\cm{s}
+become decidable, in contrast with \cite{Morita96}.
+% 
+
 
 
 \section{Symmetric counter machines} \label{sec:model}
@@ -345,12 +360,13 @@ A $d$-\cm $\mach$ is \emph{symmetric} if its set of update transitions
 is invariant under the natural action: for every $\sigma\in \symg d$ 
 and $(q,\updinstr w,q')\in T$, we have $(q,\updinstr {\sigma (w)},q')\in T$.
 Importantly, 
-we note that no restriction is imposed on zero-test transitions of $\mach$.
+symmetry is imposed on $\xupdinstr$ transitions, but not on 
+$\xztinstr$ transitions of $\mach$.
 % We assume, \mywlog, that every zero-test applies to a single counter.
 % 
 In the sequel
 we mostly focus on symmetric 2-\cm{s},
-which are 2-\cm{s} whose set of transitions is invariant under the
+namely 2-\cm{s} whose set of $\xupdinstr$ transitions is invariant under the
 swap of counters.
 
 The reflexive-transitive closure $\step^*$ of $\step$ we call
@@ -371,18 +387,27 @@ with $s = q_0(\vr v_0)$ and $t = q_n(\vr v_n)$,
 % Since the additional spacing was put in explicitly, I'd like to know
 % why before fixing this.}
 related by the step relation,
-is said to be a \emph{run} from configuration $s$ to $t$.
+is said to be a \emph{run} from $s$ to $t$.
 
-\para{Notational considerations}
-For relations $R \subseteq A \times B$,
-$R' \subseteq B \times C$, we denote by
-$R \circ R' \subseteq A \times C$
-the diagrammatic-order composition of the relations.
-In particular, whenever convenient we consider sets
-$S \subseteq A, T \subseteq B$ as
-relations from/to the singleton set, denoting
-by $S \circ R$ and $R \circ T$ the image of a set
-under a relation $R$.
+\para{Variants}
+Two natural restrictions of the model are obtained by requiring that:
+% \begin{itemize}
+(1) the set of $\xztinstr$ transitions is also \emph{symmetric}, 
+that is invariant under permutations of counters; 
+(2) all $\xupdinstr$ transitions $(q,\updinstr{w},q')$ are 
+\emph{single-counter}, that is $w$ is nonzero on at most one coordinate.
+% \end{itemize}
+% 
+As we discuss later in \Cref{sec:variants}, the first 
+restriction is equally powerful as the unrestricted model,
+and imposing both restrictions makes the model equivalent to 1-\cm{s}.
+We do not know consequences of 
+imposing solely the second restriction.
+
+
+
+
+
 
 % A 2-\vass $\V$ is symmetric if whenever it has a transition
 % $q \xstep{(x_1,x_2)} q'$
@@ -411,6 +436,19 @@ We now outline the proof of \Cref{thm:main}.
 To this end we
 consider a given symmetric 2-\cm $\mach = (Q,T)$ and 
 two configurations, source $s$ and target $t$  ($s,t \in Q\times\N^2$).
+
+\para{Notations}
+For relations $R \subseteq A \times B$,
+$R' \subseteq B \times C$, we denote by
+$R \circ R' \subseteq A \times C$
+the diagrammatic-order composition of the relations.
+In particular, whenever convenient we consider sets
+$S \subseteq A, T \subseteq B$ as
+relations from/to the singleton set, denoting
+by $S \circ R$ and $R \circ T$ the (inverse) image of a set
+under a relation $R$.
+The reflexive transitive closure of $R\subseteq A\times A$ 
+is denoted by $R^*$, as usual.
 
 \para{Decomposing a run into segments}
 For convenience, we perform on $\mach$ the following notational
@@ -520,7 +558,7 @@ closure of $\reachrel$.
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.8]{figures-1.eps}
+\includegraphics[scale=0.7]{figures-1.eps}
 \caption{The three relations $\stepp +$, $\stepp -$, and $\stepp 0$.
 The axes do \emph{not} correspond to the counters, 
 but rather the initial and final values $a$ and $a'$ of a segment.
@@ -531,6 +569,7 @@ but rather the initial and final values $a$ and $a'$ of a segment.
 \vspace{-2mm}
 
 \para{Three types of segments}
+
 As we will see in \Cref{sec:targetpump}, the relation $\reachrel$
 can be split into three disjoint areas with different properties,
 delineated by a machine-dependent constant~$C$
@@ -591,6 +630,26 @@ for  the three relations defined by the following rational expressions:
       &\Phi_3 \ = \ ({\stepp -} \,\circ\, {\stepp{0}^\ast})^\ast.
   \end{aligned}
 \end{align}
+
+\noindent
+Above, $\circ$ stands for composition of relations, and $^*$ for 
+composition iteration, namely $R^* = $.
+
+
+
+
+\para{Notational considerations}
+For relations $R \subseteq A \times B$,
+$R' \subseteq B \times C$, we denote by
+$R \circ R' \subseteq A \times C$
+the diagrammatic-order composition of the relations.
+In particular, whenever convenient we consider sets
+$S \subseteq A, T \subseteq B$ as
+relations from/to the singleton set, denoting
+by $S \circ R$ and $R \circ T$ the image of a set
+under a relation $R$.
+
+
 
 \para{Proof of \Cref{thm:main}}
 
@@ -671,10 +730,10 @@ and the lemma holds for \emph{all} 2-\cm{s}, as opposed to
 the proof of \Cref{lem:compbackfor} that crucially uses the symmetry assumption.
 \end{remark}
 
-Relying on effective 
+Relying on the effective 
 semilinearity given in \Cref{lem:0star,lem:compbackfor},
-and on the effective equivalence between semilinear sets and Presburger 
-Arithmetic \cite{GS66},
+% and on the effective equivalence between semilinear sets and Presburger 
+% Arithmetic \cite{GS66},
 the proof of \Cref{thm:main} is immediate:
 the reachability question $s\reachrel^* t$
 which, according to \eqref{eq:reachrel}, is equivalent to%
@@ -683,12 +742,20 @@ which, according to \eqref{eq:reachrel}, is equivalent to%
     \exists\, x,y \in Q\times\N \ : \  x \in (\{s\} \circ \Phi_1) \ \wedge \ (x,y) \in \Phi_2 
     \ \wedge \ y\in (\Phi_3 \circ \{t\}),
 \end{equation}
-is effectively 
-expressible in Presburger Arithmetic, and hence decidable 
-\cite{Presburger30,Oppen78}.
-\lukasz{Strictly speaking, using Presburger arithmetic increases the complexity to sometheing 
-like $7ExpSpace$. 
-Maybe it is better to write about intersection of semilinear sets which is cheap.}
+and therefore equivalent to nonemptiness of the intersection of two 
+effectively semilinear sets:
+\[ \bigl(\{s\} \circ \Phi_1\bigr) \, \times \, 
+\bigl(\Phi_3\circ \{t\} \bigr)
+\quad \cap \quad
+\Phi_2,
+\]
+again effectively semilinear \cite[Thm.~6]{taming}.
+% effectively 
+% expressible in Presburger Arithmetic, and hence decidable 
+% \cite{Presburger30,Oppen78}.
+% \lukasz{Strictly speaking, using Presburger arithmetic increases the complexity to sometheing 
+% like $7ExpSpace$. 
+% Maybe it is better to write about intersection of semilinear sets which is cheap.}
 It thus remains to demonstrate the two key lemmas.
 Continuing in a top-down manner, we first focus on
 \Cref{lem:compbackfor}, whose proof makes use of
@@ -713,7 +780,7 @@ Continuing in a top-down manner, we first focus on
 Proof of \Cref{lem:compbackfor}} \label{sec:sl}
 
 
-\para{Target and source pumping}
+% \para{Target and source pumping}
 
 The \emph{target pumping} 
 property of segments of the form $\stepp +$ is 
@@ -744,8 +811,9 @@ $a, a'\in\N$ such that $a' > a + C$,%
 \end{lemma}
 
 \begin{remark}
-It is worth noting that the proof of \Cref{lem:targetpump},
-to be given in \Cref{sec:targetpump}, is the part of
+% It is worth noting that 
+The proof of \Cref{lem:targetpump},
+to be given in \Cref{sec:targetpump}, is the (only) part of
 our development that unavoidably relies on symmetry.
 \Cref{lem:targetpump} fails for non-symmetric 2-\vass,
 for instance point $\punkt 1 2$ fails 
