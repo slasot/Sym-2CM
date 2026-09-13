@@ -72,7 +72,7 @@ In summary:
 
 \newcommand{\poly}[1]{\text{poly}(#1)}
 \para{Terminology}
-We use the triple exponential function $\exptriple(k) = 2^{2^{2^k}}$.
+We use the triple exponential function $\exptriple(m) = 2^{2^{2^m}}$.
 Whenever a base-period representation of a semilinear set $X$ is clear
 from the context, 
 % \sla{reprezentacji moze byc oczywiscie wiele, mam nadzieje ze to jest
@@ -247,20 +247,21 @@ of
 Using \Cref{claim:sl2} and \Cref{claim:circ} we conclude
 that the relation
   $(\stepp - \circ \, \stepp{0}^*)$ is triply exponentially semilinear,
-which allows us further to deduce the bounds on bases
-of the (necessarily $D$-saturated) inverse image of the relation,
-as well as on the bases of the semilinear image thereof:
+which allows us further to deduce the bounds on bases and periods
+of the (necessarily $D$-saturated) inverse image of the relation.
 
 \begin{claim}\label{claim:sl3}
 The mapping $S \mapsto (\stepp - \circ \, \stepp{0}^*) \,\circ\, S$
   is triply exponentially bounded.
 \end{claim}
 
+For later use we state a bound on the bases and periods 
+of the semilinear image of $(\stepp - \circ \, \stepp{0}^*)$:
+
 \begin{claim}\label{claim:sl3a}
     The mapping
-  set  $S\mapsto S \,\circ\,(\stepp - \circ \, \stepp{0}^*)$
+  $S\mapsto S \,\circ\,(\stepp - \circ \, \stepp{0}^*)$
   is triply exponentially bounded.
-    \mei{is "mapping set" a typo here?}
 \end{claim}
 
 
@@ -268,7 +269,7 @@ Concerning the first part of \Cref{lem:compbackfor},
 we bound the number of iterations of the transformation
 \begin{align}\label{eq:tra}
 S \quad \mapsto \quad S \ \cup \ 
-(\stepp - \, \circ \, \stepp{0}^*)  \circ  S
+(\stepp - \, \circ \, \stepp{0}^*) \, \circ \,  S
 \end{align}
 needed to compute the fixpoint $\Phi_3 \circ \{t\}$, starting from
 $X_0 = ({\stepp -} \,\circ\ {\stepp{0}^\ast})  \circ \{t\}$.
@@ -306,6 +307,7 @@ have
 \[
 \norm{X_i} \leq \norm{X_0}^{O(\mysize Q \cdot D)} \cdot \exptriple(\poly n),
 \]
+\sla{to nie jest w formacie triply expoentially bounded}
 % for some polynomial $p'$,
 which yields a triply exponential bound on $\norm{X_i}$.
 Therefore, the total number of iterations of \eqref{eq:tra} 
@@ -351,8 +353,9 @@ $
 We start by analysing the computation of $X_0 = f(\{s\})$.
 By \Cref{claim:sl} the set $(\stepp + \circ \ X_{q,r})$
 is exponentially semilinear.
-Then by \Cref{claim:sl4} applied to $S= (\stepp + \circ \ X_{q,r})$,
-the $D$-saturated set 
+Then by \Cref{claim:sl4} applied to $S= (\stepp + \circ \ X_{q,r})$, the 
+% $D$-saturated 
+set 
 $\Phi_3 \circ (\stepp +\circ \,X_{q,r}) = 
 (\Phi_3 \, \circ \stepp +)\circ \,X_{q,r}$
 is computable in at most triply exponentially many iterations
@@ -379,6 +382,8 @@ has necessarily nonempty intersection with $X_{q,r}$, and moreover
 the intersection contains, due to Claims \ref{claim:sl} and \ref{claim:sl3a}, 
 a number
 which is at most triply exponential in $n$.
+\sla{nie, wzrost jest wiekszy niz triply exponential; trzeba wzmocnić 
+\Cref{claim:sl3a}}
 This provides a triply exponential upper bound on the number of iterations 
 of the exhaustive search 
 in the proof of \Cref{lem:compbackfor}, and thus the bound

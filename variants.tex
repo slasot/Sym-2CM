@@ -10,8 +10,7 @@ that is invariant under permutations of counters;
 \item all $\xupdinstr$ transitions $(q,\updinstr{w},q')$ are 
 \emph{single-counter}, that is $w$  is nonzero on at most one coordinate.
 \end{itemize}
-
-
+% 
 \para{Symmetric zero-tests}
 
 For simplicity, let's focus on 2-\cm{s} below.
@@ -44,8 +43,10 @@ Therefore a successful $\ztinstr{\ast}$ is only possible on
 counter 2, which rules out possibility of use of swapped versions
 of the first and last transition.
 
+\smallskip
+
 The above considerations generalise 
-to $G$-\cm{s}, that is to 
+to $G$-\cm{s}, for 
 an arbitrary number $d>2$ of counters, and arbitrary permutation group
 $G\leq\symg d$.
 To this aim we distinguish between the counters by remainders modulo 
@@ -53,29 +54,32 @@ $d$, simulate a configuration $q(a_1, \ldots, a_d)$ by
 \[q(d a_1, d a_2 + 1, \ldots, d a_d + d-1),\]
 and simulate a transition $(q,\updinstr{\vr v}, q')$ by
 $(q,\updinstr{d\vr v}, q')$.
-Furthermore, to correctly simulate a zero-test of counter $j$, 
-say a transition $(q,\ztinstr j,q')$,
+Furthermore, to correctly simulate a zero-test of counter $j+1>1$, 
+say a transition $(q,\ztinstr {j+1},q')$,
 we replace the vectors $(1,-1)$ and $(-1,1)$ in the first
-and last transition of \eqref{eq:sim3} by
+and last transition in \eqref{eq:sim3} by
 \[
-(d,\ldots,d,-(j-1), d, \ldots, d)
+(j,\ldots,j,-j, j, \ldots, j)
 \qquad\text{ and } \qquad
-(-d,\ldots,-d,j-1, -d, \ldots, -d),
+(-j,\ldots,-j,j, -j, \ldots, -j),
 \]
-respectively, where the value $j-1$, respectively~$-(j-1)$, appears on 
-the $j$th coordinate.
-\mei{I don't think it should be $d$, I expected $j-1$ and $-(j-1)$
-respectively, to match the special case worked out for 2-\cm{s}.}
+respectively, where the unique value of negative (left) or positive
+(right) sign appears on the $(j+1)$th coordinate.
+% \mei{I don't think it should be $d$, I expected $j-1$ and $-(j-1)$
+% respectively, to match the special case worked out for 2-\cm{s}.}
 
 \para{Symmetric zero-tests and single-counter updates}
 We do not know how much weaker is the fragment with only 
 single-counter $\xupdinstr$ transitions (but unrestricted
 $\xztinstr$ transitions).
 However, imposing both restrictions results in a degeneracy,
-namely the model is simulated by (and equivalent to) 1-\vass.
+namely the model is simulated by (and equivalent to) 1-\vass,
+at least as long as zero source and target vectors are considered.
 Indeed, 
-whenever a symmetric \cm has a run $q(0,0)\step^* q'(0,0)$, it also has a
+whenever a symmetric \cm has a run 
+$q(0,\ldots, 0)\step^* q'(0,\ldots, 0)$, it also has a
 \emph{simple} run, in which all counter updates are performed on
-counter 1, while all zero-tests are (trivially) performed on counter 2.
+counter 1, say, while all zero-tests are (trivially) performed on counter 2,
+say.
 The zero-tests are thus void, and simple runs are essentially
 runs of a 1-\vass.
