@@ -10,7 +10,7 @@
 In this section we provide an upper complexity bound for our decision procedure
 outlined in \Cref{sec:outline}.
 We will measure the size of input instances of the reachability problem 
-as the size of \emph{unary}
+as the size of the \emph{unary}
 representation of a 2-\cm $\mach=(Q,T)$, the source $s=q(w)$ 
 and the target $t=q'(w')$, namely
 \[
@@ -20,10 +20,10 @@ n \, = \,
 2 \cdot \norm \V \cdot \mysize {T_\text{update}}
 \, + \, \norm w \, + \, \norm{w'},
 \]
-\mei{wait, do we want to include $w$ and $w'$ within
-$\mysize \mach$? Doesn't feel right...}
-\sla{i think we should. I've removed the notation $\mysize \mach$, let's 
-simply use $n$ instead}
+% \mei{wait, do we want to include $w$ and $w'$ within
+% $\mysize \mach$? Doesn't feel right...}
+% \sla{i think we should. I've removed the notation $\mysize \mach$, let's 
+% simply use $n$ instead}
 where $T_\text{zero-test}$ and $T_\text{update}$ are the sets of zero-test
 and update transitions of $\mach$, respectively, and 
 $\V=(Q,T_\text{update})$ is the underlying 2-\vass.
@@ -63,7 +63,7 @@ are bounded by $2(e_\text{max} \norm{\V})^2$, thus
 polynomially in $n$.
 Taking as $D$ the least common multiple of all $D_\sigma$ is enough for the
 claim of the lemma.
-Summing up:
+In summary:
 
 \begin{claim} \label{claim:bounds}
   The constants $C$ and $D$ of \Cref{lem:targetpump} are bounded
@@ -418,7 +418,7 @@ This completes the complexity analysis of the second part of
 
 \medskip
 
-Summing up, the running time of our decision procedure is at
+To summarize, the running time of our decision procedure is at
 most triply exponential in $n$, the size of unary representation,
 and hence at most quadruply exponential in the size of binary 
 representation.

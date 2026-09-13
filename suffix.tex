@@ -711,13 +711,13 @@ aiming to prove it for $i+1$.
     \begin{scope}[xshift=10cm]
         \draw[->] (0,0) -- (3,0) node[right] {$x$};
         \draw[->] (0,0) -- (0,3) node[above] {$y$};
-        \coordinate (root) at (0,0.5);
-        \coordinate (conf) at (1.5,0.5);
+        \coordinate (root) at (0,1);
+        \coordinate (conf) at (1.5,0.8);
         \coordinate (slope1) at (1,0.3);
         \coordinate (slope2) at (1,0.7);
         \draw[dashed,thick,blue!70!black] ($ (root) + -0.4*(slope1) $) -- +($ 3.5*(slope1) $);
-        \draw[dashed,thick,blue!70!black] ($ (root) + -0.4*(slope2) $) -- +($ 3.5*(slope2) $);
-        \draw[->,dotted] ($ (root) + 3*(slope1) $) arc (30:45:3.8cm);
+        \draw[dashed,thick,blue!70!black] ($ (root) + -0.4*(slope2) $) -- +($ 3.1*(slope2) $);
+        \draw[->,dotted] ($ (root) + 3*(slope1) $) arc (16.7:35:3cm);
         \fill (conf) circle (1.5pt);
     \end{scope}
 \end{tikzpicture}
