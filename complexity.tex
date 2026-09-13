@@ -11,21 +11,27 @@ In this section we provide an upper complexity bound for our decision procedure
 outlined in \Cref{sec:outline}.
 We will measure the size of input instances of the reachability problem 
 as the size of \emph{unary}
-representation of a 2-\cm $\mach$, the source $s=q(w)$ 
+representation of a 2-\cm $\mach=(Q,T)$, the source $s=q(w)$ 
 and the target $t=q'(w')$, namely
 \[
-\mysize \mach = 
-\mysize Q + 2 \cdot \norm \mach \cdot \mysize {T_\mathrm{upd}}
-\ + \ \norm w \ + \ \norm{w'},
+% \mysize \mach = 
+n \, = \,
+\mysize Q + \mysize{T_\text{zero-test}} \, + \, 
+2 \cdot \norm \V \cdot \mysize {T_\text{update}}
+\, + \, \norm w \, + \, \norm{w'},
 \]
 \mei{wait, do we want to include $w$ and $w'$ within
 $\mysize \mach$? Doesn't feel right...}
-where $T_\mathrm{upd}$ is the set of update transitions of $\mach$.
-Note that $\mysize \mach = \mysize \V$, namely we do not distinguish
-between the size of $\mach$ and of the underlying 
-2-\vass $\V$.
+\sla{i think we should. I've removed the notation $\mysize \mach$, let's 
+simply use $n$ instead}
+where $T_\text{zero-test}$ and $T_\text{update}$ are the sets of zero-test
+and update transitions of $\mach$, respectively, and 
+$\V=(Q,T_\text{update})$ is the underlying 2-\vass.
+% Note that $\mysize \mach = \mysize \V$, namely we do not distinguish
+% between the size of $\mach$ and of the underlying 
+% 2-\vass $\V$.
 Our objective is to provide an elementary upper bound
-in terms of the unary size $n=\mysize \mach$, rather than
+in terms of $n$, rather than
 optimizing the number of exponentials, 
 and we will be content with a triply exponential bound.
 
@@ -67,10 +73,11 @@ Summing up:
 \newcommand{\poly}[1]{\text{poly}(#1)}
 \para{Terminology}
 We use the triple exponential function $\exptriple(k) = 2^{2^{2^k}}$.
-For a semilinear set $X$ 
-with some given base-period representation
-\sla{reprezentacji moze byc oczywiscie wiele, mam nadzieje ze to jest
-zrozumiale}, we write
+Whenever a base-period representation of a semilinear set $X$ is clear
+from the context, 
+% \sla{reprezentacji moze byc oczywiscie wiele, mam nadzieje ze to jest
+% zrozumiale}, 
+we write
 $\norm{X}$ for the maximum of norms of bases
 and periods of this representation.
 In the sequel we say that a semilinear set $X$ is 
@@ -113,9 +120,9 @@ $t$ is also reachable from $s$ by a run
 t_0 \ c_1^{*} \ t_1 \ c_2^{*} \ \ldots \ c_\ell^{*} \ t_\ell,
 \end{align}
 where 
-$\ell$ is polynomial in $\mysize \mach$, and
+$\ell$ is polynomial in $n$, and
 $t_0, \ldots, t_\ell$ are paths and $c_1, \ldots, c_\ell$ are cycles of
-length polynomial in $\mysize \mach$ (cf.~\eqref{eq:lps}).
+length polynomial in $n$ (cf.~\eqref{eq:lps}).
 As shown in \cite{Blondin15},
 once $\ell$, $t_0, \ldots, t_\ell$ and $c_1, \ldots, c_\ell$ are fixed, 
 the reachability relation along all runs of the form \eqref{eq:lps2} 
@@ -166,7 +173,9 @@ In consequence, the 1-\cm $\mach'$
 constructed in the proof of \Cref{lem:0star} is at most
 doubly exponentially large (so is the least common multiple $N$ of
 all the periods $N^c_{q,q'}$, across all choices of $c, q$ and $q'$).
-This, combined with the exponential blow-up of Parikh's theorem, \lukasz{Should we add citation?}
+This, combined with the exponential blow-up of Parikh's theorem, 
+\lukasz{Should we add citation?}
+\sla{maybe not}
 yields a triple-exponential bound on the norms of bases and periods of 
 the relation $\stepp 0^*$.
 As both construction of $\mach'$ and Parikh's theorem are effective,
@@ -288,7 +297,7 @@ is either smaller than some base of $X_i$, or is
 %  However, at the moment I don't see how, and the complexity is the same anyway.}
  otherwise 
  $\norm{X_{i+1}} \leq \norm{X_i}$.
- \sla{bylo $\norm{X_{i+1}} \leq \max\{\norm{X_i}, D\}$.}
+%  \sla{bylo $\norm{X_{i+1}} \leq \max\{\norm{X_i}, D\}$.}
  %larger than a base of $X_i$ by
  %at most triply-exponential multiplicative factor, due to 
  %\Cref{claim:sl3}.
@@ -339,33 +348,43 @@ $
 
 \medskip
 
-We start with the computation of $X_0$.
-By \Cref{claim:sl4} applied to $S= (\stepp + \circ \ X_{q,r})$,
-the $D$-saturated set $(\Phi_3 \circ \stepp +)\circ X_{q,r}$
+We start by analysing the computation of $X_0 = f(\{s\})$.
+By \Cref{claim:sl} the set $(\stepp + \circ \ X_{q,r})$
+is exponentially semilinear.
+Then by \Cref{claim:sl4} applied to $S= (\stepp + \circ \ X_{q,r})$,
+the $D$-saturated set 
+$\Phi_3 \circ (\stepp +\circ \,X_{q,r}) = 
+(\Phi_3 \, \circ \stepp +)\circ \,X_{q,r}$
 is computable in at most triply exponentially many iterations
 of the transformation \eqref{eq:tra}, and its intersection $Y$
-with the set $(S \, \circ \stepp{0}^*)$, 
+with the set $(\{s\} \, \circ \stepp{0}^*)$, 
 \[
-Y \ = \ (S \, \circ \stepp{0}^*) \ \cap \ 
-\bigl((\Phi_3 \, \circ \stepp +)\circ X_{q,r}\bigr)
+Y \ = \ (\{s\} \, \circ \stepp{0}^*) \ \cap \ 
+\bigl((\Phi_3 \, \circ \stepp +)\circ \,X_{q,r}\bigr)
 \]
-(relying on \Cref{claim:sl2} and \Cref{claim:cap})
+(relying on Claims \ref{claim:sl2} and \ref{claim:cap})
 has bases and periods of at most triply exponential norm. 
-Now, a key observation is that since  the set
-$(\Phi_3 \circ \stepp +)\circ X_{q,r}$ is computed in at most
+Now, a key observation is that once $Y$ is nonempty and the set
+$\Phi_3 \circ (\stepp +\circ \,X_{q,r})$ is computed in at most
 triply exponentially many (say $m$) iterations of \eqref{eq:tra},
-the set 
-\[ Y \ \circ \ (\stepp - \, \circ \, \stepp{0}^*)^{\leq m}
+there is a pair $(y,y')\in Y\times (\stepp + \circ\, X_{q,r})$
+such that
+$ (y,y') \ \in \, (\stepp - \, \circ \, \stepp{0}^*)^{\leq m},
+$
+which implies that the set
+\[ Y \ \circ \ (\stepp - \, \circ \, \stepp{0}^*)^{\leq m} \ \circ \ 
+\stepp +
 \]
 has necessarily nonempty intersection with $X_{q,r}$, and moreover
-the intersection contains, due to \Cref{claim:sl3a}, a number
+the intersection contains, due to Claims \ref{claim:sl} and \ref{claim:sl3a}, 
+a number
 which is at most triply exponential in $n$.
-This provides a triply exponential bound on the number of iterations 
+This provides a triply exponential upper bound on the number of iterations 
 of the exhaustive search 
 in the proof of \Cref{lem:compbackfor}, and thus the bound
 on the computation time for $X_0$.
 In the same way one obtains the bound on the computation time for every
-next iterate $X_{i+1}$.
+next iterate $X_{i+1}=X_i + f(X_i)$.
 
 Finally, the triple exponential bound on the number of iterations 
 \eqref{eq:tra2} before a fixpoint is reached in show similarly
@@ -402,7 +421,7 @@ This completes the complexity analysis of the second part of
 Summing up, the running time of our decision procedure is at
 most triply exponential in $n$, the size of unary representation,
 and hence at most quadruply exponential in the size of binary 
-representation,
-while the only known lower bound is \pspace-hardness
-(in binary representation).
-Narrowing the apparent complexity gap is left as future research.
+representation.
+As the only known lower bound is \pspace-hardness
+(in binary representation),
+narrowing the apparent complexity gap is left as future research.

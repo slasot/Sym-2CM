@@ -196,8 +196,8 @@ $e' := 2e (C_0 + 1)$.
 Call a cycle $c_j$ \emph{sum-increasing} if its effect $(x_j, y_j)$ satisfies $x_j + y_j > 0$.
 We claim that, by setting a large enough value of $C$, we can guarantee that the run
 will contain at least one (major) sum-increasing cycle.
-
-Indeed, we are assuming that $a' - a > C$, the sum of counters
+% 
+Indeed, as we are assuming that $a' - a > C$, the sum of counters
 must increase by more than $C$ along $\sigma$.
 % In particular, the total effect of the one-off paths
 % $t_0, \ldots, t_\ell$ is bounded,
@@ -211,13 +211,13 @@ Thus, it is enough when
 \]
 where $e'_\mathrm{max}$ and $\ell_\mathrm{max}$ are the (polynomial in $\mysize\V$) bounds
 on $e'$ and $\ell$, respectively.
-\lukasz{Does it make sense to introduce $e'_\mathrm{max}$ and $\ell_\mathrm{max}$?
-It is enough to say that $\ell$ and $e'$ are polynomially bounded 
-to avoid introducing new variables.
-}
-\sla{let's keep them. at least $l_{max}$ we need}
-\mei{yup, as currently written, $e'$ and $\ell$ are run-specific, and
-then we take the max over all runs}
+% \lukasz{Does it make sense to introduce $e'_\mathrm{max}$ and $\ell_\mathrm{max}$?
+% It is enough to say that $\ell$ and $e'$ are polynomially bounded 
+% to avoid introducing new variables.
+% }
+% \sla{let's keep them. at least $l_{max}$ we need}
+% \mei{yup, as currently written, $e'$ and $\ell$ are run-specific, and
+% then we take the max over all runs}
 
 \begin{figure}[h]
 \centering
@@ -501,7 +501,7 @@ That suitable cycles exist is stated by the following claim.
 \centering
 \begin{tikzpicture}[
     >=stealth,
-    scale=0.9,
+    scale=1.0,
     every node/.style={font=\small}
 ]
 
