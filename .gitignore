@@ -9,3 +9,4 @@
 *.pdf
 *.vtc
 *.fdb_latexmk
+*.synctex.gz
