@@ -1,4 +1,4 @@
-    
+
 %\noindent A \emph{Counter Machine with $n$-counters} (or $n$-\cm for short) 
 %is a quadruple
 %\[
@@ -163,7 +163,7 @@ a run $\sigma : q(0,a)\step^* q'(0,a')$ for some $a, a'\in \N$.
 Assuming that the difference $a'-a$ is sufficiently large
 (namely larger than some $C$, depending only on $\V$),
 we modify the run to lift the target configuration to $q'(0,a'+\gamma D_\sigma)$ for any
-multiple $\gamma \in \N$ of some particular $D_\sigma$, which depends on both $\V$ and $\sigma$.
+$\gamma \in \N$ and some particular $D_\sigma$, which depends on both $\V$ and $\sigma$.
 Holding $\V$ fixed, $D_\sigma$ will only attain finitely many different values,
 hence we argue that taking the least common multiple of all $D_\sigma$ yields a
 constant $D$ satisfying the claim of the lemma.
@@ -198,7 +198,7 @@ than $2 C_0$, and \emph{minor} otherwise.
 by inlining any minor cycles $c_i$ into their neighboring one-off paths $t_{i-1}$ and $t_i$.
 After this operation, the lengths of the one-off paths are bounded by
 $e' := e (2\ell C_0 + \ell + 1)$.
-\sla{changed}
+% \sla{changed}
 % $e' := e(\ell+1) + 2C_0\ell$. \sla{changed to 'sum of lengths'}
 
 Call a cycle $c_j$ \emph{sum-increasing} if its effect $(x_j, y_j)$ satisfies $x_j + y_j > 0$.
@@ -416,7 +416,7 @@ We thus get the claim with $D_\sigma = (x+y)(y-x)$.
       \draw[->] (-3,0) -- (3,0) node[right] {$x$};
       \draw[->] (0,-3) -- (0,3) node[above] {$y$};
 
-      % rays corresponding to steepnesses
+      % rays corresponding to steepness
       \draw[dashed] (0,0) -- (1.75,2.0)
           node[pos=.92, right] {$\varphi_1$};
 
@@ -737,10 +737,10 @@ aiming to prove it for $i+1$.
     horizontally negative cycles either stay below the invariant line (red)
     or satisfy \Cref{claim:steep} (dotted black).
     \figcenter One-off paths may force the invariant line to be raised,
-    but this can be bounded ahead of time. The greatest upwards
-    movement per unit effect is forced by a path %whose effect is pointing
-    going
-    directly left, when the slope of the invariant line is high.
+    but this can be bounded ahead of time. 
+    % The greatest upwards
+    % movement per unit effect is forced by a path %whose effect is pointing
+    % going directly left, when the slope of the invariant line is high.
     \figright Because the configuration is guaranteed to stay at $x \geq 0$,
     we may freely make the invariant line steeper as long as the $y$-intercept
     doesn't get lowered in the process.

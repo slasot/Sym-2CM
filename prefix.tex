@@ -494,9 +494,10 @@ Such a fragment, called \emph{segment} in the sequel,
 may be considered as a 2-\vass run
 that ends with one counter 0, and which counter is 0 is
 determined by the ending, zero-testing state.
-Formally, we will consider a segment as a run in the
+Formally, we will consider a segment to be a run in the
 underlying symmetric 2-\vass $\V$, extended with a single zero-testing
-transition to the ending zero-testing state with no outgoing transitions.
+transition to a chosen ending zero-testing state 
+with no outgoing transitions.
 % obtained by removing all zero-testing states except the starting and ending one.
 %  transitions $(q, \ztinstr i, q^t)$ by
 % the corresponding $(0,0)$ update one
@@ -506,10 +507,11 @@ transition to the ending zero-testing state with no outgoing transitions.
 Furthermore, \mywlog we may assume that one counter is 0
 in both source and target configurations.
 For instance, if the source vector is $\vr v=(v_1,v_2)$ with $0<v_1\leq v_2$,
-we replace it by $(0,v_2-v_1)$ and add one extra symmetric transition
+we replace it by $(0,v_2-v_1)$ and add one extra transition
+from a freshly added source state,
 with update $(v_1,v_1)$.
 We thus assume, \mywlog, 
-that the source and target states are zero-testing as well.
+that the source and target states are zero-testing.
 \end{remark}
 
 %into those corresponding to counter $\textsf{c}_1$ and to counter $\textsf{c}_2$,
@@ -1154,7 +1156,7 @@ computed, concluding the proof of the second part of \Cref{lem:compbackfor}.
     $q'\in Q$, such that
     the current counter value $n$ belongs to the set 
     $X^c_{q,q'}$ as defined in \eqref{eq:per2}.
-    Then, it
+    Upon positive test, $\mach'$
     increments the counter by $c$ and goes to the next state
     $q'[r + c \bmod N]$.
 

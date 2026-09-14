@@ -32,8 +32,8 @@ $\V=(Q,T_\text{update})$ is the underlying 2-\vass.
 % 2-\vass $\V$.
 Our objective is to provide an elementary upper bound
 in terms of $n$, rather than
-optimizing the number of exponentials, 
-and we will be content with a 6-exponential bound.
+optimizing the number of exponents, 
+and we will be content with a 5-exponential bound.
 
 
 \para{Bounds for \Cref{lem:targetpump}}
@@ -55,8 +55,7 @@ The constant
 \]
 % x}
 is polynomial in $n$.
-The norm of the effect of every cycle 
-% of length at most $e_\text{max}$ 
+The norm of the effect of every cycle of length at most $e_\text{max}$ 
 is bounded by $e_\text{max}\norm{\V}$,
 where $e_\mathrm{max}$ is the maximal length $e$ (polynomial in $n$),
 and hence
@@ -131,7 +130,7 @@ As shown in \cite{Blondin15},
 once $\ell$, $t_0, \ldots, t_\ell$ and $c_1, \ldots, c_\ell$ are fixed, 
 the reachability relation along all runs of the form \eqref{eq:lps2} 
 is the union of (the projections of) the solution sets of instances $I$ 
-of the integer linear programming problem of size polynomial in $\ell$, 
+of the integer linear programming problem of size polynomial in $n$, 
 and hence effectively semilinear.
 Moreover, numbers appearing in $I$ are bounded exponentially in
 $n$, and hence by the bound of \cite{Pottier91}
@@ -147,7 +146,7 @@ fixing some coordinates to 0.
 Finally, we transfer the same effective bounds to the three subrelations
 $\stepp 0, \stepp +, \stepp -$ by noticing that each of them is
 the intersection of $\reachrel$ with a semilinear set
-whose bases and periods are of norm at most $C$, the constant of
+whose bases and periods are of norm at most $C+1$, the constant of
 \Cref{lem:targetpump}
 (which is polynomial in $n$),
 and intersection of linear sets in fixed dimension (here 2) 
@@ -155,7 +154,7 @@ increases the norms of bases and periods at most polynomially
 (see \cite[Thm.~6]{taming}):
 \begin{claim} \label{claim:cap}
 Semilinear sets $r_1,r_2\subseteq (Q\times\N)^2$ satisfy
-$\norm{r_1 \cap r_2} \leq (\norm{r_1} \cdot \norm{r_2})^{O(1)}$.
+$\norm{r_1 \cap r_2} \leq (O(1)+\norm{r_1} \cdot \norm{r_2})^{O(1)}$.
 \end{claim}
 We have thus shown:
 
@@ -173,12 +172,15 @@ we conclude that sets $X^c_{q,q'}$ %\eqref{eq:per1},
  \eqref{eq:per2} 
 in the proof of \Cref{lem:0star} have 
 base-period representations with at most exponential periods and bases.
-The period $N^c_{q,q'}$ of ultimately periodic presentation of $X^c_{q,q'}$ 
-is at most doubly exponential, as the least common multiplicity of periods
+The period $N^c_{q,q'}$ and threshold $M^c_{q,q'}$ 
+of ultimately periodic presentation of $X^c_{q,q'}$ 
+are at most doubly exponential, as they are bounded by 
+the least common multiplicity of  bases and periods
 of its base-period representation.
-So is the least common multiple $N$ of
-all the periods $N^c_{q,q'}$, across all choices of $c, q$ and $q'$.
-By \Cref{claim:sl}, the bases of $N^c_{q,q'}$ are bounded by $N$ as well.
+So is the least common multiple 
+$N$ of all periods of $N^c_{q,q'}$,
+across all choices of $c, q$ and $q'$, which is doubly exponential.
+% By \Cref{claim:sl}, the bases of $X^c_{q,q'}$ are bounded by $N$ as well.
 In consequence, the 1-\cm $\mach'$
 constructed in the proof of \Cref{lem:0star} is at most
 doubly exponentially large.
@@ -243,7 +245,7 @@ increases the norms of bases and periods at most polynomially:
 
 \begin{claim} \label{claim:circ}
 Semilinear relations $r_1,r_2\subseteq (Q\times\N)^2$ satisfy
-$\norm{r_1 \circ r_2} \leq O(\norm{r_1} \cdot \norm{r_2})^{O(1)}$.
+$\norm{r_1 \circ r_2} \leq (O(1)+\norm{r_1} \cdot \norm{r_2})^{O(1)}$.
 \end{claim}
 Indeed, ignoring $Q$ for simplicity, \Cref{claim:circ} 
 follows immediately from \cite[Thm.~6]{taming}, similarly to 
@@ -257,7 +259,8 @@ Likewise we get the bound for images and inverse images of relations:
 \begin{claim} \label{claim:im}
 Semilinear relations $r\subseteq (Q\times\N)^2$ and semilinear sets
 $X\subseteq Q\times\N$ satisfy
-$\norm{r \circ X}, \norm{X \circ r} \leq O(\norm{r} \cdot \norm{X})^{O(1)}$.
+$\norm{r \circ X}, \norm{X \circ r} \leq 
+(O(1)+\norm{r} \cdot \norm{X})^{O(1)}$.
 \end{claim}
 
 
@@ -345,8 +348,8 @@ Our reasoning was not specific to the starting set $\{t\}$,
 and we have actually shown:
 
 \begin{claim}\label{claim:sl4}
-  Given a k-exponential semilinear set $S$, $k\geq 3$, the set
-    $\Phi_3 \circ S$ is also
+  Given a $k$-exponentially semilinear set $S$, $k\geq 3$, 
+  the set $\Phi_3 \circ S$ is 
   $k$-exponentially semilinear and computable in
   at most $k$-exponentially many iterations of \eqref{eq:tra}.
 \end{claim}
@@ -373,12 +376,12 @@ $
 
 \medskip
 
-We start by analysing the computation of $X_0 = f(\{s\})$.
+We start by analyzing the computation of $X_0 = f(\{s\})$.
 By \Cref{claim:sl} the set $(\stepp + \circ \ X_{q,r})$
 is exponentially semilinear.
-Then by \Cref{claim:sl4} applied to $S= (\stepp + \circ \ X_{q,r})$, the 
-% $D$-saturated 
-set 
+Then by \Cref{claim:sl4} 
+applied to $k=3$ and 
+$S= (\stepp + \circ \ X_{q,r})$, the set 
 $S'=\Phi_3 \circ (\stepp +\circ \,X_{q,r}) = 
 (\Phi_3 \, \circ \stepp +)\circ \,X_{q,r}$
 is computable in at most triply exponentially many iterations
@@ -425,6 +428,9 @@ of the exhaustive search
 in the proof of \Cref{lem:compbackfor}, and thus also the same
 % , relying on \Cref{claim:sl4}, the 
 bound on $\norm{X_0}$.
+Testing candidates in the exhaustive search requires only
+4-exponentially many iterations of \eqref{eq:tra}, due to
+\Cref{claim:sl4} (applied to $k=4$).
 
 As the bound $m$ on the number of iterations does not depend
 on the input set $S$ when computing an iteration 
