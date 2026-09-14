@@ -165,14 +165,18 @@ We have thus shown:
 
 By the above effective exponential bounds on bases and periods of 
 $\stepp 0$,
-we conclude that the ultimately periodic sets %\eqref{eq:per1},
+we conclude that sets $X^c_{q,q'}$ %\eqref{eq:per1},
  \eqref{eq:per2} 
-in the proof of \Cref{lem:0star} have at most exponential periods 
-and bases.
+in the proof of \Cref{lem:0star} have 
+base-period representations with at most exponential periods and bases.
+The period $N^c_{q,q'}$ of ultimately periodic presentation of $X^c_{q,q'}$ 
+is at most doubly exponential, as the least common multiplicity of periods
+of its base-period representation.
+So is the least common multiple $N$ of
+all the periods $N^c_{q,q'}$, across all choices of $c, q$ and $q'$.
 In consequence, the 1-\cm $\mach'$
 constructed in the proof of \Cref{lem:0star} is at most
-doubly exponentially large (so is the least common multiple $N$ of
-all the periods $N^c_{q,q'}$, across all choices of $c, q$ and $q'$).
+doubly exponentially large.
 This, combined with the exponential blow-up of Parikh's theorem
 \cite[Thm.~11]{KopczynskiTo:LICS2010},
 yields a triple-exponential bound on the norms of bases and periods of 
@@ -244,10 +248,10 @@ of
 \[
 (r_1 \times \N) \ \cap \ (\N\times r_2).
 \]
-Using \Cref{claim:sl2} and \Cref{claim:circ} we conclude
+Using Claims \ref{claim:sl}--\ref{claim:circ} we conclude
 that the relation
   $(\stepp - \circ \, \stepp{0}^*)$ is triply exponentially semilinear,
-which allows us further to deduce the bounds on bases and periods
+which allows us to deduce further bounds on bases and periods
 of the (necessarily $D$-saturated) inverse image of the relation.
 
 \begin{claim}\label{claim:sl3}
@@ -288,8 +292,13 @@ is either smaller than some base of $X_i$, or is
  A newly created base may appear at most $\mysize Q \cdot D$ 
  times (exponentially many times) during the whole iteration.
  Due to \Cref{claim:sl3},
+ \begin{claim}\label{claim:sl3m}
+The mapping $S \mapsto (\stepp - \circ \, \stepp{0}^*)^m \,\circ\, S$
+  is triply exponentially bounded.
+\end{claim}
+
 %  there is $d \in \N$ and polynomial $p$ such that 
- if new base appears in $X_{i+1}$ then
+ if a new base appears in $X_{i+1}$ then
  \[
     \norm{X_{i+1}} \leq \norm{X_i}^{O(1)} \cdot \exptriple(\poly n),
  \]

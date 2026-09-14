@@ -350,6 +350,8 @@ $(q,\ztinstr i, q')\in T$.
 \noindent
 We use the term $d$-\vass (vector addition system with states)
 for a $d$-\cm without zero-test instructions.
+The $d$-\vass obtained by removing from $\mach$ all
+$\xztinstr$ transitions we call the \emph{underlying} \vass of $\mach$.
 
 The symmetric group $\symg d$ acts naturally on vectors in $\Z^d$
 and hence also on update transitions:
@@ -369,6 +371,16 @@ we mostly focus on symmetric 2-\cm{s},
 namely 2-\cm{s} whose set of $\xupdinstr$ transitions is invariant under the
 swap of counters.
 
+\begin{remark}
+    Likewise one defines $G$-\cm{s}, counter machines whose 
+    set of $\xupdinstr$ 
+    transitions is invariant under the action of a permutation subgroup
+    $G\leq\symg d$.
+    Clearly, when $G$ is a permutation subgroup of $H$, every
+    $H$-\cm is automatically a $G$-\cm.
+    This more general model is investigated only in 
+    \Cref{sec:undecid,sec:variants}. 
+\end{remark}
 The reflexive-transitive closure $\step^*$ of $\step$ we call
 the \emph{reachability relation} (between configurations).
 The \emph{reachability problem} asks, given a \cm $\mach$ and two
@@ -1203,7 +1215,7 @@ computed, concluding the proof of the second part of \Cref{lem:compbackfor}.
     add another $N$ extra states $p'[N-1] \ldots p'[0]$ forming 
     a $b$-labelled cycle of transitions decrementing the counter by 1:
     \[
-    (p'[i], \updinstr{-1}, p[i-1 \bmod N]) \qquad \text{for all } 
+    (p'[i], \updinstr{-1}, p'[i-1 \bmod N]) \qquad \text{for all } 
     i\in\setfromto 0 {N-1},
     \]
     and finally add 0-update transitions from
