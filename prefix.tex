@@ -325,32 +325,35 @@ $T\subseteqfin Q\times\Instr\times Q$ is a finite set of
 and the set $\Instr$ of \emph{instructions} is the union of
 update instructions and zero-test instructions:
 \[
-\Instr \ = \ \setof{\updinstr{w}}{w\in\Z^d} \ \cup \ 
+\Instr \ = \ \setof{\updinstr{\vr w}}{w\in\Z^d} \ \cup \ 
 \setof{\ztinstr{i}}{i\in \setto d}.
 \]
 % \mei{it is ambiguous here whether $i \in d$ is supposed to mean
 % $\{0, ..., d-1\}$ or $\{1, ..., d\}$. We use the more explicit notation
 % below, maybe we should do so here as well?}
-Execution of $\updinstr{w}$ amounts to adding
+Execution of $\updinstr{\vr w}$ amounts to adding
 the vector
-$w$ to the counters, and execution of 
+$\vr w$ to the counters, and execution of 
 $\ztinstr{i}$ amounts to checking that counter $i$
 has value 0.
 Formally, we define the semantics of $\mach$ by considering
-its \emph{configurations} $(q,v) \in Q\times \N^d$, written $q(v)$, and
+its \emph{configurations} $(q,\vr v) \in Q\times \N^d$, written $q(\vr v)$, and
 the step relation between configurations determined by 
 transitions of $\mach$:
-$q(v) \step q'(v')$ if 
-
+$q(\vr v) \step q'(\vr v')$ if 
 \begin{itemize}
 \item 
-$v' = v + w$,  for some  $(q,\updinstr{w},q')\in T$, or
+$\vr v' = \vr v + \vr w$,  for some  $(q,\updinstr{\vr w},q')\in T$, or
 \item  
-$v' = v$ and $v(i)=0$, for some 
-$(q,\ztinstr i, q')\in T$.
+$\vr v' = \vr v$ and $\vr v[i]=0$, for some 
+$(q,\ztinstr i, q')\in T$,
 \end{itemize}
+where by $\vr v[i]$ we denote the $i$-th coordinate of the vector $\vr v$.
+\mei{I chose to change the notation to $\vr v[i]$ to make the below
+definition of $\sigma(\vr w)$ read better; I'm open to discussion on this.
+One potential sticking point is that the $q[r]$ notation we later use in the
+1-cm construction looks the same, but I'd say the contexts are sufficiently different.}
 
-\noindent
 We use the term $d$-\vass (vector addition system with states)
 for a $d$-\cm without zero-test instructions.
 The \emph{underlying} \vass of $\mach$ is
@@ -358,12 +361,12 @@ obtained by removing from $\mach$ all $\xztinstr$ transitions.
 
 The symmetric group $\symg d$ acts naturally on vectors in $\Z^d$
 and hence also on update transitions:
-for $\sigma\in \symg d$ and $t=(q,\updinstr w,q')\in T$, we define
-$\sigma(t)=(q,\updinstr{\sigma(w)},q')$, where $\sigma(w)(\sigma(i))=w(i)$
+for $\sigma\in \symg d$ and $t=(q,\updinstr{\vr w},q')\in T$, we define
+$\sigma(t)=(q,\updinstr{\sigma(\vr w)},q')$, where $\sigma(\vr w)[\sigma(i)]=\vr w[i]$
 for every $i\in\setto d$.
 A $d$-\cm $\mach$ is \emph{symmetric} if its set of update transitions
 is invariant under the natural action: for every $\sigma\in \symg d$ 
-and $(q,\updinstr w,q')\in T$, we have $(q,\updinstr {\sigma (w)},q')\in T$.
+and $(q,\updinstr{\vr w},q')\in T$, we have $(q,\updinstr {\sigma (\vr w)},q')\in T$.
 Importantly, 
 symmetry is imposed on $\xupdinstr$ transitions, but not on 
 $\xztinstr$ transitions of $\mach$.
@@ -409,7 +412,7 @@ Two natural restrictions of the model are obtained by requiring that:
 % \begin{itemize}
 (1) the set of $\xztinstr$ transitions is also \emph{symmetric}, 
 that is invariant under permutations of counters; 
-(2) all $\xupdinstr$ transitions $(q,\updinstr{w},q')$ are 
+(2) all $\xupdinstr$ transitions $(q,\updinstr{\vr w},q')$ are 
 \emph{single-counter}, that is $w$ is nonzero on at most one coordinate.
 % \end{itemize}
 % 
