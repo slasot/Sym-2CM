@@ -72,23 +72,17 @@ that are
 is invariant under all permutations $\sigma$ of counters:
 for every update transition $(q,i,q')$, the machine has also a transition
 $(q,\sigma(i), q')$, where $\sigma(i)$ is the result of 
-applying $\sigma$ to the counters in the update instruction $i$.
-We thus choose to impose the invariance only on update transitions,
+applying $\sigma$ to the counters in the update instruction $i$
+(see \Cref{fig:example} for an example).
+To stress this point, we choose to impose the invariance only on update transitions,
 % (when the instruction $i$ is a counter update), 
-but
-not on zero-test transitions.
-Imposing the invariance (symmetry) 
+but not on zero-test transitions ---
+imposing the invariance (symmetry) 
 also on zero-tests is not needed for our main 
 decidability proof.
 
-Here is an illustrative example of a 2-\cm (a \cm having two counters)
-with
-two control states and
-six transitions, including five symmetric update transitions
-(invariant under the swap of counters) and one zero-test transition:
-
-% \begin{figure}
-\begin{center}
+\begin{figure}[h]
+    \centering
 \scalebox{0.7}
 {\begin{tikzpicture} [draw=black!70,
   fill=blue!20, node distance = 5cm, on grid, auto,
@@ -99,17 +93,24 @@ six transitions, including five symmetric update transitions
 \node (q1) [state, scale=1.2, fill=blue!20, right = of q0] {$q$};
 % Arrows
 \path [-stealth, thick]
-   (q0) edge[bend left] node {\scriptsize{$\ztinstr 1$}}  (q1)
-   (q1) edge[bend left] node {\scriptsize$\updinstr{1,1}$}  (q0)
-   (q0) edge [loop above] node {\scriptsize$\updinstr{-1, 3}$}()
-   (q0) edge [loop below] node {\scriptsize$\updinstr{3, -1}$}()
-   (q1) edge [loop below] node {\scriptsize$\updinstr{1, -1}$}()
-   (q1) edge [loop above] node {\scriptsize$\updinstr{-1, 1}$}();
+    (q0) edge[bend left] node {\small{$\ztinstr 1$}}  (q1)
+    (q1) edge[bend left] node {\small$\updinstr{1,1}$}  (q0)
+    (q0) edge [loop above] node[above left] {\small$\updinstr{-1, 3}$}()
+    (q0) edge [loop below] node[below left] {\small$\updinstr{3, -1}$}()
+    (q1) edge [loop below] node[below right] {\small$\updinstr{1, -1}$}()
+    (q1) edge [loop above] node[above right] {\small$\updinstr{-1, 1}$}();
 \end{tikzpicture}}
-\end{center}
-% \caption{A symmetric 2-counter machine.}
-% \label{fig:example}
-% \end{figure}
+\caption{
+    An example symmetric 2-counter machine with two control states and
+    six transitions, including five symmetric update transitions
+    (invariant under the swap of counters) and one zero-test transition.
+    Due to the symmetry condition, the $(p, \updinstr{-1, 3}, p)$ transition
+    also forces $(p, \updinstr{3, -1}, p)$ to exist. In contrast, we permit
+    $\ztinstr 1$ without a corresponding $\ztinstr 2$ transition.
+    Also notice the $\updinstr{1,1}$ transition, which is self-symmetric.
+}
+\label{fig:example}
+\end{figure}
 
 
 \para{Contribution}
