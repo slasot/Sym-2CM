@@ -33,7 +33,7 @@ $\V=(Q,T_\text{update})$ is the underlying 2-\vass.
 Our objective is to provide an elementary upper bound
 in terms of $n$, rather than
 optimizing the number of exponentials, 
-and we will be content with a triply exponential bound.
+and we will be content with a 6-exponential bound.
 
 
 \para{Bounds for \Cref{lem:targetpump}}
@@ -87,9 +87,9 @@ $\norm{X}$ for the maximum of norms of bases
 and periods of this representation.
 In the sequel we say that a semilinear set $X$ is 
 \emph{$k$-exponentially semilinear} if given $\mach$,
-some base-period representation of $X$ can be computed in time
-$\norm X \leq \expf k(\poly n)$, 
-and $\norm X$ is bounded by $\norm X \leq \expf k(\poly n)$.
+some base-period representation of $X$ can be computed 
+% in time $\norm X \leq \expf k(\poly n)$, and 
+of norm bounded by $\norm X \leq \expf k(\poly n)$.
 %and all computed bases and periods
 %are at most (triply) exponential in $n$.
 % Furthermore,
@@ -178,6 +178,7 @@ is at most doubly exponential, as the least common multiplicity of periods
 of its base-period representation.
 So is the least common multiple $N$ of
 all the periods $N^c_{q,q'}$, across all choices of $c, q$ and $q'$.
+By \Cref{claim:sl}, the bases of $N^c_{q,q'}$ are bounded by $N$ as well.
 In consequence, the 1-\cm $\mach'$
 constructed in the proof of \Cref{lem:0star} is at most
 doubly exponentially large.
@@ -242,7 +243,7 @@ increases the norms of bases and periods at most polynomially:
 
 \begin{claim} \label{claim:circ}
 Semilinear relations $r_1,r_2\subseteq (Q\times\N)^2$ satisfy
-$\norm{r_1 \circ r_2} \leq (\norm{r_1} \cdot \norm{r_2})^{O(1)}$.
+$\norm{r_1 \circ r_2} \leq O(\norm{r_1} \cdot \norm{r_2})^{O(1)}$.
 \end{claim}
 Indeed, ignoring $Q$ for simplicity, \Cref{claim:circ} 
 follows immediately from \cite[Thm.~6]{taming}, similarly to 
@@ -256,7 +257,7 @@ Likewise we get the bound for images and inverse images of relations:
 \begin{claim} \label{claim:im}
 Semilinear relations $r\subseteq (Q\times\N)^2$ and semilinear sets
 $X\subseteq Q\times\N$ satisfy
-$\norm{r \circ X}, \norm{X \circ r} \leq (\norm{r} \cdot \norm{X})^{O(1)}$.
+$\norm{r \circ X}, \norm{X \circ r} \leq O(\norm{r} \cdot \norm{X})^{O(1)}$.
 \end{claim}
 
 
@@ -324,10 +325,10 @@ is either smaller than some base of $X_i$, or is
  %\Cref{claim:sl3}.
 In consequence, for every $X_i$ we 
 have 
-\[
+\begin{align} \label{eq:3e}
 \norm{X_i} \leq \bigl(\norm{X_0} \cdot 
-\expf 3(\poly n)\bigr)^{O(\mysize Q \cdot D)},
-\]
+\expf 3(\poly n)\bigr)^{2^{O(\mysize Q \cdot D)}},
+\end{align}
 % \sla{to nie jest w formacie triply expoentially bounded}
 % for some polynomial $p'$,
 which yields a triply exponential bound on $\norm{X_i}$.
@@ -344,10 +345,10 @@ Our reasoning was not specific to the starting set $\{t\}$,
 and we have actually shown:
 
 \begin{claim}\label{claim:sl4}
-  Given a 3-exponential semilinear set $S$, the set
+  Given a k-exponential semilinear set $S$, $k\geq 3$, the set
     $\Phi_3 \circ S$ is also
-  3-exponentially semilinear and computable in
-  at most triply exponentially many iterations of \eqref{eq:tra}.
+  $k$-exponentially semilinear and computable in
+  at most $k$-exponentially many iterations of \eqref{eq:tra}.
 \end{claim}
 
 % \smallskip
@@ -394,7 +395,8 @@ bases and periods of at most triply exponential norm.
 Assume, \mywlog, that $m=2^\ell$ for some doubly exponential $\ell$, 
 an let $R = (\stepp - \, \circ \, \stepp{0}^*)^{\leq m}$.
 The relation $R$ is computable by $\ell$-fold self-composition
-$T\mapsto T \cup T^2$, each self-composition increasing the norm 
+$T\mapsto T \cup T^2$ starting from $T=(\stepp - \, \circ \, \stepp{0}^*) \cup \text{Id}$,
+each self-composition increasing the norm 
 polynomially, which implies:
 \begin{claim} \label{claim:sl5}
   The relation $R$ is 4-exponentially semilinear.
@@ -420,19 +422,26 @@ which is at most 4-exponential in $n$.
 % \Cref{claim:sl3a}}
 This provides a 4-exponential upper bound on the number of iterations 
 of the exhaustive search 
-in the proof of \Cref{lem:compbackfor}, and thus the bound
-on the computation time for $X_0$.
+in the proof of \Cref{lem:compbackfor}, and thus also the same
+% , relying on \Cref{claim:sl4}, the 
+bound on $\norm{X_0}$.
 
 As the bound $m$ on the number of iterations does not depend
 on the input set $S$ when computing an iteration 
 $S\mapsto S\cup f(S)$,
 in the same way as above
 we obtain the same 4-exponential bound on the norm of every
-next iterate $X_{i+1}=X_i + f(X_i)$.
+next iterate $X_{i+1}=X_i \cup f(X_i)$.
 
 Finally, the 4-exponential bound on the number of iterations 
 \eqref{eq:tra2} before a fixpoint is reached in shown similarly
 as in the first part.
+Similarly as in \eqref{eq:3e} we have
+\[
+\norm{X_i} \leq \bigl(\norm{X_0} \cdot 
+\expf 4(\poly n)\bigr)^{2^{O(\mysize Q \cdot D)}},
+\]
+which yields a 4-exponential bound on $\norm{X_i}$.
 This completes the complexity analysis of the second part of 
 \Cref{lem:compbackfor}.
 
@@ -467,7 +476,9 @@ representations of computed semilinear sets, and on the numbers
 of iterations performed in the course of computation.
 The bounds are 4-exponential in $n$, the size of unary representation,
 and hence at 5-exponential in the size of binary representation.
-The running time of our decision procedure is hence elementary.
+Combining this with an exponential blowup incurred by a necessity to generate
+all bases and periods, this yields
+the elementary running time of our decision procedure.
 % 
 As the only known lower bound is \pspace-hardness
 (in binary representation),

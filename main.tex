@@ -115,7 +115,8 @@ Counter machines are a particularly simple, Turing-complete
 model of computation.
 We study the expressive power of nondeterministic
 2-counter machines which are symmetric, in that their set of
-transitions is invariant under swapping of counters.
+update transitions is invariant under swapping of counters
+(we impose no restriction on zero-testing transitions).
     % \mei{This used to say "invariant" under swapping of counters.
     % But to me that feels incorrect --- it sounds like each \emph{particular} transition 
     % would need to be unchanged by the permutation (effectively, the delta at
@@ -130,7 +131,7 @@ reachability problem.
 %machines, and does not extend to 3 or more counters.
 We conjecture that the decidability extends to 
 machines with 3 or more counters that are symmetric, 
-\ie whose set of transitions is
+\ie whose set of update transitions is
 invariant under any permutation of counters. 
 We leave this problem open for machines with 3 and more counters,
 while identifying a frontier of the impact of symmetry:

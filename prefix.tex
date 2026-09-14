@@ -68,13 +68,14 @@ extended with zero-tests, and
 is clearly equivalent to standard \cm{s}. %counter machines.
 In this paper we mostly focus on \cm{s} %counter machines 
 that are 
-\emph{symmetric}, by which we mean that the set of transitions
+\emph{symmetric}, by which we mean that the set of update transitions
 is invariant under all permutations $\sigma$ of counters:
-for every transition $(q,i,q')$, the machine has also a transition
+for every update transition $(q,i,q')$, the machine has also a transition
 $(q,\sigma(i), q')$, where $\sigma(i)$ is the result of 
-applying $\sigma$ to the counters in the instruction $i$.
-We thus choose to impose the invariance only on update transitions
-(when the instruction $i$ is a counter update), but
+applying $\sigma$ to the counters in the update instruction $i$.
+We thus choose to impose the invariance only on update transitions,
+% (when the instruction $i$ is a counter update), 
+but
 not on zero-test transitions.
 Imposing the invariance (symmetry) 
 also on zero-tests is not needed for our main 
@@ -350,8 +351,8 @@ $(q,\ztinstr i, q')\in T$.
 \noindent
 We use the term $d$-\vass (vector addition system with states)
 for a $d$-\cm without zero-test instructions.
-The $d$-\vass obtained by removing from $\mach$ all
-$\xztinstr$ transitions we call the \emph{underlying} \vass of $\mach$.
+The \emph{underlying} \vass of $\mach$ is
+obtained by removing from $\mach$ all $\xztinstr$ transitions.
 
 The symmetric group $\symg d$ acts naturally on vectors in $\Z^d$
 and hence also on update transitions:
@@ -384,7 +385,7 @@ swap of counters.
 The reflexive-transitive closure $\step^*$ of $\step$ we call
 the \emph{reachability relation} (between configurations).
 The \emph{reachability problem} asks, given a \cm $\mach$ and two
-of its configurations, source $s\in Q\times\N^2$ and target $t\in Q\times\N^2$, 
+of its configurations, source $s\in Q\times\N^d$ and target $t\in Q\times\N^d$, 
 whether 
 $s \step^* t$
 (in which case we say that $t$ is \emph{reachable} from $s$).
@@ -413,7 +414,7 @@ that is invariant under permutations of counters;
 As we discuss later in \Cref{sec:variants}, the first 
 restriction is equally powerful as the unrestricted model,
 and imposing both restrictions makes the model essentially degenerate 
-to 1-\vass.
+to 1-\vass, once the source and target vectors are zero.
 We do not know consequences of 
 imposing solely the second restriction.
 
@@ -493,11 +494,12 @@ may be considered as a 2-\vass run
 that ends with one counter 0, and which counter is 0 is
 determined by the ending, zero-testing state.
 Formally, we will consider a segment as a run in the
-\emph{underlying} symmetric 2-\vass $\V$
-obtained by replacing every zero-test transition 
-$(q, \ztinstr i, q^t)$ by
-the corresponding $(0,0)$ update one
-$(q, \updinstr{0,0}, q^t)$.
+underlying symmetric 2-\vass $\V$, extended with a single zero-testing
+transition to the ending zero-testing state with no outgoing transitions.
+% obtained by removing all zero-testing states except the starting and ending one.
+%  transitions $(q, \ztinstr i, q^t)$ by
+% the corresponding $(0,0)$ update one
+% $(q, \updinstr{0,0}, q^t)$.
 
 \begin{remark} \label{rem:wlog}
 Furthermore, \mywlog we may assume that one counter is 0
@@ -1169,8 +1171,10 @@ computed, concluding the proof of the second part of \Cref{lem:compbackfor}.
 
   This construction assures the equivalence \eqref{eq:mach}. Considering
   now the unrestricted reachability relation $\step^*$ of $\mach'$,
-  for every pair $q,q'\in Q$ of zero-testing control states, 
-    $c\in\setfromto {-C} C$, and $n,n'\in\N$ we have:    
+  for every zero-testing control states $q,q'\in Q$ 
+    % $c\in\setfromto {-C} C$, 
+    and $n,n'\in\N$,
+    %  we have:    
     \begin{align} \label{eq:mach2}
     {q(n) \stepp {0}^* {q}'(n')} \text{ in } \mach \ \iff \ 
     {q[r](n)\step^* q'[r'](n') \text{ in } \mach'},
