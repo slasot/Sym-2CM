@@ -174,8 +174,8 @@ The reachability problem  is undecidable for $\cycg 3$-counter machines.
 % 
 Both the above results hold in the hardest case: decidability with
 unrestricted zero-tests, and undecidability with symmetric ones. 
-This is unsurprising, as we observe that assuming symmetry of zero-tests
-does not weaken the model.
+This is unsurprising, as in \Cref{sec:variants} we show that assuming
+symmetry of zero-tests does not weaken the model.
 
 \para{Open questions}
 
@@ -472,18 +472,18 @@ is denoted by $R^*$, as usual.
 For convenience, we perform on $\mach$ the following notational
 preprocessing:
 we replace every zero-test transition
-$t=(q,\ztinstr i, q')\in T$ by a sequence of two transitions,
+$z=(q,\ztinstr i, q')\in T$ by a sequence of two transitions,
 \[
-(q, \ztinstr i, q^t) \qquad
-(q^t, \updinstr {0,0}, q'),
+(q, \ztinstr i, q^z) \qquad
+(q^z, \updinstr {0,0}, q'),
 \]
 % q \xstep{\textsf{c}_i=0?} S_i^t \xstep{(0,0)} q',\]
-where $q^t$ is a new state, unique to the transition $t$.
+where $q^z$ is a new state, unique to the transition $z$.
 Notice that reachability in the new symmetric 2-\cm thus obtained 
 is equivalent to the original one, 
-and that it has special states $q^t$
+and that it has special states $q^z$
 which can only be entered if the counter zero-tested by 
-transition $t$ is zero;
+transition $z$ is zero;
 we call them \emph{zero-testing states}.
 The zero-testing states have the property
 that they ``remember'' which counter is zero 
@@ -501,9 +501,9 @@ Formally, we will consider a segment as a run in the
 underlying symmetric 2-\vass $\V$, extended with a single zero-testing
 transition to the ending zero-testing state with no outgoing transitions.
 % obtained by removing all zero-testing states except the starting and ending one.
-%  transitions $(q, \ztinstr i, q^t)$ by
+%  transitions $(q, \ztinstr i, q^z)$ by
 % the corresponding $(0,0)$ update one
-% $(q, \updinstr{0,0}, q^t)$.
+% $(q, \updinstr{0,0}, q^z)$.
 
 \begin{remark} \label{rem:wlog}
 Furthermore, \mywlog we may assume that one counter is 0
@@ -856,7 +856,7 @@ $D$ from \eqref{eq:tpump} and \eqref{eq:spump}.
 \para{\Saturated sets}
 
 It is folklore that semilinear sets $X\subseteq Q\times\N$
-are exactly \emph{ultimately periodic} sets, namely satisfying
+are exactly the \emph{ultimately periodic} sets, \ie those satisfying
 $q(a)\in X\iff q(a+N) \in X$ for some $N>0,M\geq 0$, all $q\in Q$ 
 and all sufficiently large $a\geq M$.
 We call $N$ and $M$ a \emph{period} and \emph{threshold} of $X$.

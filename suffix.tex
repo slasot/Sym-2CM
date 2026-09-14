@@ -130,15 +130,15 @@ To ease the presentation, we introduce the following definitions:
     in the sequence. Unlike a run, a path does not fully specify
     the source and target configurations.
 
-    The source of the first transition is said to be the \emph{source of the path},
-    and the target of the final transition is said to be the \emph{target of the
-    path}. The \emph{effect of a path} is defined as the sum of the effects of its
+    The source of the first transition is said to be the \emph{source} of the path,
+    and the target of the final transition is said to be the \emph{target} of the
+    path. The \emph{effect} of a path is defined as the sum of the effects of its
     transitions.
 \item A \emph{cycle} is a path whose source and target coincide.
 \item A path $\rho$ is said to be \emph{fireable} at a configuration $q(\vr v)$
-    if there exists a configuration $q'(\vr v')$ such that $q(\vr v) \xstep{\rho} q'(\vr v')$,
-    \ie $\rho$ can be executed starting from $q(\vr v)$, without the counters
-    having to go negative along the way.
+    if there exists a configuration $q'(\vr v')$ such that $q(\vr v) \xstep{\rho} q'(\vr v')$.
+    This amounts to requiring that $\rho$ can be executed starting from $q(\vr v)$,
+    without the counters having to go negative along the way.
     We denote the target configuration $q'(\vr v')$ thus obtained by $q(\vr v); \rho$.
 \item For paths $\rho_1$ and $\rho_2$, denote their concatenation by $\rho_1; \rho_2$.
 % \item A path $\rho_2$ is said to be \emph{fireable after} a path $\rho_1$, if for any
@@ -149,12 +149,12 @@ To ease the presentation, we introduce the following definitions:
     If $\rho$ has effect $(a, b)$, $\overline{\rho}$ has effect $(b, a)$.
 \end{itemize}
 
-We define the \emph{norm} of a vector $w = (w_1,w_2) \in \Z^2$ 
+We define the \emph{norm} of a vector $\vr w = (w_1,w_2) \in \Z^2$ 
 to be the maximal absolute value of its components,
-$\norm{w}=\max\{|w_1|,|w_2|\}$, and 
+$\norm{\vr w}=\max\{|w_1|,|w_2|\}$, and 
 the norm of a 2-\vass $\V=(Q,T)$ to be the maximal norm of the effects 
 of its transitions, 
-$\norm \V = \max\{\norm{w} \mid (q,\updinstr{w},q')\in T\}$.
+$\norm \V = \max\{\norm{\vr w} \mid (q,\updinstr{\vr w},q')\in T\}$.
 
 
 \begin{proof}[Proof of \Cref{lem:targetpump} $\punkt 2 2$]
@@ -197,8 +197,9 @@ than $2 C_0$, and \emph{minor} otherwise.
 \Mywlog we may assume that all cycles are major,
 by inlining any minor cycles $c_i$ into their neighboring one-off paths $t_{i-1}$ and $t_i$.
 After this operation, the lengths of the one-off paths are bounded by
-$e' := e (2\ell C_0 + \ell + 1)$.
+$e' := e (2C_0 \ell + \ell + 1)$.
 \sla{changed}
+\mei{nice catch, the previous value indeed wasn't enough.}
 % $e' := e(\ell+1) + 2C_0\ell$. \sla{changed to 'sum of lengths'}
 
 Call a cycle $c_j$ \emph{sum-increasing} if its effect $(x_j, y_j)$ satisfies $x_j + y_j > 0$.
@@ -227,6 +228,12 @@ on $e'$ and $\ell$, respectively.
 % \sla{let's keep them. at least $l_{max}$ we need}
 % \mei{yup, as currently written, $e'$ and $\ell$ are run-specific, and
 % then we take the max over all runs}
+
+We now focus our attention on the sum-increasing cycles, and perform
+case analysis in terms of the sign of each coordinate of their effect.
+Specifically, the effect of a \emph{sum-increasing} cycle can be:
+vertical $(0,+)$, horizontal $(+,0)$, or one of $(+,-)$, $(+,+)$, or $(-,+)$.
+We classify these into three cases (\Cref{fig:cases}, left).
 
 \begin{figure}[h]
 \centering
@@ -303,12 +310,6 @@ on $e'$ and $\ell$, respectively.
 }
 \label{fig:cases}
 \end{figure}
-
-We now focus our attention on the sum-increasing cycles, and perform
-case analysis in terms of the sign of each coordinate of their effect.
-Specifically, the effect of a \emph{sum-increasing} cycle can be:
-vertical $(0,+)$, horizontal $(+,0)$, or one of $(+,-)$, $(+,+)$, or $(-,+)$.
-We classify these into three cases (\Cref{fig:cases}, left).
 
 \para{Case 1: Some sum-increasing cycle $c_j$ has vertical $(0,+)$ effect}
 One extra iteration of this cycle yields the claim, with the vertical effect
@@ -718,16 +719,20 @@ aiming to prove it for $i+1$.
     \end{scope}
 
     \begin{scope}[xshift=10cm]
-        \draw[->] (0,0) -- (3,0) node[right] {$x$};
-        \draw[->] (0,0) -- (0,3) node[above] {$y$};
         \coordinate (root) at (0,1);
         \coordinate (conf) at (1.5,0.8);
         \coordinate (slope1) at (1,0.3);
         \coordinate (slope2) at (1,0.7);
+
+        \fill[black!10] (0,0) -- (root) -- ($ (root) + 3*(slope1) $) -- (3,0) -- cycle;
+
+        \draw[->] (0,0) -- (3,0) node[right] {$x$};
+        \draw[->] (0,0) -- (0,3) node[above] {$y$};
+
         \draw[dashed,thick,blue!70!black] ($ (root) + -0.4*(slope1) $) -- +($ 3.5*(slope1) $);
         \draw[dashed,thick,blue!70!black] ($ (root) + -0.4*(slope2) $) -- +($ 3.1*(slope2) $);
         \draw[->,dotted] ($ (root) + 3*(slope1) $) arc (16.7:35:3cm);
-        \fill (conf) circle (1.5pt);
+        % \fill (conf) circle (1.5pt);
     \end{scope}
 \end{tikzpicture}
 \caption{
