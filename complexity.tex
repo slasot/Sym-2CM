@@ -11,14 +11,14 @@ In this section we provide an upper complexity bound for our decision procedure
 outlined in \Cref{sec:outline}.
 We will measure the size of input instances of the reachability problem 
 as the size of the \emph{unary}
-representation of a 2-\cm $\mach=(Q,T)$, the source $s=q(w)$ 
-and the target $t=q'(w')$, namely
+representation of a 2-\cm $\mach=(Q,T)$, the source $s=q(\vr w)$ 
+and the target $t=q'(\vr w')$, namely
 \[
 % \mysize \mach = 
 n \, = \,
 \mysize Q + \mysize{T_\text{zero-test}} \, + \, 
 2 \cdot \norm \V \cdot \mysize {T_\text{update}}
-\, + \, \norm w \, + \, \norm{w'},
+\, + \, \norm{\vr w} \, + \, \norm{\vr w'},
 \]
 % \mei{wait, do we want to include $w$ and $w'$ within
 % $\mysize \mach$? Doesn't feel right...}
