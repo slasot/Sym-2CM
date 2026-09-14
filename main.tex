@@ -55,17 +55,16 @@
 {}
 % {Partially supported by ERC grant INFSYS, agreement no. 950398 and 
 % by the NCN grant 2024/55/B/ST6/01674.}
-\author{Vaios~Michalakis}{University of Warsaw}{}
-{}
-{}
+% \author{Vaios~Michalakis}{University of Warsaw}{}
+% {}
+% {}
 
 
-\authorrunning{K.~Jaros, 
-%R.~Guttenberg, 
-{\L}.~Kami{\'n}ski, M.~Kądziołka, S.~Lasota, V.~Michalakis} 
+\authorrunning{K.~Jaros, {\L}.~Kami{\'n}ski, M.~Kądziołka, S.~Lasota} 
 %TODO mandatory. First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et al.'
 
-\Copyright{Clotilde~Biziere, Wojciech~Czerwi{\'n}ski, Roland~Guttenberg, {\L}ukasz~Kami{\'n}ski, S{\l}awomir~Lasota, {\L}ukasz~Orlikowski, Vaios~Michalakis} %TODO mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
+\Copyright{Krzysztof~Jaros, Maja~Kądziołka, {\L}ukasz~Kami{\'n}ski, S{\l}awomir~Lasota} 
+%TODO mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
 
 %\ccsdesc[100]{\textcolor{red}{Replace ccsdesc macro with valid one}} 
 %TODO mandatory: Please choose ACM 2012 classifications from 
@@ -116,28 +115,19 @@ model of computation.
 We study the expressive power of nondeterministic
 2-counter machines which are symmetric, in that their set of
 update transitions is invariant under swapping of counters
-(we assume simulataneous updates of all counters).
+(we assume simultaneous updates of all counters).
 On the other hand,
 we impose no restriction on zero-testing transitions.
-    % \mei{This used to say "invariant" under swapping of counters.
-    % But to me that feels incorrect --- it sounds like each \emph{particular} transition 
-    % would need to be unchanged by the permutation (effectively, the delta at
-    % each counter would need to be equal).
-    % If someone feels strongly about the wording, we could also
-    % go for "their \emph{set of} transitions is invariant".}
 As the main result we demonstrate a dramatic impact of symmetry:
 we show that symmetric 2-counter machines
 are not Turing-complete, by proving decidability of their 
 reachability problem.
-%Our approach builds on specific properties of 2-counter
-%machines, and does not extend to 3 or more counters.
 We conjecture that the decidability extends to 
 machines with 3 or more counters that are symmetric, 
 meaning the set of update transitions is
 invariant under any permutation of counters. 
 We leave this problem open for machines with 3 and more counters,
-while identifying a frontier of the impact of symmetry:
-we prove
+while identifying a frontier of the impact of symmetry: we prove
 undecidability for 3-counter machines invariant under the
 cyclic permutation group of order~3.
 \end{abstract}
@@ -145,24 +135,17 @@ cyclic permutation group of order~3.
 
 \newpage
 
-    \input{prefix.tex}
+    \input{prefix}
 
-    \input{suffix.tex}
+    \input{suffix}
     
     \input{variants}
 
-    \input{complexity.tex}
-
+    \input{complexity}
 
 \newpage
 
-
-%%
-%% Bibliography
-%%
-
-%% Please use bibtex,
-\bibliography{bib.bib}
+\bibliography{bib}
 
 
 \end{document}
