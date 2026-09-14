@@ -190,8 +190,10 @@ Call a cycle $c_j$ \emph{major} if its number of iterations $n_j$ is larger
 than $2 C_0$, and \emph{minor} otherwise.
 \Mywlog we may assume that all cycles are major,
 by inlining any minor cycles $c_i$ into their neighboring one-off paths $t_{i-1}$ and $t_i$.
-After this operation, lengths of the one-off paths are bounded by
-$e' := 2e (C_0 + 1)$.
+After this operation, the lengths of the one-off paths are bounded by
+$e' := 2e (\ell C_0 + 1)$.
+\sla{added $\ell$}
+% $e' := e(\ell+1) + 2C_0\ell$. \sla{changed to 'sum of lengths'}
 
 Call a cycle $c_j$ \emph{sum-increasing} if its effect $(x_j, y_j)$ satisfies $x_j + y_j > 0$.
 We claim that, by setting a large enough value of $C$, we can guarantee that the run

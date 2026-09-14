@@ -72,7 +72,9 @@ In summary:
 
 \newcommand{\poly}[1]{\text{poly}(#1)}
 \para{Terminology}
-We use the triple exponential function $\exptriple(m) = 2^{2^{2^m}}$.
+We use the $k$-exponential function $\expf k$, defined as
+$\expf 0 (m) = m$, and $\expf {k+1} (m) = 2^{\expf k (m)}$.
+%  (m) = 2^{2^{2^m}}$.
 Whenever a base-period representation of a semilinear set $X$ is clear
 from the context, 
 % \sla{reprezentacji moze byc oczywiscie wiele, mam nadzieje ze to jest
@@ -81,24 +83,23 @@ we write
 $\norm{X}$ for the maximum of norms of bases
 and periods of this representation.
 In the sequel we say that a semilinear set $X$ is 
-\emph{(triply) exponentially semilinear} if given $\mach$,
+\emph{$k$-exponentially semilinear} if given $\mach$,
 some base-period representation of $X$ can be computed in time
-(triply) exponential in $n$, 
-and $\norm X$ is bounded (triply) exponentially in $n$:
-$\norm X \leq 2^{\poly n}$, resp.~$\norm X \leq \exptriple(\poly n)$.
+$\norm X \leq \expf k(\poly n)$, 
+and $\norm X$ is bounded by $\norm X \leq \expf k(\poly n)$.
 %and all computed bases and periods
 %are at most (triply) exponential in $n$.
-Furthermore,
-a mapping $S \mapsto f(S)$ transforming a semilinear set $S$
-into a semilinear set $f(S)$ we call 
-\emph{triply exponentially bounded} if
-  given $\mach$ and a base-period representation of 
-  $S\subseteq Q\times\N$, some 
-  representation of $f(S)$ can be computed in time 
-  ${\norm S}^{O(1)}\cdot \exptriple(\poly n)$,
-  % polynomial in $\norm S$ and triply exponential in $n$, 
-  and 
-  $\norm{f(S)} \leq {\norm S}^{O(1)}\cdot \exptriple(\poly n)$.
+% Furthermore,
+% a mapping $S \mapsto f(S)$ transforming a semilinear set $S$
+% into a semilinear set $f(S)$ we call 
+% \emph{triply exponentially bounded} if
+%   given $\mach$ and a base-period representation of 
+%   $S\subseteq Q\times\N$, some 
+%   representation of $f(S)$ can be computed in time 
+%   ${\norm S}^{O(1)}\cdot \expf 3(\poly n)$,
+%   % polynomial in $\norm S$ and triply exponential in $n$, 
+%   and 
+%   $\norm{f(S)} \leq {\norm S}^{O(1)}\cdot \expf 3(\poly n)$.
   
 
 %  some base-period description of $f(S)$ is computable in time
@@ -126,8 +127,8 @@ length polynomial in $n$ (cf.~\eqref{eq:lps}).
 As shown in \cite{Blondin15},
 once $\ell$, $t_0, \ldots, t_\ell$ and $c_1, \ldots, c_\ell$ are fixed, 
 the reachability relation along all runs of the form \eqref{eq:lps2} 
-is (the projection of) the solution set of an instance $I$ of the integer
-linear programming problem of size polynomial in $\ell$, 
+is the union of (the projections of) the solution sets of instances $I$ 
+of the integer linear programming problem of size polynomial in $\ell$, 
 and hence effectively semilinear.
 Moreover, numbers appearing in $I$ are bounded exponentially in
 $n$, and hence by the bound of \cite{Pottier91}
@@ -185,7 +186,7 @@ As both construction of $\mach'$ and Parikh's theorem are effective,
 we have thus shown:
 
 \begin{claim} \label{claim:sl2}
-  The relation $\stepp{0}^*$ is triply exponetially semilinear.
+  The relation $\stepp{0}^*$ is 3-exponentially semilinear.
 %   and the norms of bases and periods of its semilinear description
 %   are bounded triply-exponentially in $n$.
 \end{claim}
@@ -248,25 +249,33 @@ of
 \[
 (r_1 \times \N) \ \cap \ (\N\times r_2).
 \]
-Using Claims \ref{claim:sl}--\ref{claim:circ} we conclude
-that the relation
-  $(\stepp - \circ \, \stepp{0}^*)$ is triply exponentially semilinear,
-which allows us to deduce further bounds on bases and periods
-of the (necessarily $D$-saturated) inverse image of the relation.
-
-\begin{claim}\label{claim:sl3}
-The mapping $S \mapsto (\stepp - \circ \, \stepp{0}^*) \,\circ\, S$
-  is triply exponentially bounded.
+Likewise we get the bound for images and inverse images of relations:
+\begin{claim} \label{claim:im}
+Semilinear relations $r\subseteq (Q\times\N)^2$ and semilinear sets
+$X\subseteq Q\times\N$ satisfy
+$\norm{r \circ X}, \norm{X \circ r} \leq (\norm{r} \cdot \norm{X})^{O(1)}$.
 \end{claim}
 
-For later use we state a bound on the bases and periods 
-of the semilinear image of $(\stepp - \circ \, \stepp{0}^*)$:
 
-\begin{claim}\label{claim:sl3a}
-    The mapping
-  $S\mapsto S \,\circ\,(\stepp - \circ \, \stepp{0}^*)$
-  is triply exponentially bounded.
-\end{claim}
+% Using Claims \ref{claim:sl}--\ref{claim:circ} we conclude
+% that the relation
+%   $(\stepp - \circ \, \stepp{0}^*)$ is triply exponentially semilinear,
+% which allows us to deduce further bounds on bases and periods
+% of the (necessarily $D$-saturated) inverse image of the relation.
+
+% \begin{claim}\label{claim:sl3}
+% The mapping $S \mapsto (\stepp - \circ \, \stepp{0}^*) \,\circ\, S$
+%   is triply exponentially bounded.
+% \end{claim}
+
+% For later use we state a bound on the bases and periods 
+% of the semilinear image of $(\stepp - \circ \, \stepp{0}^*)$:
+
+% \begin{claim}\label{claim:sl3a}
+%     The mapping
+%   $S\mapsto S \,\circ\,(\stepp - \circ \, \stepp{0}^*)$
+%   is triply exponentially bounded.
+% \end{claim}
 
 
 Concerning the first part of \Cref{lem:compbackfor},
@@ -277,7 +286,8 @@ S \quad \mapsto \quad S \ \cup \
 \end{align}
 needed to compute the fixpoint $\Phi_3 \circ \{t\}$, starting from
 $X_0 = ({\stepp -} \,\circ\ {\stepp{0}^\ast})  \circ \{t\}$.
-Due to \Cref{claim:sl3}, the bases of the $D$-saturated 
+Due to Claims \ref{claim:sl2} and \ref{claim:im}, 
+the bases of the $D$-saturated 
 set $X_0$ are bounded triply exponentially in $n$.
 Then every base of every next $D$-saturated set
 \[
@@ -291,14 +301,14 @@ is either smaller than some base of $X_i$, or is
  for some $q\in Q$ and $r\in\setfromto 0 {D-1}$.
  A newly created base may appear at most $\mysize Q \cdot D$ 
  times (exponentially many times) during the whole iteration.
- Due to \Cref{claim:sl3},
+ Again due to Claims \ref{claim:sl2} and \ref{claim:im},
 %  \begin{claim}\label{claim:sl3m}
 % The mapping $S \mapsto (\stepp - \circ \, \stepp{0}^*)^m \,\circ\, S$
 %   is triply exponentially bounded.
 % \end{claim}
  if a new base appears in $X_{i+1}$ then
  \[
-    \norm{X_{i+1}} \leq \norm{X_i}^{O(1)} \cdot \exptriple(\poly n),
+    \norm{X_{i+1}} \leq \norm{X_i}^{O(1)} \cdot \expf 3(\poly n),
  \]
 %  \lukasz{Probably it would be possible to prove that $X_{i+1}$ is only multiplied 
 %  by some triply exponential factor, without the exponent $d$.
@@ -312,9 +322,10 @@ is either smaller than some base of $X_i$, or is
 In consequence, for every $X_i$ we 
 have 
 \[
-\norm{X_i} \leq \norm{X_0}^{O(\mysize Q \cdot D)} \cdot \exptriple(\poly n),
+\norm{X_i} \leq \bigl(\norm{X_0} \cdot 
+\expf 3(\poly n)\bigr)^{O(\mysize Q \cdot D)},
 \]
-\sla{to nie jest w formacie triply expoentially bounded}
+% \sla{to nie jest w formacie triply expoentially bounded}
 % for some polynomial $p'$,
 which yields a triply exponential bound on $\norm{X_i}$.
 Therefore, the total number of iterations of \eqref{eq:tra} 
@@ -330,8 +341,9 @@ Our reasoning was not specific to the starting set $\{t\}$,
 and we have actually shown:
 
 \begin{claim}\label{claim:sl4}
-    The mapping $S\mapsto \Phi_3 \circ S$
-  is triply exponentially bounded and computable in
+  Given a 3-exponential semilinear set $S$, the set
+    $\Phi_3 \circ S$ is also
+  3-exponentially semilinear and computable in
   at most triply exponentially many iterations of \eqref{eq:tra}.
 \end{claim}
 
@@ -363,43 +375,60 @@ is exponentially semilinear.
 Then by \Cref{claim:sl4} applied to $S= (\stepp + \circ \ X_{q,r})$, the 
 % $D$-saturated 
 set 
-$\Phi_3 \circ (\stepp +\circ \,X_{q,r}) = 
+$S'=\Phi_3 \circ (\stepp +\circ \,X_{q,r}) = 
 (\Phi_3 \, \circ \stepp +)\circ \,X_{q,r}$
 is computable in at most triply exponentially many iterations
-of the transformation \eqref{eq:tra}, and its intersection $Y$
+of the transformation \eqref{eq:tra}, say $m$ iterations.
+Then intersection $Y$ of $S'$
 with the set $(\{s\} \, \circ \stepp{0}^*)$, 
 \[
 Y \ = \ (\{s\} \, \circ \stepp{0}^*) \ \cap \ 
-\bigl((\Phi_3 \, \circ \stepp +)\circ \,X_{q,r}\bigr)
+\bigl((\Phi_3 \, \circ \stepp +)\circ \,X_{q,r}\bigr),
 \]
+has
 (relying on Claims \ref{claim:sl2} and \ref{claim:cap})
-has bases and periods of at most triply exponential norm. 
-Now, a key observation is that once $Y$ is nonempty and the set
-$\Phi_3 \circ (\stepp +\circ \,X_{q,r})$ is computed in at most
-triply exponentially many (say $m$) iterations of \eqref{eq:tra},
+bases and periods of at most triply exponential norm. 
+Assume, \mywlog, that $m=2^\ell$ for some doubly exponential $\ell$, 
+an let $R = (\stepp - \, \circ \, \stepp{0}^*)^{\leq m}$.
+The relation $R$ is computable by $\ell$-fold self-composition
+$T\mapsto T \cup T^2$, each self-composition increasing the norm 
+polynomially, which implies:
+\begin{claim} \label{claim:sl5}
+  The relation $R$ is 4-exponentially semilinear.
+%   and the norms of bases and periods of its semilinear description
+%   are bounded triply-exponentially in $n$.
+\end{claim}
+% 
+We have $\Phi_3 \circ (\stepp +\circ \,X_{q,r}) =
+R \circ (\stepp +\circ \,X_{q,r})$.
+Now, a key observation is that once $Y$ is nonempty,
 there is a pair $(y,y')\in Y\times (\stepp + \circ\, X_{q,r})$
 such that
-$ (y,y') \ \in \, (\stepp - \, \circ \, \stepp{0}^*)^{\leq m},
-$
+$ (y,y') \in R$,
 which implies that the set
-\[ Y \ \circ \ (\stepp - \, \circ \, \stepp{0}^*)^{\leq m} \ \circ \ 
-\stepp +
+\[ Y \ \circ \ R \ \circ \ \stepp +
 \]
 has necessarily nonempty intersection with $X_{q,r}$, and moreover
-the intersection contains, due to Claims \ref{claim:sl} and \ref{claim:sl3a}, 
+the intersection contains, due to Claims \ref{claim:sl}, \ref{claim:circ}, 
+\ref{claim:im} and \ref{claim:sl5}, 
 a number
-which is at most triply exponential in $n$.
-\sla{nie, wzrost jest wiekszy niz triply exponential; trzeba wzmocnić 
-\Cref{claim:sl3a}}
-This provides a triply exponential upper bound on the number of iterations 
+which is at most 4-exponential in $n$.
+% \sla{nie, wzrost jest wiekszy niz triply exponential; trzeba wzmocnić 
+% \Cref{claim:sl3a}}
+This provides a 4-exponential upper bound on the number of iterations 
 of the exhaustive search 
 in the proof of \Cref{lem:compbackfor}, and thus the bound
 on the computation time for $X_0$.
-In the same way one obtains the bound on the computation time for every
+
+As the bound $m$ on the number of iterations does not depend
+on the input set $S$ when computing an iteration 
+$S\mapsto S\cup f(S)$,
+in the same way as above
+we obtain the same 4-exponential bound on the norm of every
 next iterate $X_{i+1}=X_i + f(X_i)$.
 
-Finally, the triple exponential bound on the number of iterations 
-\eqref{eq:tra2} before a fixpoint is reached in show similarly
+Finally, the 4-exponential bound on the number of iterations 
+\eqref{eq:tra2} before a fixpoint is reached in shown similarly
 as in the first part.
 This completes the complexity analysis of the second part of 
 \Cref{lem:compbackfor}.
@@ -430,10 +459,13 @@ This completes the complexity analysis of the second part of
 
 \medskip
 
-To summarize, the running time of our decision procedure is at
-most triply exponential in $n$, the size of unary representation,
-and hence at most quadruply exponential in the size of binary 
-representation.
+To summarize, we have obtained the bounds on the norms of 
+representations of computed semilinear sets, and on the numbers
+of iterations performed in the course of computation.
+The bounds are 4-exponential in $n$, the size of unary representation,
+and hence at 5-exponential in the size of binary representation.
+The running time of our decision procedure is hence elementary.
+% 
 As the only known lower bound is \pspace-hardness
 (in binary representation),
 narrowing the apparent complexity gap is left as future research.
