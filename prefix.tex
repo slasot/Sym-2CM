@@ -72,18 +72,24 @@ that are
 is invariant under all permutations $\sigma$ of counters:
 for every update transition $(q,i,q')$, the machine has also a transition
 $(q,\sigma(i), q')$, where $\sigma(i)$ is the result of 
-applying $\sigma$ to the counters in the update instruction $i$
-(see \Cref{fig:example} for an example).
-To stress this point, we choose to impose the invariance only on update transitions,
+applying $\sigma$ to the counters in the update instruction $i$.
+We thus choose to impose the invariance only on update transitions,
 % (when the instruction $i$ is a counter update), 
-but not on zero-test transitions ---
-imposing the invariance (symmetry) 
+but
+not on zero-test transitions.
+Imposing the invariance (symmetry) 
 also on zero-tests is not needed for our main 
 decidability proof.
 
-\begin{figure}[h]
-    \centering
-\scalebox{0.7}
+Here is an illustrative example of a 2-\cm (a \cm having two counters)
+with
+two control states and
+six transitions, including five symmetric update transitions
+(invariant under the swap of counters) and one zero-test transition:
+
+% \begin{figure}
+\begin{center}
+\scalebox{0.6}
 {\begin{tikzpicture} [draw=black!70,
   fill=blue!20, node distance = 5cm, on grid, auto,
   every initial by arrow/.style = {thin}]
@@ -93,25 +99,19 @@ decidability proof.
 \node (q1) [state, scale=1.2, fill=blue!20, right = of q0] {$q$};
 % Arrows
 \path [-stealth, thick]
-    (q0) edge[bend left] node {\small{$\ztinstr 1$}}  (q1)
-    (q1) edge[bend left] node {\small$\updinstr{1,1}$}  (q0)
-    (q0) edge [loop above] node[above left] {\small$\updinstr{-1, 3}$}()
-    (q0) edge [loop below] node[below left] {\small$\updinstr{3, -1}$}()
-    (q1) edge [loop below] node[below right] {\small$\updinstr{1, -1}$}()
-    (q1) edge [loop above] node[above right] {\small$\updinstr{-1, 1}$}();
+   (q0) edge[bend left] node {\scriptsize{$\ztinstr 1$}}  (q1)
+   (q1) edge[bend left] node {\scriptsize$\updinstr{1,1}$}  (q0)
+   (q0) edge [loop above] node {\scriptsize$\updinstr{-1, 3}$}()
+   (q0) edge [loop below] node {\scriptsize$\updinstr{3, -1}$}()
+   (q1) edge [loop below] node {\scriptsize$\updinstr{1, -1}$}()
+   (q1) edge [loop above] node {\scriptsize$\updinstr{-1, 1}$}();
 \end{tikzpicture}}
-\caption{
-    An example symmetric 2-counter machine with two control states and
-    six transitions, including five symmetric update transitions
-    (invariant under the swap of counters) and one zero-test transition.
-    Due to the symmetry condition, the $(p, \updinstr{-1, 3}, p)$ transition
-    also forces $(p, \updinstr{3, -1}, p)$ to exist. In contrast, we permit
-    $\ztinstr 1$ without a corresponding $\ztinstr 2$ transition.
-    Also notice the $\updinstr{1,1}$ transition, which is self-symmetric.
-}
-\label{fig:example}
-\end{figure}
+\end{center}
+% \caption{A symmetric 2-counter machine.}
+% \label{fig:example}
+% \end{figure}
 
+\vspace{-3mm}
 
 \para{Contribution}
 The initial motivation of this study is the immense impact of symmetry
@@ -174,8 +174,8 @@ The reachability problem  is undecidable for $\cycg 3$-counter machines.
 % 
 Both the above results hold in the hardest case: decidability with
 unrestricted zero-tests, and undecidability with symmetric ones. 
-This is unsurprising, as in \Cref{sec:variants} we show that assuming
-symmetry of zero-tests does not weaken the model.
+This is unsurprising, as we observe that assuming symmetry of zero-tests
+does not weaken the model.
 
 \para{Open questions}
 
@@ -324,35 +324,32 @@ $T\subseteqfin Q\times\Instr\times Q$ is a finite set of
 and the set $\Instr$ of \emph{instructions} is the union of
 update instructions and zero-test instructions:
 \[
-\Instr \ = \ \setof{\updinstr{\vr w}}{w\in\Z^d} \ \cup \ 
+\Instr \ = \ \setof{\updinstr{w}}{w\in\Z^d} \ \cup \ 
 \setof{\ztinstr{i}}{i\in \setto d}.
 \]
 % \mei{it is ambiguous here whether $i \in d$ is supposed to mean
 % $\{0, ..., d-1\}$ or $\{1, ..., d\}$. We use the more explicit notation
 % below, maybe we should do so here as well?}
-Execution of $\updinstr{\vr w}$ amounts to adding
+Execution of $\updinstr{w}$ amounts to adding
 the vector
-$\vr w$ to the counters, and execution of 
+$w$ to the counters, and execution of 
 $\ztinstr{i}$ amounts to checking that counter $i$
 has value 0.
 Formally, we define the semantics of $\mach$ by considering
-its \emph{configurations} $(q,\vr v) \in Q\times \N^d$, written $q(\vr v)$, and
+its \emph{configurations} $(q,v) \in Q\times \N^d$, written $q(v)$, and
 the step relation between configurations determined by 
 transitions of $\mach$:
-$q(\vr v) \step q'(\vr v')$ if 
+$q(v) \step q'(v')$ if 
+
 \begin{itemize}
 \item 
-$\vr v' = \vr v + \vr w$,  for some  $(q,\updinstr{\vr w},q')\in T$, or
+$v' = v + w$,  for some  $(q,\updinstr{w},q')\in T$, or
 \item  
-$\vr v' = \vr v$ and $\vr v[i]=0$, for some 
-$(q,\ztinstr i, q')\in T$,
+$v' = v$ and $v(i)=0$, for some 
+$(q,\ztinstr i, q')\in T$.
 \end{itemize}
-where by $\vr v[i]$ we denote the $i$-th coordinate of the vector $\vr v$.
-\mei{I chose to change the notation to $\vr v[i]$ to make the below
-definition of $\sigma(\vr w)$ read better; I'm open to discussion on this.
-One potential sticking point is that the $q[r]$ notation we later use in the
-1-cm construction looks the same, but I'd say the contexts are sufficiently different.}
 
+\noindent
 We use the term $d$-\vass (vector addition system with states)
 for a $d$-\cm without zero-test instructions.
 The \emph{underlying} \vass of $\mach$ is
@@ -360,12 +357,12 @@ obtained by removing from $\mach$ all $\xztinstr$ transitions.
 
 The symmetric group $\symg d$ acts naturally on vectors in $\Z^d$
 and hence also on update transitions:
-for $\sigma\in \symg d$ and $t=(q,\updinstr{\vr w},q')\in T$, we define
-$\sigma(t)=(q,\updinstr{\sigma(\vr w)},q')$, where $\sigma(\vr w)[\sigma(i)]=\vr w[i]$
+for $\sigma\in \symg d$ and $t=(q,\updinstr w,q')\in T$, we define
+$\sigma(t)=(q,\updinstr{\sigma(w)},q')$, where $\sigma(w)(\sigma(i))=w(i)$
 for every $i\in\setto d$.
 A $d$-\cm $\mach$ is \emph{symmetric} if its set of update transitions
 is invariant under the natural action: for every $\sigma\in \symg d$ 
-and $(q,\updinstr{\vr w},q')\in T$, we have $(q,\updinstr {\sigma (\vr w)},q')\in T$.
+and $(q,\updinstr w,q')\in T$, we have $(q,\updinstr {\sigma (w)},q')\in T$.
 Importantly, 
 symmetry is imposed on $\xupdinstr$ transitions, but not on 
 $\xztinstr$ transitions of $\mach$.
@@ -411,7 +408,7 @@ Two natural restrictions of the model are obtained by requiring that:
 % \begin{itemize}
 (1) the set of $\xztinstr$ transitions is also \emph{symmetric}, 
 that is invariant under permutations of counters; 
-(2) all $\xupdinstr$ transitions $(q,\updinstr{\vr w},q')$ are 
+(2) all $\xupdinstr$ transitions $(q,\updinstr{w},q')$ are 
 \emph{single-counter}, that is $w$ is nonzero on at most one coordinate.
 % \end{itemize}
 % 
@@ -472,18 +469,18 @@ is denoted by $R^*$, as usual.
 For convenience, we perform on $\mach$ the following notational
 preprocessing:
 we replace every zero-test transition
-$z=(q,\ztinstr i, q')\in T$ by a sequence of two transitions,
+$t=(q,\ztinstr i, q')\in T$ by a sequence of two transitions,
 \[
-(q, \ztinstr i, q^z) \qquad
-(q^z, \updinstr {0,0}, q'),
+(q, \ztinstr i, q^t) \qquad
+(q^t, \updinstr {0,0}, q'),
 \]
 % q \xstep{\textsf{c}_i=0?} S_i^t \xstep{(0,0)} q',\]
-where $q^z$ is a new state, unique to the transition $z$.
+where $q^t$ is a new state, unique to the transition $t$.
 Notice that reachability in the new symmetric 2-\cm thus obtained 
 is equivalent to the original one, 
-and that it has special states $q^z$
+and that it has special states $q^t$
 which can only be entered if the counter zero-tested by 
-transition $z$ is zero;
+transition $t$ is zero;
 we call them \emph{zero-testing states}.
 The zero-testing states have the property
 that they ``remember'' which counter is zero 
@@ -501,9 +498,9 @@ Formally, we will consider a segment as a run in the
 underlying symmetric 2-\vass $\V$, extended with a single zero-testing
 transition to the ending zero-testing state with no outgoing transitions.
 % obtained by removing all zero-testing states except the starting and ending one.
-%  transitions $(q, \ztinstr i, q^z)$ by
+%  transitions $(q, \ztinstr i, q^t)$ by
 % the corresponding $(0,0)$ update one
-% $(q, \updinstr{0,0}, q^z)$.
+% $(q, \updinstr{0,0}, q^t)$.
 
 \begin{remark} \label{rem:wlog}
 Furthermore, \mywlog we may assume that one counter is 0
@@ -856,7 +853,7 @@ $D$ from \eqref{eq:tpump} and \eqref{eq:spump}.
 \para{\Saturated sets}
 
 It is folklore that semilinear sets $X\subseteq Q\times\N$
-are exactly the \emph{ultimately periodic} sets, \ie those satisfying
+are exactly \emph{ultimately periodic} sets, namely satisfying
 $q(a)\in X\iff q(a+N) \in X$ for some $N>0,M\geq 0$, all $q\in Q$ 
 and all sufficiently large $a\geq M$.
 We call $N$ and $M$ a \emph{period} and \emph{threshold} of $X$.

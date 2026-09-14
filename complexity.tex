@@ -11,14 +11,14 @@ In this section we provide an upper complexity bound for our decision procedure
 outlined in \Cref{sec:outline}.
 We will measure the size of input instances of the reachability problem 
 as the size of the \emph{unary}
-representation of a 2-\cm $\mach=(Q,T)$, the source $s=q(\vr w)$ 
-and the target $t=q'(\vr w')$, namely
+representation of a 2-\cm $\mach=(Q,T)$, the source $s=q(w)$ 
+and the target $t=q'(w')$, namely
 \[
 % \mysize \mach = 
 n \, = \,
 \mysize Q + \mysize{T_\text{zero-test}} \, + \, 
 2 \cdot \norm \V \cdot \mysize {T_\text{update}}
-\, + \, \norm{\vr w} \, + \, \norm{\vr w'},
+\, + \, \norm w \, + \, \norm{w'},
 \]
 % \mei{wait, do we want to include $w$ and $w'$ within
 % $\mysize \mach$? Doesn't feel right...}
@@ -476,7 +476,7 @@ representations of computed semilinear sets, and on the numbers
 of iterations performed in the course of computation.
 The bounds are 4-exponential in $n$, the size of unary representation,
 and hence at 5-exponential in the size of binary representation.
-Combining this with an exponential blowup incurred by a necessity to generate
+Combined with an exponential blowup incurred by a necessity to generate
 all bases and periods, this yields
 the elementary running time of our decision procedure.
 % 
