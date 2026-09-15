@@ -459,8 +459,8 @@ imposing solely the second restriction.
 
 We now outline the proof of \Cref{thm:main}.
 To this end we
-consider a given symmetric 2-\cm $\mach = (Q,T)$ and 
-two configurations, source $s$ and target $t$  ($s,t \in Q\times\N^2$).
+fix a given symmetric 2-\cm $\mach = (Q,T)$ and 
+two configurations: a source $s$, and a target $t$ ($s,t \in Q\times\N^2$).
 
 \para{Notations}
 For relations $R \subseteq A \times B$,
@@ -470,7 +470,7 @@ the diagrammatic-order composition of the relations.
 In particular, whenever convenient we consider sets
 $S \subseteq A$, $T \subseteq B$ as
 relations from/to the singleton set, denoting
-by $S \circ R$ and $R \circ T$ the (inverse) image of a set
+by $S \circ R \subseteq B$ and $R \circ T \subseteq C$ the (inverse) image of a set
 under a relation $R$.
 The reflexive transitive closure of $R\subseteq A\times A$ 
 is denoted by $R^*$, as usual.
@@ -479,18 +479,18 @@ is denoted by $R^*$, as usual.
 For convenience, we perform on $\mach$ the following notational
 preprocessing:
 we replace every zero-test transition
-$z=(q,\ztinstr i, q')\in T$ by a sequence of two transitions,
+$t=(q,\ztinstr i, q')\in T$ by a sequence of two transitions,
 \[
-(q, \ztinstr i, q^z) \qquad
-(q^z, \updinstr {0,0}, q'),
+(q, \ztinstr i, q_t) \qquad
+(q_t, \updinstr {0,0}, q'),
 \]
 % q \xstep{\textsf{c}_i=0?} S_i^t \xstep{(0,0)} q',\]
-where $q^z$ is a new state, unique to the transition $z$.
+where $q_t$ is a new state, unique to the transition $t$.
 Notice that reachability in the new symmetric 2-\cm thus obtained 
 is equivalent to the original one, 
-and that it has special states $q^z$
+and that it has special states $q_t$
 which can only be entered if the counter zero-tested by 
-transition $z$ is zero;
+transition $t$ is zero;
 we call them \emph{zero-testing states}.
 The zero-testing states have the property
 that they ``remember'' which counter is zero 
@@ -505,9 +505,13 @@ may be considered as a 2-\vass run
 that ends with one counter 0, and which counter is 0 is
 determined by the ending, zero-testing state.
 Formally, we will consider a segment to be a run in the
-underlying symmetric 2-\vass $\V$, extended with a single zero-testing
-transition to a chosen ending zero-testing state 
-with no outgoing transitions.
+underlying symmetric 2-\vass $\V$,
+leaving the final zero-test implicit in the fact
+that the final configuration of a segment has the relevant
+counter be zero.
+% extended with a single zero-testing
+% transition to a chosen ending zero-testing state 
+% with no outgoing transitions.
 % obtained by removing all zero-testing states except the starting and ending one.
 %  transitions $(q, \ztinstr i, q^z)$ by
 % the corresponding $(0,0)$ update one
@@ -516,10 +520,9 @@ with no outgoing transitions.
 \begin{remark} \label{rem:wlog}
 Furthermore, \mywlog we may assume that one counter is 0
 in both source and target configurations.
-For instance, if the source vector is $\vr v=(v_1,v_2)$ with $0<v_1\leq v_2$,
-we replace it by $(0,v_2-v_1)$ and add one extra transition
-from a freshly added source state,
-with update $(v_1,v_1)$.
+    For instance, if the source configuration $q(v_1, v_2)$ satisfies $0<v_1\leq v_2$,
+    we replace it by $q_s(0,v_2-v_1)$ for a freshly added source state $q_s$,
+    and add an additional transition $(q_s, \updinstr{v_1, v_1}, q)$.
 We thus assume, \mywlog, 
 that the source and target states are zero-testing.
 \end{remark}
