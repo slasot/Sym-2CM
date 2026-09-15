@@ -114,10 +114,13 @@ Counter machines are a particularly simple, Turing-complete
 model of computation.
 We study the expressive power of nondeterministic
 2-counter machines which are symmetric, in that their set of
-update transitions is invariant under swapping of counters
-(we assume simultaneous updates of all counters).
-On the other hand,
-we impose no restriction on zero-testing transitions.
+update transitions is invariant under swapping of counters.
+Our model is an extension of symmetric 2-\vass, in that
+we allow modifying both counters within a single transition.
+% On the other hand,
+% we impose no restriction on zero-testing transitions.
+%mei: skipping this sentence, as it disturbs the flow a bit too much,
+%and we end up showing that this choice isn't important
 As the main result we demonstrate a dramatic impact of symmetry:
 we show that symmetric 2-counter machines
 are not Turing-complete, by proving decidability of their 

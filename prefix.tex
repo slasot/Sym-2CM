@@ -52,8 +52,10 @@ a machine may choose between different instructions executable
 in the same state.
 
 \para{Symmetric counter machines}
-As the starting point, we specifically choose the set of 
-machine instructions:
+Imposing a symmetry condition on the transitions of a counter
+machine is inherently sensitive to what can be expressed
+within a single instruction.
+As such, we specifically choose the set of machine instructions:
 counter \emph{updates} that simultaneously modify all counters  
 by corresponding deltas, and counter \emph{zero-tests}, which are 
 executable only if a given counter has value zero.
@@ -71,8 +73,8 @@ that are
 \emph{symmetric}, by which we mean that the set of update transitions
 is invariant under all permutations $\sigma$ of counters:
 for every update transition $(q,i,q')$, the machine has also a transition
-$(q,\sigma(i), q')$, where $\sigma(i)$ is the result of 
-applying $\sigma$ to the counters in the update instruction $i$
+$(q,\sigma(i), q')$, where $\sigma$ acts on an update instruction $i$
+by permuting the roles of the counters
 (see \Cref{fig:example} for an example).
 To stress this point, we choose to impose the invariance only on update transitions,
 % (when the instruction $i$ is a counter update), 
@@ -104,7 +106,7 @@ decidability proof.
     An example symmetric 2-counter machine with two control states and
     six transitions, including five symmetric update transitions
     (invariant under the swap of counters) and one zero-test transition.
-    Due to the symmetry condition, the $(p, \updinstr{-1, 3}, p)$ transition
+    Due to the symmetry condition, \eg the $(p, \updinstr{-1, 3}, p)$ transition
     also forces $(p, \updinstr{3, -1}, p)$ to exist. In contrast, we permit
     $\ztinstr 1$ without a corresponding $\ztinstr 2$ transition.
     Also notice the $\updinstr{1,1}$ transition, which is self-symmetric.
@@ -116,7 +118,7 @@ decidability proof.
 
 \para{Contribution}
 The initial motivation of this study is the immense impact of symmetry
-on complexity of the \vass reachability problem:
+on the complexity of the \vass reachability problem:
 while the problem is {\sc Ackermann}-complete in general \cite{LS19,CO21,L21},
 the complexity drops to
 only \pspace-complete for symmetric \vass \cite{KL25}.
@@ -197,7 +199,7 @@ The reachability problem  is decidable for symmetric counter machines.
 \end{conjecture}
 
 We focus on decidability, thus
-leaving open the exact complexity  
+leaving open the exact complexity of the problem for
 symmetric 2-\cm{s}.
 While we obtain an elementary upper bound for our decision 
 procedure,
@@ -231,10 +233,12 @@ Then, in \Cref{sec:sl,sec:sl2}, we prove the effective semilinearity,
 building on the central property of target (resp.~source) pumping
 in symmetric 2-\vass, that is subsequently shown in \Cref{sec:targetpump}.
 Technically, \Cref{sec:targetpump} is probably the most intricate part 
-of the paper, and the only one exploiting the symmetry of 2-\cm{s}.
-Finally, \Cref{sec:undecid} contains the proof of \Cref{thm:undecid},
-and the last two,  \Cref{sec:variants,sec:complexity}, discuss
-variants of the model, and an upper complexity bound.
+of the paper, and the only one directly exploiting the symmetry of 2-\cm{s}.
+In \Cref{sec:undecid}, we turn to the proof of \Cref{thm:undecid},
+followed by \Cref{sec:variants} where we discuss how syntactic restrictions of our model
+affect its expressive power.
+Finally, in \Cref{sec:complexity}, we provide an elementary upper bound
+on the complexity of our decision procedure for symmetric 2-\cm{s}.
 
 
 \para{Related research}
@@ -281,20 +285,23 @@ and for a relaxation of 2-\vass to
 2-\cm{s} with just one zero-tested counter \cite{FLS18}.
 In all these cases 
 the reachability relation is effectively semilinear, which
-is a key for obtaining \pspace upper bound, but which 
+is the key for obtaining a \pspace upper bound, but which 
 fails already for 3-\vass 
 \cite{HopcroftPansiot}.
 We do not know the exact complexity of symmetric 2-\cm{s}.
 % but it is possible that the complexity remains \pspace.
-Neither we know if the reachability relation of a
+Neither do we know if the reachability relation of a
 symmetric 2-\cm is semilinear, but we believe it is so.
 
 Contrary to the above-mentioned restrictions of zero-tests, 
-our model leaves the zero-tests unrestricted, 
+our model leaves the zero-tests unrestricted,
+which rarely results in a decidable model
+--- the primary example being a result of Dudenhefner
+\cite{Dudenhefner22}, showing that
 % which makes \Cref{thm:main} particularly interesting.
 % We conclude by recalling another recently obtained decidability result that
 % also does not assume any explicit restriction of zero-tests 
-similarly to \cite{Dudenhefner22} showing that
+% similarly to \cite{Dudenhefner22} showing that
 % , and hence seems as surprising as our \Cref{thm:main}.
 % It amounts to observing that
 % the above-mentioned Turing-completeness of
