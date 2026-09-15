@@ -321,16 +321,15 @@ Let $d$ be a positive integer.
 A \emph{$d$-counter machine} ($d$-\cm in short) 
 $\mach$
 is a finite-state automaton whose transitions
-may perform two kinds of instructions,
-namely update and zero-test \emph{instructions},
+may perform two kinds of \emph{instructions},
+namely \emph{update} and \emph{zero-test} instructions,
 on $d$ \emph{counters}, namely nonnegative integer values
 stored as part of the configuration.
 Formally, we define such a machine as 
 $\mach = (Q,T)$, where $Q$ is a finite set of control states,
 $T\subseteqfin Q\times\Instr\times Q$ is a finite set of 
 \emph{transitions} of $\mach$,
-and the set $\Instr$ of \emph{instructions} is the union of
-update instructions and zero-test instructions:
+and the set $\Instr$ of \emph{instructions} is given by:
 \[
 \Instr \ = \ \setof{\updinstr{\vr w}}{\vr w\in\Z^d} \ \cup \ 
 \setof{\ztinstr{i}}{i\in \setto d}.
@@ -389,15 +388,15 @@ swap of counters.
     set of $\xupdinstr$ 
     transitions is invariant under the action of a permutation subgroup
     $G\leq\symg d$.
-    Clearly, when $G$ is a permutation subgroup of $H$, every
-    $H$-\cm is automatically a $G$-\cm.
-    This more general model is investigated only in 
+    Note that this notion is contravariant: when $G$ is a permutation subgroup of $H$, every
+    $H$-\cm is automatically a $G$-\cm, and not vice versa.
+    We investigate this more general model only in 
     \Cref{sec:undecid,sec:variants}. 
 \end{remark}
-The reflexive-transitive closure $\step^*$ of $\step$ we call
-the \emph{reachability relation} (between configurations).
+We define the \emph{reachability relation} (between configurations)
+as the reflexive-transitive closure $\step^*$ of $\step$.
 The \emph{reachability problem} asks, given a \cm $\mach$ and two
-of its configurations, source $s\in Q\times\N^d$ and target $t\in Q\times\N^d$, 
+of its configurations, a source $s\in Q\times\N^d$ and a target $t\in Q\times\N^d$, 
 whether 
 $s \step^* t$
 (in which case we say that $t$ is \emph{reachable} from $s$).
@@ -420,7 +419,7 @@ Two natural restrictions of the model are obtained by requiring that:
 (1) the set of $\xztinstr$ transitions is also \emph{symmetric}, 
 that is invariant under permutations of counters; 
 (2) all $\xupdinstr$ transitions $(q,\updinstr{\vr w},q')$ are 
-\emph{single-counter}, that is $w$ is nonzero on at most one coordinate.
+\emph{single-counter}, that is $\vr w$ is nonzero on at most one coordinate.
 % \end{itemize}
 % 
 As we discuss later in \Cref{sec:variants}, the first 
