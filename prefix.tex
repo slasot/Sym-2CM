@@ -852,7 +852,7 @@ q(a)\stepp + q'(a') \quad \implies  \quad  q(a) \stepp + q'(a'+D).
 \end{align}
 The reverse version of the four claims of \Cref{lem:targetpump}, 
 where we swap source and target and reverse all transitions
-(the reverse of $(q,w,q')$ is $(q',-w,q)$, as expected), 
+(the reverse of $(q,\vr w,q')$ is $(q',-\vr w,q)$, as expected), 
 implies that $\stepp -$ is \emph{source-pumpable}, that is 
 \begin{align} \label{eq:spump}
 q(a)\stepp - q'(a') \quad \implies  \quad  q(a+D) \stepp - q'(a').
@@ -873,26 +873,26 @@ $q(a)\in X\iff q(a+N) \in X$ for some $N>0,M\geq 0$, all $q\in Q$
 and all sufficiently large $a\geq M$.
 We call $N$ and $M$ a \emph{period} and \emph{threshold} of $X$.
 
-Given $N>0$, a subset $X\subseteq Q\times\N$ we call  \emph{$N$-\saturated} 
-if for all $(q,a) \in X$, also $(q,a+N) \in X$.
+Given $N>0$, we define $N$-\emph{\saturated} subsets $X\subseteq Q\times\N$ as those
+where for all $(q,a) \in X$, also $(q,a+N) \in X$.
 % if $(q,a) \in X \implies (q,a+N) \in X$ for all $q\in Q$ and $a\in\N$.
 $N$-\saturated sets
 are ultimately periodic, and hence semilinear.
 % 
 An $N$-\saturated set $X$ is representable by a function 
 $\minf X : Q\times \setfromto 0 {N-1} \to \N \cup \{\infty\}$ 
-that maps a state $q\in Q$ and $r<N$ to the least number $n$ 
-whose remainder modulo $N$ equals $r$ and  $(q,n)\in X$,
+that maps a state $q\in Q$ and remainder $r<N$ to the least number $n$ 
+congruent to $r$ such that $(q,n)\in X$,
 \[
-\minf X (q,r) \ = \ \min\{n : (q,n) \in X, \ \ n \equiv r \bmod N\},
+    \minf X (q,r) \ = \ \min\ \setof{n}{(q,n) \in X, \ \ n \equiv r \bmod N},
 \]
 and to $\infty$ if there is no such number $n$.
-We call $N$ a \emph{period} of $X$, and the numbers 
-$\setof{\minf X(q,r)}{\minf X(q,r)\in\N}$  its \emph{bases}.
+We call $N$ a \emph{period} of $X$, and the numbers $n < \infty$
+appearing in the image of $\minf X$ its \emph{bases}.
 % 
 For instance, in consequence of \eqref{eq:tpump} and \eqref{eq:spump}, 
-the image $S\circ \stepp +$ as well as the inverse image
-$\stepp - \circ\, S$ is always $D$-\saturated, regardless of
+the image $S\circ {\stepp +}$ as well as the inverse image
+${\stepp -} \circ\, S$ is always $D$-\saturated, regardless of
 $S\subseteq Q\times\N$.
 
 For termination of our decision procedure it will be crucial that
@@ -937,7 +937,8 @@ set, are also effectively semilinear.
 Recall that $\Phi_3 \ = \ ({\stepp -} \circ\, {\stepp{0}^\ast})^\ast$.
 By \Cref{lem:0-+,lem:0star}, both the relations $\stepp -$ and
 $\stepp{0}^*$ are effectively semilinear.
-Using the effective equivalence between semilinear sets and Presburger Arithmetic,
+By a standard argument building upon \cite[Thm.~6]{taming},
+% Using the effective equivalence between semilinear sets and Presburger Arithmetic,
 the composed relation 
 ${\stepp -} \circ\, {\stepp{0}^\ast}$ is also effectively semilinear,
 in particular meaning that
@@ -962,12 +963,12 @@ starting from the initial set
 until a fixpoint is reached. By the above observations, we deduce that
 both the initial set $X_0$, as well as every successive iterate $X_{i+1}$,
 are effectively semilinear and $D$-\saturated; moreover it is
-self-evident that the sequence $X_0 \subseteq X_1 \subseteq \ldots$
+self-evident that the sequence $X_0 \subseteq X_1 \subseteq \cdots$
 is non-decreasing.
 
 More explicitly, by \Cref{lem:stab} we have that at starting at some $j$,
 \[
-X_j \ = \ X_{j+1} \ = \ X_{j+2} \ = \ \ldots
+X_j \ = \ X_{j+1} \ = \ X_{j+2} \ = \ \cdots
 \] 
 Since both the iteration
 $X_i \mapsto X_{i+1}$ and the equality test $X_i = X_{i+1}$ are effective,
@@ -990,11 +991,11 @@ the set $\{s\} \circ \Phi_1$ is effectively semilinear.
 To this aim we prefer to use another rational expression defining 
 $\Phi_1$, where $\Phi_3$ appears as a subexpression:
 \[
-\Phi_1 \ = \ (\stepp{0}^* \ \circ \ \Phi_3 \ \circ \ \stepp +)^\ast;
+    \Phi_1 \ = \ ({\stepp{0}^*} \ \circ \ \Phi_3 \ \circ \ {\stepp +})^\ast;
 % \qquad\qquad\qquad
 % \text{recalling } \Phi_3 \ = \ (\stepp - \circ \stepp {0}^\ast)^\ast;
 \]
-indeed, as in \eqref{eq:regexp} in \Cref{sec:outline}, the inner subexpression $\stepp{0}^*  \circ \  \Phi_3  \  \circ  \stepp +$ 
+indeed, as in \eqref{eq:regexp} in \Cref{sec:outline}, the inner subexpression ${\stepp{0}^*} \,\circ\, \Phi_3 \,\circ\, {\stepp +}$ 
 describes an arbitrary
 composition of segments of type $\stepp 0$ and $\stepp -$ that ends 
 with one segment of type $\stepp +$.
@@ -1016,7 +1017,7 @@ f\bigl(X_i\bigr)
 where
 \[
 f(S) \ = \ S \ 
-\circ \ \bigl(\stepp{0}^* \ \circ \ \Phi_3 \ \circ \ \stepp +\bigr).
+\circ \ \bigl({\stepp{0}^*} \ \circ \ \Phi_3 \ \circ \ {\stepp +}\bigr).
 \]
 Similarly as before, knowing that $\stepp +$ is target pumpable, we know
 that all $X_i$ are $D$-\saturated sets, and therefore the sequence 
@@ -1043,7 +1044,7 @@ $
 which proceeds 'forward', we need a trick.
 Note that the relation 
 ${\stepp{0}^*} \  \circ \ \Phi_3 \ \circ \  {\stepp +}$ is always
-target-pumpable since $\stepp +$ is so \eqref{eq:tpump},
+target-pumpable since $\stepp +$ is so by \eqref{eq:tpump},
 and hence $f(S)$ is always $D$-\saturated
 regardless of $S$.
 To compute $f(S)$, one first establishes, for every state $q\in Q$, 
@@ -1066,7 +1067,8 @@ are effectively semilinear due to
 $\Phi_3 \ \circ \ \bigl(\stepp + \circ \ X_{q,r}\bigr)$,
 and its intersection $Y_{q,r}$ with \eqref{eq:set2}, are
 computable.
-Then one finds the precise representation
+Knowing which remainders to expect,
+one then finds the precise representation
 $\minf{f(S)}$ of $f(S)$ by an \emph{exhaustive search}.
 For every positively verified state-remainder pair $(q,r)$,
 namely one with $Y_{q,r}\neq\emptyset$, 
@@ -1113,7 +1115,7 @@ computed, concluding the proof of the second part of \Cref{lem:compbackfor}.
 
     Moreover, each set $X^c_{q,q'}$ is effectively semilinear,
     being the intersection of the effectively semilinear relation $\stepp 0$ 
-    with the semilinear set $\setof{\bigl(q(n),q'(n')\bigr)}{n'=n+c}$,
+    with the semilinear set $\Setof{\bigl(q(n),q'(n')\bigr)}{n'=n+c}$,
     projected down to one dimension.
     Hence, each $X^c_{q,q'}$ is
     ultimately periodic, with an effectively computable 
@@ -1212,10 +1214,9 @@ computed, concluding the proof of the second part of \Cref{lem:compbackfor}.
     \[
         \setof{ a^n b^{n'} }{ q[n \bmod N](n) \step_{\mach'}^* q'[n' \bmod N](n') }.
     \]
-    Applying Parikh's Theorem to this language, we get that
+    Applying Parikh's Theorem to this language, we'll get that
     the relation $\stepp{0}^*$ is effectively semilinear
-    \cite{Parikh66,EGKL11}, provided that the aforementioned
-    pushdown automata can be constructed.
+    \cite{Parikh66,EGKL11}.
 
 \begin{figure}[h]
 \centering
@@ -1291,8 +1292,9 @@ computed, concluding the proof of the second part of \Cref{lem:compbackfor}.
 }
 \label{fig:parikh}
 \end{figure}
-    In order to construct the pushdown automata,
-    we extend the 1-\cm $\mach'$ to a \emph{labelled} 1-\cm, where
+    It remains to describe the construction of the aforementioned pushdown automata,
+    which we depict on \Cref{fig:parikh}.
+    We extend the 1-\cm $\mach'$ to a \emph{labelled} 1-\cm, where
     every transition is labelled with a symbol from the alphabet $\{a,b\}$,
     or with $\varepsilon$.
     Fix a pair of zero-testing states $q,q'\in Q$ for which

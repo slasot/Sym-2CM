@@ -289,7 +289,7 @@ Concerning the first part of \Cref{lem:compbackfor},
 we bound the number of iterations of the transformation
 \begin{align}\label{eq:tra}
 S \quad \mapsto \quad S \ \cup \ 
-(\stepp - \, \circ \, \stepp{0}^*) \, \circ \,  S
+    ({\stepp -} \, \circ \, {\stepp{0}^*}) \, \circ \,  S
 \end{align}
 needed to compute the fixpoint $\Phi_3 \circ \{t\}$, starting from
 $X_0 = ({\stepp -} \,\circ\ {\stepp{0}^\ast})  \circ \{t\}$.
@@ -299,7 +299,7 @@ set $X_0$ are bounded triply exponentially in $n$.
 Then every base of every next $D$-saturated set
 \[
     X_{i+1} \ := \ X_{i} \ \cup \ 
-    ({\stepp -} \,\circ\, \stepp{0}^\ast) \, \circ\,  X_{i},
+    ({\stepp -} \,\circ\, {\stepp{0}^\ast}) \, \circ\,  X_{i},
 \]
 as $X_i \subseteq X_{i+1}$,
 is either smaller than some base of $X_i$, or is 
@@ -363,15 +363,15 @@ of the transformation
 S \quad \mapsto \quad S \ \cup \ f(S),
 \qquad \text{ where } \quad
 f(S) \ = \ S \ 
-\circ \ \bigl(\stepp{0}^* \ \circ \ \Phi_3 \ \circ \ \stepp +\bigr),
+    \circ \ \bigl({\stepp{0}^*} \ \circ \ \Phi_3 \ \circ \ {\stepp +}\bigr),
 \end{align}
 needed to compute the
-fixpoint $\{s\} \circ \Phi_1$, starting from
+fixpoint $\{s\} \,\circ\, \Phi_1$, starting from
 $X_0 =  f\bigl(\{s\}\bigr)$. 
 We should also provide an upper bound on computation of $X_0$,
 and computation of every iteration
 $
-X_{i+1}  :=  X_i  \cup f\bigl(X_i\bigr).
+X_{i+1}  :=  X_i  \,\cup\, f\bigl(X_i\bigr).
 $
 
 \medskip
@@ -382,23 +382,23 @@ is exponentially semilinear.
 Then by \Cref{claim:sl4} 
 applied to $k=3$ and 
 $S= (\stepp + \circ \ X_{q,r})$, the set 
-$S'=\Phi_3 \circ (\stepp +\circ \,X_{q,r}) = 
-(\Phi_3 \, \circ \stepp +)\circ \,X_{q,r}$
+$S'=\Phi_3 \,\circ\, ({\stepp +}\,\circ \,X_{q,r}) = 
+(\Phi_3 \, \circ \, {\stepp +})\,\circ \,X_{q,r}$
 is computable in at most triply exponentially many iterations
 of the transformation \eqref{eq:tra}, say $m$ iterations.
 Then intersection $Y$ of $S'$
-with the set $(\{s\} \, \circ \stepp{0}^*)$, 
+with the set $(\{s\} \, \circ \, {\stepp{0}^*})$, 
 \[
-Y \ = \ (\{s\} \, \circ \stepp{0}^*) \ \cap \ 
-\bigl((\Phi_3 \, \circ \stepp +)\circ \,X_{q,r}\bigr),
+    Y \ = \ (\{s\} \, \circ \, {\stepp{0}^*}) \ \cap \ 
+\bigl((\Phi_3 \, \circ \, {\stepp +})\, \circ \,X_{q,r}\bigr),
 \]
 has
 (relying on Claims \ref{claim:sl2} and \ref{claim:cap})
 bases and periods of at most triply exponential norm. 
 Assume, \mywlog, that $m=2^\ell$ for some doubly exponential $\ell$, 
-an let $R = (\stepp - \, \circ \, \stepp{0}^*)^{\leq m}$.
+an let $R = ({\stepp -} \, \circ \, {\stepp{0}^*})^{\leq m}$.
 The relation $R$ is computable by $\ell$-fold self-composition
-$T\mapsto T \cup T^2$ starting from $T=(\stepp - \, \circ \, \stepp{0}^*) \cup \text{Id}$,
+$T\mapsto T \cup T^2$ starting from $T=({\stepp -} \, \circ \, {\stepp{0}^*}) \cup \text{Id}$,
 each self-composition increasing the norm 
 polynomially, which implies:
 \begin{claim} \label{claim:sl5}
@@ -407,14 +407,14 @@ polynomially, which implies:
 %   are bounded triply-exponentially in $n$.
 \end{claim}
 % 
-We have $\Phi_3 \circ (\stepp +\circ \,X_{q,r}) =
-R \circ (\stepp +\circ \,X_{q,r})$.
+We have $\Phi_3 \circ ({\stepp +}\circ X_{q,r}) =
+R \circ ({\stepp +}\circ X_{q,r})$.
 Now, a key observation is that once $Y$ is nonempty,
-there is a pair $(y,y')\in Y\times (\stepp + \circ\, X_{q,r})$
+there is a pair $(y,y')\in Y\times ({\stepp +} \circ X_{q,r})$
 such that
 $ (y,y') \in R$,
 which implies that the set
-\[ Y \ \circ \ R \ \circ \ \stepp +
+\[ Y \ \circ \ R \ \circ \ {\stepp +}
 \]
 has necessarily nonempty intersection with $X_{q,r}$, and moreover
 the intersection contains, due to Claims \ref{claim:sl}, \ref{claim:circ}, 
