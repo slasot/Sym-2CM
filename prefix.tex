@@ -601,7 +601,7 @@ but rather the initial and final values $a$ and $a'$ of a segment.
 
 \para{Three types of segments}
 
-As we will see in \Cref{sec:targetpump}, the relation $\reachrel$
+As we shall soon see, the relation $\reachrel$
 can be split into three disjoint areas with different properties,
 delineated by a machine-dependent constant~$C$
 (see \Cref{fig:areas}).
@@ -658,7 +658,7 @@ for  the three relations defined by the following rational expressions:
   \begin{aligned} \label{eq:regexp}
       &\Phi_1 \ = \ (({\stepp 0} \ \cup \ {\stepp -})^\ast \circ\, {\stepp +})^\ast,\\
       &\Phi_2 \ = \ {\stepp 0^\ast},\\
-      &\Phi_3 \ = \ ({\stepp -} \,\circ\, {\stepp{0}^\ast})^\ast.
+      &\Phi_3 \ = \ ({\stepp -} \circ\, {\stepp{0}^\ast})^\ast.
   \end{aligned}
 \end{align}
 
@@ -721,8 +721,8 @@ is effectively semilinear.
 \begin{lemma} \label{lem:compbackfor}
 Given a symmetric 2-\cm $\mach$ and source $s$ and target $t$, the sets
 \begin{alignat*}{5}
-    \Phi_3 \circ \{t\} \ &:= \  \setof{y}{(y,t) \in \Phi_3} \ &&\subseteq \ Q \times \N, \\
-    \{s\} \circ \Phi_1 \ &:= \  \setof{x}{(s,x) \in \Phi_1} \ &&\subseteq \ Q \times \N
+    \Phi_3 \circ \{t\} \ &:= \  \setof{y}{(y,t) &&\in \Phi_3} \ &&\subseteq \ Q \times \N, \\
+    \{s\} \circ \Phi_1 \ &:= \  \setof{x}{(s,x) &&\in \Phi_1} \ &&\subseteq \ Q \times \N
 \end{alignat*}
 are effectively semilinear.
 % One can compute 
@@ -753,14 +753,14 @@ semilinearity given in \Cref{lem:0star,lem:compbackfor},
 % Arithmetic \cite{GS66},
 the proof of \Cref{thm:main} is immediate:
 the reachability question $s\reachrel^* t$
-is, according to \eqref{eq:reachrel}, equivalent to%
+is, according to \eqref{eq:reachrel}, equivalent to
 %\( (s,t) \in \Phi_1\circ\Phi_2\circ\Phi_3,\) \ie 
-\begin{equation}
-    \exists\, x,y \in Q\times\N \ : \  x \in (\{s\} \circ \Phi_1) \ \wedge \ (x,y) \in \Phi_2 
-    \ \wedge \ y\in (\Phi_3 \circ \{t\});
-\end{equation}
-but this formula is logically equivalent to the nonemptiness of the intersection
-\[ \bigl(\{s\} \circ \Phi_1\bigr) \, \times \, 
+% \begin{equation}
+%     \exists\, x,y \in Q\times\N \ : \  x \in (\{s\} \circ \Phi_1) \ \wedge \ (x,y) \in \Phi_2 
+%     \ \wedge \ y\in (\Phi_3 \circ \{t\});
+% \end{equation}
+the nonemptiness of the intersection
+\[ \bigl(\{s\} \circ \Phi_1\bigr) \times 
 \bigl(\Phi_3\circ \{t\} \bigr)
 \quad \cap \quad
 \Phi_2
