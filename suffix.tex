@@ -910,7 +910,8 @@ For a configuration $q(a, b)$ of $\mach$, the corresponding configuration
 of $\mach'$ shall have the form $q(3a+2, 3b+2, 0)$,
 with two \emph{main counters} keeping track of the values
 of the counters of $\mach$,
-and one \emph{auxiliary counter}, which is almost always kept at 0.
+and one \emph{auxiliary counter}, which is always zero outside of
+auxiliary states.
 Thanks to the presence of the auxiliary counter,
 we will be able to ``anchor'' each transition as it executes,
 in such a way that any run making use of an unwanted cyclic rotation
@@ -918,7 +919,7 @@ of a transition
 will get rapidly cut short by a failing zero-test.
 
 To simulate a transition of the form $(q, \updinstr{x, y}, q') \in T$,
-we include in $T'$ the following transitions:
+we include in $T'$ the transitions in use by the following fragment of a run:
 \[ \begin{split}
     q&(3a + 2, && 3b + 2, && 0)
     \xstep{\updinstr{3x - 1, 3y - 1, 0}} \\
@@ -931,18 +932,17 @@ we include in $T'$ the following transitions:
     q'&(3(a + x) + 2, && 3(b + y) + 2, && 0),
 \end{split} \]
 as well as their cyclic rotations.
-Clearly, this forms a run reflecting the intended semantics of the transition,
-so it now remains to see that the cyclic shifts of the above instructions,
-which we must also include within $T'$, do not cause any issues.
+We now need to verify that the cyclic shifts of these transitions
+do not cause any issues.
 
-Let us first consider the $\updinstr{3x-1, 3y-1, 0}$ instruction above.
+Let us first consider the $\updinstr{3x-1, 3y-1, 0}$ instruction.
 As the update vector contains only one zero, executing any cyclic rotation will
 disturb the auxiliary counter, making it non-zero.
 Moreover, because the main counters have a remainder of $2 \bmod 3$
-before the transition, no cyclic rotation of the update instruction
-can make them zero: only remainders 2 and 0 are
-present within the update instruction.
-Hence, should any cyclic rotation of the first update instruction execute,
+before the transition, they can only have a remainder of $1$ or $2$ after
+any cyclic rotation executes. In particular, none of the main counters may
+become zero.
+Hence, should any unwanted cyclic rotation of the first update instruction execute,
 the zero-test that follows will fail.
 
 The reasoning for the $\updinstr{1, 1, 0}$ instruction is similar:
@@ -950,7 +950,7 @@ any cyclic rotation will increase the auxiliary counter to 1,
 and neither of the main counters may decrease to 0,
 as the vector is non-negative on all coordinates.
 
-It remains to simulate the zero-test transitions of $\mach$.
+We now turn to simulating the zero-test transitions of $\mach$.
 For concreteness, let us focus on the case where the first counter
 is being zero-tested;
 a zero-test of the second counter is handled analogously.
