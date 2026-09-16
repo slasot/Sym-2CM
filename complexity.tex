@@ -86,9 +86,10 @@ $\norm{X}$ for the maximum of norms of bases
 and periods of this representation.
 In the sequel we say that a semilinear set $X$ is 
 \emph{$k$-exponentially semilinear} if given $\mach$,
-some base-period representation of $X$ can be computed 
-% in time $\norm X \leq \expf k(\poly n)$, and 
+one can compute
+a base-period representation of $X$
 of norm bounded by $\norm X \leq \expf k(\poly n)$.
+% in time $\norm X \leq \expf k(\poly n)$, and 
 %and all computed bases and periods
 %are at most (triply) exponential in $n$.
 % Furthermore,
@@ -432,12 +433,15 @@ Testing candidates in the exhaustive search requires only
 4-exponentially many iterations of \eqref{eq:tra}, due to
 \Cref{claim:sl4} (applied to $k=4$).
 
-As the bound $m$ on the number of iterations does not depend
-on the input set $S$ when computing an iteration 
-$S\mapsto S\cup f(S)$,
-in the same way as above
+When computing the iteration $S \mapsto S \cup f(S)$,
+we only apply \Cref{claim:sl4} to sets of the form
+${\stepp +} \circ X_{q,r}$, which do not themselves depend
+on the input set $S$. As such,
+the bound $m$ on the number of iterations does not depend
+on the input set $S$ either,
+and in the same way as above
 we obtain the same 4-exponential bound on the norm of every
-next iterate $X_{i+1}=X_i \cup f(X_i)$.
+subsequent iterate $X_{i+1}=X_i \cup f(X_i)$.
 
 Finally, the 4-exponential bound on the number of iterations 
 \eqref{eq:tra2} before a fixpoint is reached in shown similarly
