@@ -1,0 +1,380 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=28mm]{geometry}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\DeclareMathOperator{\supp}{supp}
+
+\begin{document}
+
+\begin{lemma}[Perturbation lemma]\label{lem:perturbation}
+Let $d,m\geq 1$, let $s,t\in\{1,\ldots,d\}$, and let
+$\alpha,\beta\in\mathbb{Q}$ with $0\leq\alpha<\beta$. Suppose that
+$x_0,\ldots,x_m\in\mathbb{Q}_{\geq 0}^d$ satisfy
+\[
+  x_0=\alpha e_s,\qquad x_m=\beta e_t,\qquad
+  x_i-x_{i-1}=\ell_i v_i\quad(1\leq i\leq m),
+\]
+where $\ell_i\in\mathbb{Q}_{>0}$, $v_i\in\mathbb{Q}^d$, and $e_k$ denotes the
+$k$th standard basis vector. For each $i$, put
+\[
+  A_i=\supp(x_{i-1}+x_i),
+\]
+and let $G_i$ be the group of coordinate permutations fixing every
+coordinate outside $A_i$.
+
+Then there exist vectors $z_0,\ldots,z_m\in\mathbb{Q}^d$,
+coefficients $r_i\in\mathbb{Q}$ and $q_i\in\mathbb{Q}_{\geq 0}$, and permutations
+$h_i\in G_i$, each the identity or a transposition, such that
+\begin{align}
+  z_0&=0,\qquad z_m=e_t,\label{eq:perturbation-ends}\\
+  z_i-z_{i-1}
+    &=r_i v_i+q_i h_i(v_i)
+      &&(1\leq i\leq m),\label{eq:perturbation-increments}\\
+  x_i[k]=0&\quad\Longrightarrow\quad z_i[k]=0
+      &&(0\leq i\leq m,\ 1\leq k\leq d).
+      \label{eq:perturbation-boundary}
+\end{align}
+\end{lemma}
+
+\begin{proof}
+Suppose first that $x_j=0$ for some $j$. Since $x_m=\beta e_t\neq 0$,
+we have $j<m$. Define
+\[
+  z_i=\begin{cases}
+    0,&i\leq j,\\
+    x_i/\beta,&i>j.
+  \end{cases}
+\]
+The required conditions hold with all $q_i=0$ and $h_i=\mathrm{id}$, with $r_i=0$
+for $i\leq j$, and with $r_i=\ell_i/\beta$ for $i>j$.
+
+We may therefore assume that every $x_i$ is nonzero; in particular,
+$\alpha>0$. Choose a coordinate $k_i$ attaining the maximum of
+$x_i$, retaining the previous choice whenever possible. More precisely,
+set $k_0=s$, and, for $i\geq 1$, set $k_i=k_{i-1}$ if $k_{i-1}$ is
+still maximal in $x_i$; otherwise choose any maximal coordinate of
+$x_i$. Necessarily $k_m=t$.
+
+Put
+\[
+  w_i=x_i-\alpha e_{k_i}.
+\]
+Then
+\[
+  w_0=0,\qquad w_m=(\beta-\alpha)e_t.
+\]
+Moreover, if $x_i[k]=0$, then $k\neq k_i$, since the maximum
+coordinate of the nonzero nonnegative vector $x_i$ is positive.
+Consequently,
+\begin{equation}\label{eq:zero-coordinate}
+  x_i[k]=0\quad\Longrightarrow\quad w_i[k]=0.
+\end{equation}
+
+Fix $i\in\{1,\ldots,m\}$. If $k_i=k_{i-1}$, then
+\begin{equation}\label{eq:no-switch}
+  w_i-w_{i-1}=\ell_i v_i.
+\end{equation}
+Otherwise, write $a=k_{i-1}$ and $b=k_i$. By the choice of the
+maximal coordinates,
+\[
+  x_{i-1}[a]\geq x_{i-1}[b],\qquad x_i[b]>x_i[a].
+\]
+The latter inequality is strict because we would have retained $a$
+if it were still maximal. Hence
+\begin{align*}
+  \ell_i\bigl(v_i[b]-v_i[a]\bigr)
+    &=\bigl(x_i[b]-x_i[a]\bigr)
+      +\bigl(x_{i-1}[a]-x_{i-1}[b]\bigr)\\
+    &>0.
+\end{align*}
+Thus $\delta_i:=v_i[b]-v_i[a]>0$.
+
+Since $x_{i-1}[a]>0$ and $x_i[b]>0$, both $a$ and $b$ belong to
+$A_i$. The transposition $\sigma_i=(a\ b)$ therefore belongs to
+$G_i$, and
+\[
+  \sigma_i(v_i)-v_i=\delta_i(e_a-e_b).
+\]
+With $c_i=\alpha/\delta_i>0$, this gives
+\begin{align}
+  w_i-w_{i-1}
+    &=\ell_i v_i+\alpha(e_a-e_b)\notag\\
+    &=(\ell_i-c_i)v_i+c_i\sigma_i(v_i).
+      \label{eq:switch}
+\end{align}
+The coefficient $\ell_i-c_i$ is allowed to have either sign, whereas
+the coefficient of the permuted vector is positive.
+
+Finally, set $z_i=w_i/(\beta-\alpha)$. For a stage with no change of
+maximal coordinate, set $r_i=\ell_i/(\beta-\alpha)$, $q_i=0$, and
+$h_i=\mathrm{id}$. For a stage with a change, set
+\[
+  r_i=\frac{\ell_i-c_i}{\beta-\alpha},\qquad
+  q_i=\frac{c_i}{\beta-\alpha},\qquad h_i=\sigma_i.
+\]
+Equations~\eqref{eq:no-switch} and~\eqref{eq:switch} yield
+\eqref{eq:perturbation-increments}; the endpoint conditions and
+\eqref{eq:zero-coordinate} yield
+\eqref{eq:perturbation-ends} and~\eqref{eq:perturbation-boundary}.
+All formulas preserve rationality.
+\end{proof}
+
+We call a $d$-VASS \emph{symmetric} if, whenever $(p,v,q)$ is an
+update transition, so is $(p,\pi(v),q)$ for every coordinate
+permutation $\pi$. Thus permutations preserve the control states.
+We write $p(x)\longrightarrow_V^*q(y)$ for reachability in $V$,
+and put $\mathbb{N}=\{0,1,\ldots\}$.
+
+\begin{proposition}[Axis target pumping]\label{prop:axis-pumping}
+Let $V$ be a symmetric $d$-VASS with a semilinear reachability
+relation. One can compute integers $C,D>0$ such that, for all
+states $p,q$, coordinates $s,t$, and $a,b\in\mathbb{N}$,
+\[
+  p(ae_s)\longrightarrow_V^*q(be_t),\qquad b>a+C
+  \quad\Longrightarrow\quad
+  p(ae_s)\longrightarrow_V^*q((b+D)e_t).
+\]
+\end{proposition}
+
+\begin{proof}
+By the flattability theorem for semilinear VASS reachability
+relations~\cite{Leroux2013}, finitely many linear path schemes
+\[
+  \tau_0c_1^*\tau_1\cdots c_m^*\tau_m
+\]
+cover the reachability relation of $V$. Here each $c_i$ is a cycle
+and each $\tau_i$ is a fixed connecting path. Such a complete family
+can be found effectively: enumerate finite families, compute their
+Presburger-definable relations $S$, and check
+\[
+  \mathrm{Id}\subseteq S,\qquad S\circ{\longrightarrow_V}\subseteq S.
+\]
+Every candidate satisfies $S\subseteq{\longrightarrow_V^*}$, so
+these conditions certify completeness, and flattability guarantees
+that the search terminates. Composition is read from left to right.
+
+Fix a scheme and endpoint axes. The tuples consisting of the source
+and target values, the repetition counts, and the counter vectors
+at the ends of every cycle block and connecting path form an
+effectively semilinear set. Indeed, executability of a repeated
+fixed cycle is expressed by linear inequalities on the first and
+last repetitions, with repetition count zero treated separately.
+Compute a decomposition into linear sets
+\[
+  L=\mathbf{b}+\sum_{\rho\in P}\mathbb{N}\rho.
+\]
+All coordinates of the base and periods are nonnegative, including
+the coordinates recording the counter vectors at block boundaries.
+
+Consider a period $\rho$ with source and target increments
+$\alpha,\beta$ satisfying $\beta>\alpha$. Its increments to the
+cycle repetition counts are nonnegative integers $\ell_i$.
+The fixed connecting paths have zero homogeneous effect. Omitting
+the blocks with $\ell_i=0$, the homogeneous boundary vectors
+therefore satisfy the assumptions of Lemma~\ref{lem:perturbation},
+with $v_i$ the effect of $c_i$. At least one block remains, since
+$\beta>\alpha$.
+
+Apply Lemma~\ref{lem:perturbation} and clear denominators. We obtain
+an integer $d_\rho>0$, integer vectors $u_i$, signed integers $a_i$,
+nonnegative integers $b_i$, and coordinate permutations $h_i$ such that
+\[
+  u_0=0,\qquad u_m=d_\rho e_t,\qquad
+  u_i-u_{i-1}=a_i v_i+b_i h_i(v_i),
+\]
+and $u_i[k]=0$ whenever $x_i[k]=0$. Each $h_i$ fixes the complement
+of $A_i=\supp(x_{i-1}+x_i)$. Extend these offsets across the omitted
+blocks and connecting paths by keeping them constant.
+
+We claim that, whenever the coefficient $n$ of $\rho$ in a tuple
+of $L$ is sufficiently large, these offsets can be implemented by
+an executable run, uniformly in all other period coefficients.
+In each retained block, change the number of copies of $c_i$ by
+$a_i$ and insert $b_i$ copies of $h_i(c_i)$ near the middle of the
+block. Symmetry ensures that $h_i(c_i)$ is a cycle at the same
+control state. Negative $a_i$ means deleting a fixed number of
+copies; this is possible for large $n$, since $\ell_i>0$.
+
+Here is the required buffer argument. Split the original block
+after $\lfloor n_i/2\rfloor$ copies, where $n_i$ is its total
+repetition count. The counter vector there differs by a bounded
+amount from the average of the two block boundary vectors. Hence,
+for each $k\in A_i$, its value is at least
+\[
+  \frac{n}{2}\bigl(x_{i-1}[k]+x_i[k]\bigr)-B_i
+\]
+for a computable constant $B_i$, independently of all other
+coefficients. This tends to infinity and absorbs the fixed deficits
+of the inserted or deleted copies. If $k\notin A_i$, then
+$x_{i-1}[k]=x_i[k]=v_i[k]=0$, the offsets on this coordinate are
+zero, and $h_i(c_i)$ has exactly the same coordinate trace as $c_i$.
+Since $v_i[k]=0$, these copies all start at the same value on $k$;
+the original executable block thus supplies the required trace.
+
+Before the middle modification, the unchanged part of a block has
+offset $u_{i-1}$; afterwards it has offset $u_i$. A negative entry
+of the former is possible only where $x_{i-1}[k]>0$, and a negative
+entry of the latter only where $x_i[k]>0$. On the corresponding
+half-block, homogeneous counter values are then bounded below by
+a positive multiple of $n$, up to a fixed constant. Thus both
+half-blocks remain executable for large $n$. The same reasoning
+protects the fixed connecting paths and omitted blocks: their
+offsets vanish on coordinates of zero homogeneous growth.
+All other periods contribute nonnegative boundary vectors and
+nonnegative interpolated values, so these estimates are uniform
+in their coefficients. The resulting run keeps the source fixed
+and increases the target by $d_\rho$.
+
+The threshold is computable. For example, the modified block counts
+and intermediate vectors, splitting according to the parity of
+$n_i$, have Presburger-definable executability conditions. Enumerate
+thresholds $N$ and check that these conditions hold for every tuple
+with coefficient of $\rho$ at least $N$ and arbitrary nonnegative
+other coefficients. The preceding argument guarantees termination.
+
+There are finitely many positive-gain periods across all components,
+schemes, states, and axes. Take $D$ to be the least common multiple
+of their $d_\rho$, or $D=1$ if there are none. Scale each modification
+to have target increment $D$, and compute a corresponding threshold
+$N_\rho\geq1$. If $g_L$ is the target value minus the source value
+of the base of $L$, choose a positive integer $C$ satisfying
+\[
+  C\geq\max_L\left(
+    g_L+\sum_{\rho\in P:\,\beta_\rho>\alpha_\rho}
+      (N_\rho-1)(\beta_\rho-\alpha_\rho)
+  \right).
+\]
+Any tuple with $b-a>C$ must use some positive-gain period at least
+$N_\rho$ times, since all other periods have nonpositive gain.
+Its modification gives the required run to $(b+D)e_t$.
+\end{proof}
+
+\begin{theorem}\label{thm:pair-tests}
+Assume that every symmetric $3$-VASS has a semilinear reachability
+relation. Then reachability is decidable for symmetric
+$3$-counter machines whose zero-tests simultaneously test two
+counters. No symmetry assumption on the zero-test transitions
+is required.
+\end{theorem}
+
+\begin{proof}
+Let $M$ be such a machine. For each zero-test transition, introduce
+a fresh interface state $z$ immediately after the test, with a
+zero-update edge to its original target. If $i(z)$ is the untested
+coordinate, configurations immediately after this test have the form
+\[
+  z(n):=z(ne_{i(z)}),\qquad n\in\mathbb{N}.
+\]
+Let $Z$ be the finite set of these states. Define
+$R\subseteq(Z\times\mathbb{N})^2$ by putting $z(a)Rz'(b)$ when
+there is a run consisting of update transitions followed by one
+zero-test, from $z(a)$ to $z'(b)$.
+
+For fixed $z,z'$, replace the final zero-test by a zero update into
+a fresh sink, and allow no other tests. Restrict the source and
+target to the axes specified by $z,z'$. This realizes the
+corresponding part of $R$ as an axis section of the reachability
+relation of a symmetric $3$-VASS. The hypothesis and the effective
+flattability search in Proposition~\ref{prop:axis-pumping} make $R$
+effectively semilinear. Apply that proposition to these auxiliary
+VASS and their reversals. Taking a maximum of the finitely many
+constants $C$ and a common multiple of their constants $D$, we obtain
+\begin{align*}
+  z(a)Rz'(b),\ b>a+C&\ \Longrightarrow\ z(a)Rz'(b+D),\\
+  z(a)Rz'(b),\ a>b+C&\ \Longrightarrow\ z(a+D)Rz'(b).
+\end{align*}
+
+We give the scalar reachability argument explicitly. Partition $R$
+into $R_+,R_-,R_0$ according as $b>a+C$, $a>b+C$, or
+$|a-b|\leq C$, and put
+\[
+  H=R_0^*,\qquad G=(R_-H)^*,\qquad F=(HGR_+)^*.
+\]
+Juxtaposition denotes left-to-right composition. Splitting a word
+over $\{R_0,R_-,R_+\}$ at its last $R_+$ gives
+\begin{equation}\label{eq:scalar-decomposition}
+  R^*=FHG.
+\end{equation}
+
+First, $H$ is effectively semilinear. For each displacement
+$c\in\{-C,\ldots,C\}$ and states $z,z'$, the enabling set
+\[
+  \{n\in\mathbb{N}:z(n)R_0z'(n+c)\}
+\]
+is effectively ultimately periodic. A one-counter machine can
+therefore implement $R_0$: store the residue modulo a common period
+in its control state, check the finitely many threshold or exact
+value conditions without changing the counter, and then add $c$.
+Its reachability relation, restricted to the original interface
+states and their appropriate residues, is $H$. Effective
+semilinearity follows from Parikh's theorem applied to the pushdown
+encoding of a one-counter machine, with initial and final counter
+values recorded by input and output words.
+
+Call $X\subseteq Z\times\mathbb{N}$ \emph{$D$-saturated} if
+$z(n)\in X$ implies $z(n+D)\in X$. Such a set is determined by
+its least element in each state and residue class modulo $D$.
+Consequently every increasing chain of $D$-saturated sets stabilizes.
+For any semilinear $T$, the predecessor set $(R_-H)T$ is effectively
+semilinear and $D$-saturated, by source pumping of $R_-$.
+Iterating
+\[
+  X_0=(R_-H)T,\qquad X_{j+1}=X_j\cup(R_-H)X_j
+\]
+therefore reaches a computable fixed point $X$, and $GT=T\cup X$
+is effectively semilinear.
+
+Next, for semilinear $S$, put $f(S)=SHGR_+$. This set is
+$D$-saturated, by target pumping of $R_+$. Its finite representation
+can be computed using the predecessor operation just established.
+For each state $z$ and residue $r$, let
+\[
+  U_{z,r}=\{z(n):n\equiv r\pmod D\}.
+\]
+The set $f(S)$ meets $U_{z,r}$ exactly when
+\[
+  SH\cap G(R_+U_{z,r})\neq\varnothing.
+\]
+This is decidable using effective semilinearity and computability
+of $G$ on predecessor sets. For each nonempty class, find its least
+element by the same test with $U_{z,r}$ replaced by successive
+singletons in that class. These searches terminate and compute
+$f(S)$. Iterating $Y_0=f(S)$ and
+$Y_{j+1}=Y_j\cup f(Y_j)$ stabilizes by $D$-saturation, so $SF$
+is effectively semilinear as well. By
+\eqref{eq:scalar-decomposition}, reachability from a semilinear
+interface set $S$ to a semilinear interface set $T$ reduces to
+\[
+  ((SF)\times(GT))\cap H\neq\varnothing,
+\]
+which is decidable.
+
+Finally, let $\gamma,\eta$ be arbitrary source and target
+configurations of $M$. Compute the semilinear set $S$ of interfaces
+reachable from $\gamma$ by an update-only prefix followed by the
+first test, and the semilinear set $T$ of interfaces from which an
+update-only suffix reaches $\eta$. These are sections and
+projections of symmetric VASS reachability relations, and hence
+are effectively semilinear by the hypothesis. A run with at least
+one test exists exactly when some element of $S$ reaches some
+element of $T$ under $R^*$, which was just shown decidable.
+Runs with no tests are decided separately in the underlying VASS.
+This decides reachability in $M$.
+\end{proof}
+
+The same argument works in every fixed dimension $d\geq2$, under
+the corresponding semilinearity hypothesis, when every zero-test
+simultaneously tests $d-1$ counters.
+
+\begin{thebibliography}{1}
+\bibitem{Leroux2013}
+J\'er\^ome Leroux.
+\emph{Presburger Vector Addition Systems}.
+Proceedings of LICS 2013, pp.~23--32.
+\end{thebibliography}
+
+\end{document}
