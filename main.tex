@@ -2,8 +2,8 @@
 %\uselmfalse
 \uselmtrue
 \RemoveFromHook{package/amsthm/after}[firstaid/aliascounter]
-%\documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate,dvipsnames]{lipics-v2021}
-\documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate,dvipsnames,anonymous]{lipics-v2021}
+\documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate,dvipsnames]{lipics-v2021}
+% \documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate,dvipsnames,anonymous]{lipics-v2021}
 
 
 \usepackage{todonotes}
@@ -30,7 +30,7 @@
 \newtheoremrep{apxtheorem}[theorem]{Theorem}
 \newtheoremrep{apxlemma}[theorem]{Lemma}
 
-%\nolinenumbers
+\nolinenumbers
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 
@@ -137,8 +137,9 @@ cyclic permutation group of order~3.
 \end{abstract}
 
 \para{Disclosure}
-AI-based tools were used to assist with proofreading and checking the correctness of the text.
-The authors remain fully responsible for the content of the paper.
+Large language models have been used to assist with proofreading and checking the correctness of the text.
+The authors remain fully responsible for the content of the paper, and are confident that its quality
+was not negatively impacted by the inherent shortcomings of the technology.
 
 
 \newpage
@@ -150,6 +151,19 @@ The authors remain fully responsible for the content of the paper.
     \input{variants}
 
     \input{complexity}
+
+\section{Acknowledgments}
+We thank Roland Guttenberg
+and Vaios Michalakis for 
+insightful discussions
+on the topic of this research,
+as well as Samira Bertsch
+and Violet Promeuschel
+for their helpful remarks which
+helped shape the exposition
+in this paper.
+The authors have been financially
+supported by NCN grant 2024/55/B/ST6/01674.
 
 %\newpage
 
