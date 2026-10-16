@@ -1,0 +1,72 @@
+%%% Thanks to Sylvain Schmitz for creating this file (2025).
+
+%% Add arXiv logo to odd pages
+\def\ps@headings{%
+    \def\@evenhead{\large\sffamily\bfseries
+                   \llap{\hbox to0.5\oddsidemargin{  \ifx\@hideLIPIcs\@undefined\ifx\@ArticleNo\@empty\textcolor{red}{XX}\else\@ArticleNo\fi:\fi\thepage\hss}}\leftmark\hfil}%
+    \def\@oddhead{\large\sffamily\bfseries\rightmark\hfil
+                  \rlap{\hbox to0.5\oddsidemargin{\hss  \ifx\@hideLIPIcs\@undefined\ifx\@ArticleNo\@empty\textcolor{red}{XX}\else\@ArticleNo\fi:\fi\thepage}}}%
+    \def\@oddfoot{\hfil
+                  \rlap{%
+                    \vtop{%
+                      \vskip10mm
+                      \colorbox{lipicsYellow}
+                                    {\@tempdima\evensidemargin
+                                     \advance\@tempdima1in
+                                     \advance\@tempdima\hoffset
+                                     \hb@xt@\@tempdima{%
+                                       %\textcolor{white}{\normalsize\sffamily\quad{arXiv}}%
+                                       \hfill\raisebox{-.9ex}{\includegraphics[height=1.3em]{arxiv-logo.pdf}}\hspace*{2em}
+                                     \strut\hss}}}}}
+    \let\@evenfoot\@empty
+    \let\@mkboth\markboth
+  \let\sectionmark\@gobble
+  \let\subsectionmark\@gobble}
+\pagestyle{headings}
+
+%% Change default LIPIcs colour to arXiv red
+\DeclareCaptionLabelFormat{boxed}{%
+  \kern0.05em{\color[rgb]{0.76,0.12,0.12}\rule{0.73em}{0.73em}}%
+  \hspace*{0.67em}\bothIfFirst{#1}{~}#2}
+\AtBeginDocument{
+	\definecolor[named]{lipicsYellow}{rgb}{0.76,0.12,0.12}
+}
+
+%% Section numbers in white
+\def\@sect#1#2#3#4#5#6[#7]#8{%
+  \ifnum #2>\c@secnumdepth
+    \let\@svsec\@empty
+  \else
+    \refstepcounter{#1}%
+    \protected@edef\@svsec{\@seccntformat{#1}\relax}%
+  \fi
+  \@tempskipa #5\relax
+  \ifdim \@tempskipa>\z@
+    \begingroup
+      #6{%
+        \@hangfrom{\hskip #3\relax
+          \ifnum #2=1
+            \colorbox{lipicsYellow}{\kern0.15em{\color{white}\@svsec}\kern0.15em}\quad
+          \else
+            \@svsec\quad
+          \fi}%
+          \interlinepenalty \@M #8\@@par}%
+    \endgroup
+    \csname #1mark\endcsname{#7}%
+    \addcontentsline{toc}{#1}{%
+      \ifnum #2>\c@secnumdepth \else
+        \protect\numberline{\csname the#1\endcsname}%
+      \fi
+      #7}%
+  \else
+    \def\@svsechd{%
+      #6{\hskip #3\relax
+      \@svsec #8}%
+      \csname #1mark\endcsname{#7}%
+      \addcontentsline{toc}{#1}{%
+        \ifnum #2>\c@secnumdepth \else
+          \protect\numberline{\csname the#1\endcsname}%
+        \fi
+        #7}}%
+  \fi
+  \@xsect{#5}}
