@@ -517,9 +517,7 @@
 		\pdfgentounicode=1
 	}{}%
 \fi 
-\ifuselm
-  \IfFileExists{lmodern.sty}{\RequirePackage{lmodern}}{}
-\fi
+\IfFileExists{lmodern.sty}{\RequirePackage{lmodern}}{}
 \IfFileExists{fontawesome5.sty}{%
 \RequirePackage{fontawesome5}%
 \IfFileExists{orcid.pdf}{%
@@ -791,7 +789,7 @@ pdfsubject={LIPIcs, Vol.\@SeriesVolume, \@EventShortTitle; Copyright (C) \ifx\au
        \textcolor{red}{Author: Please enter author name}%
      \else
        \ifx\authoranonymous\relax
-			\textcolor{red}{Anonymous author}
+			\textcolor{red}{Anonymous author(s)}
 		\else
 			#1\,%
 			\ifx\compactauthor\relax\if!#3!\else{\,\href{mailto:#3}{\mailsymbol}}\fi%
@@ -808,7 +806,7 @@ pdfsubject={LIPIcs, Vol.\@SeriesVolume, \@EventShortTitle; Copyright (C) \ifx\au
      \fi
      }
 	{\small
-    \if!#2!\textcolor{red}{Author: Please enter affiliation as second parameter of the author macro}\else{\\* \ifx\authoranonymous\relax\textcolor{red}{Anonymous affiliation}\else\ifx\compactauthor\relax \affiliation \else#2\fi\fi}\fi
+    \if!#2!\textcolor{red}{Author: Please enter affiliation as second parameter of the author macro}\else{\\* \ifx\authoranonymous\relax\textcolor{red}{Anonymous affiliation(s)}\else\ifx\compactauthor\relax \affiliation \else#2\fi\fi}\fi
     \ifx\compactauthor\relax\else\if!#3!\else{\ifx\authoranonymous\relax\else\\*\href{mailto:#3}{#3}\fi}\fi\fi
 	}\par
 	\ifx\authorcolumns\relax

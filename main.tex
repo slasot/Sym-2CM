@@ -5,6 +5,8 @@
 \documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate,dvipsnames]{lipics-v2021}
 % \documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate,dvipsnames,anonymous]{lipics-v2021}
 
+\usepackage{arxiv-lipics-v2021}
+
 
 \usepackage{todonotes}
 \usepackage{xspace}
@@ -34,6 +36,7 @@
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 
+\hideLIPIcs 
 \title{Symmetric two-counter machines%
 % \footnote{{Partially supported by the NCN grant 2024/55/B/ST6/01674.}}
 } 
@@ -89,15 +92,27 @@
 
 %\relatedversion{} %optional, e.g. full version hosted on arXiv, HAL, or other repository/website
 %\relatedversiondetails[linktext={opt. text shown instead of the URL}, cite=DBLP:books/mk/GrayR93]{Classification (e.g. Full Version, Extended Version, Previous Version}{URL to related version} %linktext and cite are optional
-\relatedversion{}
-\relatedversiondetails{Extended Version}{}
+%\relatedversion{}
+%\relatedversiondetails{Extended Version}{}
 
 %\supplement{}%optional, e.g. related research data, source code, ... hosted on a repository like zenodo, figshare, GitHub, ...
 %\supplementdetails[linktext={opt. text shown instead of the URL}, cite=DBLP:books/mk/GrayR93, subcategory={Description, Subcategory}, swhid={Software Heritage Identifier}]{General Classification (e.g. Software, Dataset, Model, ...)}{URL to related version} %linktext, cite, and subcategory are optional
 
 %\funding{(Optional) general funding statement \dots}%optional, to capture a funding statement, which applies to all authors. Please enter author specific funding statements as fifth argument of the \author macro.
 
-%\acknowledgements{I want to thank \dots}%optional
+\acknowledgements{
+We thank Roland Guttenberg
+and Vaios Michalakis for 
+insightful discussions
+on the topic of this research,
+as well as Samira Bertsch
+and Violet Promeuschel
+for their helpful remarks which
+helped shape the exposition
+in this paper.
+The authors have been financially
+supported by NCN grant 2024/55/B/ST6/01674.
+}
 
 %\nolinenumbers %uncomment to disable line numbering
 
@@ -152,18 +167,6 @@ was not negatively impacted by the inherent shortcomings of the technology.
 
     \input{complexity}
 
-\section{Acknowledgments}
-We thank Roland Guttenberg
-and Vaios Michalakis for 
-insightful discussions
-on the topic of this research,
-as well as Samira Bertsch
-and Violet Promeuschel
-for their helpful remarks which
-helped shape the exposition
-in this paper.
-The authors have been financially
-supported by NCN grant 2024/55/B/ST6/01674.
 
 %\newpage
 
