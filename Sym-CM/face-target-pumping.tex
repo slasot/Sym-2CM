@@ -1,0 +1,382 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=25mm,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[hidelinks,pdftitle={Target Pumping on Faces of Symmetric VASS},pdfsubject={A face extension of the target-pumping proposition in dimension three}]{hyperref}
+\definecolor{ink}{RGB}{32,48,65}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{ink}{Target pumping on faces}}
+\fancyhead[R]{\small Symmetric VASS}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt plus 1pt minus 1pt}
+\setlength{\emergencystretch}{2em}
+\setlist{nosep,leftmargin=*}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\eff}{\operatorname{eff}}
+\newcommand{\Id}{\operatorname{Id}}
+\newcommand{\one}{\mathbf 1}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert_1}
+\newcommand{\reach}{\longrightarrow_V^*}
+\newcommand{\step}{\longrightarrow_V}
+\title{\vspace{-13mm}\textcolor{ink}{Target Pumping on Faces\\of Symmetric VASS}}
+\author{}
+\date{1 November 2026}
+
+\begin{document}
+\setlength{\abovedisplayskip}{7pt plus 2pt minus 2pt}
+\setlength{\belowdisplayskip}{7pt plus 2pt minus 2pt}
+\setlength{\abovedisplayshortskip}{3pt plus 1pt}
+\setlength{\belowdisplayshortskip}{7pt plus 2pt minus 2pt}
+\maketitle
+\vspace{-10mm}
+\begin{abstract}
+Assuming semilinearity of the full reachability relation, we extend axis target pumping to every proper face in dimension three. If the target has larger total counter sum than the source by a computable constant, all its positive coordinates can be increased simultaneously by a common computable amount, with its zero coordinates unchanged. The source is unrestricted. The proof uses a nonnegative perturbation lemma for arbitrary endpoints, finite combinations of semilinear periods, and a discrete redistribution lemma that handles a small positive target coordinate. In every dimension, the same theorem holds for targets with at most two positive coordinates.
+\end{abstract}
+
+\section{Statement and scope}
+
+Put $\N=\{0,1,2,\ldots\}$. A $d$-VASS $V$ is \emph{symmetric} if, for every update transition $(p,v,q)$ and every coordinate permutation $\pi$, it also has the transition $(p,\pi(v),q)$. Permutations preserve the control states. For $J\subseteq\{1,\ldots,d\}$, put $\one_J=\sum_{j\in J}e_j$.
+
+\begin{theorem}[Target pumping with at most two positive coordinates]\label{thm:main}
+Let $V$ be a symmetric $d$-VASS whose full reachability relation is semilinear. One can compute integers $C,D>0$ such that, for all states $p,q$ and all $x,y\in\N^d$ with $|\supp(y)|\le2$,
+\begin{equation}\label{eq:main}
+\left.
+\begin{aligned}
+ p(x)&\reach q(y),\\
+ \norm{y}&>\norm{x}+C
+\end{aligned}
+\right\}
+\quad\Longrightarrow\quad
+ p(x)\reach q\bigl(y+D\one_{\supp(y)}\bigr).
+\end{equation}
+\end{theorem}
+
+In dimension $d=3$, every point on a proper face has at most two positive coordinates. Thus Theorem~\ref{thm:main} is the requested face extension of Proposition~1 in the supplied draft~\cite{draft}. No restriction on the source is needed. For axis endpoints, the growth condition reduces to the original condition $b>a+C$.
+
+\paragraph{Simultaneous versus independent pumping.}
+The conclusion increases \emph{every} positive target coordinate by the same $D$. Independent pumping of individual coordinates is false. Consider the one-state symmetric $3$-VASS with update vectors $(1,1,0)$, $(1,0,1)$ and $(0,1,1)$. Its reachability relation is semilinear: if the three update counts are $a,b,c$, the total effect is $(a+b,a+c,b+c)$, and all updates are nonnegative. From zero, its targets on the face $z=0$ are exactly $(n,n,0)$. Increasing either positive coordinate alone is impossible.
+
+The only external structural input below is the flattability theorem used in the draft: semilinearity of the full VASS reachability relation implies that finitely many linear path schemes cover it~\cite{leroux}. All new geometric and combinatorial steps are proved here.
+
+\newpage
+\section{A nonnegative perturbation lemma}
+
+\begin{lemma}[Perturbation for arbitrary endpoints]\label{lem:perturb}
+Suppose $x_0,\ldots,x_m\in\Q_{\ge0}^d$ satisfy
+\[
+ x_i-x_{i-1}=\ell_i v_i\quad(1\le i\le m),\qquad
+ \ell_i\in\Q_{>0},\quad v_i\in\Q^d,
+\]
+and $\norm{x_m}>\norm{x_0}$. Put
+\[
+ J=\supp(x_m),\qquad A_i=\supp(x_{i-1}+x_i),
+\]
+and let $G_i$ be the group of coordinate permutations fixing the complement of $A_i$. There exist $z_0,\ldots,z_m\in\Q_{\ge0}^d$ and $q_{i,\pi}\in\Q_{\ge0}$ such that
+\begin{align}
+ z_0&=0,& z_m&=\one_J,\label{eq:ends}\\
+ z_i-z_{i-1}&=\sum_{\pi\in G_i}q_{i,\pi}\pi(v_i)
+ &&(1\le i\le m),\label{eq:increments}\\
+ x_i[k]=0&\ \Longrightarrow\ z_i[k]=0
+ &&(0\le i\le m,\ 1\le k\le d).\label{eq:zeros}
+\end{align}
+These vectors and coefficients can be computed effectively.
+\end{lemma}
+
+\begin{proof}
+Write $\alpha=\norm{x_0}$, $\beta=\norm{x_m}$ and $r=|J|$. Choose a rational $\varepsilon>0$ with
+\[
+ r\varepsilon<\beta-\alpha,
+ \qquad \varepsilon<\min_{j\in J}x_m[j],
+\]
+and put $h=\beta-r\varepsilon>\alpha$. Define $F$ on the nonnegative orthant as follows. If $\norm{x}\le h$, set $F(x)=0$. Otherwise, let $\tau>0$ be the unique solution of
+\begin{equation}\label{eq:waterlevel}
+ \sum_k(x[k]-\tau)^+=h
+\end{equation}
+and set
+\begin{equation}\label{eq:F}
+ F(x)[k]=\min\{x[k],\tau\}.
+\end{equation}
+The map $F$ is continuous and piecewise linear with rational coefficients. It is nonnegative and preserves zero coordinates. Moreover,
+\[
+ F(x_0)=0,\qquad F(x_m)=\varepsilon\one_J.
+\]
+For the latter equality, $\tau=\varepsilon$ satisfies~\eqref{eq:waterlevel}, since every positive coordinate of $x_m$ exceeds $\varepsilon$.
+
+Consider one segment $x(t)=x_{i-1}+t\ell_i v_i$, $0\le t\le1$. On a piece where $\norm{x(t)}>h$ and
+\[
+ T=\{k:x(t)[k]>\tau(t)\}
+\]
+is constant, the set $T$ is nonempty and
+\[
+ \tau(t)=\frac{\sum_{k\in T}x(t)[k]-h}{|T|}.
+\]
+Consequently, the derivative of $F(x(t))$ is obtained from $\ell_i v_i$ by averaging its coordinates in $T$ and leaving all other coordinates unchanged. This operator is the average of the coordinate permutations of $T$. Also $T\subseteq A_i$, because a coordinate zero at both segment endpoints is identically zero along the segment. On pieces where $\norm{x(t)}\le h$, the derivative is zero.
+
+Integrating over these finitely many pieces expresses $F(x_i)-F(x_{i-1})$ as a nonnegative rational combination of $\pi(v_i)$, $\pi\in G_i$. The breakpoints are rational because they are determined by rational linear equations. Degenerate pieces lying on a boundary cause no difficulty: either $F$ is identically zero there, or a coordinate tied with $\tau$ has the same derivative as $\tau$.
+
+Finally set $z_i=F(x_i)/\varepsilon$. The endpoint identities, the increment formulas and preservation of zero coordinates prove the claim. The finite rational piecewise-linear construction is effective.
+\end{proof}
+
+\newpage
+\section{From semilinear periods to executable pumps}
+
+\subsection{Effective path-scheme tuples}
+
+By the flattability input, finitely many linear path schemes
+\[
+ \tau_0c_1^*\tau_1\cdots c_m^*\tau_m
+\]
+cover the reachability relation. Here $c_i$ is a cycle and $\tau_i$ is a fixed connecting path. As in the draft, a complete family can be found without a supplied semilinear description: enumerate finite families, compute their Presburger-definable union $S$, and test
+\[
+ \Id\subseteq S,\qquad S\circ\step\ \subseteq S,
+\]
+where composition is read from left to right. Every candidate satisfies $S\subseteq\reach$; the two tests certify the reverse inclusion. Flattability guarantees termination.
+
+For each scheme, record the source and target vectors, all repetition counts, and all counter vectors at boundaries of cycle blocks and connecting paths. The set of executable tuples is effectively semilinear. For a fixed cycle, when its repetition count is positive, executability is expressed by the inequalities for the first and last repetitions; a zero count is treated separately. These are Presburger conditions.
+
+Compute a finite decomposition into linear sets
+\begin{equation}\label{eq:linearset}
+ L=\mathbf b_L+\sum_{\rho\in P_L}\N\rho.
+\end{equation}
+Every coordinate of a base or period is nonnegative, including the recorded boundary vectors and repetition counts. Denote the source and target parts of a period by $a_\rho,b_\rho\in\N^d$, and put
+\[
+ g_\rho=\norm{b_\rho}-\norm{a_\rho}.
+\]
+
+\begin{lemma}[Implementing a positive-gain period]\label{lem:period}
+If $g_\rho>0$, one can compute an integer $d_\rho>0$ with the following property. For every positive multiple $E$ of $d_\rho$, there is a computable threshold $n_\rho(E)$ such that any tuple of $L$ whose coefficient of $\rho$ is at least $n_\rho(E)$ admits a modified executable run with unchanged source and target increased by
+\[
+ E\one_{\supp(b_\rho)}.
+\]
+The threshold is uniform in all other period coefficients. The same conclusion applies when $\rho$ is any nonnegative integer combination of the generators of $L$ having positive gain.
+\end{lemma}
+
+\begin{proof}
+The homogeneous effect of a connecting path is zero. Let $\ell_i\ge0$ be the period increment of the repetition count of $c_i$, and let $v_i=\eff(c_i)$. Omitting blocks with $\ell_i=0$ and contracting the fixed parts yields nonnegative homogeneous boundary vectors satisfying
+\[
+ x_0=a_\rho,\qquad x_m=b_\rho,\qquad x_i-x_{i-1}=\ell_i v_i.
+\]
+At least one retained block exists because $g_\rho>0$.
+
+Apply Lemma~\ref{lem:perturb} and clear denominators. This gives nonnegative integer offsets $u_i$ and nonnegative integer multiplicities $b_{i,\pi}$ such that
+\begin{align*}
+ u_0&=0,&u_m&=d_\rho\one_{\supp(b_\rho)},\\
+ u_i-u_{i-1}&=\sum_{\pi\in G_i}b_{i,\pi}\pi(v_i),
+ &x_i[k]=0&\ \Longrightarrow\ u_i[k]=0.
+\end{align*}
+Extend offsets constantly over omitted blocks and connecting paths. For a multiple $E$ of $d_\rho$, scale all offsets and multiplicities by $E/d_\rho$.
+
+In a retained block, form a fixed word $W_i$ consisting of the prescribed copies of $\pi(c_i)$. Symmetry makes every such word a cycle at the same control state as $c_i$, and
+\[
+ \eff(W_i)=u_i-u_{i-1}.
+\]
+Insert $W_i$ after $\lfloor N_i/2\rfloor$ original cycle copies, where $N_i$ is the total original repetition count.
+
+Let $n$ be the coefficient of $\rho$ in the tuple. If $B_i^-,B_i^+$ are the original block endpoints, its middle counter vector is
+\[
+ P_i=\frac{B_i^-+B_i^+}{2}+\theta_i v_i,
+ \qquad -\tfrac12\le\theta_i\le0.
+\]
+Since the base and every other period contribute nonnegative boundary vectors,
+\begin{equation}\label{eq:buffer}
+ P_i[k]\ge\frac n2\bigl(x_{i-1}[k]+x_i[k]\bigr)-\frac{|v_i[k]|}{2}.
+\end{equation}
+For $k\in A_i=\supp(x_{i-1}+x_i)$, this tends to infinity. It absorbs the fixed prefix deficits of $W_i$ once $n$ is large enough.
+
+For $k\notin A_i$, we have $v_i[k]=u_{i-1}[k]=u_i[k]=0$, and all permutations in $W_i$ fix $k$. Every inserted cycle therefore has exactly the original coordinate trace on $k$. Its net effect on $k$ is zero, so all these copies start at the same value there. Because $N_i\ge n\ell_i>0$ for $n\ge1$, the original executable block supplies the required trace.
+
+Before insertion, the unchanged part has offset $u_{i-1}$; afterwards it has offset $u_i$. Both are nonnegative, so the unchanged parts, connecting paths and omitted blocks remain executable by monotonicity.
+
+For explicit effectivity, let
+\[
+ R_{ik}=\max\left\{0,-\min_{w\text{ prefix of }W_i}\eff(w)[k]\right\}.
+\]
+For all retained $i$ and $k\in A_i$, it suffices to impose
+\begin{equation}\label{eq:threshold}
+ n\ge1,\qquad
+ n\ge\left\lceil\frac{2R_{ik}+|v_i[k]|}{x_{i-1}[k]+x_i[k]}\right\rceil.
+\end{equation}
+Thus the threshold is computable and uniform in the remaining coefficients.
+
+Finally, any nonnegative integer combination $\sigma$ of generators is a redundant generator of the same linear set: $\mathbf b_L+\N\sigma+\sum_{\rho\in P_L}\N\rho$ still equals $L$. The argument applies to this presentation as well.
+\end{proof}
+
+\begin{lemma}[Pumping the union of large-period supports]\label{lem:union}
+One can compute integers $D,N>0$ such that the following holds simultaneously for all components~\eqref{eq:linearset}. For a tuple with coefficients $n_\rho$, put
+\[
+ S=\{\rho\in P_L:n_\rho\ge N\},\qquad
+ U=\bigcup_{\rho\in S}\supp(b_\rho).
+\]
+If $S$ contains a positive-gain period, the source can be kept fixed while adding either $D\one_U$ or $2D\one_U$ to the target. Moreover, $D$ can be required to be divisible by any prescribed finite collection of positive integers.
+\end{lemma}
+
+\begin{proof}
+For each $L$ and each subset $S\subseteq P_L$ containing a positive-gain period $\rho_0$, choose positive integer weights $w_{S,\rho}$ so that
+\[
+ \sigma_S=\sum_{\rho\in S}w_{S,\rho}\rho
+\]
+has positive gain. For example, take all weights except that of $\rho_0$ equal to one, and take
+\[
+ w_{S,\rho_0}=1+\sum_{\rho\in S\setminus\{\rho_0\}}\max\{0,-g_\rho\}.
+\]
+Since $g_{\rho_0}\ge1$, the resulting gain is positive. Nonnegativity of the target increments gives
+\[
+ \supp(b_{\sigma_S})=\bigcup_{\rho\in S}\supp(b_\rho).
+\]
+There are finitely many such synthetic periods. By Lemma~\ref{lem:period}, compute their pumping amounts $d_{\sigma_S}$ and take $D$ to be a common multiple of these and the prescribed integers; an empty least common multiple is one.
+
+Let
+\[
+ T_{L,S}=\max\{n_{\sigma_S}(D),n_{\sigma_S}(2D)\},
+\]
+and choose $N\ge1$ satisfying
+\begin{equation}\label{eq:N}
+ N\ge T_{L,S}w_{S,\rho}
+ \quad\text{for every applicable }L,S\text{ and }\rho\in S.
+\end{equation}
+If all $n_\rho\ge N$ for $\rho\in S$, the tuple can be written as
+\[
+ \mathbf b_L+T_{L,S}\sigma_S+
+ \sum_{\rho\in P_L}\bigl(n_\rho-T_{L,S}w_{S,\rho}\bigr)\rho,
+\]
+with $w_{S,\rho}=0$ outside $S$ and all residual coefficients nonnegative. Lemma~\ref{lem:period} supplies either desired pump. The construction precedes the classification of coefficients as large, so there is no circular choice of $N$.
+\end{proof}
+
+\section{Redistributing a fixed amount between coordinates}
+
+Let $M$ be the largest absolute coordinate of an update vector, with $M=0$ if there are no updates. Define
+\[
+ \Delta=\{1\}\cup\{v[s]-v[t]:v\text{ is an update},\ s\ne t,\ v[s]>v[t]\}.
+\]
+Choose $D$ in Lemma~\ref{lem:union} divisible by every element of $\Delta$, and put
+\begin{equation}\label{eq:BK}
+ B=\sum_{\delta\in\Delta}(D-\delta),\qquad K=D+M+B.
+\end{equation}
+
+\begin{lemma}[Discrete redistribution]\label{lem:redistribute}
+For distinct coordinates $s,t$, if
+\[
+ p(x)\reach q(z),\qquad z[s]-z[t]>\norm{x}+K,
+\]
+then $p(x)\reach q(z-De_s+De_t)$.
+\end{lemma}
+
+\begin{proof}
+Fix a witnessing run with counter vectors $\gamma_0=x,\ldots,\gamma_L=z$. The displayed inequality implies $z[s]\ge D$. If some $\gamma_j[s]<D$, let $a$ be one plus the largest such index. Otherwise put $a=0$. All configurations from $a$ onwards have $s$-coordinate at least $D$.
+
+If $a>0$, the update entering $\gamma_a$ has absolute $s$-coordinate at most $M$, so
+\[
+ \gamma_a[s]-\gamma_a[t]\le D-1+M.
+\]
+If $a=0$, its difference is $x[s]-x[t]\le\norm{x}$. In either case, using~\eqref{eq:BK},
+\[
+ (z[s]-z[t])-(\gamma_a[s]-\gamma_a[t])>B.
+\]
+This is the sum of the increments $v[s]-v[t]$ along the suffix starting at $a$.
+
+Some positive $\delta\in\Delta$ must occur at least $D/\delta$ times in this suffix. Otherwise the sum of its positive increments would be at most $B$, contradicting the strict inequality, since
+\[
+ \sum_{\delta\in\Delta}\delta\left(\frac D\delta-1\right)=B.
+\]
+
+At exactly $D/\delta$ such occurrences, interchange coordinates $s,t$ in the update. Symmetry leaves each control-state transition available. At every point, the accumulated change relative to the original run is $-be_s+be_t$ for some $0\le b\le D$. Coordinate $s$ remains nonnegative because its original value on the suffix is at least $D$; coordinate $t$ only increases, and all other coordinates are unchanged. The final change is $-De_s+De_t$, as required.
+\end{proof}
+
+\section{Computable constants and the face theorem}
+
+Fix $D,N$ from Lemma~\ref{lem:union}, with the divisibility requirement above. Let $a_L,b_L$ be the source and target vectors of the base tuple $\mathbf b_L$, and put $g_L=\norm{b_L}-\norm{a_L}$. Define
+\begin{align}
+ C_0&=\max\left(\{0\}\cup
+ \left\{g_L+(N-1)\sum_{\rho\in P_L:\,g_\rho>0}g_\rho:L\right\}\right),\label{eq:C0}\\
+ H&=\max\left(\{0\}\cup
+ \left\{b_L[k]+(N-1)\sum_{\rho\in P_L}b_\rho[k]:L,\ 1\le k\le d\right\}\right),\label{eq:H}\\
+ C&=\max\{1,C_0,2H+K\}.\label{eq:C}
+\end{align}
+These are integers effectively computable from the finite construction.
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Suppose the hypotheses of~\eqref{eq:main} hold. Select a witnessing tuple in some $L$, with coefficients $n_\rho$, and let $J=\supp(y)$. Since $C>0$, the target is nonzero.
+
+There is a positive-gain period whose coefficient is at least $N$. Indeed, otherwise
+\[
+ \norm{y}-\norm{x}
+ =g_L+\sum_{\rho\in P_L}n_\rho g_\rho
+ \le g_L+(N-1)\sum_{\rho:\,g_\rho>0}g_\rho
+ \le C_0\le C,
+\]
+a contradiction. Set
+\[
+ S=\{\rho:n_\rho\ge N\},\qquad U=\bigcup_{\rho\in S}\supp(b_\rho).
+\]
+The set $U$ is nonempty, because a positive-gain period has a nonzero target increment. Also $U\subseteq J$: every coefficient in $S$ is positive and all target base and period coordinates are nonnegative.
+
+If $U=J$, Lemma~\ref{lem:union} directly yields $p(x)\reach q(y+D\one_J)$.
+
+Otherwise, since $|J|\le2$, necessarily $J=\{s,t\}$ and $U=\{s\}$ for distinct coordinates $s,t$. Every period with $b_\rho[t]>0$ has coefficient less than $N$, so~\eqref{eq:H} gives
+\begin{equation}\label{eq:small}
+ y[t]=b_L[t]+\sum_{\rho}n_\rho b_\rho[t]\le H.
+\end{equation}
+Lemma~\ref{lem:union} gives a run from $p(x)$ to $q(z)$, where $z=y+2De_s$. Because the only positive coordinates of $y$ are $s,t$,
+\[
+ \begin{aligned}
+ y[s]-y[t]
+ &=\norm{y}-2y[t]\\
+ &>\norm{x}+C-2H\\
+ &\ge\norm{x}+K.
+ \end{aligned}
+\]
+Thus $z[s]-z[t]>\norm{x}+K$ as well. Apply Lemma~\ref{lem:redistribute} to the run ending at $z$. Its new target is
+\[
+ z-De_s+De_t=y+D(e_s+e_t)=y+D\one_J.
+\]
+This proves the implication, with the source fixed and every zero target coordinate preserved.
+\end{proof}
+
+\section{What holds on larger faces}
+
+The geometric lemma and the large-period support construction are not restricted to dimension three. They also give the following statement for arbitrary target support.
+
+\begin{corollary}[Arbitrary faces away from their boundary]\label{cor:all-d}
+For every symmetric $d$-VASS with semilinear reachability relation, one can compute $C_0,H,D>0$ such that, for arbitrary $x,y\in\N^d$ with $J=\supp(y)$,
+\[
+ p(x)\reach q(y),\quad \norm{y}>\norm{x}+C_0,\quad
+ y[j]>H\ (j\in J)
+ \quad\Longrightarrow\quad
+ p(x)\reach q(y+D\one_J).
+\]
+\end{corollary}
+
+\begin{proof}
+Use the construction above, increasing $C_0,H$ to one if necessary. The gain condition ensures that $S$ contains a positive-gain period. If $j\notin U$, all periods contributing to target coordinate $j$ have coefficient below $N$, and hence $y[j]\le H$. Therefore the coordinate inequalities force $U=J$, and Lemma~\ref{lem:union} applies.
+\end{proof}
+
+For targets with at most two positive coordinates, the redistribution argument removes the coordinate lower bounds altogether. Thus the complete result established here covers every proper face in dimension three. No unrestricted extension to faces with three or more positive coordinates is asserted.
+
+\begin{thebibliography}{9}
+\bibitem{draft}
+\emph{Perturbation lemma and axis target pumping}.
+User-supplied draft, \texttt{perturbation-lemma.pdf}, 5 pages.
+In particular, Proposition~1 and its path-scheme construction.
+
+\bibitem{leroux}
+J\'er\^ome Leroux.
+\emph{Presburger Vector Addition Systems}.
+Proceedings of LICS 2013, pp.~23--32.
+Structural flattability input, as invoked in the supplied draft.
+\end{thebibliography}
+\end{document}
