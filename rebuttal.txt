@@ -1,0 +1,94 @@
+
+We thank the reviewers for their effort and comments and suggestions - we'll 
+take them all into account.
+
+In summary, the major reviewers' objections concern:
+
+1) insufficient motivation (#B,#C).
+
+2) structure of the paper - insufficient explanation of main concepts 
+   in the 10-page prefix (#C).
+
+Our response:
+
+1) We think that studying symmetry is of fundamental relevance. 
+   It is in fact quite surprising that we do not know yet if the so natural 
+   restriction on CM, namely counter symmetry, yields a Turing-complete model!
+
+2) We agree, and propose an improvement.
+
+
+Review #A:
+
+A: We appreciate the final evaluation: 
+   "this paper solves elegantly a well-motivated problem". 
+
+Q: l 476: what is e? 
+   l 481: The sentence starting with Wlog is unclear. I don't understand 
+   what you mean by one-off.
+
+A: e is the poly bound on lengths of LPSes [2]; 
+   one-off = single-use (inside some path t_i, not on any cycle c_i).
+
+
+Review #B:
+
+Q: At high level, the techniques are not particularly novel, but 
+   as always the details are the important thing, and the mathematical 
+   work carried out here is nontrivial
+
+A: Indeed, part of our technical contribution is to subtly adjust 
+   mathematical tools (eg. Sect.4). On the other hand the concept of 
+   target pumping (Lemma 9) is completely novel, and specific to 
+   symmetric VASS.
+
+Q: The motivation of the paper is not particularly strong [...] not 
+   clear whether this model captures any natural system
+
+A: In our opinion, impact of model symmetry on complexity of decision 
+   problems seems a highly intriguing research question. We envisage 
+   further research plan concerning partial symmetry, beyond just full 
+   symmetry studied in this paper, that would presumably allow capturing 
+   natural systems.
+
+
+Review #C:
+
+Q: I primarily find the question interesting because of the result that 
+   shows a sharp contrast to the conventional case, however I am not 
+   sure I fully see the motivation of the model beyond this. 
+
+A: Even this single motivation is sufficient in our opinion: we deserve
+   knowing whether imposing symmetry on CM yields a Turing-complete model 
+   or not. 
+
+Q: I do not feel the paper does a good job of providing the key arguments 
+   in the first 10 pages. In particular, while the key results and 
+   structure are presented in section 3, there is little intuition 
+   of how section 5 and 6 will work before 10 pages. There are both 
+   of the fundamental sections, and this is especially relevant for 
+   Lemma 9 proven in section 6 which is fundamental to the argument.
+
+A: We agree. Indeed, the key result is the proof of target pumping in 
+   Sect. 6, whose underlying ideas are not sufficiently explained beforehand.
+   We propose to move Lemma 9 (target pumping) to the end of Sect.3,
+   and add a (say, 1-page) subsection that would sketch the most important 
+   ideas behind the proof of Lemmas 6,7 and 9 and their inter-dependences.
+
+Q: While a complexity upper bound is shown, it would be good to have 
+   a matching lower bound.
+
+A: Establishing tight complexity seems very challenging. We would 
+   rather believe that the upper bound may be significantly improved, 
+   maybe even to PSPACE.
+
+Q: it is natural to ask for 3 counters, but the papers extension to 
+   3-CM focuses on a different group structure to the main body.
+
+A: Absolutely, the status of symmetric 3-CM, and generally symmetric n-CM, 
+   is a very intriguing and natural question. We would love to answer 
+   these question, and conjecture decidability in Sect.1. It seems however
+   that even the case of 3-CM is extremely demanding. We have some
+   partial decidability results, but still do not know the full answer. 
+   We've looked at the cycle group to establish some frontiers for
+   decidability, as symmetric group reduces to cyclic one.
