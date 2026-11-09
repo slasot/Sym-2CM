@@ -42,19 +42,17 @@ A: Indeed, part of our technical contribution is to subtly adjust
    target pumping (Lemma 9) is completely novel, and specific to 
    symmetric VASS.
 
-   The question of how reusable are the techniques we have used is something we
-   have only thought about after the submission deadline, and as such we do not
-   point this out. However, the novel notion of relations realizable by an
-   (augmented) 1-CM, as used implicitly in Section 5, is a subclass of
-   semilinear relations which is closed under transitive closure (at the cost
-   of not being closed under intersections).
+   The reusability of the techniques is something we
+   have only recently thought about, and as such our paper does not
+   point this out. However, we make use of
+   two novel subclasses of semilinear sets:
 
-   Likewise, the notion of N-saturated sets, as used in Section 4, is a novel
-   subclass of semilinear sets, with the useful property that ascending chains
-   must be finite, which allows fixpoint computations to stabilize.
-
-   Of course, we shall make these contributions more explicit in the final
-   version of the paper.
+   - relations realizable by an (augmented) 1-CM, as used implicitly in Section 5,
+     are a novel subclass which is closed under transitive closure
+     (at the cost of not being closed under intersections).
+   - N-saturated sets, as used in Section 4, are a novel
+     subclass with the useful property that ascending chains
+     must be finite, which allows fixpoint computations to stabilize.
 
 Q: The motivation of the paper is not particularly strong [...] not 
    clear whether this model captures any natural system
@@ -104,5 +102,5 @@ A: Absolutely, the status of symmetric 3-CM, and generally symmetric n-CM,
    these question, and conjecture decidability in Sect.1. It seems however
    that even the case of 3-CM is extremely demanding. We have some
    partial decidability results, but still do not know the full answer. 
-   We've looked at the cycle group to establish some frontiers for
-   decidability, as symmetric group reduces to cyclic one.
+   We've looked at the Z3 cyclic group to establish some frontiers for
+   decidability, as the symmetric group n-CMs reduce to the cyclic Zn-CMs.
