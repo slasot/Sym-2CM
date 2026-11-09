@@ -27,7 +27,7 @@ Q: l 476: what is e?
    l 481: The sentence starting with Wlog is unclear. I don't understand 
    what you mean by one-off.
 
-A: e is the poly bound on lengths of LPSes [2]; 
+A: e is the poly bound on lengths of LPSes [2]; the claim of the sentence is that such an e exists.
    one-off = single-use (inside some path t_i, not on any cycle c_i).
 
 
@@ -41,6 +41,20 @@ A: Indeed, part of our technical contribution is to subtly adjust
    mathematical tools (eg. Sect.4). On the other hand the concept of 
    target pumping (Lemma 9) is completely novel, and specific to 
    symmetric VASS.
+
+   The question of how reusable are the techniques we have used is something we
+   have only thought about after the submission deadline, and as such we do not
+   point this out. However, the novel notion of relations realizable by an
+   (augmented) 1-CM, as used implicitly in Section 5, is a subclass of
+   semilinear relations which is closed under transitive closure (at the cost
+   of not being closed under intersections).
+
+   Likewise, the notion of N-saturated sets, as used in Section 4, is a novel
+   subclass of semilinear sets, with the useful property that ascending chains
+   must be finite, which allows fixpoint computations to stabilize.
+
+   Of course, we shall make these contributions more explicit in the final
+   version of the paper.
 
 Q: The motivation of the paper is not particularly strong [...] not 
    clear whether this model captures any natural system
